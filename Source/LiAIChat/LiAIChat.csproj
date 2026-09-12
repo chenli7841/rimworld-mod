@@ -142,6 +142,7 @@
     <Compile Include="Civilization\CivilizationKnowledgeManager.cs" />
     <Compile Include="Civilization\CivilizationKnowledgeState.cs" />
     <Compile Include="Civilization\CivilizationKnowledgeUtility.cs" />
+    <Compile Include="Civilization\Window_CivilizationKnowledge.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Config\Config.cs" />
     <Compile Include="Defs\LiAIChatThingDefOf.cs" />
