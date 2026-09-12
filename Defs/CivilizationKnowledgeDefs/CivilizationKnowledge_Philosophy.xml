@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Defs>
+
+  <LiAIChat.Civilization.CivilizationKnowledgeDef>
+    <defName>LiAIChat_CivKnowledge_ClassicalGreekPoliticalThought</defName>
+    <label>Classical Greek Political Thought</label>
+    <title>Classical Greek Political Thought</title>
+    <titleChinese>古典希腊政治思想</titleChinese>
+    <description>A reconstructed body of knowledge concerning classical Greek political philosophy, citizenship, government, justice, and the organization of political communities.</description>
+    <category>PoliticalThought</category>
+    <requiredTexts>
+      <li>LiAIChat_Text_Plato_Republic</li>
+      <li>LiAIChat_Text_Aristotle_Politics</li>
+    </requiredTexts>
+  </LiAIChat.Civilization.CivilizationKnowledgeDef>
+
+</Defs>

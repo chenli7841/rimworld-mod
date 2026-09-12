@@ -113,6 +113,9 @@
     <Compile Include="Archive\ArchiveTerminalInvestigationCalculator.cs" />
     <Compile Include="Archive\ArchiveTerminalRiskAssessment.cs" />
     <Compile Include="Archive\Building_AncientArchiveSignalTerminal.cs" />
+    <Compile Include="Archive\ColonyLibrary.cs" />
+    <Compile Include="Archive\ColonyLibraryEntry.cs" />
+    <Compile Include="Archive\ColonyLibraryIndex.cs" />
     <Compile Include="Archive\EarthTextDef.cs" />
     <Compile Include="Archive\EarthTextSelector.cs" />
     <Compile Include="Archive\IArchiveReflectionGenerator.cs" />
@@ -132,6 +135,8 @@
     <Compile Include="Background\PawnAISnapshot.cs" />
     <Compile Include="Background\PawnAISnapshotBuilder.cs" />
     <Compile Include="Bootstrap.cs" />
+    <Compile Include="Civilization\CivilizationKnowledgeCategory.cs" />
+    <Compile Include="Civilization\CivilizationKnowledgeDef.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Config\Config.cs" />
     <Compile Include="Defs\LiAIChatThingDefOf.cs" />
