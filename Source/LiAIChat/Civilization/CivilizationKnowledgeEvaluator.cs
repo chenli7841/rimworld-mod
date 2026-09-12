@@ -45,11 +45,22 @@ namespace LiAIChat.Civilization
                 return;
             }
 
-            foreach (CivilizationKnowledgeDef def
-                in defs)
+            bool changed;
+
+            do
             {
-                Evaluate(def);
+                changed = false;
+
+                foreach (CivilizationKnowledgeDef def
+                    in defs)
+                {
+                    if (Evaluate(def))
+                    {
+                        changed = true;
+                    }
+                }
             }
+            while (changed);
         }
 
         public static bool Evaluate(
@@ -62,6 +73,12 @@ namespace LiAIChat.Civilization
 
             if (CivilizationKnowledgeManager
                 .IsUnlocked(knowledgeDef))
+            {
+                return false;
+            }
+
+            if (!CivilizationKnowledgeUtility
+    .HasPrerequisites(knowledgeDef))
             {
                 return false;
             }

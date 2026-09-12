@@ -280,5 +280,66 @@ namespace LiAIChat.Civilization
             return HasRequiredTexts(
                 knowledgeDef);
         }
+        public static bool HasPrerequisites(
+    CivilizationKnowledgeDef knowledgeDef)
+        {
+            if (knowledgeDef == null)
+            {
+                return false;
+            }
+
+            if (knowledgeDef.prerequisites == null ||
+                knowledgeDef.prerequisites.Count == 0)
+            {
+                return true;
+            }
+
+            foreach (CivilizationKnowledgeDef prerequisite
+                in knowledgeDef.prerequisites)
+            {
+                if (prerequisite == null)
+                {
+                    continue;
+                }
+
+                if (!CivilizationKnowledgeManager
+                    .IsUnlocked(prerequisite))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        public static List<CivilizationKnowledgeDef>
+    GetMissingPrerequisites(
+        CivilizationKnowledgeDef knowledgeDef)
+        {
+            List<CivilizationKnowledgeDef> missing =
+                new List<CivilizationKnowledgeDef>();
+
+            if (knowledgeDef == null ||
+                knowledgeDef.prerequisites == null)
+            {
+                return missing;
+            }
+
+            foreach (CivilizationKnowledgeDef prerequisite
+                in knowledgeDef.prerequisites)
+            {
+                if (prerequisite == null)
+                {
+                    continue;
+                }
+
+                if (!CivilizationKnowledgeManager
+                    .IsUnlocked(prerequisite))
+                {
+                    missing.Add(prerequisite);
+                }
+            }
+
+            return missing;
+        }
     }
 }

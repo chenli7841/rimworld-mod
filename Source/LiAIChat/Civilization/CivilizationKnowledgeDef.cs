@@ -15,6 +15,9 @@ namespace LiAIChat.Civilization
         public List<EarthTextDef> requiredTexts =
             new List<EarthTextDef>();
 
+        public List<CivilizationKnowledgeDef> prerequisites =
+            new List<CivilizationKnowledgeDef>();
+
         public int gracePeriodDays = 10;
 
         public int dormantAfterDays = 30;
