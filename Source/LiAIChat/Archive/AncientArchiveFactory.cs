@@ -18,16 +18,14 @@ namespace LiAIChat.Archive
             {
                 return null;
             }
+            archive.SetProvenance(sourceType, sourceDescription);
 
-            archive.SetProvenance(
-                sourceType,
-                sourceDescription);
-
-            ArchiveContentDef content =
-                ArchiveContentSelector
-                    .SelectForSource(sourceType);
-
+            ArchiveContentDef content = ArchiveContentSelector.SelectForSource(sourceType);
             archive.SetContent(content);
+
+            EarthTextDef earthText = EarthTextSelector.SelectRandom();
+            archive.SetEarthText(earthText);
+
 
             return archive;
         }

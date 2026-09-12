@@ -40,6 +40,46 @@ namespace LiAIChat.Archive
         public bool Identified =>
             identified;
 
+        private string earthTextDefName;
+
+        public EarthTextDef EarthText
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(earthTextDefName))
+                {
+                    return null;
+                }
+
+                return DefDatabase<EarthTextDef>.GetNamedSilentFail(
+                    earthTextDefName);
+            }
+        }
+
+        public string EarthTextDefName
+        {
+            get
+            {
+                return earthTextDefName;
+            }
+        }
+
+        public void SetEarthText(EarthTextDef text)
+        {
+            if (text == null)
+            {
+                return;
+            }
+
+            // Identity is immutable once assigned.
+            if (!string.IsNullOrEmpty(earthTextDefName))
+            {
+                return;
+            }
+
+            earthTextDefName = text.defName;
+        }
+
         public void Identify()
         {
             identified = true;
@@ -98,6 +138,7 @@ namespace LiAIChat.Archive
             Scribe_Values.Look(ref sourceDescription, "archiveSourceDescription", "");
             Scribe_Values.Look(ref discoveryTick, "archiveDiscoveryTick", -1);
             Scribe_Values.Look(ref identified, "archiveIdentified", false);
+            Scribe_Values.Look(ref earthTextDefName, "earthTextDefName", null);
         }
         public override string LabelNoCount
         {
