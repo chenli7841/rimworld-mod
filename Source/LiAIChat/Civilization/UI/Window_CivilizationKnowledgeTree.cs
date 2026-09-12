@@ -174,31 +174,183 @@ namespace LiAIChat.Civilization.UI
         }
 
         private void DrawNode(
-            Rect rect,
-            CivilizationKnowledgeDef def)
+    Rect rect,
+    CivilizationKnowledgeDef def)
         {
-            Widgets.DrawMenuSection(rect);
+            CivilizationKnowledgeNodeVisualState visualState =
+                CivilizationKnowledgeNodeVisualUtility
+                    .GetVisualState(def);
+
+            DrawNodeBackground(
+                rect,
+                visualState);
 
             Rect innerRect =
                 rect.ContractedBy(8f);
+
+            Rect titleRect =
+                new Rect(
+                    innerRect.x,
+                    innerRect.y,
+                    innerRect.width,
+                    innerRect.height - 20f);
+
+            Rect statusRect =
+                new Rect(
+                    innerRect.x,
+                    innerRect.yMax - 18f,
+                    innerRect.width,
+                    18f);
 
             string title =
                 !string.IsNullOrEmpty(def.title)
                     ? def.title
                     : def.label;
 
-            Text.Anchor =
-                TextAnchor.MiddleCenter;
-
             Text.Font =
                 GameFont.Small;
 
+            Text.Anchor =
+                TextAnchor.MiddleCenter;
+
             Widgets.Label(
-                innerRect,
+                titleRect,
                 title);
+
+            Text.Font =
+                GameFont.Tiny;
+
+            Widgets.Label(
+                statusRect,
+                CivilizationKnowledgeNodeVisualUtility
+                    .GetStatusLabel(visualState));
 
             Text.Anchor =
                 TextAnchor.UpperLeft;
+
+            Text.Font =
+                GameFont.Small;
+            if (Mouse.IsOver(rect))
+            {
+                Widgets.DrawHighlight(rect);
+            }
+            string tooltip =
+    !string.IsNullOrEmpty(def.description)
+        ? def.description
+        : def.label;
+
+            TooltipHandler.TipRegion(
+                rect,
+                new TipSignal(tooltip));
+        }
+
+        private void DrawNodeBackground(
+    Rect rect,
+    CivilizationKnowledgeNodeVisualState state)
+        {
+            Color backgroundColor =
+                GetNodeBackgroundColor(state);
+
+            Color borderColor =
+                GetNodeBorderColor(state);
+
+            Widgets.DrawBoxSolid(
+                rect,
+                backgroundColor);
+
+            Color oldColor = GUI.color;
+
+            GUI.color = borderColor;
+
+            Widgets.DrawBox(
+                rect,
+                2);
+
+            GUI.color = oldColor;
+        }
+        private Color GetNodeBackgroundColor(
+    CivilizationKnowledgeNodeVisualState state)
+        {
+            switch (state)
+            {
+                case CivilizationKnowledgeNodeVisualState.Active:
+                    return new Color(
+                        0.16f,
+                        0.24f,
+                        0.18f,
+                        1f);
+
+                case CivilizationKnowledgeNodeVisualState.Unstable:
+                    return new Color(
+                        0.28f,
+                        0.22f,
+                        0.10f,
+                        1f);
+
+                case CivilizationKnowledgeNodeVisualState.Dormant:
+                    return new Color(
+                        0.18f,
+                        0.18f,
+                        0.18f,
+                        1f);
+
+                case CivilizationKnowledgeNodeVisualState
+                    .AwaitingReactivation:
+                    return new Color(
+                        0.18f,
+                        0.19f,
+                        0.28f,
+                        1f);
+
+                default:
+                    return new Color(
+                        0.10f,
+                        0.10f,
+                        0.10f,
+                        1f);
+            }
+        }
+        private Color GetNodeBorderColor(
+    CivilizationKnowledgeNodeVisualState state)
+        {
+            switch (state)
+            {
+                case CivilizationKnowledgeNodeVisualState.Active:
+                    return new Color(
+                        0.40f,
+                        0.80f,
+                        0.48f,
+                        1f);
+
+                case CivilizationKnowledgeNodeVisualState.Unstable:
+                    return new Color(
+                        0.95f,
+                        0.70f,
+                        0.25f,
+                        1f);
+
+                case CivilizationKnowledgeNodeVisualState.Dormant:
+                    return new Color(
+                        0.42f,
+                        0.42f,
+                        0.42f,
+                        1f);
+
+                case CivilizationKnowledgeNodeVisualState
+                    .AwaitingReactivation:
+                    return new Color(
+                        0.48f,
+                        0.58f,
+                        0.92f,
+                        1f);
+
+                default:
+                    return new Color(
+                        0.30f,
+                        0.30f,
+                        0.30f,
+                        1f);
+            }
         }
 
         private void GetTreeBounds(

@@ -142,6 +142,8 @@
     <Compile Include="Civilization\CivilizationKnowledgeManager.cs" />
     <Compile Include="Civilization\CivilizationKnowledgeState.cs" />
     <Compile Include="Civilization\CivilizationKnowledgeUtility.cs" />
+    <Compile Include="Civilization\UI\CivilizationKnowledgeNodeVisualState.cs" />
+    <Compile Include="Civilization\UI\CivilizationKnowledgeNodeVisualUtility.cs" />
     <Compile Include="Civilization\UI\CivilizationKnowledgeTreeLayout.cs" />
     <Compile Include="Civilization\UI\Window_CivilizationKnowledgeTree.cs" />
     <Compile Include="Civilization\Window_CivilizationKnowledge.cs" />
