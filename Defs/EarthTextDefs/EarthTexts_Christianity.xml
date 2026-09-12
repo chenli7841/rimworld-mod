@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <LiAIChat.Archive.EarthTextDef>
+    <defName>LiAIChat_Text_Augustine_Confessions</defName>
+    <label>Confessions</label>
+    <title>Confessions</title>
+    <titleChinese>忏悔录</titleChinese>
+    <author>Augustine of Hippo</author>
+    <year>400</year>
+    <primaryTopicId>earth.religion.christianity</primaryTopicId>
+  </LiAIChat.Archive.EarthTextDef>
+
+  <LiAIChat.Archive.EarthTextDef>
+    <defName>LiAIChat_Text_Augustine_CityOfGod</defName>
+    <label>The City of God</label>
+    <title>The City of God</title>
+    <titleChinese>上帝之城</titleChinese>
+    <author>Augustine of Hippo</author>
+    <year>426</year>
+    <primaryTopicId>earth.religion.christianity</primaryTopicId>
+  </LiAIChat.Archive.EarthTextDef>
+
+  <LiAIChat.Archive.EarthTextDef>
+    <defName>LiAIChat_Text_Luther_NinetyFiveTheses</defName>
+    <label>Ninety-Five Theses</label>
+    <title>Ninety-Five Theses</title>
+    <titleChinese>九十五条论纲</titleChinese>
+    <author>Martin Luther</author>
+    <year>1517</year>
+    <primaryTopicId>earth.christianity.reformation</primaryTopicId>
+  </LiAIChat.Archive.EarthTextDef>
+
+  <LiAIChat.Archive.EarthTextDef>
+    <defName>LiAIChat_Text_Calvin_Institutes</defName>
+    <label>Institutes of the Christian Religion</label>
+    <title>Institutes of the Christian Religion</title>
+    <titleChinese>基督教要义</titleChinese>
+    <author>John Calvin</author>
+    <year>1536</year>
+    <primaryTopicId>earth.christianity.reformation</primaryTopicId>
+  </LiAIChat.Archive.EarthTextDef>
+
+</Defs>

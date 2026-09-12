@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <LiAIChat.Archive.EarthTextDef>
+    <defName>LiAIChat_Text_Hobbes_Leviathan</defName>
+    <label>Leviathan</label>
+    <title>Leviathan</title>
+    <titleChinese>利维坦</titleChinese>
+    <author>Thomas Hobbes</author>
+    <year>1651</year>
+    <primaryTopicId>earth.politics.modern</primaryTopicId>
+  </LiAIChat.Archive.EarthTextDef>
+
+  <LiAIChat.Archive.EarthTextDef>
+    <defName>LiAIChat_Text_Locke_TwoTreatises</defName>
+    <label>Two Treatises of Government</label>
+    <title>Two Treatises of Government</title>
+    <titleChinese>政府论</titleChinese>
+    <author>John Locke</author>
+    <year>1689</year>
+    <primaryTopicId>earth.politics.liberalism</primaryTopicId>
+  </LiAIChat.Archive.EarthTextDef>
+
+</Defs>

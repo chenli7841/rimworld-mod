@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <LiAIChat.Archive.EarthTextDef>
+    <defName>LiAIChat_Text_Plato_Republic</defName>
+    <label>The Republic</label>
+    <title>The Republic</title>
+    <titleChinese>理想国</titleChinese>
+    <author>Plato</author>
+    <year>-375</year>
+    <primaryTopicId>earth.philosophy.plato</primaryTopicId>
+  </LiAIChat.Archive.EarthTextDef>
+
+  <LiAIChat.Archive.EarthTextDef>
+    <defName>LiAIChat_Text_Plato_Apology</defName>
+    <label>Apology</label>
+    <title>Apology</title>
+    <titleChinese>申辩篇</titleChinese>
+    <author>Plato</author>
+    <year>-399</year>
+    <primaryTopicId>earth.philosophy.plato</primaryTopicId>
+  </LiAIChat.Archive.EarthTextDef>
+
+  <LiAIChat.Archive.EarthTextDef>
+    <defName>LiAIChat_Text_Aristotle_Politics</defName>
+    <label>Politics</label>
+    <title>Politics</title>
+    <titleChinese>政治学</titleChinese>
+    <author>Aristotle</author>
+    <year>-350</year>
+    <primaryTopicId>earth.philosophy.aristotle</primaryTopicId>
+  </LiAIChat.Archive.EarthTextDef>
+
+  <LiAIChat.Archive.EarthTextDef>
+    <defName>LiAIChat_Text_Aristotle_NicomacheanEthics</defName>
+    <label>Nicomachean Ethics</label>
+    <title>Nicomachean Ethics</title>
+    <titleChinese>尼各马可伦理学</titleChinese>
+    <author>Aristotle</author>
+    <year>-340</year>
+    <primaryTopicId>earth.philosophy.aristotle</primaryTopicId>
+  </LiAIChat.Archive.EarthTextDef>
+
+  <LiAIChat.Archive.EarthTextDef>
+    <defName>LiAIChat_Text_Kant_CritiqueOfPureReason</defName>
+    <label>Critique of Pure Reason</label>
+    <title>Critique of Pure Reason</title>
+    <titleChinese>纯粹理性批判</titleChinese>
+    <author>Immanuel Kant</author>
+    <year>1781</year>
+    <primaryTopicId>earth.philosophy.kant</primaryTopicId>
+  </LiAIChat.Archive.EarthTextDef>
+
+  <LiAIChat.Archive.EarthTextDef>
+    <defName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</defName>
+    <label>Critique of Practical Reason</label>
+    <title>Critique of Practical Reason</title>
+    <titleChinese>实践理性批判</titleChinese>
+    <author>Immanuel Kant</author>
+    <year>1788</year>
+    <primaryTopicId>earth.philosophy.kant</primaryTopicId>
+  </LiAIChat.Archive.EarthTextDef>
+
+</Defs>

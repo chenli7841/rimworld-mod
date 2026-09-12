@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <LiAIChat.Archive.EarthTextDef>
+    <defName>LiAIChat_Text_Copernicus_DeRevolutionibus</defName>
+    <label>De revolutionibus orbium coelestium</label>
+    <title>De revolutionibus orbium coelestium</title>
+    <titleChinese>天体运行论</titleChinese>
+    <author>Nicolaus Copernicus</author>
+    <year>1543</year>
+    <primaryTopicId>earth.science.scientific_revolution</primaryTopicId>
+  </LiAIChat.Archive.EarthTextDef>
+
+  <LiAIChat.Archive.EarthTextDef>
+    <defName>LiAIChat_Text_Newton_Principia</defName>
+    <label>Philosophiæ Naturalis Principia Mathematica</label>
+    <title>Philosophiæ Naturalis Principia Mathematica</title>
+    <titleChinese>自然哲学的数学原理</titleChinese>
+    <author>Isaac Newton</author>
+    <year>1687</year>
+    <primaryTopicId>earth.science.scientific_revolution</primaryTopicId>
+  </LiAIChat.Archive.EarthTextDef>
+
+  <LiAIChat.Archive.EarthTextDef>
+    <defName>LiAIChat_Text_Darwin_OriginOfSpecies</defName>
+    <label>On the Origin of Species</label>
+    <title>On the Origin of Species</title>
+    <titleChinese>物种起源</titleChinese>
+    <author>Charles Darwin</author>
+    <year>1859</year>
+    <primaryTopicId>earth.science.evolution</primaryTopicId>
+  </LiAIChat.Archive.EarthTextDef>
+
+</Defs>
