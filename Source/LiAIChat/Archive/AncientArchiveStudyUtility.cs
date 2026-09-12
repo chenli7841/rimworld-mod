@@ -83,10 +83,11 @@ namespace LiAIChat.Archive
                 Thing_AncientEarthArchiveFragment archive
                 in archives)
             {
-                ArchiveContentDef content =
-                    archive.Content;
+                string studyId =
+    archive.StudyIdentityId;
 
-                if (content == null)
+                if (string.IsNullOrWhiteSpace(
+                    studyId))
                 {
                     continue;
                 }
@@ -94,11 +95,36 @@ namespace LiAIChat.Archive
                 bool alreadyStudied =
                     state
                         .StudiedArchiveContentIds
-                        .Contains(
-                            content.defName);
+                        .Contains(studyId);
 
-                string label =
-                    content.title;
+                string label;
+
+                if (archive.EarthText != null)
+                {
+                    label =
+                        archive.EarthText.title;
+
+                    if (!string.IsNullOrWhiteSpace(
+                        archive.EarthText.author))
+                    {
+                        label +=
+                            " — " +
+                            archive.EarthText.author;
+                    }
+                }
+                else
+                {
+                    ArchiveContentDef content =
+                        archive.Content;
+
+                    if (content == null)
+                    {
+                        continue;
+                    }
+
+                    label =
+                        content.title;
+                }
 
                 if (alreadyStudied)
                 {
@@ -166,29 +192,32 @@ namespace LiAIChat.Archive
                 JobTag.Misc);
         }
 
-        public static void CompleteStudy(
-    Pawn pawn,
-    Thing archiveThing)
+        public static void CompleteStudy(Pawn pawn, Thing archiveThing)
         {
-            if (pawn == null ||
-                archiveThing == null)
+            if (pawn == null || archiveThing == null)
             {
                 return;
             }
 
-            Thing_AncientEarthArchiveFragment archive =
-                archiveThing as
-                    Thing_AncientEarthArchiveFragment;
+            Thing_AncientEarthArchiveFragment archive = archiveThing as Thing_AncientEarthArchiveFragment;
 
             if (archive == null)
             {
                 return;
             }
 
-            ArchiveContentDef content =
-                archive.Content;
+            ArchiveContentDef content = archive.Content;
 
             if (content == null)
+            {
+                return;
+            }
+
+            string topicId = archive.KnowledgeTopicId;
+
+            string studyId = archive.StudyIdentityId;
+
+            if (string.IsNullOrWhiteSpace(topicId) || string.IsNullOrWhiteSpace(studyId))
             {
                 return;
             }
@@ -197,15 +226,9 @@ namespace LiAIChat.Archive
             // Validate topic
             // ---------------------------------------------------------
 
-            if (!KnowledgeTopicCatalog.Contains(
-                content.topicId))
+            if (!KnowledgeTopicCatalog.Contains(topicId))
             {
-                Log.Error(
-                    "[Li AI Chat] ArchiveContentDef " +
-                    content.defName +
-                    " references unknown topic: " +
-                    content.topicId);
-
+                Log.Error("[Li AI Chat] Archive references unknown topic: " + topicId);
                 return;
             }
 
@@ -219,8 +242,7 @@ namespace LiAIChat.Archive
                 return;
             }
 
-            string contentId =
-                content.defName;
+            string contentId = studyId;
 
             // ---------------------------------------------------------
             // Prevent studying the same content twice
@@ -246,7 +268,7 @@ namespace LiAIChat.Archive
                 new KnowledgeAcquisition
                 {
                     TopicId =
-                        content.topicId,
+                        topicId,
 
                     LearningStrength =
                         content.familiarityGain
@@ -260,8 +282,7 @@ namespace LiAIChat.Archive
             // Learn parent topic
             // ---------------------------------------------------------
 
-            if (!string.IsNullOrWhiteSpace(
-                content.parentTopicId))
+            if (archive.EarthText == null && !string.IsNullOrWhiteSpace(content.parentTopicId))
             {
                 if (KnowledgeTopicCatalog.Contains(
                     content.parentTopicId))
@@ -302,13 +323,37 @@ namespace LiAIChat.Archive
             // Long-term memory
             // ---------------------------------------------------------
 
+            string studyTitle;
+
+            if (archive.EarthText != null)
+            {
+                studyTitle =
+                    archive.EarthText.title;
+            }
+            else
+            {
+                studyTitle =
+                    content.title;
+            }
+
             string memoryText =
-                "Studied the Ancient Earth archive \"" +
-                content.title +
-                "\" about " +
-                content.theme +
-                ". Topic learned: " +
-                content.topicId +
+                "Studied the Ancient Earth text \"" +
+                studyTitle +
+                "\".";
+
+            if (archive.EarthText != null &&
+                !string.IsNullOrWhiteSpace(
+                    archive.EarthText.author))
+            {
+                memoryText +=
+                    " Author: " +
+                    archive.EarthText.author +
+                    ".";
+            }
+
+            memoryText +=
+                " Topic learned: " +
+                topicId +
                 ".";
 
             if (!string.IsNullOrWhiteSpace(
@@ -347,7 +392,7 @@ namespace LiAIChat.Archive
             Messages.Message(
                 pawn.LabelShort +
                 " studied " +
-                content.title +
+                studyTitle +
                 ".",
                 MessageTypeDefOf.PositiveEvent);
 
@@ -355,9 +400,10 @@ namespace LiAIChat.Archive
                 "[Li AI Chat] " +
                 pawn.LabelShort +
                 " learned " +
-                content.topicId +
-                " +" +
-                content.familiarityGain);
+                topicId +
+                " from \"" +
+                studyTitle +
+                "\".");
 
             // ---------------------------------------------------------
             // AI reflection

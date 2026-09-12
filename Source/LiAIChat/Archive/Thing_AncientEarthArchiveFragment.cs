@@ -80,6 +80,44 @@ namespace LiAIChat.Archive
             earthTextDefName = text.defName;
         }
 
+        public string KnowledgeTopicId
+        {
+            get
+            {
+                if (EarthText != null &&
+                    !string.IsNullOrWhiteSpace(
+                        EarthText.primaryTopicId))
+                {
+                    return EarthText.primaryTopicId;
+                }
+
+                if (Content != null)
+                {
+                    return Content.topicId;
+                }
+
+                return null;
+            }
+        }
+
+        public string StudyIdentityId
+        {
+            get
+            {
+                if (EarthText != null)
+                {
+                    return EarthText.defName;
+                }
+
+                if (Content != null)
+                {
+                    return Content.defName;
+                }
+
+                return null;
+            }
+        }
+
         public void Identify()
         {
             identified = true;
