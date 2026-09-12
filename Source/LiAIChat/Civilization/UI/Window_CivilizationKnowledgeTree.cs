@@ -196,14 +196,21 @@ namespace LiAIChat.Civilization.UI
                     innerRect.x,
                     innerRect.y,
                     innerRect.width,
-                    innerRect.height - 20f);
+                    42f);
 
             Rect statusRect =
                 new Rect(
                     innerRect.x,
-                    innerRect.yMax - 18f,
+                    titleRect.yMax,
                     innerRect.width,
-                    18f);
+                    16f);
+
+            Rect requirementRect =
+                new Rect(
+                    innerRect.x,
+                    statusRect.yMax + 2f,
+                    innerRect.width,
+                    16f);
 
             string title =
                 !string.IsNullOrEmpty(def.title)
@@ -228,19 +235,33 @@ namespace LiAIChat.Civilization.UI
                 CivilizationKnowledgeNodeVisualUtility
                     .GetStatusLabel(visualState));
 
+            string requirementSummary =
+                CivilizationKnowledgeNodeVisualUtility
+                    .GetRequirementSummary(def);
+
+            if (!string.IsNullOrEmpty(
+                requirementSummary))
+            {
+                Widgets.Label(
+                    requirementRect,
+                    requirementSummary);
+            }
+
             Text.Anchor =
                 TextAnchor.UpperLeft;
 
             Text.Font =
                 GameFont.Small;
+
             if (Mouse.IsOver(rect))
             {
                 Widgets.DrawHighlight(rect);
             }
+
             string tooltip =
-    !string.IsNullOrEmpty(def.description)
-        ? def.description
-        : def.label;
+                !string.IsNullOrEmpty(def.description)
+                    ? def.description
+                    : def.label;
 
             TooltipHandler.TipRegion(
                 rect,
