@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
-using LiAIChat.Archive;
+﻿using LiAIChat.Archive;
+using RimWorld;
+using System.Collections.Generic;
+using Verse;
 
 namespace LiAIChat.Civilization
 {
@@ -56,6 +58,134 @@ namespace LiAIChat.Civilization
 
             return IsMissingRequiredTexts(
                 knowledgeDef);
+        }
+        public static int GetMissingDurationTicks(
+    CivilizationKnowledgeDef knowledgeDef)
+        {
+            if (knowledgeDef == null)
+            {
+                return 0;
+            }
+
+            CivilizationKnowledgeState state =
+                CivilizationKnowledgeManager
+                    .GetState(knowledgeDef);
+
+            if (state == null ||
+                state.MissingSinceTick < 0)
+            {
+                return 0;
+            }
+
+            if (Find.TickManager == null)
+            {
+                return 0;
+            }
+
+            int duration =
+                Find.TickManager.TicksGame -
+                state.MissingSinceTick;
+
+            return duration < 0
+                ? 0
+                : duration;
+        }
+        public static float GetMissingDurationDays(
+    CivilizationKnowledgeDef knowledgeDef)
+        {
+            int ticks =
+                GetMissingDurationTicks(
+                    knowledgeDef);
+
+            return ticks /
+                (float)GenDate.TicksPerDay;
+        }
+        public static int GetGracePeriodTicks(
+    CivilizationKnowledgeDef knowledgeDef)
+        {
+            if (knowledgeDef == null)
+            {
+                return 0;
+            }
+
+            int days =
+                knowledgeDef.gracePeriodDays;
+
+            if (days < 0)
+            {
+                days = 0;
+            }
+
+            return days *
+                GenDate.TicksPerDay;
+        }
+        public static bool IsWithinGracePeriod(
+    CivilizationKnowledgeDef knowledgeDef)
+        {
+            if (knowledgeDef == null)
+            {
+                return false;
+            }
+
+            CivilizationKnowledgeState state =
+                CivilizationKnowledgeManager
+                    .GetState(knowledgeDef);
+
+            if (state == null)
+            {
+                return false;
+            }
+
+            if (!state.Unlocked)
+            {
+                return false;
+            }
+
+            if (state.MissingSinceTick < 0)
+            {
+                return false;
+            }
+
+            int missingDuration =
+                GetMissingDurationTicks(
+                    knowledgeDef);
+
+            int gracePeriod =
+                GetGracePeriodTicks(
+                    knowledgeDef);
+
+            return missingDuration <
+                   gracePeriod;
+        }
+        public static bool HasGracePeriodExpired(
+    CivilizationKnowledgeDef knowledgeDef)
+        {
+            if (knowledgeDef == null)
+            {
+                return false;
+            }
+
+            if (!IsUnlockedButIncomplete(
+                knowledgeDef))
+            {
+                return false;
+            }
+
+            CivilizationKnowledgeState state =
+                CivilizationKnowledgeManager
+                    .GetState(knowledgeDef);
+
+            if (state == null ||
+                state.MissingSinceTick < 0)
+            {
+                return false;
+            }
+
+            return GetMissingDurationTicks(
+                       knowledgeDef)
+                   >=
+                   GetGracePeriodTicks(
+                       knowledgeDef);
         }
     }
 }

@@ -14,5 +14,7 @@ namespace LiAIChat.Civilization
 
         public List<EarthTextDef> requiredTexts =
             new List<EarthTextDef>();
+
+        public int gracePeriodDays = 10;
     }
 }
