@@ -1,0 +1,620 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\archive\\archivescholarproactivedialogue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:archive\\archivescholarproactivedialogue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\questing\\questnode_resolvearchivescholargift.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:questing\\questnode_resolvearchivescholargift.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\ai\\openaiproactivedialoguedirector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:ai\\openaiproactivedialoguedirector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\archive\\archivescholargiftutility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:archive\\archivescholargiftutility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\patches\\pawnexitmaparchivescholarpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:patches\\pawnexitmaparchivescholarpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\archive\\archivescholarstaystate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:archive\\archivescholarstaystate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\archive\\archivescholarstayutility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:archive\\archivescholarstayutility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\questing\\questnode_startarchivescholarstay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:questing\\questnode_startarchivescholarstay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\questing\\questpart_waitforpawnexit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:questing\\questpart_waitforpawnexit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\questing\\questnode_createuniquesignal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:questing\\questnode_createuniquesignal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\patches\\pawnkillarchivescholarpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:patches\\pawnkillarchivescholarpatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\dialogue\\proactivedialoguemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:dialogue\\proactivedialoguemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\ai\\iproactivedialoguedirector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:ai\\iproactivedialoguedirector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\archive\\archivescholargiftdecisionutility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:archive\\archivescholargiftdecisionutility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\ui\\dialog_pawnchat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:ui\\dialog_pawnchat.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\archive\\openaiarchivescholarconversationdirector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:archive\\openaiarchivescholarconversationdirector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\archive\\iarchivescholarconversationdirector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:archive\\iarchivescholarconversationdirector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\archive\\archivescholarconversationimpact.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:archive\\archivescholarconversationimpact.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\social\\intellectualexchangemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:social\\intellectualexchangemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\archive\\archivescholarpromptbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:archive\\archivescholarpromptbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\ai\\openaichatprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:ai\\openaichatprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\pawns\\pawncontextbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:pawns\\pawncontextbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\models\\pawncontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:models\\pawncontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\patches\\pawn_kill_archivescholar_patch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:patches\\pawn_kill_archivescholar_patch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\questing\\questnode_givescholararchive.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:questing\\questnode_givescholararchive.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\questing\\questnode_createarchivescholar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:questing\\questnode_createarchivescholar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\questing\\questnode_completearchivescholarstay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:questing\\questnode_completearchivescholarstay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\questing\\questnode_initializearchivescholar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:questing\\questnode_initializearchivescholar.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\models\\pawnaistate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:models\\pawnaistate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\pawnconversationeligibility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:pawnconversationeligibility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\patches\\pawngizmopatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:patches\\pawngizmopatch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\archive\\archivescholarinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:archive\\archivescholarinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\archive\\archivescholarpawnfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:archive\\archivescholarpawnfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\ai\\ichatprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:ai\\ichatprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 507,
+          "SelectedChildIndex": 12,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PawnExitMapArchiveScholarPatch.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Patches\\PawnExitMapArchiveScholarPatch.cs",
+              "RelativeDocumentMoniker": "Patches\\PawnExitMapArchiveScholarPatch.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Patches\\PawnExitMapArchiveScholarPatch.cs",
+              "RelativeToolTip": "Patches\\PawnExitMapArchiveScholarPatch.cs",
+              "ViewState": "AgIAADsAAAAAAAAAAAAAwFAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T21:12:36.05Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "QuestPart_WaitForPawnExit.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Questing\\QuestPart_WaitForPawnExit.cs",
+              "RelativeDocumentMoniker": "Questing\\QuestPart_WaitForPawnExit.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Questing\\QuestPart_WaitForPawnExit.cs",
+              "RelativeToolTip": "Questing\\QuestPart_WaitForPawnExit.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T20:59:11.63Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "QuestNode_CreateUniqueSignal.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Questing\\QuestNode_CreateUniqueSignal.cs",
+              "RelativeDocumentMoniker": "Questing\\QuestNode_CreateUniqueSignal.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Questing\\QuestNode_CreateUniqueSignal.cs",
+              "RelativeToolTip": "Questing\\QuestNode_CreateUniqueSignal.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T20:50:02.592Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "PawnKillArchiveScholarPatch.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Patches\\PawnKillArchiveScholarPatch.cs",
+              "RelativeDocumentMoniker": "Patches\\PawnKillArchiveScholarPatch.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Patches\\PawnKillArchiveScholarPatch.cs",
+              "RelativeToolTip": "Patches\\PawnKillArchiveScholarPatch.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAkwEQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T18:14:55.815Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "QuestNode_ResolveArchiveScholarGift.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Questing\\QuestNode_ResolveArchiveScholarGift.cs",
+              "RelativeDocumentMoniker": "Questing\\QuestNode_ResolveArchiveScholarGift.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Questing\\QuestNode_ResolveArchiveScholarGift.cs",
+              "RelativeToolTip": "Questing\\QuestNode_ResolveArchiveScholarGift.cs",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAvwFEAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T17:47:48.535Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "OpenAIArchiveScholarConversationDirector.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\OpenAIArchiveScholarConversationDirector.cs",
+              "RelativeDocumentMoniker": "Archive\\OpenAIArchiveScholarConversationDirector.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\OpenAIArchiveScholarConversationDirector.cs",
+              "RelativeToolTip": "Archive\\OpenAIArchiveScholarConversationDirector.cs",
+              "ViewState": "AgIAAEoBAAAAAAAAAAAUwFUBAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T17:43:44.543Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "IArchiveScholarConversationDirector.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\IArchiveScholarConversationDirector.cs",
+              "RelativeDocumentMoniker": "Archive\\IArchiveScholarConversationDirector.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\IArchiveScholarConversationDirector.cs",
+              "RelativeToolTip": "Archive\\IArchiveScholarConversationDirector.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T17:43:32.039Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "ArchiveScholarConversationImpact.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\ArchiveScholarConversationImpact.cs",
+              "RelativeDocumentMoniker": "Archive\\ArchiveScholarConversationImpact.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\ArchiveScholarConversationImpact.cs",
+              "RelativeToolTip": "Archive\\ArchiveScholarConversationImpact.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T17:43:13.454Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "IntellectualExchangeManager.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Social\\IntellectualExchangeManager.cs",
+              "RelativeDocumentMoniker": "Social\\IntellectualExchangeManager.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Social\\IntellectualExchangeManager.cs",
+              "RelativeToolTip": "Social\\IntellectualExchangeManager.cs",
+              "ViewState": "AgIAAC8BAAAAAAAAAADwvzwBAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T17:39:17.398Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ArchiveScholarGiftDecisionUtility.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\ArchiveScholarGiftDecisionUtility.cs",
+              "RelativeDocumentMoniker": "Archive\\ArchiveScholarGiftDecisionUtility.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\ArchiveScholarGiftDecisionUtility.cs",
+              "RelativeToolTip": "Archive\\ArchiveScholarGiftDecisionUtility.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAArwCMAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T17:37:23.744Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "OpenAIProactiveDialogueDirector.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\AI\\OpenAIProactiveDialogueDirector.cs",
+              "RelativeDocumentMoniker": "AI\\OpenAIProactiveDialogueDirector.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\AI\\OpenAIProactiveDialogueDirector.cs",
+              "RelativeToolTip": "AI\\OpenAIProactiveDialogueDirector.cs",
+              "ViewState": "AgIAAEIBAAAAAAAAAAAjwE0BAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T17:28:06.06Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "IProactiveDialogueDirector.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\AI\\IProactiveDialogueDirector.cs",
+              "RelativeDocumentMoniker": "AI\\IProactiveDialogueDirector.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\AI\\IProactiveDialogueDirector.cs",
+              "RelativeToolTip": "AI\\IProactiveDialogueDirector.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAswA4AAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T17:27:35.896Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ArchiveScholarProactiveDialogue.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\ArchiveScholarProactiveDialogue.cs",
+              "RelativeDocumentMoniker": "Archive\\ArchiveScholarProactiveDialogue.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\ArchiveScholarProactiveDialogue.cs",
+              "RelativeToolTip": "Archive\\ArchiveScholarProactiveDialogue.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAIAwwCwAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T17:18:51.942Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "PawnContext.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Models\\PawnContext.cs",
+              "RelativeDocumentMoniker": "Models\\PawnContext.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Models\\PawnContext.cs",
+              "RelativeToolTip": "Models\\PawnContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAQAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T17:13:13.002Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Dialog_PawnChat.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\UI\\Dialog_PawnChat.cs",
+              "RelativeDocumentMoniker": "UI\\Dialog_PawnChat.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\UI\\Dialog_PawnChat.cs",
+              "RelativeToolTip": "UI\\Dialog_PawnChat.cs",
+              "ViewState": "AgIAAN8CAAAAAAAAAAAkwPYCAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T17:13:11.413Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "ArchiveScholarPromptBuilder.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\ArchiveScholarPromptBuilder.cs",
+              "RelativeDocumentMoniker": "Archive\\ArchiveScholarPromptBuilder.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\ArchiveScholarPromptBuilder.cs",
+              "RelativeToolTip": "Archive\\ArchiveScholarPromptBuilder.cs",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAIwI8AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T16:58:04.366Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Pawn_Kill_ArchiveScholar_Patch.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Patches\\Pawn_Kill_ArchiveScholar_Patch.cs",
+              "RelativeDocumentMoniker": "Patches\\Pawn_Kill_ArchiveScholar_Patch.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Patches\\Pawn_Kill_ArchiveScholar_Patch.cs",
+              "RelativeToolTip": "Patches\\Pawn_Kill_ArchiveScholar_Patch.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAIwDMAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T16:49:48.642Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "QuestNode_GiveScholarArchive.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Questing\\QuestNode_GiveScholarArchive.cs",
+              "RelativeDocumentMoniker": "Questing\\QuestNode_GiveScholarArchive.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Questing\\QuestNode_GiveScholarArchive.cs",
+              "RelativeToolTip": "Questing\\QuestNode_GiveScholarArchive.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAADwvysAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T16:44:05.662Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ArchiveScholarGiftUtility.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\ArchiveScholarGiftUtility.cs",
+              "RelativeDocumentMoniker": "Archive\\ArchiveScholarGiftUtility.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\ArchiveScholarGiftUtility.cs",
+              "RelativeToolTip": "Archive\\ArchiveScholarGiftUtility.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAgwCEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T16:43:40.148Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "QuestNode_CreateArchiveScholar.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Questing\\QuestNode_CreateArchiveScholar.cs",
+              "RelativeDocumentMoniker": "Questing\\QuestNode_CreateArchiveScholar.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Questing\\QuestNode_CreateArchiveScholar.cs",
+              "RelativeToolTip": "Questing\\QuestNode_CreateArchiveScholar.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAADwvzYAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T16:19:03.437Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "QuestNode_StartArchiveScholarStay.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Questing\\QuestNode_StartArchiveScholarStay.cs",
+              "RelativeDocumentMoniker": "Questing\\QuestNode_StartArchiveScholarStay.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Questing\\QuestNode_StartArchiveScholarStay.cs",
+              "RelativeToolTip": "Questing\\QuestNode_StartArchiveScholarStay.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAAAwEEAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T15:46:29.429Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "QuestNode_CompleteArchiveScholarStay.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Questing\\QuestNode_CompleteArchiveScholarStay.cs",
+              "RelativeDocumentMoniker": "Questing\\QuestNode_CompleteArchiveScholarStay.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Questing\\QuestNode_CompleteArchiveScholarStay.cs",
+              "RelativeToolTip": "Questing\\QuestNode_CompleteArchiveScholarStay.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAqwCEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T15:27:03.656Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ArchiveScholarStayUtility.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\ArchiveScholarStayUtility.cs",
+              "RelativeDocumentMoniker": "Archive\\ArchiveScholarStayUtility.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\ArchiveScholarStayUtility.cs",
+              "RelativeToolTip": "Archive\\ArchiveScholarStayUtility.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAsAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T15:23:01.008Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ProactiveDialogueManager.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Dialogue\\ProactiveDialogueManager.cs",
+              "RelativeDocumentMoniker": "Dialogue\\ProactiveDialogueManager.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Dialogue\\ProactiveDialogueManager.cs",
+              "RelativeToolTip": "Dialogue\\ProactiveDialogueManager.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAAkwEcAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T17:25:52.447Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ArchiveScholarStayState.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\ArchiveScholarStayState.cs",
+              "RelativeDocumentMoniker": "Archive\\ArchiveScholarStayState.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\ArchiveScholarStayState.cs",
+              "RelativeToolTip": "Archive\\ArchiveScholarStayState.cs",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAjwE0AAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T15:22:18.658Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "QuestNode_InitializeArchiveScholar.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Questing\\QuestNode_InitializeArchiveScholar.cs",
+              "RelativeDocumentMoniker": "Questing\\QuestNode_InitializeArchiveScholar.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Questing\\QuestNode_InitializeArchiveScholar.cs",
+              "RelativeToolTip": "Questing\\QuestNode_InitializeArchiveScholar.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAAAC4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T15:20:33.968Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "PawnConversationEligibility.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\PawnConversationEligibility.cs",
+              "RelativeDocumentMoniker": "PawnConversationEligibility.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\PawnConversationEligibility.cs",
+              "RelativeToolTip": "PawnConversationEligibility.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAWwCsAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T15:17:02.381Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "PawnGizmoPatch.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Patches\\PawnGizmoPatch.cs",
+              "RelativeDocumentMoniker": "Patches\\PawnGizmoPatch.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Patches\\PawnGizmoPatch.cs",
+              "RelativeToolTip": "Patches\\PawnGizmoPatch.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAABsAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T15:17:26.253Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "ArchiveScholarInitializer.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\ArchiveScholarInitializer.cs",
+              "RelativeDocumentMoniker": "Archive\\ArchiveScholarInitializer.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\ArchiveScholarInitializer.cs",
+              "RelativeToolTip": "Archive\\ArchiveScholarInitializer.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAmwC8AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T15:15:51.93Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "PawnAIState.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Models\\PawnAIState.cs",
+              "RelativeDocumentMoniker": "Models\\PawnAIState.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Models\\PawnAIState.cs",
+              "RelativeToolTip": "Models\\PawnAIState.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAQwE4AAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T15:15:16.669Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "ArchiveScholarPawnFactory.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\ArchiveScholarPawnFactory.cs",
+              "RelativeDocumentMoniker": "Archive\\ArchiveScholarPawnFactory.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\ArchiveScholarPawnFactory.cs",
+              "RelativeToolTip": "Archive\\ArchiveScholarPawnFactory.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAuwC8AAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T15:14:01.317Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "OpenAIChatProvider.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\AI\\OpenAIChatProvider.cs",
+              "RelativeDocumentMoniker": "AI\\OpenAIChatProvider.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\AI\\OpenAIChatProvider.cs",
+              "RelativeToolTip": "AI\\OpenAIChatProvider.cs",
+              "ViewState": "AgIAAL0CAAAAAAAAAAAkwMoCAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T15:07:33.145Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "IChatProvider.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\AI\\IChatProvider.cs",
+              "RelativeDocumentMoniker": "AI\\IChatProvider.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\AI\\IChatProvider.cs",
+              "RelativeToolTip": "AI\\IChatProvider.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T15:07:29.812Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "PawnContextBuilder.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Pawns\\PawnContextBuilder.cs",
+              "RelativeDocumentMoniker": "Pawns\\PawnContextBuilder.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Pawns\\PawnContextBuilder.cs",
+              "RelativeToolTip": "Pawns\\PawnContextBuilder.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAnwEEAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-11T17:14:06.171Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedHeight": 196,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{004be353-6879-467c-9d1e-9ac23cdf6d49}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{a80febb4-e7e0-4147-b476-21aaf2453969}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

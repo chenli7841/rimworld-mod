@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Defs>
+
+  <!-- ========================================================= -->
+  <!-- IDENTIFY ANCIENT EARTH ARCHIVE                            -->
+  <!-- ========================================================= -->
+
+  <JobDef>
+    <defName>LiAIChat_IdentifyAncientArchive</defName>
+    <driverClass>LiAIChat.Archive.JobDriver_IdentifyAncientArchive</driverClass>
+    <reportString>identifying ancient Earth archive.</reportString>
+  </JobDef>
+
+
+  <!-- ========================================================= -->
+  <!-- STUDY ANCIENT EARTH ARCHIVE                               -->
+  <!-- ========================================================= -->
+
+  <JobDef>
+    <defName>LiAIChat_StudyAncientArchive</defName>
+    <driverClass>LiAIChat.Archive.JobDriver_StudyAncientArchive</driverClass>
+    <reportString>studying ancient Earth archive.</reportString>
+  </JobDef>
+
+
+  <!-- ========================================================= -->
+  <!-- INVESTIGATE ANCIENT ARCHIVE SIGNAL TERMINAL               -->
+  <!-- ========================================================= -->
+
+  <JobDef>
+    <defName>LiAIChat_InvestigateArchiveTerminal</defName>
+    <driverClass>LiAIChat.Archive.JobDriver_InvestigateArchiveTerminal</driverClass>
+    <reportString>investigating ancient Earth signal.</reportString>
+  </JobDef>
+
+</Defs>

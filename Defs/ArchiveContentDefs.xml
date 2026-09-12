@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Defs>
+
+  <!-- ========================================================= -->
+  <!-- HISTORY                                                   -->
+  <!-- ========================================================= -->
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_AncientGreece</defName>
+    <topicId>earth.history.ancient_greece</topicId>
+    <parentTopicId>earth.history</parentTopicId>
+    <title>Ancient Greece</title>
+    <summary>
+      An introductory historical archive describing the Greek city-states,
+      their wars, political experiments, culture, religion, and intellectual life.
+    </summary>
+    <familiarityGain>0.20</familiarityGain>
+    <parentFamiliarityGain>0.05</parentFamiliarityGain>
+    <rarity>Common</rarity>
+    <theme>History</theme>
+    <studyDifficulty>Easy</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_RomanEmpire</defName>
+    <topicId>earth.history.roman_empire</topicId>
+    <parentTopicId>earth.history</parentTopicId>
+    <title>The Roman Empire</title>
+    <summary>
+      A surviving historical record of Rome's transformation from republic
+      to empire, its government, military expansion, society, and long influence
+      on later civilizations.
+    </summary>
+    <familiarityGain>0.20</familiarityGain>
+    <parentFamiliarityGain>0.05</parentFamiliarityGain>
+    <rarity>Common</rarity>
+    <theme>History</theme>
+    <studyDifficulty>Easy</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_QinHanChina</defName>
+    <topicId>earth.history.qin_han_china</topicId>
+    <parentTopicId>earth.history</parentTopicId>
+    <title>Qin and Han China</title>
+    <summary>
+      A historical record describing the unification of ancient China under Qin,
+      followed by the political, military, administrative, and cultural development
+      of the Han dynasty.
+    </summary>
+    <familiarityGain>0.20</familiarityGain>
+    <parentFamiliarityGain>0.05</parentFamiliarityGain>
+    <rarity>Common</rarity>
+    <theme>History</theme>
+    <studyDifficulty>Easy</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_IndustrialRevolution</defName>
+    <topicId>earth.history.industrial_revolution</topicId>
+    <parentTopicId>earth.history</parentTopicId>
+    <title>The Industrial Revolution</title>
+    <summary>
+      An account of the transformation of production, transportation,
+      urban life, labor, and economic organization during Earth's industrial age.
+    </summary>
+    <familiarityGain>0.20</familiarityGain>
+    <parentFamiliarityGain>0.05</parentFamiliarityGain>
+    <rarity>Common</rarity>
+    <theme>History</theme>
+    <studyDifficulty>Easy</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_WorldWarII</defName>
+    <topicId>earth.history.world_war_ii</topicId>
+    <parentTopicId>earth.history</parentTopicId>
+    <title>The Second World War</title>
+    <summary>
+      A historical account of the global war fought from 1939 to 1945,
+      including its major powers, military campaigns, mass destruction,
+      ideological conflicts, and consequences for the old Earth.
+    </summary>
+    <familiarityGain>0.25</familiarityGain>
+    <parentFamiliarityGain>0.06</parentFamiliarityGain>
+    <rarity>Common</rarity>
+    <theme>History</theme>
+    <studyDifficulty>Moderate</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_ColdWar</defName>
+    <topicId>earth.history.cold_war</topicId>
+    <parentTopicId>earth.history</parentTopicId>
+    <title>The Cold War</title>
+    <summary>
+      A record of the long geopolitical and ideological rivalry between
+      competing power blocs after the Second World War, including nuclear
+      deterrence, proxy conflicts, technological competition, and political division.
+    </summary>
+    <familiarityGain>0.22</familiarityGain>
+    <parentFamiliarityGain>0.05</parentFamiliarityGain>
+    <rarity>Uncommon</rarity>
+    <theme>History</theme>
+    <studyDifficulty>Moderate</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+
+  <!-- ========================================================= -->
+  <!-- PHILOSOPHY                                                -->
+  <!-- ========================================================= -->
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_Plato</defName>
+    <topicId>earth.philosophy.plato</topicId>
+    <parentTopicId>earth.philosophy</parentTopicId>
+    <title>Introduction to Plato</title>
+    <summary>
+      A philosophical archive introducing Plato's thought,
+      including questions of justice, knowledge, virtue,
+      political order, education, and the nature of reality.
+    </summary>
+    <familiarityGain>0.20</familiarityGain>
+    <parentFamiliarityGain>0.05</parentFamiliarityGain>
+    <rarity>Common</rarity>
+    <theme>Philosophy</theme>
+    <studyDifficulty>Moderate</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_Aristotle</defName>
+    <topicId>earth.philosophy.aristotle</topicId>
+    <parentTopicId>earth.philosophy</parentTopicId>
+    <title>Introduction to Aristotle</title>
+    <summary>
+      A philosophical archive introducing Aristotle's writings on logic,
+      ethics, politics, causation, nature, virtue, and the pursuit of human flourishing.
+    </summary>
+    <familiarityGain>0.20</familiarityGain>
+    <parentFamiliarityGain>0.05</parentFamiliarityGain>
+    <rarity>Uncommon</rarity>
+    <theme>Philosophy</theme>
+    <studyDifficulty>Moderate</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_Stoicism</defName>
+    <topicId>earth.philosophy.stoicism</topicId>
+    <parentTopicId>earth.philosophy</parentTopicId>
+    <title>Stoic Philosophy</title>
+    <summary>
+      A collection of ideas associated with the Stoic tradition,
+      emphasizing virtue, reason, self-command, acceptance of what cannot
+      be controlled, and responsibility for one's own judgments.
+    </summary>
+    <familiarityGain>0.20</familiarityGain>
+    <parentFamiliarityGain>0.04</parentFamiliarityGain>
+    <rarity>Common</rarity>
+    <theme>Philosophy</theme>
+    <studyDifficulty>Moderate</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_Enlightenment</defName>
+    <topicId>earth.philosophy.enlightenment</topicId>
+    <parentTopicId>earth.philosophy</parentTopicId>
+    <title>The Enlightenment</title>
+    <summary>
+      An archive introducing the early modern intellectual movement
+      that emphasized reason, criticism of inherited authority,
+      natural rights, scientific inquiry, and debates over political legitimacy.
+    </summary>
+    <familiarityGain>0.22</familiarityGain>
+    <parentFamiliarityGain>0.05</parentFamiliarityGain>
+    <rarity>Uncommon</rarity>
+    <theme>Philosophy</theme>
+    <studyDifficulty>Moderate</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_KantIntroduction</defName>
+    <topicId>earth.philosophy.kant</topicId>
+    <parentTopicId>earth.philosophy</parentTopicId>
+    <title>Introduction to Immanuel Kant</title>
+    <summary>
+      A difficult philosophical archive introducing Kant's investigation
+      of human knowledge, moral obligation, freedom, reason,
+      and the limits of metaphysical speculation.
+    </summary>
+    <familiarityGain>0.20</familiarityGain>
+    <parentFamiliarityGain>0.05</parentFamiliarityGain>
+    <rarity>Rare</rarity>
+    <theme>Philosophy</theme>
+    <studyDifficulty>Difficult</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+
+  <!-- ========================================================= -->
+  <!-- RELIGION                                                  -->
+  <!-- ========================================================= -->
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_HebrewBible</defName>
+    <topicId>earth.religion.hebrew_bible</topicId>
+    <parentTopicId>earth.religion</parentTopicId>
+    <title>The Hebrew Bible</title>
+    <summary>
+      An introductory archive describing the collection of ancient Israelite
+      scriptures concerning creation, covenant, law, kingship, wisdom,
+      prophecy, worship, exile, and hope.
+    </summary>
+    <familiarityGain>0.22</familiarityGain>
+    <parentFamiliarityGain>0.05</parentFamiliarityGain>
+    <rarity>Uncommon</rarity>
+    <theme>Religion</theme>
+    <studyDifficulty>Moderate</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_ChristianityIntroduction</defName>
+    <topicId>earth.religion.christianity</topicId>
+    <parentTopicId>earth.religion</parentTopicId>
+    <title>Introduction to Christianity</title>
+    <summary>
+      An introductory record of Christianity, including its origins
+      in ancient Judaism, belief in Jesus Christ, the early Christian movement,
+      scripture, worship, salvation, and major themes of Christian teaching.
+    </summary>
+    <familiarityGain>0.20</familiarityGain>
+    <parentFamiliarityGain>0.05</parentFamiliarityGain>
+    <rarity>Uncommon</rarity>
+    <theme>Religion</theme>
+    <studyDifficulty>Moderate</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_Jesus</defName>
+    <topicId>earth.religion.jesus</topicId>
+    <parentTopicId>earth.religion.christianity</parentTopicId>
+    <title>The Life and Teaching of Jesus</title>
+    <summary>
+      A surviving record introducing Jesus of Nazareth,
+      his teachings, relationships, public ministry, crucifixion,
+      and the Christian claim that he rose from the dead.
+    </summary>
+    <familiarityGain>0.25</familiarityGain>
+    <parentFamiliarityGain>0.06</parentFamiliarityGain>
+    <rarity>Rare</rarity>
+    <theme>Religion</theme>
+    <studyDifficulty>Moderate</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_EarlyChurch</defName>
+    <topicId>earth.religion.early_church</topicId>
+    <parentTopicId>earth.religion.christianity</parentTopicId>
+    <title>The Early Christian Church</title>
+    <summary>
+      A record of the development of early Christian communities,
+      their missions, persecutions, theological disputes,
+      councils, worship, and growth throughout the Roman world.
+    </summary>
+    <familiarityGain>0.22</familiarityGain>
+    <parentFamiliarityGain>0.05</parentFamiliarityGain>
+    <rarity>Uncommon</rarity>
+    <theme>Religion</theme>
+    <studyDifficulty>Moderate</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_Reformation</defName>
+    <topicId>earth.religion.reformation</topicId>
+    <parentTopicId>earth.religion.christianity</parentTopicId>
+    <title>The Protestant Reformation</title>
+    <summary>
+      A historical and theological archive describing the sixteenth-century
+      reform movements that challenged Western church institutions
+      and reshaped Christian theology, worship, politics, and European society.
+    </summary>
+    <familiarityGain>0.22</familiarityGain>
+    <parentFamiliarityGain>0.05</parentFamiliarityGain>
+    <rarity>Uncommon</rarity>
+    <theme>Religion</theme>
+    <studyDifficulty>Moderate</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+
+  <!-- ========================================================= -->
+  <!-- POLITICS                                                  -->
+  <!-- ========================================================= -->
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_AncientPoliticalThought</defName>
+    <topicId>earth.politics.ancient_political_thought</topicId>
+    <parentTopicId>earth.politics</parentTopicId>
+    <title>Ancient Political Thought</title>
+    <summary>
+      An archive surveying ancient debates about law, justice,
+      citizenship, monarchy, aristocracy, democracy, political virtue,
+      and the proper organization of human communities.
+    </summary>
+    <familiarityGain>0.20</familiarityGain>
+    <parentFamiliarityGain>0.05</parentFamiliarityGain>
+    <rarity>Common</rarity>
+    <theme>Politics</theme>
+    <studyDifficulty>Moderate</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_RepublicanGovernment</defName>
+    <topicId>earth.politics.republican_government</topicId>
+    <parentTopicId>earth.politics</parentTopicId>
+    <title>Republican Government</title>
+    <summary>
+      A political archive discussing systems in which public authority
+      is understood as belonging to a political community rather than
+      to a hereditary ruler, including institutions, representation,
+      civic virtue, and constitutional limits.
+    </summary>
+    <familiarityGain>0.20</familiarityGain>
+    <parentFamiliarityGain>0.05</parentFamiliarityGain>
+    <rarity>Common</rarity>
+    <theme>Politics</theme>
+    <studyDifficulty>Moderate</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_Liberalism</defName>
+    <topicId>earth.politics.liberalism</topicId>
+    <parentTopicId>earth.politics</parentTopicId>
+    <title>Liberal Political Thought</title>
+    <summary>
+      An archive introducing political traditions concerned with
+      individual liberty, legal equality, rights, constitutional government,
+      private judgment, and limits on political authority.
+    </summary>
+    <familiarityGain>0.22</familiarityGain>
+    <parentFamiliarityGain>0.05</parentFamiliarityGain>
+    <rarity>Uncommon</rarity>
+    <theme>Politics</theme>
+    <studyDifficulty>Moderate</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_Socialism</defName>
+    <topicId>earth.politics.socialism</topicId>
+    <parentTopicId>earth.politics</parentTopicId>
+    <title>Socialist Political Thought</title>
+    <summary>
+      An archive introducing political and economic traditions
+      critical of social inequality and concentrated private ownership,
+      including debates over labor, class, collective ownership,
+      planning, democracy, and social welfare.
+    </summary>
+    <familiarityGain>0.22</familiarityGain>
+    <parentFamiliarityGain>0.05</parentFamiliarityGain>
+    <rarity>Uncommon</rarity>
+    <theme>Politics</theme>
+    <studyDifficulty>Moderate</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_ModernNationState</defName>
+    <topicId>earth.politics.modern_nation_state</topicId>
+    <parentTopicId>earth.politics</parentTopicId>
+    <title>The Modern Nation-State</title>
+    <summary>
+      A political archive describing the development of territorial states,
+      nationalism, citizenship, sovereignty, bureaucracy, diplomacy,
+      borders, and centralized political institutions on old Earth.
+    </summary>
+    <familiarityGain>0.20</familiarityGain>
+    <parentFamiliarityGain>0.05</parentFamiliarityGain>
+    <rarity>Common</rarity>
+    <theme>Politics</theme>
+    <studyDifficulty>Moderate</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+
+  <!-- ========================================================= -->
+  <!-- SCIENCE                                                   -->
+  <!-- ========================================================= -->
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_ScientificRevolution</defName>
+    <topicId>earth.science.scientific_revolution</topicId>
+    <parentTopicId>earth.science</parentTopicId>
+    <title>The Scientific Revolution</title>
+    <summary>
+      An archive describing the transformation of Earth's understanding
+      of nature through observation, mathematics, experimentation,
+      astronomy, mechanics, and new methods of scientific inquiry.
+    </summary>
+    <familiarityGain>0.22</familiarityGain>
+    <parentFamiliarityGain>0.05</parentFamiliarityGain>
+    <rarity>Uncommon</rarity>
+    <theme>Science</theme>
+    <studyDifficulty>Moderate</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_Evolution</defName>
+    <topicId>earth.science.evolution</topicId>
+    <parentTopicId>earth.science</parentTopicId>
+    <title>Biological Evolution</title>
+    <summary>
+      A scientific archive introducing the theory that populations
+      of living organisms change across generations through processes
+      including variation, inheritance, natural selection, and common descent.
+    </summary>
+    <familiarityGain>0.22</familiarityGain>
+    <parentFamiliarityGain>0.05</parentFamiliarityGain>
+    <rarity>Uncommon</rarity>
+    <theme>Science</theme>
+    <studyDifficulty>Moderate</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_Computing</defName>
+    <topicId>earth.science.computing</topicId>
+    <parentTopicId>earth.science</parentTopicId>
+    <title>The Rise of Computing</title>
+    <summary>
+      A technological archive tracing the development of electronic computing,
+      digital information, programming, networks, and increasingly powerful
+      machines during the final centuries of old Earth civilization.
+    </summary>
+    <familiarityGain>0.20</familiarityGain>
+    <parentFamiliarityGain>0.05</parentFamiliarityGain>
+    <rarity>Common</rarity>
+    <theme>Science</theme>
+    <studyDifficulty>Moderate</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_SpaceFlight</defName>
+    <topicId>earth.science.spaceflight</topicId>
+    <parentTopicId>earth.science</parentTopicId>
+    <title>The First Age of Spaceflight</title>
+    <summary>
+      An archive describing humanity's first journeys beyond Earth,
+      including rockets, satellites, crewed spaceflight, lunar exploration,
+      orbital stations, and the beginnings of interplanetary ambition.
+    </summary>
+    <familiarityGain>0.20</familiarityGain>
+    <parentFamiliarityGain>0.05</parentFamiliarityGain>
+    <rarity>Common</rarity>
+    <theme>Science</theme>
+    <studyDifficulty>Easy</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+  <LiAIChat.Archive.ArchiveContentDef>
+    <defName>LiAIChat_Archive_ArtificialIntelligence</defName>
+    <topicId>earth.science.artificial_intelligence</topicId>
+    <parentTopicId>earth.science</parentTopicId>
+    <title>Artificial Intelligence on Old Earth</title>
+    <summary>
+      A surviving archive describing old Earth's attempts to construct
+      machines capable of learning, reasoning, generating language,
+      recognizing patterns, and performing tasks once associated with human intelligence.
+    </summary>
+    <familiarityGain>0.25</familiarityGain>
+    <parentFamiliarityGain>0.06</parentFamiliarityGain>
+    <rarity>Rare</rarity>
+    <theme>Science</theme>
+    <studyDifficulty>Difficult</studyDifficulty>
+  </LiAIChat.Archive.ArchiveContentDef>
+
+</Defs>

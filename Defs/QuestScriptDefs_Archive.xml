@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Defs>
+
+  <!-- ========================================================= -->
+  <!-- DEBUG / REGRESSION TEST QUEST                             -->
+  <!-- ========================================================= -->
+
+  <QuestScriptDef>
+    <defName>LiAIChat_TestArchiveQuest</defName>
+
+    <root Class="QuestNode_Sequence">
+      <nodes>
+
+        <!--
+            Prepares basic quest context such as:
+            slate["map"]
+        -->
+        <li Class="LiAIChat.Questing.QuestNode_Root_ArchiveTest" />
+
+        <!--
+            Adds three reward choices:
+
+            A. Vanilla random reward
+            B. Stable resource reward
+            C. Unknown Ancient Earth Archive
+        -->
+        <li Class="LiAIChat.Questing.QuestNode_AddArchiveReward">
+          <inSignal>ArchiveRewardReady</inSignal>
+          <rewardValue>1800</rewardValue>
+        </li>
+
+        <!--
+            Short delay for testing reward delivery.
+        -->
+        <li Class="QuestNode_Delay">
+          <delayTicks>1800</delayTicks>
+          <outSignalComplete>ArchiveRewardReady</outSignalComplete>
+        </li>
+
+        <!-- Quest succeeds when reward signal fires. -->
+        <li Class="QuestNode_Signal">
+          <inSignal>ArchiveRewardReady</inSignal>
+
+          <node Class="QuestNode_End">
+            <outcome>Success</outcome>
+          </node>
+        </li>
+
+      </nodes>
+    </root>
+
+    <questNameRules>
+      <rulesStrings>
+        <li>questName->Ancient Earth Archive Test</li>
+      </rulesStrings>
+    </questNameRules>
+
+    <questDescriptionRules>
+      <rulesStrings>
+        <li>questDescription->This is a Li AI Chat development quest used to test Ancient Earth Archive reward choices.</li>
+      </rulesStrings>
+    </questDescriptionRules>
+
+  </QuestScriptDef>
+
+
+  <!-- ========================================================= -->
+  <!-- LOST EARTH ARCHIVE                                        -->
+  <!-- First formal Ancient Earth Archive quest                  -->
+  <!-- ========================================================= -->
+
+  <QuestScriptDef>
+    <defName>LiAIChat_LostEarthArchive</defName>
+
+    <root Class="QuestNode_Sequence">
+      <nodes>
+
+        <!-- =================================================== -->
+        <!-- 1. Get player's current quest map                   -->
+        <!-- =================================================== -->
+
+        <li Class="QuestNode_GetMap" />
+
+
+        <!-- =================================================== -->
+        <!-- 2. Find a world tile for the archive site           -->
+        <!-- =================================================== -->
+
+        <li Class="QuestNode_GetSiteTile">
+          <storeAs>siteTile</storeAs>
+          <preferCloserTiles>true</preferCloserTiles>
+        </li>
+
+
+        <!-- =================================================== -->
+        <!-- 3. Build parameters for our custom SitePart         -->
+        <!-- =================================================== -->
+
+        <li Class="QuestNode_GetDefaultSitePartsParams">
+
+          <tile>$siteTile</tile>
+
+          <sitePartDefs>
+            <li>LiAIChat_LostEarthArchiveSitePart</li>
+          </sitePartDefs>
+
+          <storeSitePartsParamsAs>
+            sitePartsParams
+          </storeSitePartsParamsAs>
+
+        </li>
+
+
+        <!-- =================================================== -->
+        <!-- 4. Generate the Site world object                   -->
+        <!-- =================================================== -->
+
+        <li Class="QuestNode_SubScript">
+          <def>Util_GenerateSite</def>
+        </li>
+
+
+        <!-- =================================================== -->
+        <!-- 5. Spawn the Site onto the world map                -->
+        <!-- =================================================== -->
+
+        <li Class="QuestNode_SpawnWorldObjects">
+          <worldObjects>$site</worldObjects>
+        </li>
+
+
+        <!-- =================================================== -->
+        <!-- 6. Add selectable rewards                           -->
+        <!-- =================================================== -->
+
+        <li Class="LiAIChat.Questing.QuestNode_AddArchiveReward">
+          <inSignal>site.ArchiveInvestigated</inSignal>
+          <rewardValue>2200</rewardValue>
+        </li>
+
+
+        <!-- =================================================== -->
+        <!-- 7. Quest success                                    -->
+        <!-- =================================================== -->
+
+        <li Class="QuestNode_Signal">
+          <inSignal>site.ArchiveInvestigated</inSignal>
+
+          <node Class="QuestNode_End">
+            <outcome>Success</outcome>
+          </node>
+        </li>
+
+      </nodes>
+    </root>
+
+
+    <!-- ======================================================= -->
+    <!-- QUEST TITLE                                             -->
+    <!-- ======================================================= -->
+
+    <questNameRules>
+      <rulesStrings>
+        <li>questName->失落的地球档案</li>
+      </rulesStrings>
+    </questNameRules>
+
+
+    <!-- ======================================================= -->
+    <!-- QUEST DESCRIPTION                                       -->
+    <!-- ======================================================= -->
+
+    <questDescriptionRules>
+      <rulesStrings>
+        <li>questDescription->你的殖民地截获了一段异常古老的数据讯号。信号格式与现存的 RimWorld 通讯网络完全不同，似乎来自数千年前的人类文明。\n\n经过初步分析，你们确定讯号来自附近世界地图上的一处地点。那里可能保存着某种来自古代地球文明的数据载体。\n\n这些资料究竟记录了什么，目前仍然无法确定。它可能只是一份残缺的历史记录，也可能保存着早已被人类遗忘的思想、信仰、科学或文明知识。\n\n完成调查后，你可以选择领取常规物资奖励，或者取得这份未知的古代地球档案。</li>
+      </rulesStrings>
+    </questDescriptionRules>
+
+  </QuestScriptDef>
+
+
+  <!-- ========================================================= -->
+  <!-- THE SCHOLAR'S LAST COLLECTION                             -->
+  <!-- Second formal Ancient Earth Archive quest                -->
+  <!-- ========================================================= -->
+
+  <QuestScriptDef>
+    <defName>LiAIChat_ScholarsLastCollection</defName>
+
+    <root Class="QuestNode_Sequence">
+      <nodes>
+
+
+        <!-- =================================================== -->
+        <!-- 1. Player map                                       -->
+        <!-- =================================================== -->
+
+        <li Class="QuestNode_GetMap" />
+
+
+        <!-- =================================================== -->
+        <!-- 2. Create quest-specific lifecycle signals          -->
+        <!-- =================================================== -->
+
+        <!--
+            Unique signal fired if this Scholar dies
+            before completing the temporary stay.
+        -->
+        <li Class="LiAIChat.Questing.QuestNode_CreateUniqueSignal">
+          <storeAs>scholarDeathSignal</storeAs>
+          <prefix>LiAIChat_ScholarDied</prefix>
+        </li>
+
+        <!--
+            Unique signal fired by Pawn.ExitMap Harmony patch
+            after this Scholar has successfully completed
+            the stay and actually exited the map.
+        -->
+        <li Class="LiAIChat.Questing.QuestNode_CreateUniqueSignal">
+          <storeAs>scholarExitSignal</storeAs>
+          <prefix>LiAIChat_ScholarExited</prefix>
+        </li>
+
+
+        <!-- =================================================== -->
+        <!-- 3. Generate Scholar                                 -->
+        <!-- =================================================== -->
+
+        <li Class="LiAIChat.Questing.QuestNode_CreateArchiveScholar">
+          <storeAs>scholar</storeAs>
+        </li>
+
+
+        <!-- =================================================== -->
+        <!-- 4. Initialize Li AI Chat Scholar identity           -->
+        <!-- =================================================== -->
+
+        <li Class="LiAIChat.Questing.QuestNode_InitializeArchiveScholar">
+          <pawn>$scholar</pawn>
+        </li>
+
+
+        <!-- =================================================== -->
+        <!-- 5. Preserve original faction                        -->
+        <!-- =================================================== -->
+
+        <li Class="QuestNode_ExtraFaction">
+          <faction>$scholarFaction</faction>
+          <pawns>$scholar</pawns>
+          <factionType>HomeFaction</factionType>
+        </li>
+
+
+        <!-- =================================================== -->
+        <!-- 6. Scholar arrives as temporary Quest Lodger        -->
+        <!-- =================================================== -->
+
+        <li Class="QuestNode_PawnsArrive">
+          <pawns>$scholar</pawns>
+          <joinPlayer>true</joinPlayer>
+        </li>
+
+
+        <!-- =================================================== -->
+        <!-- 7. Cleanup protection                               -->
+        <!-- =================================================== -->
+
+        <!--
+            If the quest ends unexpectedly while the Scholar
+            still exists as a temporary lodger, vanilla cleanup
+            will make the Scholar leave.
+        -->
+        <li Class="QuestNode_LeaveOnCleanup">
+          <pawns>$scholar</pawns>
+          <sendStandardLetter>false</sendStandardLetter>
+        </li>
+
+
+        <!-- =================================================== -->
+        <!-- 8. Start temporary stay                             -->
+        <!-- =================================================== -->
+
+        <!--
+            Stores both quest-specific lifecycle signals inside
+            ArchiveScholarStayState.
+
+            deathSignal:
+              Pawn.Kill patch -> Quest Fail
+
+            exitSignal:
+              Pawn.ExitMap patch -> Quest Success
+        -->
+        <li Class="LiAIChat.Questing.QuestNode_StartArchiveScholarStay">
+          <pawn>$scholar</pawn>
+          <durationTicks>600</durationTicks>
+          <deathSignal>$scholarDeathSignal</deathSignal>
+          <exitSignal>$scholarExitSignal</exitSignal>
+        </li>
+
+
+        <!-- =================================================== -->
+        <!-- 9. Stay timer                                       -->
+        <!-- =================================================== -->
+
+        <!--
+            Development value:
+            600 ticks
+
+            Later production value can be changed to:
+            180000 ticks = 3 RimWorld days
+        -->
+        <li Class="QuestNode_Delay">
+          <delayTicks>600</delayTicks>
+          <outSignalComplete>ScholarStayFinished</outSignalComplete>
+        </li>
+
+
+        <!-- =================================================== -->
+        <!-- 10. Failure: Scholar dies during active stay        -->
+        <!-- =================================================== -->
+
+        <li Class="QuestNode_Signal">
+          <inSignal>$scholarDeathSignal</inSignal>
+
+          <node Class="QuestNode_Sequence">
+            <nodes>
+
+              <li Class="QuestNode_Letter">
+                <letterDef>NegativeEvent</letterDef>
+                <label>学者去世</label>
+                <text>那名请求你们庇护的流浪学者已经死亡。你没能保护他完成这段停留。</text>
+              </li>
+
+              <li Class="QuestNode_End">
+                <outcome>Fail</outcome>
+              </li>
+
+            </nodes>
+          </node>
+        </li>
+
+
+        <!-- =================================================== -->
+        <!-- 11. Stay completed                                  -->
+        <!-- =================================================== -->
+
+        <!--
+            First mark the stay as successfully completed.
+
+            Then resolve the Scholar's already formed / frozen
+            decision about whether to leave the physical Archive
+            with the colony.
+        -->
+        <li Class="QuestNode_Signal">
+          <inSignal>ScholarStayFinished</inSignal>
+
+          <node Class="QuestNode_Sequence">
+            <nodes>
+
+              <li Class="LiAIChat.Questing.QuestNode_CompleteArchiveScholarStay">
+                <pawn>$scholar</pawn>
+              </li>
+
+              <li Class="LiAIChat.Questing.QuestNode_ResolveArchiveScholarGift">
+                <pawn>$scholar</pawn>
+              </li>
+
+            </nodes>
+          </node>
+        </li>
+
+
+        <!-- =================================================== -->
+        <!-- 12. Short pause before leaving                      -->
+        <!-- =================================================== -->
+
+        <li Class="QuestNode_Delay">
+          <inSignalEnable>ScholarStayFinished</inSignalEnable>
+          <delayTicks>60</delayTicks>
+          <outSignalComplete>ScholarLeaveNow</outSignalComplete>
+        </li>
+
+
+        <!-- =================================================== -->
+        <!-- 13. Scholar begins leaving                          -->
+        <!-- =================================================== -->
+
+        <!--
+            Vanilla QuestPart_Leave only initiates departure.
+
+            It does NOT determine quest success.
+
+            Actual success is triggered later by our
+            Pawn.ExitMap Harmony patch.
+        -->
+        <li Class="QuestNode_Leave">
+          <inSignal>ScholarLeaveNow</inSignal>
+          <pawns>$scholar</pawns>
+          <sendStandardLetter>false</sendStandardLetter>
+        </li>
+
+
+        <!-- =================================================== -->
+        <!-- 14. Success: Scholar actually exits map alive       -->
+        <!-- =================================================== -->
+
+        <!--
+            Pawn.ExitMap Harmony patch checks:
+
+              ScholarStay.Completed == true
+              pawn.Spawned == false
+              pawn.Dead == false
+              ExitSignalSent == false
+
+            and then sends scholarExitSignal.
+        -->
+        <li Class="QuestNode_End">
+          <inSignal>$scholarExitSignal</inSignal>
+          <outcome>Success</outcome>
+        </li>
+
+
+      </nodes>
+    </root>
+
+
+    <!-- ======================================================= -->
+    <!-- QUEST TITLE                                             -->
+    <!-- ======================================================= -->
+
+    <questNameRules>
+      <rulesStrings>
+
+        <li>questName->学者最后的收藏</li>
+
+      </rulesStrings>
+    </questNameRules>
+
+
+    <!-- ======================================================= -->
+    <!-- QUEST DESCRIPTION                                       -->
+    <!-- ======================================================= -->
+
+    <questDescriptionRules>
+      <rulesStrings>
+
+        <li>questDescription->一名流浪学者来到了你的殖民地附近。\n\n多年来，他一直在收集和研究来自古代地球文明的残存资料。在漫长的旅途中，他保存下来了一份未知的古代地球档案，其中可能记录着早已失落的历史、哲学、宗教、政治思想或科学知识。\n\n如今他的旅途遇到了危险。他希望能够在你的殖民地暂时停留三天，获得一个安全的地方休息，并继续保护自己携带的资料。\n\n在停留期间，你可以与这名学者交谈，了解他的研究、经历，以及他为什么认为这些来自古代地球的知识值得保存。\n\n这份档案仍然属于这名学者。他最终会如何处置它，将取决于他在殖民地停留期间所形成的判断。</li>
+
+      </rulesStrings>
+    </questDescriptionRules>
+
+  </QuestScriptDef>
+
+</Defs>

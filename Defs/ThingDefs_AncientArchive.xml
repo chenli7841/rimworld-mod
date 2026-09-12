@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Defs>
+
+  <ThingDef>
+    <defName>LiAIChat_AncientEarthArchiveFragment</defName>
+
+    <label>ancient Earth archive fragment</label>
+
+    <description>A damaged archive fragment containing partially recovered knowledge from ancient Earth. Its contents may preserve fragments of ancient history, philosophy, religion, science, or culture.</description>
+
+    <thingClass>LiAIChat.Archive.Thing_AncientEarthArchiveFragment</thingClass>
+
+    <!-- ================================
+         Basic Thing settings
+         ================================ -->
+
+    <category>Item</category>
+
+    <selectable>true</selectable>
+
+    <altitudeLayer>Item</altitudeLayer>
+
+    <alwaysHaulable>true</alwaysHaulable>
+
+    <drawGUIOverlay>true</drawGUIOverlay>
+
+    <rotatable>false</rotatable>
+
+    <pathCost>15</pathCost>
+
+    <!-- ================================
+         Graphics
+         ================================ -->
+
+    <graphicData>
+      <texPath>Things/Item/AncientEarthArchiveFragment</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>0.8</drawSize>
+    </graphicData>
+
+    <!-- ================================
+         Stats
+         ================================ -->
+
+    <statBases>
+      <MaxHitPoints>60</MaxHitPoints>
+      <MarketValue>120</MarketValue>
+      <Mass>0.5</Mass>
+      <Flammability>1.0</Flammability>
+      <DeteriorationRate>1.0</DeteriorationRate>
+    </statBases>
+
+    <!-- Each archive fragment is an
+         individual physical artifact. -->
+    <stackLimit>1</stackLimit>
+
+    <!-- ================================
+         Components
+         ================================ -->
+
+    <comps>
+      <li Class="CompProperties_Forbiddable" />
+    </comps>
+
+  </ThingDef>
+
+</Defs>

@@ -1,0 +1,8 @@
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\LiAIChat\Source\LiAIChat\bin\Debug\LiAIChat.dll
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\LiAIChat\Source\LiAIChat\bin\Debug\LiAIChat.pdb
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\LiAIChat\Assemblies\LiAIChat.dll
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\LiAIChat\Assemblies\LiAIChat.pdb
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\LiAIChat\Source\LiAIChat\obj\Debug\LiAIChat.csproj.AssemblyReference.cache
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\LiAIChat\Source\LiAIChat\obj\Debug\LiAIChat.csproj.CoreCompileInputs.cache
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\LiAIChat\Source\LiAIChat\obj\Debug\LiAIChat.dll
+C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\LiAIChat\Source\LiAIChat\obj\Debug\LiAIChat.pdb

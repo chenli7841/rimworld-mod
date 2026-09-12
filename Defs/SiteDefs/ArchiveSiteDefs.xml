@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Defs>
+
+  <SitePartDef>
+    <defName>LiAIChat_LostEarthArchiveSitePart</defName>
+    <label>lost Earth archive site</label>
+    <description>An ancient signal appears to originate from this location.</description>
+    <workerClass>LiAIChat.Questing.SitePartWorker_LostEarthArchive</workerClass>
+  </SitePartDef>
+
+</Defs>

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LiAIChat</RootNamespace>
+    <AssemblyName>LiAIChat</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Assemblies\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\..\..\..\..\workshop\content\294100\2009463077\Current\Assemblies\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AI\IChatProvider.cs" />
+    <Compile Include="AI\IConversationSummarizer.cs" />
+    <Compile Include="AI\IIntellectualExchangeDirector.cs" />
+    <Compile Include="AI\IIntellectualExchangeImpactDirector.cs" />
+    <Compile Include="AI\IKnowledgeDirector.cs" />
+    <Compile Include="AI\ILifeGoalDirector.cs" />
+    <Compile Include="AI\IMemoryExtractor.cs" />
+    <Compile Include="AI\IProactiveDialogueDirector.cs" />
+    <Compile Include="AI\IWorldviewDirector.cs" />
+    <Compile Include="AI\KnowledgeUpdater.cs" />
+    <Compile Include="AI\OpenAIChatProvider.cs" />
+    <Compile Include="AI\OpenAIConversationSummarizer.cs" />
+    <Compile Include="AI\OpenAIIntellectualExchangeDirector.cs" />
+    <Compile Include="AI\OpenAIIntellectualExchangeImpactDirector.cs" />
+    <Compile Include="AI\OpenAIKnowledgeDirector.cs" />
+    <Compile Include="AI\OpenAILifeGoalDirector.cs" />
+    <Compile Include="AI\OpenAIMemoryExtractor.cs" />
+    <Compile Include="AI\OpenAIProactiveDialogueDirector.cs" />
+    <Compile Include="AI\OpenAIResponseParser.cs" />
+    <Compile Include="AI\OpenAIWorldviewDirector.cs" />
+    <Compile Include="Archive\AncientArchiveFactory.cs" />
+    <Compile Include="Archive\AncientArchiveIdentificationUtility.cs" />
+    <Compile Include="Archive\AncientArchiveStudyUtility.cs" />
+    <Compile Include="Archive\AncientRuinArchiveMapComponent.cs" />
+    <Compile Include="Archive\AncientRuinArchiveSpawner.cs" />
+    <Compile Include="Archive\AncientRuinDetector.cs" />
+    <Compile Include="Archive\ArchiveContentDef.cs" />
+    <Compile Include="Archive\ArchiveContentSelector.cs" />
+    <Compile Include="Archive\ArchiveContentSelectorDiagnostics.cs" />
+    <Compile Include="Archive\ArchiveIdentificationCalculator.cs" />
+    <Compile Include="Archive\ArchiveLootRules.cs" />
+    <Compile Include="Archive\ArchiveReflection.cs" />
+    <Compile Include="Archive\ArchiveReflectionPromptBuilder.cs" />
+    <Compile Include="Archive\ArchiveReflectionRetriever.cs" />
+    <Compile Include="Archive\ArchiveReflectionService.cs" />
+    <Compile Include="Archive\ArchiveScholarConversationImpact.cs" />
+    <Compile Include="Archive\ArchiveScholarGiftDecisionUtility.cs" />
+    <Compile Include="Archive\ArchiveScholarGiftUtility.cs" />
+    <Compile Include="Archive\ArchiveScholarInitializer.cs" />
+    <Compile Include="Archive\ArchiveScholarKnowledgeInitializer.cs" />
+    <Compile Include="Archive\ArchiveScholarPawnFactory.cs" />
+    <Compile Include="Archive\ArchiveScholarProactiveDialogue.cs" />
+    <Compile Include="Archive\ArchiveScholarProfile.cs" />
+    <Compile Include="Archive\ArchiveScholarProfileInitializer.cs" />
+    <Compile Include="Archive\ArchiveScholarPromptBuilder.cs" />
+    <Compile Include="Archive\ArchiveScholarStayState.cs" />
+    <Compile Include="Archive\ArchiveScholarStayUtility.cs" />
+    <Compile Include="Archive\ArchiveSourceType.cs" />
+    <Compile Include="Archive\ArchiveStudyCalculator.cs" />
+    <Compile Include="Archive\ArchiveTerminalInvestigationCalculator.cs" />
+    <Compile Include="Archive\ArchiveTerminalRiskAssessment.cs" />
+    <Compile Include="Archive\Building_AncientArchiveSignalTerminal.cs" />
+    <Compile Include="Archive\IArchiveReflectionGenerator.cs" />
+    <Compile Include="Archive\IArchiveScholarConversationDirector.cs" />
+    <Compile Include="Archive\JobDriver_IdentifyAncientArchive.cs" />
+    <Compile Include="Archive\JobDriver_InvestigateArchiveTerminal.cs" />
+    <Compile Include="Archive\JobDriver_StudyAncientArchive.cs" />
+    <Compile Include="Archive\LiAIChatJobDefOf.cs" />
+    <Compile Include="Archive\OpenAIArchiveReflectionGenerator.cs" />
+    <Compile Include="Archive\OpenAIArchiveScholarConversationDirector.cs" />
+    <Compile Include="Archive\Patches\PawnGenerator_ArchivePatch.cs" />
+    <Compile Include="Archive\ThingDefOfArchive.cs" />
+    <Compile Include="Archive\Thing_AncientEarthArchiveFragment.cs" />
+    <Compile Include="Background\IntellectualExchangeSnapshot.cs" />
+    <Compile Include="Background\KnowledgeTopicSnapshot.cs" />
+    <Compile Include="Background\MainThreadActionQueue.cs" />
+    <Compile Include="Background\PawnAISnapshot.cs" />
+    <Compile Include="Background\PawnAISnapshotBuilder.cs" />
+    <Compile Include="Bootstrap.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="Defs\LiAIChatThingDefOf.cs" />
+    <Compile Include="Dialogue\ProactiveDialogueManager.cs" />
+    <Compile Include="Dialogue\ProactiveDialogueRules.cs" />
+    <Compile Include="Events\PawnDeathEventHandler.cs" />
+    <Compile Include="Game\LiAIChatGameComponent.cs" />
+    <Compile Include="Goals\LifeGoalUpdater.cs" />
+    <Compile Include="Knowledge\KnowledgeInitializer.cs" />
+    <Compile Include="Knowledge\KnowledgePromptBuilder.cs" />
+    <Compile Include="Knowledge\KnowledgeTopicCatalog.cs" />
+    <Compile Include="Knowledge\KnowledgeTopicDescriptionResolver.cs" />
+    <Compile Include="Knowledge\KnowledgeTopicIds.cs" />
+    <Compile Include="Memory\MemoryRetriever.cs" />
+    <Compile Include="Models\AppliedWorldviewChange.cs" />
+    <Compile Include="Models\ChatMessage.cs" />
+    <Compile Include="Models\IntellectualExchangeImpactResult.cs" />
+    <Compile Include="Models\IntellectualExchangeResult.cs" />
+    <Compile Include="Models\KnowledgeAcquisition.cs" />
+    <Compile Include="Models\KnowledgeState.cs" />
+    <Compile Include="Models\KnowledgeTopic.cs" />
+    <Compile Include="Models\LifeGoal.cs" />
+    <Compile Include="Models\LifeGoalProposal.cs" />
+    <Compile Include="Models\MeaningState.cs" />
+    <Compile Include="Models\PawnAIState.cs" />
+    <Compile Include="Models\PawnContext.cs" />
+    <Compile Include="Models\PawnConversation.cs" />
+    <Compile Include="Models\PawnExchangeImpact.cs" />
+    <Compile Include="Models\PawnIntellectualExchange.cs" />
+    <Compile Include="Models\PawnLifeEvent.cs" />
+    <Compile Include="Models\PawnMemory.cs" />
+    <Compile Include="Models\WorldviewChange.cs" />
+    <Compile Include="Models\WorldviewState.cs" />
+    <Compile Include="Patches\MapFinalizeInitPatch.cs" />
+    <Compile Include="Patches\PawnDeathPatch.cs" />
+    <Compile Include="Patches\PawnExitMapArchiveScholarPatch.cs" />
+    <Compile Include="Patches\PawnGizmoPatch.cs" />
+    <Compile Include="Patches\PawnKillArchiveScholarPatch.cs" />
+    <Compile Include="Patches\Pawn_Kill_ArchiveScholar_Patch.cs" />
+    <Compile Include="PawnConversationEligibility.cs" />
+    <Compile Include="Pawns\PawnContextBuilder.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Questing\ArchiveQuestRewardUtility.cs" />
+    <Compile Include="Questing\ArchiveSiteDefenderUtility.cs" />
+    <Compile Include="Questing\ArchiveSiteDefenseComponent.cs" />
+    <Compile Include="Questing\ArchiveSiteMechanoidUtility.cs" />
+    <Compile Include="Questing\QuestNode_AddArchiveReward.cs" />
+    <Compile Include="Questing\QuestNode_CompleteArchiveScholarStay.cs" />
+    <Compile Include="Questing\QuestNode_CreateArchiveRefugees.cs" />
+    <Compile Include="Questing\QuestNode_CreateArchiveScholar.cs" />
+    <Compile Include="Questing\QuestNode_CreateUniqueSignal.cs" />
+    <Compile Include="Questing\QuestNode_DeliverArchive.cs" />
+    <Compile Include="Questing\QuestNode_GenerateArchiveReward.cs" />
+    <Compile Include="Questing\QuestNode_GiveArchiveToRefugeeGroup.cs" />
+    <Compile Include="Questing\QuestNode_GiveScholarArchive.cs" />
+    <Compile Include="Questing\QuestNode_InitializeArchiveScholar.cs" />
+    <Compile Include="Questing\QuestNode_ResolveArchiveScholarGift.cs" />
+    <Compile Include="Questing\QuestNode_Root_ArchiveTest.cs" />
+    <Compile Include="Questing\QuestNode_Root_LostEarthArchive .cs" />
+    <Compile Include="Questing\QuestNode_StartArchiveScholarStay.cs" />
+    <Compile Include="Questing\QuestPart_DeliverArchive.cs" />
+    <Compile Include="Questing\QuestPart_WaitForPawnExit.cs" />
+    <Compile Include="Questing\SitePartWorker_LostEarthArchive.cs" />
+    <Compile Include="Refugees\ArchiveRefugeeGroupComponent.cs" />
+    <Compile Include="Refugees\ArchiveRefugeeGroupManager.cs" />
+    <Compile Include="Refugees\ArchiveRefugeeGroupState.cs" />
+    <Compile Include="Social\IntellectualExchangeManager.cs" />
+    <Compile Include="State\PawnAIStateManager.cs" />
+    <Compile Include="Trading\StockGenerator_AncientArchive.cs" />
+    <Compile Include="UI\Dialog_PawnChat.cs" />
+    <Compile Include="UI\LiAIChatTextures.cs" />
+    <Compile Include="Worldview\WorldviewChangeRules.cs" />
+    <Compile Include="Worldview\WorldviewUpdater.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Conversations\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

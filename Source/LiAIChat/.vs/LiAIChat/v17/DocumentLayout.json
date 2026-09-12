@@ -1,0 +1,136 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\questing\\questnode_createarchiverefugees.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:questing\\questnode_createarchiverefugees.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\questing\\questnode_givearchivetorefugeegroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:questing\\questnode_givearchivetorefugeegroup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\refugees\\archiverefugeegroupmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:refugees\\archiverefugeegroupmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\refugees\\archiverefugeegroupcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:refugees\\archiverefugeegroupcomponent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\refugees\\archiverefugeegroupstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:refugees\\archiverefugeegroupstate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\liaichat\\source\\liaichat\\archive\\archivesourcetype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B5E6FE-B297-420B-9EBC-5C79B1711E0A}|LiAIChat.csproj|solutionrelative:archive\\archivesourcetype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 507,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ArchiveRefugeeGroupComponent.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Refugees\\ArchiveRefugeeGroupComponent.cs",
+              "RelativeDocumentMoniker": "Refugees\\ArchiveRefugeeGroupComponent.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Refugees\\ArchiveRefugeeGroupComponent.cs",
+              "RelativeToolTip": "Refugees\\ArchiveRefugeeGroupComponent.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-12T03:24:22.943Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ArchiveRefugeeGroupManager.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Refugees\\ArchiveRefugeeGroupManager.cs",
+              "RelativeDocumentMoniker": "Refugees\\ArchiveRefugeeGroupManager.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Refugees\\ArchiveRefugeeGroupManager.cs",
+              "RelativeToolTip": "Refugees\\ArchiveRefugeeGroupManager.cs",
+              "ViewState": "AgIAAH0AAAAAAAAAAAAYwJAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-12T03:23:57.342Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ArchiveRefugeeGroupState.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Refugees\\ArchiveRefugeeGroupState.cs",
+              "RelativeDocumentMoniker": "Refugees\\ArchiveRefugeeGroupState.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Refugees\\ArchiveRefugeeGroupState.cs",
+              "RelativeToolTip": "Refugees\\ArchiveRefugeeGroupState.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-12T03:23:20.791Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "QuestNode_GiveArchiveToRefugeeGroup.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Questing\\QuestNode_GiveArchiveToRefugeeGroup.cs",
+              "RelativeDocumentMoniker": "Questing\\QuestNode_GiveArchiveToRefugeeGroup.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Questing\\QuestNode_GiveArchiveToRefugeeGroup.cs",
+              "RelativeToolTip": "Questing\\QuestNode_GiveArchiveToRefugeeGroup.cs",
+              "ViewState": "AgIAAF0AAAAAAAAAAAAowHMAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-12T03:13:15.298Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ArchiveSourceType.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\ArchiveSourceType.cs",
+              "RelativeDocumentMoniker": "Archive\\ArchiveSourceType.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Archive\\ArchiveSourceType.cs",
+              "RelativeToolTip": "Archive\\ArchiveSourceType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-12T03:12:37.142Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "QuestNode_CreateArchiveRefugees.cs",
+              "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Questing\\QuestNode_CreateArchiveRefugees.cs",
+              "RelativeDocumentMoniker": "Questing\\QuestNode_CreateArchiveRefugees.cs",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\LiAIChat\\Source\\LiAIChat\\Questing\\QuestNode_CreateArchiveRefugees.cs",
+              "RelativeToolTip": "Questing\\QuestNode_CreateArchiveRefugees.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAcAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-12T02:51:03.063Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedHeight": 196,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{004be353-6879-467c-9d1e-9ac23cdf6d49}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{a80febb4-e7e0-4147-b476-21aaf2453969}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
