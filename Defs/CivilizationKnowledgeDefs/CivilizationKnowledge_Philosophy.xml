@@ -13,6 +13,45 @@
       <li>LiAIChat_Text_Plato_Republic</li>
       <li>LiAIChat_Text_Aristotle_Politics</li>
     </requiredTexts>
+    <treeX>0</treeX>
+    <treeY>1</treeY>
+  </LiAIChat.Civilization.CivilizationKnowledgeDef>
+
+  <LiAIChat.Civilization.CivilizationKnowledgeDef>
+    <defName>LiAIChat_CivKnowledge_ClassicalGreekPoliticalThought</defName>
+    <label>Classical Greek Political Thought</label>
+    <title>Classical Greek Political Thought</title>
+    <titleChinese>古典希腊政治思想</titleChinese>
+    <description>Reconstructed understanding of major classical Greek political ideas concerning the polis, citizenship, justice, constitutions, and political order.</description>
+    <category>PoliticalThought</category>
+    <prerequisites>
+        <li>LiAIChat_CivKnowledge_AncientGreekPhilosophy</li>
+    </prerequisites>
+    <requiredTexts>
+        <li>LiAIChat_Text_Plato_Republic</li>
+        <li>LiAIChat_Text_Aristotle_Politics</li>
+    </requiredTexts>
+    <gracePeriodDays>10</gracePeriodDays>
+    <dormantAfterDays>30</dormantAfterDays>
+    <treeX>1</treeX>
+    <treeY>0</treeY>
+  </LiAIChat.Civilization.CivilizationKnowledgeDef>
+  <LiAIChat.Civilization.CivilizationKnowledgeDef>
+    <defName>LiAIChat_CivKnowledge_GreekEthics</defName>
+
+    <label>Classical Greek Ethics</label>
+    <title>Classical Greek Ethics</title>
+    <titleChinese>古典希腊伦理学</titleChinese>
+    <description>Reconstructed understanding of virtue, character and the good life in classical Greek philosophy.</description>
+    <category>Philosophy</category>
+    <prerequisites>
+        <li>LiAIChat_CivKnowledge_AncientGreekPhilosophy</li>
+    </prerequisites>
+    <requiredTexts>
+        <li>LiAIChat_Text_Aristotle_NicomacheanEthics</li>
+    </requiredTexts>
+    <treeX>1</treeX>
+    <treeY>2</treeY>
   </LiAIChat.Civilization.CivilizationKnowledgeDef>
 
 </Defs>
