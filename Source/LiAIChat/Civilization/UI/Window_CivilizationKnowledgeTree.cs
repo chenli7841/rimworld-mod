@@ -115,7 +115,10 @@ namespace LiAIChat.Civilization.UI
                 outerRect,
                 ref scrollPosition,
                 viewRect);
-
+            DrawPrerequisiteLines(
+                defs,
+                minTreeX,
+                minTreeY);
             DrawNodes(
                 defs,
                 minTreeX,
@@ -409,6 +412,170 @@ namespace LiAIChat.Civilization.UI
                     maxY = def.treeY;
                 }
             }
+        }
+        private void DrawPrerequisiteLines(
+    List<CivilizationKnowledgeDef> defs,
+    float minTreeX,
+    float minTreeY)
+        {
+            foreach (CivilizationKnowledgeDef def
+                in defs)
+            {
+                if (def == null)
+                {
+                    continue;
+                }
+
+                if (def.prerequisites == null)
+                {
+                    continue;
+                }
+
+                Rect childRect =
+                    GetNodeRect(
+                        def,
+                        minTreeX,
+                        minTreeY);
+
+                foreach (CivilizationKnowledgeDef prerequisite
+                    in def.prerequisites)
+                {
+                    if (prerequisite == null)
+                    {
+                        continue;
+                    }
+
+                    Rect prerequisiteRect =
+                        GetNodeRect(
+                            prerequisite,
+                            minTreeX,
+                            minTreeY);
+
+                    DrawPrerequisiteConnection(
+                        prerequisiteRect,
+                        childRect,
+                        GetConnectionColor(def));
+                }
+            }
+        }
+        private void DrawPrerequisiteConnection(
+    Rect prerequisiteRect,
+    Rect childRect,
+    Color lineColor)
+        {
+            float lineThickness = 2f;
+
+            float startX =
+                prerequisiteRect.xMax;
+
+            float startY =
+                prerequisiteRect.center.y;
+
+            float endX =
+                childRect.x;
+
+            float endY =
+                childRect.center.y;
+
+            float middleX =
+                (startX + endX) * 0.5f;
+
+            DrawHorizontalLine(
+                startX,
+                middleX,
+                startY,
+                lineThickness,
+                lineColor);
+
+            DrawVerticalLine(
+                startY,
+                endY,
+                middleX,
+                lineThickness,
+                lineColor);
+
+            DrawHorizontalLine(
+                middleX,
+                endX,
+                endY,
+                lineThickness,
+                lineColor);
+        }
+        private void DrawHorizontalLine(
+    float x1,
+    float x2,
+    float y,
+    float thickness,
+    Color color)
+        {
+            float minX =
+                Mathf.Min(x1, x2);
+
+            float width =
+                Mathf.Abs(x2 - x1);
+
+            Rect rect =
+                new Rect(
+                    minX,
+                    y - thickness * 0.5f,
+                    width,
+                    thickness);
+
+            Widgets.DrawBoxSolid(
+                rect,
+                color);
+        }
+        private void DrawVerticalLine(
+    float y1,
+    float y2,
+    float x,
+    float thickness,
+    Color color)
+        {
+            float minY =
+                Mathf.Min(y1, y2);
+
+            float height =
+                Mathf.Abs(y2 - y1);
+
+            Rect rect =
+                new Rect(
+                    x - thickness * 0.5f,
+                    minY,
+                    thickness,
+                    height);
+
+            Widgets.DrawBoxSolid(
+                rect,
+                color);
+        }
+        private Color GetConnectionColor(
+    CivilizationKnowledgeDef child)
+        {
+            if (child == null)
+            {
+                return new Color(
+                    0.30f,
+                    0.30f,
+                    0.30f,
+                    1f);
+            }
+
+            if (CivilizationKnowledgeManager
+                .IsUnlocked(child))
+            {
+                return new Color(
+                    0.55f,
+                    0.65f,
+                    0.55f,
+                    1f);
+            }
+
+            return new Color(
+                0.30f,
+                0.30f,
+                0.30f,
+                1f);
         }
     }
 }
