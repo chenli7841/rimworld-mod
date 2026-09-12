@@ -20,6 +20,11 @@ namespace LiAIChat.Civilization.UI
 
         private CivilizationKnowledgeDef selectedKnowledge;
 
+        private bool isPanning = false;
+
+        private Vector2 lastPanMousePosition =
+            Vector2.zero;
+
         public Window_CivilizationKnowledgeTree()
         {
             doCloseX = true;
@@ -44,6 +49,8 @@ namespace LiAIChat.Civilization.UI
         private void DrawTreeCanvas(
             Rect outerRect)
         {
+            HandleTreePan(outerRect);
+
             List<CivilizationKnowledgeDef> defs =
                 DefDatabase<CivilizationKnowledgeDef>
                     .AllDefsListForReading;
@@ -117,6 +124,102 @@ namespace LiAIChat.Civilization.UI
                 minTreeY);
 
             Widgets.EndScrollView();
+        }
+
+        private void HandleTreePan(
+    Rect treeRect)
+        {
+            Event currentEvent =
+                Event.current;
+
+            if (currentEvent == null)
+            {
+                return;
+            }
+
+            Vector2 mousePosition =
+                currentEvent.mousePosition;
+
+            if (currentEvent.type ==
+                EventType.MouseDown)
+            {
+                if (currentEvent.button != 2)
+                {
+                    return;
+                }
+
+                if (!treeRect.Contains(
+                    mousePosition))
+                {
+                    return;
+                }
+
+                isPanning = true;
+
+                lastPanMousePosition =
+                    mousePosition;
+
+                currentEvent.Use();
+
+                return;
+            }
+
+            if (currentEvent.type ==
+                EventType.MouseDrag)
+            {
+                if (!isPanning)
+                {
+                    return;
+                }
+
+                Vector2 delta =
+                    mousePosition
+                    - lastPanMousePosition;
+
+                scrollPosition -=
+                    delta;
+
+                lastPanMousePosition =
+                    mousePosition;
+
+                ClampScrollPosition();
+
+                currentEvent.Use();
+
+                return;
+            }
+
+            if (currentEvent.type ==
+                EventType.MouseUp)
+            {
+                if (!isPanning)
+                {
+                    return;
+                }
+
+                if (currentEvent.button != 2)
+                {
+                    return;
+                }
+
+                isPanning =
+                    false;
+
+                currentEvent.Use();
+            }
+        }
+
+        private void ClampScrollPosition()
+        {
+            if (scrollPosition.x < 0f)
+            {
+                scrollPosition.x = 0f;
+            }
+
+            if (scrollPosition.y < 0f)
+            {
+                scrollPosition.y = 0f;
+            }
         }
 
         private void DrawNodes(
