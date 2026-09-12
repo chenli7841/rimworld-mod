@@ -21,5 +21,9 @@ namespace LiAIChat.Civilization
         public int gracePeriodDays = 10;
 
         public int dormantAfterDays = 30;
+
+        public float treeX;
+
+        public float treeY;
     }
 }
