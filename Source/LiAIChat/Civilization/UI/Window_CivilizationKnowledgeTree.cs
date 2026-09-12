@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using LiAIChat.Archive;
 using RimWorld;
+using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
@@ -17,6 +18,8 @@ namespace LiAIChat.Civilization.UI
             }
         }
 
+        private CivilizationKnowledgeDef selectedKnowledge;
+
         public Window_CivilizationKnowledgeTree()
         {
             doCloseX = true;
@@ -28,25 +31,14 @@ namespace LiAIChat.Civilization.UI
         public override void DoWindowContents(Rect inRect)
         {
             Text.Font = GameFont.Medium;
-
-            Widgets.Label(
-                new Rect(
-                    0f,
-                    0f,
-                    inRect.width,
-                    35f),
-                "Civilization Knowledge");
-
+            Widgets.Label(new Rect(0f, 0f, inRect.width, 35f), "Civilization Knowledge");
             Text.Font = GameFont.Small;
-
-            Rect canvasOuterRect =
-                new Rect(
-                    0f,
-                    45f,
-                    inRect.width,
-                    inRect.height - 45f);
-
-            DrawTreeCanvas(canvasOuterRect);
+            float detailsWidth = 320f;
+            float gap = 12f;
+            Rect treeRect = new Rect(0f, 45f, inRect.width - detailsWidth - gap, inRect.height - 45f);
+            Rect detailsRect = new Rect(treeRect.xMax + gap, 45f, detailsWidth, inRect.height - 45f);
+            DrawTreeCanvas(treeRect);
+            DrawDetailsPanel(detailsRect);
         }
 
         private void DrawTreeCanvas(
@@ -188,6 +180,12 @@ namespace LiAIChat.Civilization.UI
                 rect,
                 visualState);
 
+            if (selectedKnowledge == def)
+            {
+                DrawSelectedNodeBorder(
+                    rect);
+            }
+
             Rect innerRect =
                 rect.ContractedBy(8f);
 
@@ -257,6 +255,7 @@ namespace LiAIChat.Civilization.UI
             {
                 Widgets.DrawHighlight(rect);
             }
+            HandleNodeClick(rect, def);
 
             string tooltip =
                 !string.IsNullOrEmpty(def.description)
@@ -267,28 +266,295 @@ namespace LiAIChat.Civilization.UI
                 rect,
                 new TipSignal(tooltip));
         }
-
-        private void DrawNodeBackground(
-    Rect rect,
-    CivilizationKnowledgeNodeVisualState state)
+        private void DrawSelectedNodeBorder(Rect rect)
         {
-            Color backgroundColor =
-                GetNodeBackgroundColor(state);
+            Color oldColor =
+                GUI.color;
 
-            Color borderColor =
-                GetNodeBorderColor(state);
+            GUI.color =
+                new Color(
+                    0.90f,
+                    0.90f,
+                    0.90f,
+                    1f);
 
-            Widgets.DrawBoxSolid(
+            Widgets.DrawBox(
                 rect,
-                backgroundColor);
+                3);
+
+            GUI.color =
+                oldColor;
+        }
+        private void HandleNodeClick(Rect rect, CivilizationKnowledgeDef def)
+        {
+            Event currentEvent =
+                Event.current;
+
+            if (currentEvent == null)
+            {
+                return;
+            }
+
+            if (currentEvent.type
+                != EventType.MouseDown)
+            {
+                return;
+            }
+
+            if (currentEvent.button != 0)
+            {
+                return;
+            }
+
+            if (!rect.Contains(
+                currentEvent.mousePosition))
+            {
+                return;
+            }
+
+            selectedKnowledge =
+                def;
+
+            currentEvent.Use();
+        }
+
+        private void DrawDetailsPanel(Rect rect)
+        {
+            Widgets.DrawMenuSection(rect);
+            Rect innerRect = rect.ContractedBy(12f);
+            if (selectedKnowledge == null)
+            {
+                Text.Anchor = TextAnchor.MiddleCenter;
+                Widgets.Label(innerRect, "Select a civilization knowledge node.");
+                Text.Anchor = TextAnchor.UpperLeft;
+                return;
+            }
+
+            DrawSelectedKnowledgeDetails(innerRect, selectedKnowledge);
+        }
+        private void DrawSelectedKnowledgeDetails(Rect rect, CivilizationKnowledgeDef def)
+        {
+            float y =
+                rect.y;
+
+            DrawDetailTitle(
+                rect,
+                ref y,
+                def);
+
+            y += 8f;
+
+            DrawDetailStatus(
+                rect,
+                ref y,
+                def);
+
+            DrawIntegrityDetails(
+                rect,
+                ref y,
+                def);
+
+            DrawReconstructionDetails(
+                rect,
+                ref y,
+                def);
+
+            y += 12f;
+
+            DrawDetailDescription(
+                rect,
+                ref y,
+                def);
+
+            y += 12f;
+
+            DrawDetailPrerequisites(
+                rect,
+                ref y,
+                def);
+
+            y += 12f;
+
+            DrawDetailRequiredTexts(
+                rect,
+                ref y,
+                def);
+        }
+        private void DrawReconstructionDetails(Rect rect, ref float y, CivilizationKnowledgeDef def)
+        {
+            CivilizationKnowledgeState state =
+                CivilizationKnowledgeManager
+                    .GetState(def);
+
+            if (state == null ||
+                !state.Unlocked)
+            {
+                return;
+            }
+
+            if (state.UnlockedTick < 0)
+            {
+                return;
+            }
+
+            DrawDetailLine(
+                rect,
+                ref y,
+                "First reconstructed tick: "
+                + state.UnlockedTick);
+        }
+        private void DrawDetailTitle(
+    Rect rect,
+    ref float y,
+    CivilizationKnowledgeDef def)
+        {
+            string title =
+                !string.IsNullOrEmpty(def.title)
+                    ? def.title
+                    : def.label;
+
+            Text.Font =
+                GameFont.Medium;
+
+            Rect titleRect =
+                new Rect(
+                    rect.x,
+                    y,
+                    rect.width,
+                    32f);
+
+            Widgets.Label(
+                titleRect,
+                title);
+
+            y += 34f;
+
+            if (!string.IsNullOrEmpty(
+                def.titleChinese))
+            {
+                Text.Font =
+                    GameFont.Small;
+
+                Rect chineseRect =
+                    new Rect(
+                        rect.x,
+                        y,
+                        rect.width,
+                        24f);
+
+                Widgets.Label(
+                    chineseRect,
+                    def.titleChinese);
+
+                y += 26f;
+            }
+
+            Text.Font =
+                GameFont.Small;
+        }
+        private void DrawDetailStatus(
+    Rect rect,
+    ref float y,
+    CivilizationKnowledgeDef def)
+        {
+            CivilizationKnowledgeNodeVisualState visualState =
+                CivilizationKnowledgeNodeVisualUtility
+                    .GetVisualState(def);
+
+            string status =
+                CivilizationKnowledgeNodeVisualUtility
+                    .GetStatusLabel(
+                        visualState);
+
+            DrawDetailLine(
+                rect,
+                ref y,
+                "Status: " + status);
+        }
+        private void DrawDetailLine(Rect rect, ref float y, string text)
+        {
+            Rect lineRect = new Rect(rect.x, y, rect.width, 22f);
+            Widgets.Label(lineRect, text);
+            y += 22f;
+        }
+        private void DrawDetailDescription(Rect rect, ref float y, CivilizationKnowledgeDef def)
+        {
+            if (string.IsNullOrEmpty(def.description))
+            {
+                return;
+            }
+            Text.Font = GameFont.Small;
+            float height = Text.CalcHeight(def.description, rect.width);
+            Rect descriptionRect = new Rect(rect.x, y, rect.width, height);
+            Widgets.Label(descriptionRect, def.description);
+            y += height;
+        }
+        private void DrawDetailPrerequisites(Rect rect, ref float y, CivilizationKnowledgeDef def)
+        {
+            DrawDetailSectionHeader(rect, ref y, "Prerequisites");
+
+            if (def.prerequisites == null || def.prerequisites.Count == 0)
+            {
+                DrawDetailLine(rect, ref y, "None");
+                return;
+            }
+
+            foreach (CivilizationKnowledgeDef prerequisite in def.prerequisites)
+            {
+                if (prerequisite == null)
+                {
+                    continue;
+                }
+
+                bool satisfied = CivilizationKnowledgeManager.IsUnlocked(prerequisite);
+
+                string marker = satisfied ? "[x] " : "[ ] ";
+
+                DrawDetailLine(rect, ref y, marker + prerequisite.label);
+            }
+        }
+        private void DrawDetailSectionHeader(Rect rect, ref float y, string text)
+        {
+            Text.Font = GameFont.Small;
+            Rect headerRect = new Rect(rect.x, y, rect.width, 24f);
+            Widgets.Label(headerRect, text);
+            y += 26f;
+        }
+        private void DrawDetailRequiredTexts(Rect rect, ref float y, CivilizationKnowledgeDef def)
+        {
+            DrawDetailSectionHeader(rect, ref y, "Required Texts");
+
+            if (def.requiredTexts == null || def.requiredTexts.Count == 0)
+            {
+                DrawDetailLine(rect, ref y, "None");
+                return;
+            }
+
+            foreach (EarthTextDef text in def.requiredTexts)
+            {
+                if (text == null)
+                {
+                    continue;
+                }
+                bool available = ColonyLibrary.HasText(text);
+                string marker = available ? "[x] " : "[ ] ";
+                string title = !string.IsNullOrEmpty(text.title) ? text.title : text.label;
+                DrawDetailLine(rect, ref y, marker + title);
+            }
+        }
+        private void DrawNodeBackground(Rect rect, CivilizationKnowledgeNodeVisualState state)
+        {
+            Color backgroundColor = GetNodeBackgroundColor(state);
+
+            Color borderColor = GetNodeBorderColor(state);
+
+            Widgets.DrawBoxSolid(rect, backgroundColor);
 
             Color oldColor = GUI.color;
 
             GUI.color = borderColor;
 
-            Widgets.DrawBox(
-                rect,
-                2);
+            Widgets.DrawBox(rect, 2);
 
             GUI.color = oldColor;
         }
@@ -597,6 +863,51 @@ namespace LiAIChat.Civilization.UI
                 0.30f,
                 0.30f,
                 1f);
+        }
+        private void DrawIntegrityDetails(
+    Rect rect,
+    ref float y,
+    CivilizationKnowledgeDef def)
+        {
+            CivilizationKnowledgeState state =
+                CivilizationKnowledgeManager
+                    .GetState(def);
+
+            if (state == null ||
+                !state.Unlocked)
+            {
+                return;
+            }
+
+            if (state.MissingSinceTick < 0)
+            {
+                return;
+            }
+
+            float missingDays =
+                CivilizationKnowledgeUtility
+                    .GetMissingDurationDays(def);
+
+            DrawDetailLine(
+                rect,
+                ref y,
+                "Missing for: "
+                + missingDays.ToString("0.0")
+                + " days");
+
+            DrawDetailLine(
+                rect,
+                ref y,
+                "Grace period: "
+                + def.gracePeriodDays
+                + " days");
+
+            DrawDetailLine(
+                rect,
+                ref y,
+                "Dormant after: "
+                + def.dormantAfterDays
+                + " days");
         }
     }
 }
