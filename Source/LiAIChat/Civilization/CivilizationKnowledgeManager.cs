@@ -202,5 +202,42 @@ namespace LiAIChat.Civilization
 
             return true;
         }
+        public static bool HasValidState(
+    CivilizationKnowledgeDef knowledgeDef)
+        {
+            CivilizationKnowledgeState state =
+                GetState(knowledgeDef);
+
+            if (state == null)
+            {
+                return false;
+            }
+
+            if (!state.Unlocked)
+            {
+                return !state.Unstable
+                    && !state.Dormant
+                    && !state.AwaitingReactivation;
+            }
+
+            int specialStateCount = 0;
+
+            if (state.Unstable)
+            {
+                specialStateCount++;
+            }
+
+            if (state.Dormant)
+            {
+                specialStateCount++;
+            }
+
+            if (state.AwaitingReactivation)
+            {
+                specialStateCount++;
+            }
+
+            return specialStateCount <= 1;
+        }
     }
 }

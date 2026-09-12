@@ -298,6 +298,17 @@ namespace LiAIChat.Civilization
 
             state.MissingSinceTick = -1;
 
+            // Once a knowledge system has fallen dormant and entered
+            // reactivation mode, restoring the books alone must not
+            // automatically reactivate it.
+            if (state.AwaitingReactivation)
+            {
+                state.Dormant = false;
+                state.Unstable = false;
+                return;
+            }
+
+            // First restoration after actual Dormancy.
             if (state.Dormant)
             {
                 state.Dormant = false;
@@ -307,12 +318,12 @@ namespace LiAIChat.Civilization
                 return;
             }
 
+            // Knowledge never reached Dormant.
+            // Restoration during Grace / Unstable restores it directly.
             if (state.Unstable)
             {
                 state.Unstable = false;
             }
-
-            state.AwaitingReactivation = false;
         }
     }
 }
