@@ -12,6 +12,8 @@ namespace LiAIChat.Civilization
 
         public int MissingSinceTick = -1;
 
+        public bool Unstable;
+
         public void ExposeData()
         {
             Scribe_Values.Look(
@@ -33,6 +35,11 @@ namespace LiAIChat.Civilization
                 ref MissingSinceTick,
                 "missingSinceTick",
                 -1);
+
+            Scribe_Values.Look(
+                ref Unstable,
+                "unstable",
+                false);
         }
     }
 }

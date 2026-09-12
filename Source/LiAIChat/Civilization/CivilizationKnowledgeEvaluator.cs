@@ -11,6 +11,8 @@ namespace LiAIChat.Civilization
             EvaluateAll();
 
             UpdateAllMissingStates();
+
+            UpdateAllUnstableStates();
         }
         public static void UpdateAllMissingStates()
         {
@@ -135,6 +137,60 @@ namespace LiAIChat.Civilization
             }
 
             return Find.TickManager.TicksGame;
+        }
+
+        public static void UpdateUnstableState(
+    CivilizationKnowledgeDef knowledgeDef)
+        {
+            if (knowledgeDef == null)
+            {
+                return;
+            }
+
+            CivilizationKnowledgeState state =
+                CivilizationKnowledgeManager
+                    .GetState(knowledgeDef);
+
+            if (state == null)
+            {
+                return;
+            }
+
+            if (!state.Unlocked)
+            {
+                state.Unstable = false;
+                return;
+            }
+
+            bool shouldBeUnstable =
+                CivilizationKnowledgeUtility
+                    .IsUnlockedButIncomplete(
+                        knowledgeDef)
+                &&
+                CivilizationKnowledgeUtility
+                    .HasGracePeriodExpired(
+                        knowledgeDef);
+
+            state.Unstable =
+                shouldBeUnstable;
+        }
+
+        public static void UpdateAllUnstableStates()
+        {
+            List<CivilizationKnowledgeDef> defs =
+                DefDatabase<CivilizationKnowledgeDef>
+                    .AllDefsListForReading;
+
+            if (defs == null)
+            {
+                return;
+            }
+
+            foreach (CivilizationKnowledgeDef def
+                in defs)
+            {
+                UpdateUnstableState(def);
+            }
         }
     }
 }

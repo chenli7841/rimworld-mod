@@ -127,5 +127,15 @@ namespace LiAIChat.Civilization
 
             return true;
         }
+        public static bool IsUnstable(
+    CivilizationKnowledgeDef knowledgeDef)
+        {
+            CivilizationKnowledgeState state =
+                GetState(knowledgeDef);
+
+            return state != null &&
+                   state.Unlocked &&
+                   state.Unstable;
+        }
     }
 }
