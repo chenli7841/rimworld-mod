@@ -25,6 +25,12 @@ namespace LiAIChat.Civilization.UI
         private Vector2 lastPanMousePosition =
             Vector2.zero;
 
+        private float zoom = 1.0f;
+
+        private const float MinZoom = 0.55f;
+        private const float MaxZoom = 1.35f;
+        private const float ZoomStep = 0.10f;
+
         public Window_CivilizationKnowledgeTree()
         {
             doCloseX = true;
@@ -49,6 +55,7 @@ namespace LiAIChat.Civilization.UI
         private void DrawTreeCanvas(
             Rect outerRect)
         {
+            HandleTreeZoom(outerRect);
             HandleTreePan(outerRect);
 
             List<CivilizationKnowledgeDef> defs =
@@ -78,54 +85,136 @@ namespace LiAIChat.Civilization.UI
                 out maxTreeY);
 
             float canvasWidth =
+            (
                 CivilizationKnowledgeTreeLayout.CanvasPadding * 2f
-                +
-                (maxTreeX - minTreeX)
+                + (maxTreeX - minTreeX)
                 * CivilizationKnowledgeTreeLayout.ColumnSpacing
-                +
-                CivilizationKnowledgeTreeLayout.NodeWidth;
+                + CivilizationKnowledgeTreeLayout.NodeWidth
+            )
+            * zoom;
 
             float canvasHeight =
+            (
                 CivilizationKnowledgeTreeLayout.CanvasPadding * 2f
-                +
-                (maxTreeY - minTreeY)
+                + (maxTreeY - minTreeY)
                 * CivilizationKnowledgeTreeLayout.RowSpacing
-                +
-                CivilizationKnowledgeTreeLayout.NodeHeight;
+                + CivilizationKnowledgeTreeLayout.NodeHeight
+            )
+            * zoom;
 
-            canvasWidth =
-                Mathf.Max(
-                    canvasWidth,
-                    outerRect.width - 20f);
+            Rect viewRect = new Rect(0f, 0f, Mathf.Max(canvasWidth, outerRect.width), Mathf.Max(canvasHeight, outerRect.height));
 
-            canvasHeight =
-                Mathf.Max(
-                    canvasHeight,
-                    outerRect.height - 20f);
+            string zoomText = "Zoom " + Mathf.RoundToInt(zoom * 100f) + "%";
+            Rect zoomRect = new Rect(outerRect.x + 8f, outerRect.y + 6f, 100f, 22f);
 
-            Rect viewRect =
-                new Rect(
-                    0f,
-                    0f,
-                    canvasWidth,
-                    canvasHeight);
+            Widgets.Label(zoomRect, zoomText);
 
-            Widgets.BeginScrollView(
-                outerRect,
-                ref scrollPosition,
-                viewRect);
-            DrawPrerequisiteLines(
-                defs,
-                minTreeX,
-                minTreeY);
-            DrawNodes(
-                defs,
-                minTreeX,
-                minTreeY);
-
+            Widgets.BeginScrollView(outerRect, ref scrollPosition, viewRect);
+            DrawPrerequisiteLines(defs, minTreeX, minTreeY);
+            DrawNodes(defs, minTreeX, minTreeY);
             Widgets.EndScrollView();
+            DrawZoomIndicator(outerRect);
         }
+        private void DrawZoomIndicator(Rect outerRect)
+        {
+            string text =
+                "Zoom "
+                + Mathf.RoundToInt(
+                    zoom * 100f)
+                + "%";
 
+            Rect rect =
+                new Rect(
+                    outerRect.x + 8f,
+                    outerRect.y + 6f,
+                    100f,
+                    22f);
+
+            Widgets.Label(
+                rect,
+                text);
+        }
+        private void HandleTreeZoom(
+    Rect treeRect)
+        {
+            Event currentEvent =
+                Event.current;
+
+            if (currentEvent == null)
+            {
+                return;
+            }
+
+            if (currentEvent.type
+                != EventType.ScrollWheel)
+            {
+                return;
+            }
+
+            Vector2 mousePosition =
+                currentEvent.mousePosition;
+
+            if (!treeRect.Contains(
+                mousePosition))
+            {
+                return;
+            }
+
+            float oldZoom =
+                zoom;
+
+            float newZoom =
+                zoom;
+
+            if (currentEvent.delta.y > 0f)
+            {
+                newZoom -= ZoomStep;
+            }
+            else if (currentEvent.delta.y < 0f)
+            {
+                newZoom += ZoomStep;
+            }
+
+            newZoom =
+                Mathf.Clamp(
+                    newZoom,
+                    MinZoom,
+                    MaxZoom);
+
+            if (Mathf.Approximately(
+                oldZoom,
+                newZoom))
+            {
+                return;
+            }
+
+            Vector2 mouseInTree =
+                mousePosition
+                - treeRect.position;
+
+            Vector2 canvasPointBefore =
+                scrollPosition
+                + mouseInTree;
+
+            float zoomRatio =
+                newZoom
+                / oldZoom;
+
+            Vector2 canvasPointAfter =
+                canvasPointBefore
+                * zoomRatio;
+
+            zoom =
+                newZoom;
+
+            scrollPosition =
+                canvasPointAfter
+                - mouseInTree;
+
+            ClampScrollPosition();
+
+            currentEvent.Use();
+        }
         private void HandleTreePan(
     Rect treeRect)
         {
@@ -235,40 +324,45 @@ namespace LiAIChat.Civilization.UI
                     continue;
                 }
 
-                Rect nodeRect =
-                    GetNodeRect(
-                        def,
-                        minTreeX,
-                        minTreeY);
-
-                DrawNode(
-                    nodeRect,
-                    def);
+                Rect nodeRect = GetNodeRect(def, minTreeX, minTreeY);
+                DrawNode(nodeRect, def);
             }
         }
 
         private Rect GetNodeRect(
-            CivilizationKnowledgeDef def,
-            float minTreeX,
-            float minTreeY)
+    CivilizationKnowledgeDef def,
+    float minTreeX,
+    float minTreeY)
         {
             float x =
-                CivilizationKnowledgeTreeLayout.CanvasPadding
-                +
-                (def.treeX - minTreeX)
-                * CivilizationKnowledgeTreeLayout.ColumnSpacing;
+                (
+                    CivilizationKnowledgeTreeLayout.CanvasPadding
+                    + (def.treeX - minTreeX)
+                    * CivilizationKnowledgeTreeLayout.ColumnSpacing
+                )
+                * zoom;
 
             float y =
-                CivilizationKnowledgeTreeLayout.CanvasPadding
-                +
-                (def.treeY - minTreeY)
-                * CivilizationKnowledgeTreeLayout.RowSpacing;
+                (
+                    CivilizationKnowledgeTreeLayout.CanvasPadding
+                    + (def.treeY - minTreeY)
+                    * CivilizationKnowledgeTreeLayout.RowSpacing
+                )
+                * zoom;
+
+            float width =
+                CivilizationKnowledgeTreeLayout.NodeWidth
+                * zoom;
+
+            float height =
+                CivilizationKnowledgeTreeLayout.NodeHeight
+                * zoom;
 
             return new Rect(
                 x,
                 y,
-                CivilizationKnowledgeTreeLayout.NodeWidth,
-                CivilizationKnowledgeTreeLayout.NodeHeight);
+                width,
+                height);
         }
 
         private void DrawNode(
@@ -289,29 +383,18 @@ namespace LiAIChat.Civilization.UI
                     rect);
             }
 
+            float padding = Mathf.Max(4f, 8f * zoom);
+
             Rect innerRect =
-                rect.ContractedBy(8f);
+                rect.ContractedBy(
+                    padding);
 
-            Rect titleRect =
-                new Rect(
-                    innerRect.x,
-                    innerRect.y,
-                    innerRect.width,
-                    42f);
-
-            Rect statusRect =
-                new Rect(
-                    innerRect.x,
-                    titleRect.yMax,
-                    innerRect.width,
-                    16f);
-
-            Rect requirementRect =
-                new Rect(
-                    innerRect.x,
-                    statusRect.yMax + 2f,
-                    innerRect.width,
-                    16f);
+            float titleHeight = rect.height * 0.50f;
+            float statusHeight = rect.height * 0.22f;
+            float requirementHeight = rect.height * 0.22f;
+            Rect titleRect = new Rect(innerRect.x, innerRect.y, innerRect.width, titleHeight);
+            Rect statusRect = new Rect(innerRect.x, titleRect.yMax, innerRect.width, statusHeight);
+            Rect requirementRect = new Rect(innerRect.x, statusRect.yMax, innerRect.width, requirementHeight);
 
             string title =
                 !string.IsNullOrEmpty(def.title)
@@ -331,10 +414,13 @@ namespace LiAIChat.Civilization.UI
             Text.Font =
                 GameFont.Tiny;
 
-            Widgets.Label(
-                statusRect,
-                CivilizationKnowledgeNodeVisualUtility
-                    .GetStatusLabel(visualState));
+            if (zoom >= 0.65f)
+            {
+                Widgets.Label(
+                    statusRect,
+                    CivilizationKnowledgeNodeVisualUtility
+                        .GetStatusLabel(visualState));
+            }
 
             string requirementSummary =
                 CivilizationKnowledgeNodeVisualUtility
@@ -343,9 +429,12 @@ namespace LiAIChat.Civilization.UI
             if (!string.IsNullOrEmpty(
                 requirementSummary))
             {
-                Widgets.Label(
-                    requirementRect,
-                    requirementSummary);
+                if (zoom >= 0.75f)
+                {
+                    Widgets.Label(
+                        requirementRect,
+                        requirementSummary);
+                }
             }
 
             Text.Anchor =
