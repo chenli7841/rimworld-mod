@@ -11,7 +11,7 @@ namespace LiAIChat.Civilization
                 new List<CivilizationKnowledgeState>();
 
         public CivilizationKnowledgeGameComponent(
-            Game game)
+            Verse.Game game)
         {
         }
 

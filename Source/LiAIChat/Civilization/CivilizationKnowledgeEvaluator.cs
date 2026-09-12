@@ -9,6 +9,25 @@ namespace LiAIChat.Civilization
         public static void NotifyLibraryMayHaveChanged()
         {
             EvaluateAll();
+
+            UpdateAllMissingStates();
+        }
+        public static void UpdateAllMissingStates()
+        {
+            List<CivilizationKnowledgeDef> defs =
+                DefDatabase<CivilizationKnowledgeDef>
+                    .AllDefsListForReading;
+
+            if (defs == null)
+            {
+                return;
+            }
+
+            foreach (CivilizationKnowledgeDef def
+                in defs)
+            {
+                UpdateMissingState(def);
+            }
         }
 
         public static void EvaluateAll()
@@ -64,6 +83,58 @@ namespace LiAIChat.Civilization
                 MessageTypeDefOf.PositiveEvent);
 
             return true;
+        }
+
+        public static void UpdateMissingState(
+    CivilizationKnowledgeDef knowledgeDef)
+        {
+            if (knowledgeDef == null)
+            {
+                return;
+            }
+
+            CivilizationKnowledgeState state =
+                CivilizationKnowledgeManager
+                    .GetState(knowledgeDef);
+
+            if (state == null)
+            {
+                return;
+            }
+
+            if (!state.Unlocked)
+            {
+                state.MissingSinceTick = -1;
+                return;
+            }
+
+            bool incomplete =
+                CivilizationKnowledgeUtility
+                    .IsUnlockedButIncomplete(
+                        knowledgeDef);
+
+            if (incomplete)
+            {
+                if (state.MissingSinceTick < 0)
+                {
+                    state.MissingSinceTick =
+                        GetCurrentGameTick();
+                }
+
+                return;
+            }
+
+            state.MissingSinceTick = -1;
+        }
+
+        private static int GetCurrentGameTick()
+        {
+            if (Find.TickManager == null)
+            {
+                return -1;
+            }
+
+            return Find.TickManager.TicksGame;
         }
     }
 }

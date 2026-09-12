@@ -10,6 +10,8 @@ namespace LiAIChat.Civilization
 
         public int UnlockedTick = -1;
 
+        public int MissingSinceTick = -1;
+
         public void ExposeData()
         {
             Scribe_Values.Look(
@@ -25,6 +27,11 @@ namespace LiAIChat.Civilization
             Scribe_Values.Look(
                 ref UnlockedTick,
                 "unlockedTick",
+                -1);
+
+            Scribe_Values.Look(
+                ref MissingSinceTick,
+                "missingSinceTick",
                 -1);
         }
     }
