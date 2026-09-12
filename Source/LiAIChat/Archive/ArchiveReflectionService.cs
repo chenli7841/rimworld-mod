@@ -18,9 +18,14 @@ namespace LiAIChat.Archive
             Pawn pawn,
             Thing_AncientEarthArchiveFragment archive)
         {
-            if (pawn == null ||
-                archive == null ||
-                archive.Content == null)
+            if (pawn == null || archive == null)
+            {
+                return;
+            }
+
+            EarthTextDef earthText = archive.EarthText;
+
+            if (earthText == null)
             {
                 return;
             }
@@ -51,9 +56,6 @@ namespace LiAIChat.Archive
             PawnAISnapshot snapshot =
                 PawnAISnapshotBuilder.Build(pawn, state);
 
-            ArchiveContentDef content =
-                archive.Content;
-
             string sourceDescription =
                 archive.SourceDescription;
 
@@ -66,7 +68,7 @@ namespace LiAIChat.Archive
             _ = GenerateAsync(
                 generator,
                 snapshot,
-                content,
+                earthText,
                 sourceDescription,
                 runtimeGameId,
                 pawnId);
@@ -75,7 +77,7 @@ namespace LiAIChat.Archive
         private static async System.Threading.Tasks.Task GenerateAsync(
             IArchiveReflectionGenerator generator,
             PawnAISnapshot snapshot,
-            ArchiveContentDef content,
+            EarthTextDef earthText,
             string sourceDescription,
             string runtimeGameId,
             int pawnId)
@@ -85,7 +87,7 @@ namespace LiAIChat.Archive
                 string reflection =
                     await generator.GenerateAsync(
                         snapshot,
-                        content,
+                        earthText,
                         sourceDescription);
 
                 if (string.IsNullOrWhiteSpace(
@@ -100,7 +102,7 @@ namespace LiAIChat.Archive
                         ApplyReflection(
                             runtimeGameId,
                             pawnId,
-                            content.defName,
+                            earthText.defName,
                             reflection);
                     });
             }

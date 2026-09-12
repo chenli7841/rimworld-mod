@@ -34,7 +34,7 @@ namespace LiAIChat.Archive
 
         public async Task<string> GenerateAsync(
             PawnAISnapshot pawnSnapshot,
-            ArchiveContentDef content,
+            EarthTextDef earthText,
             string sourceDescription)
         {
             if (pawnSnapshot == null)
@@ -43,16 +43,16 @@ namespace LiAIChat.Archive
                     nameof(pawnSnapshot));
             }
 
-            if (content == null)
+            if (earthText == null)
             {
                 throw new ArgumentNullException(
-                    nameof(content));
+                    nameof(earthText));
             }
 
             string prompt =
                 BuildPrompt(
                     pawnSnapshot,
-                    content,
+                    earthText,
                     sourceDescription);
 
             string requestJson =
@@ -110,7 +110,7 @@ namespace LiAIChat.Archive
 
         private string BuildPrompt(
             PawnAISnapshot pawnSnapshot,
-            ArchiveContentDef content,
+            EarthTextDef earthText,
             string sourceDescription)
         {
             StringBuilder builder =
@@ -127,22 +127,34 @@ namespace LiAIChat.Archive
             builder.AppendLine();
 
             builder.AppendLine(
-                "ARCHIVE:");
+    "EARTH TEXT:");
 
             builder.AppendLine(
                 "Title: " +
-                Safe(content.title));
+                Safe(earthText.title));
+
+            if (!string.IsNullOrWhiteSpace(
+                earthText.titleChinese))
+            {
+                builder.AppendLine(
+                    "Chinese title: " +
+                    earthText.titleChinese);
+            }
 
             builder.AppendLine(
-                "Theme: " +
-                content.theme);
+                "Author: " +
+                Safe(earthText.author));
 
             builder.AppendLine(
-                "Summary: " +
-                Safe(content.summary));
+                "Approximate date: " +
+                earthText.YearDisplay);
 
             builder.AppendLine(
-                "Source: " +
+                "Primary knowledge topic: " +
+                Safe(earthText.primaryTopicId));
+
+            builder.AppendLine(
+                "Archive source: " +
                 Safe(sourceDescription));
 
             builder.AppendLine();
@@ -176,6 +188,12 @@ namespace LiAIChat.Archive
 
             builder.AppendLine(
                 "- Do not invent detailed Ancient Earth knowledge that the pawn has not learned.");
+
+            builder.AppendLine(
+                "- Base the reflection on the identified Earth text listed above.");
+
+            builder.AppendLine(
+                "- Do not claim the pawn has memorized or fully mastered the entire work.");
 
             builder.AppendLine(
                 "- The reflection may contain curiosity, agreement, skepticism, confusion, interest, or unresolved questions.");

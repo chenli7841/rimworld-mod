@@ -7,7 +7,7 @@ namespace LiAIChat.Archive
     {
         Task<string> GenerateAsync(
             PawnAISnapshot pawnSnapshot,
-            ArchiveContentDef content,
+            EarthTextDef earthText,
             string sourceDescription);
     }
 }
