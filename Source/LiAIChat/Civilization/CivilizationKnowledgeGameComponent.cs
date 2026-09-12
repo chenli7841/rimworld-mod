@@ -73,7 +73,10 @@ namespace LiAIChat.Civilization
                 currentTick + GenDate.TicksPerDay;
 
             CivilizationKnowledgeEvaluator
-                .UpdateAllMissingStates();
+    .UpdateAllMissingStates();
+
+            CivilizationKnowledgeEvaluator
+                .UpdateAllDormantStates();
 
             CivilizationKnowledgeEvaluator
                 .UpdateAllUnstableStates();

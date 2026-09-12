@@ -14,6 +14,8 @@ namespace LiAIChat.Civilization
 
         public bool Unstable;
 
+        public bool Dormant;
+
         public void ExposeData()
         {
             Scribe_Values.Look(
@@ -39,6 +41,11 @@ namespace LiAIChat.Civilization
             Scribe_Values.Look(
                 ref Unstable,
                 "unstable",
+                false);
+
+            Scribe_Values.Look(
+                ref Dormant,
+                "dormant",
                 false);
         }
     }

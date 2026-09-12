@@ -137,5 +137,30 @@ namespace LiAIChat.Civilization
                    state.Unlocked &&
                    state.Unstable;
         }
+        public static bool IsDormant(
+    CivilizationKnowledgeDef knowledgeDef)
+        {
+            CivilizationKnowledgeState state =
+                GetState(knowledgeDef);
+
+            return state != null &&
+                   state.Unlocked &&
+                   state.Dormant;
+        }
+        public static bool IsActive(
+    CivilizationKnowledgeDef knowledgeDef)
+        {
+            CivilizationKnowledgeState state =
+                GetState(knowledgeDef);
+
+            if (state == null)
+            {
+                return false;
+            }
+
+            return state.Unlocked &&
+                   !state.Unstable &&
+                   !state.Dormant;
+        }
     }
 }

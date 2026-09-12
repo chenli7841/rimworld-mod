@@ -12,6 +12,8 @@ namespace LiAIChat.Civilization
 
             UpdateAllMissingStates();
 
+            UpdateAllDormantStates();
+
             UpdateAllUnstableStates();
         }
         public static void UpdateAllMissingStates()
@@ -162,6 +164,12 @@ namespace LiAIChat.Civilization
                 return;
             }
 
+            if (state.Dormant)
+            {
+                state.Unstable = false;
+                return;
+            }
+
             bool shouldBeUnstable =
                 CivilizationKnowledgeUtility
                     .IsUnlockedButIncomplete(
@@ -190,6 +198,61 @@ namespace LiAIChat.Civilization
                 in defs)
             {
                 UpdateUnstableState(def);
+            }
+        }
+        public static void UpdateDormantState(
+    CivilizationKnowledgeDef knowledgeDef)
+        {
+            if (knowledgeDef == null)
+            {
+                return;
+            }
+
+            CivilizationKnowledgeState state =
+                CivilizationKnowledgeManager
+                    .GetState(knowledgeDef);
+
+            if (state == null)
+            {
+                return;
+            }
+
+            if (!state.Unlocked)
+            {
+                state.Dormant = false;
+                return;
+            }
+
+            if (CivilizationKnowledgeUtility
+                .ShouldBeDormant(knowledgeDef))
+            {
+                state.Dormant = true;
+                state.Unstable = false;
+                return;
+            }
+
+            if (!CivilizationKnowledgeUtility
+                .IsUnlockedButIncomplete(
+                    knowledgeDef))
+            {
+                state.Dormant = false;
+            }
+        }
+        public static void UpdateAllDormantStates()
+        {
+            List<CivilizationKnowledgeDef> defs =
+                DefDatabase<CivilizationKnowledgeDef>
+                    .AllDefsListForReading;
+
+            if (defs == null)
+            {
+                return;
+            }
+
+            foreach (CivilizationKnowledgeDef def
+                in defs)
+            {
+                UpdateDormantState(def);
             }
         }
     }

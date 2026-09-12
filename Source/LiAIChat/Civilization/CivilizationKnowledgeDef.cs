@@ -16,5 +16,7 @@ namespace LiAIChat.Civilization
             new List<EarthTextDef>();
 
         public int gracePeriodDays = 10;
+
+        public int dormantAfterDays = 30;
     }
 }

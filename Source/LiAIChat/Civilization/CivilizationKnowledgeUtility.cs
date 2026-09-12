@@ -187,5 +187,68 @@ namespace LiAIChat.Civilization
                    GetGracePeriodTicks(
                        knowledgeDef);
         }
+        public static int GetDormantThresholdTicks(
+    CivilizationKnowledgeDef knowledgeDef)
+        {
+            if (knowledgeDef == null)
+            {
+                return 0;
+            }
+
+            int days =
+                knowledgeDef.dormantAfterDays;
+
+            if (days < 0)
+            {
+                days = 0;
+            }
+
+            return days *
+                GenDate.TicksPerDay;
+        }
+        public static bool ShouldBeDormant(
+    CivilizationKnowledgeDef knowledgeDef)
+        {
+            if (knowledgeDef == null)
+            {
+                return false;
+            }
+
+            if (!IsUnlockedButIncomplete(
+                knowledgeDef))
+            {
+                return false;
+            }
+
+            CivilizationKnowledgeState state =
+                CivilizationKnowledgeManager
+                    .GetState(knowledgeDef);
+
+            if (state == null ||
+                state.MissingSinceTick < 0)
+            {
+                return false;
+            }
+
+            int dormantThreshold =
+                GetDormantThresholdTicks(
+                    knowledgeDef);
+
+            int graceThreshold =
+                GetGracePeriodTicks(
+                    knowledgeDef);
+
+            if (dormantThreshold <
+                graceThreshold)
+            {
+                dormantThreshold =
+                    graceThreshold;
+            }
+
+            return GetMissingDurationTicks(
+                       knowledgeDef)
+                   >=
+                   dormantThreshold;
+        }
     }
 }
