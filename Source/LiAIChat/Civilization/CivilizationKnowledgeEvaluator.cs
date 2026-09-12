@@ -128,7 +128,8 @@ namespace LiAIChat.Civilization
                 return;
             }
 
-            state.MissingSinceTick = -1;
+            HandleTextRestoration(
+                knowledgeDef);
         }
 
         private static int GetCurrentGameTick()
@@ -165,6 +166,12 @@ namespace LiAIChat.Civilization
             }
 
             if (state.Dormant)
+            {
+                state.Unstable = false;
+                return;
+            }
+
+            if (state.AwaitingReactivation)
             {
                 state.Unstable = false;
                 return;
@@ -220,22 +227,23 @@ namespace LiAIChat.Civilization
             if (!state.Unlocked)
             {
                 state.Dormant = false;
+                state.AwaitingReactivation = false;
+                return;
+            }
+
+            if (state.AwaitingReactivation)
+            {
+                state.Dormant = false;
                 return;
             }
 
             if (CivilizationKnowledgeUtility
-                .ShouldBeDormant(knowledgeDef))
+                .ShouldBeDormant(
+                    knowledgeDef))
             {
                 state.Dormant = true;
                 state.Unstable = false;
                 return;
-            }
-
-            if (!CivilizationKnowledgeUtility
-                .IsUnlockedButIncomplete(
-                    knowledgeDef))
-            {
-                state.Dormant = false;
             }
         }
         public static void UpdateAllDormantStates()
@@ -254,6 +262,57 @@ namespace LiAIChat.Civilization
             {
                 UpdateDormantState(def);
             }
+        }
+
+        public static void HandleTextRestoration(
+    CivilizationKnowledgeDef knowledgeDef)
+        {
+            if (knowledgeDef == null)
+            {
+                return;
+            }
+
+            CivilizationKnowledgeState state =
+                CivilizationKnowledgeManager
+                    .GetState(knowledgeDef);
+
+            if (state == null)
+            {
+                return;
+            }
+
+            if (!state.Unlocked)
+            {
+                return;
+            }
+
+            bool complete =
+                CivilizationKnowledgeUtility
+                    .HasRequiredTexts(
+                        knowledgeDef);
+
+            if (!complete)
+            {
+                return;
+            }
+
+            state.MissingSinceTick = -1;
+
+            if (state.Dormant)
+            {
+                state.Dormant = false;
+                state.Unstable = false;
+                state.AwaitingReactivation = true;
+
+                return;
+            }
+
+            if (state.Unstable)
+            {
+                state.Unstable = false;
+            }
+
+            state.AwaitingReactivation = false;
         }
     }
 }

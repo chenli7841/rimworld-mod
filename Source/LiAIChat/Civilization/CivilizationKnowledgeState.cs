@@ -16,6 +16,8 @@ namespace LiAIChat.Civilization
 
         public bool Dormant;
 
+        public bool AwaitingReactivation;
+
         public void ExposeData()
         {
             Scribe_Values.Look(
@@ -46,6 +48,11 @@ namespace LiAIChat.Civilization
             Scribe_Values.Look(
                 ref Dormant,
                 "dormant",
+                false);
+
+            Scribe_Values.Look(
+                ref AwaitingReactivation,
+                "awaitingReactivation",
                 false);
         }
     }
