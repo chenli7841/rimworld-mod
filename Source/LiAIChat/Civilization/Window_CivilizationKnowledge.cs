@@ -156,6 +156,39 @@ namespace LiAIChat.Civilization
 
             y += 30f;
 
+            bool incomplete =
+    CivilizationKnowledgeUtility
+        .IsUnlockedButIncomplete(def);
+
+            string integrityText;
+
+            if (!unlocked)
+            {
+                integrityText =
+                    "Not reconstructed";
+            }
+            else if (incomplete)
+            {
+                integrityText =
+                    "Incomplete";
+            }
+            else
+            {
+                integrityText =
+                    "Complete";
+            }
+
+            Widgets.Label(
+    new Rect(
+        15f,
+        y,
+        viewRect.width - 15f,
+        24f),
+    "Integrity: "
+    + integrityText);
+
+            y += 30f;
+
             Widgets.Label(
                 new Rect(
                     15f,
