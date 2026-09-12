@@ -41,5 +41,23 @@ namespace LiAIChat.Archive
         /// earth.philosophy.plato
         /// </summary>
         public string primaryTopicId;
+
+        public string YearDisplay
+        {
+            get
+            {
+                if (year < 0)
+                {
+                    return "c. " + (-year) + " BC";
+                }
+
+                if (year > 0)
+                {
+                    return "AD " + year;
+                }
+
+                return "Unknown date";
+            }
+        }
     }
 }

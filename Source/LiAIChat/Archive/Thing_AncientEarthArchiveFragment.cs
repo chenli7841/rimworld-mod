@@ -148,6 +148,12 @@ namespace LiAIChat.Archive
                 {
                     return "Unknown Ancient Earth Archive";
                 }
+                string earthTextDisplay = GetEarthTextDisplayText();
+
+                if (!string.IsNullOrEmpty(earthTextDisplay))
+                {
+                    return earthTextDisplay;
+                }
 
                 return "Ancient Earth Archive Fragment";
             }
@@ -160,6 +166,20 @@ namespace LiAIChat.Archive
             List<string> lines =
                 new List<string>();
 
+            if (content != null && identified)
+            {
+                string earthTextDisplay = GetEarthTextDisplayText();
+
+                if (!string.IsNullOrEmpty(earthTextDisplay))
+                {
+                    if (!string.IsNullOrEmpty(baseText))
+                    {
+                        baseText += "\n";
+                    }
+
+                    baseText += earthTextDisplay;
+                }
+            }
             if (!string.IsNullOrWhiteSpace(
                 baseText))
             {
@@ -219,6 +239,35 @@ namespace LiAIChat.Archive
     ArchiveContentDef newContent)
         {
             content = newContent;
+        }
+
+        public string GetEarthTextDisplayText()
+        {
+            EarthTextDef text = EarthText;
+
+            if (text == null)
+            {
+                return null;
+            }
+
+            string result = text.title;
+
+            if (!string.IsNullOrEmpty(text.titleChinese))
+            {
+                result += "\n" + text.titleChinese;
+            }
+
+            if (!string.IsNullOrEmpty(text.author))
+            {
+                result += "\n\n" + text.author;
+            }
+
+            if (!string.IsNullOrEmpty(text.YearDisplay))
+            {
+                result += "\n" + text.YearDisplay;
+            }
+
+            return result;
         }
     }
 }

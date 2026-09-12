@@ -1,1 +1,6 @@
 *.vsidx
+*.dll
+*.pdb
+Assemblies/*
+Source/LiAIChat/.vs/*
+Source/LiAIChat/obj/*
