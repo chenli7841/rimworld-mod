@@ -250,5 +250,35 @@ namespace LiAIChat.Civilization
                    >=
                    dormantThreshold;
         }
+        public static bool CanReactivate(
+    CivilizationKnowledgeDef knowledgeDef)
+        {
+            if (knowledgeDef == null)
+            {
+                return false;
+            }
+
+            CivilizationKnowledgeState state =
+                CivilizationKnowledgeManager
+                    .GetState(knowledgeDef);
+
+            if (state == null)
+            {
+                return false;
+            }
+
+            if (!state.Unlocked)
+            {
+                return false;
+            }
+
+            if (!state.AwaitingReactivation)
+            {
+                return false;
+            }
+
+            return HasRequiredTexts(
+                knowledgeDef);
+        }
     }
 }
