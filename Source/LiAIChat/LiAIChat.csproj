@@ -206,6 +206,7 @@
     <Compile Include="Questing\QuestNode_GiveArchiveToRefugeeGroup.cs" />
     <Compile Include="Questing\QuestNode_GiveScholarArchive.cs" />
     <Compile Include="Questing\QuestNode_InitializeArchiveScholar.cs" />
+    <Compile Include="Questing\QuestNode_RequireColonyAge.cs" />
     <Compile Include="Questing\QuestNode_ResolveArchiveScholarGift.cs" />
     <Compile Include="Questing\QuestNode_Root_ArchiveTest.cs" />
     <Compile Include="Questing\QuestNode_Root_LostEarthArchive .cs" />
