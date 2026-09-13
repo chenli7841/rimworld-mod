@@ -8,7 +8,7 @@ namespace LiAIChat.Patches
     public static class PawnDeathPatch
     {
         public static void Postfix(
-            Pawn __instance)
+            Pawn __instance, DamageInfo? dinfo)
         {
             if (__instance == null)
                 return;
@@ -17,7 +17,7 @@ namespace LiAIChat.Patches
                 return;
 
             PawnDeathEventHandler.HandleDeath(
-                __instance);
+                __instance, dinfo);
         }
     }
 }
