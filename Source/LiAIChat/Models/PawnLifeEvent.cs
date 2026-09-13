@@ -11,6 +11,12 @@ namespace LiAIChat.Models
 
         public int CreatedTick = 0;
 
+        public string SubjectFactionName;
+
+        public bool SubjectWasHostileToPlayer;
+
+        public bool SubjectWasPlayerFaction;
+
         /// <summary>
         /// 避免一个LifeEvent 永远让 Pawn 反复主动找你
         /// </summary>
@@ -56,6 +62,20 @@ namespace LiAIChat.Models
             Scribe_Values.Look(
                 ref ProactiveDialogueUsed,
                 "proactiveDialogueUsed",
+                false);
+
+            Scribe_Values.Look(
+                ref SubjectFactionName,
+                "subjectFactionName");
+
+            Scribe_Values.Look(
+                ref SubjectWasHostileToPlayer,
+                "subjectWasHostileToPlayer",
+                false);
+
+            Scribe_Values.Look(
+                ref SubjectWasPlayerFaction,
+                "subjectWasPlayerFaction",
                 false);
         }
     }

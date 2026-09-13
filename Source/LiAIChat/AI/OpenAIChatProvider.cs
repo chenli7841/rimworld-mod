@@ -2,8 +2,10 @@
 using LiAIChat.Knowledge;
 using LiAIChat.Models;
 using LiAIChat.Refugees;
+using RimWorld;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
@@ -29,7 +31,7 @@ namespace LiAIChat.AI
             WorldviewState worldview,
             MeaningState meaning,
             KnowledgeState knowledge,
-            LifeGoal lifeGoal, 
+            LifeGoal lifeGoal,
             IReadOnlyList<PawnLifeEvent> recentLifeEvents,
             IReadOnlyList<PawnIntellectualExchange> recentIntellectualExchanges,
             string conversationSummary,
@@ -156,6 +158,163 @@ namespace LiAIChat.AI
             }
         }
 
+        private static void AppendCurrentRelationships(
+            StringBuilder prompt,
+            PawnContext pawnContext)
+        {
+            prompt.AppendLine();
+            prompt.AppendLine("CURRENT IMPORTANT RELATIONSHIPS");
+
+            Pawn gamePawn = FindPawnForContext(pawnContext);
+
+            if (gamePawn == null ||
+                gamePawn.relations == null)
+            {
+                prompt.AppendLine(
+                    "- Current relationship information is unavailable.");
+
+                prompt.AppendLine();
+                prompt.AppendLine(
+                    "Do not invent a romantic partner or relationship that is not provided elsewhere.");
+
+                return;
+            }
+
+            List<string> relationships =
+                new List<string>();
+
+            foreach (DirectPawnRelation relation
+                     in gamePawn.relations.DirectRelations)
+            {
+                if (relation == null ||
+                    relation.def == null ||
+                    relation.otherPawn == null)
+                {
+                    continue;
+                }
+
+                Pawn otherPawn = relation.otherPawn;
+                string otherName = otherPawn.LabelShort;
+
+                if (relation.def == PawnRelationDefOf.Lover)
+                {
+                    relationships.Add(
+                        "- Lover: " + otherName);
+                }
+                else if (relation.def == PawnRelationDefOf.Fiance)
+                {
+                    relationships.Add(
+                        "- Fiancé(e): " + otherName);
+                }
+                else if (relation.def == PawnRelationDefOf.Spouse)
+                {
+                    relationships.Add(
+                        "- Spouse: " + otherName);
+                }
+            }
+
+            if (relationships.Count == 0)
+            {
+                prompt.AppendLine(
+                    "- No current romantic partner is recorded.");
+            }
+            else
+            {
+                foreach (string relationship
+                         in relationships)
+                {
+                    prompt.AppendLine(relationship);
+                }
+            }
+
+            prompt.AppendLine();
+            prompt.AppendLine(
+                "These relationships are factual parts of the character's current life.");
+
+            prompt.AppendLine(
+                "When the player asks broad personal questions such as how life has been, " +
+                "what is new, how the character is doing, what matters to them, or whether they are happy, " +
+                "consider an important romantic relationship as potentially relevant.");
+
+            prompt.AppendLine(
+                "Do not mechanically mention a partner in every response. " +
+                "Mention the relationship only when it would naturally matter to the question or the character's current concerns.");
+
+            prompt.AppendLine(
+                "Do not invent relationship events, conversations, conflicts, promises, dates, or feelings " +
+                "that are not supported by the relationship state, memories, life events, or conversation history.");
+        }
+
+        private static Pawn FindPawnForContext(
+            PawnContext pawnContext)
+        {
+            if (pawnContext == null ||
+                pawnContext.Name.NullOrEmpty() ||
+                Find.Maps == null)
+            {
+                return null;
+            }
+
+            List<Pawn> nameMatches =
+                new List<Pawn>();
+
+            foreach (Map map in Find.Maps)
+            {
+                if (map == null ||
+                    map.mapPawns == null)
+                {
+                    continue;
+                }
+
+                foreach (Pawn candidate
+                         in map.mapPawns.AllPawnsSpawned)
+                {
+                    if (candidate == null ||
+                        candidate.Name == null)
+                    {
+                        continue;
+                    }
+
+                    string labelShort = candidate.LabelShort;
+                    string nameShort = candidate.Name.ToStringShort;
+
+                    if (string.Equals(
+                            labelShort,
+                            pawnContext.Name,
+                            StringComparison.OrdinalIgnoreCase) ||
+                        string.Equals(
+                            nameShort,
+                            pawnContext.Name,
+                            StringComparison.OrdinalIgnoreCase))
+                    {
+                        nameMatches.Add(candidate);
+                    }
+                }
+            }
+
+            if (nameMatches.Count == 0)
+            {
+                return null;
+            }
+
+            if (nameMatches.Count == 1)
+            {
+                return nameMatches[0];
+            }
+
+            Pawn bestMatch =
+                nameMatches.FirstOrDefault(
+                    p =>
+                        p.ageTracker != null &&
+                        p.ageTracker.AgeBiologicalYears == pawnContext.Age &&
+                        string.Equals(
+                            p.gender.ToString(),
+                            pawnContext.Gender,
+                            StringComparison.OrdinalIgnoreCase));
+
+            return bestMatch ?? nameMatches[0];
+        }
+
         private static string EscapeJson(string value)
         {
             if (value == null)
@@ -198,8 +357,11 @@ namespace LiAIChat.AI
                 $"Age: {pawn.Age}"
             );
 
-            prompt.AppendLine();
+            AppendCurrentRelationships(
+                prompt,
+                pawn);
 
+            prompt.AppendLine();
 
             prompt.AppendLine("CHARACTER WORLDVIEW STATE");
             prompt.AppendLine(
@@ -449,22 +611,39 @@ namespace LiAIChat.AI
                         0,
                         recentLifeEvents.Count - 5);
 
-                for (int i = firstIndex;
-                     i < recentLifeEvents.Count;
-                     i++)
+                for (int i = firstIndex; i < recentLifeEvents.Count; i++)
                 {
-                    PawnLifeEvent lifeEvent =
-                        recentLifeEvents[i];
+                    PawnLifeEvent lifeEvent = recentLifeEvents[i];
 
-                    prompt.AppendLine(
-                        "- " +
-                        lifeEvent.Description);
+                    if (lifeEvent == null)
+                        continue;
+
+                    prompt.AppendLine("- Event: " + lifeEvent.Description);
+
+                    if (!string.IsNullOrWhiteSpace(lifeEvent.SubjectFactionName))
+                    {
+                        prompt.AppendLine("  Subject faction: " + lifeEvent.SubjectFactionName);
+                    }
+
+                    if (lifeEvent.SubjectWasPlayerFaction)
+                    {
+                        prompt.AppendLine("  Relationship to colony: Member of the player's colony.");
+                    }
+                    else if (lifeEvent.SubjectWasHostileToPlayer)
+                    {
+                        prompt.AppendLine("  Relationship to colony: Hostile to the player's colony.");
+                    }
                 }
             }
 
             prompt.AppendLine();
 
             prompt.AppendLine("These life events are factual events that happened in the character's world.");
+
+            prompt.AppendLine(
+                "A hostile person's death may still emotionally affect the character, " +
+                "but distinguish distress about violence, danger, killing, or mortality " +
+                "from grief over losing a colony member.");
 
             prompt.AppendLine(
                 "The character may naturally refer to them when relevant, " +
@@ -576,6 +755,16 @@ namespace LiAIChat.AI
 
             prompt.AppendLine(
                 "- Keep ordinary conversation fairly concise."
+            );
+
+            prompt.AppendLine(
+                "- When the player asks about the character's recent life or general well-being, " +
+                "give appropriate weight to major current personal relationships and recent life events."
+            );
+
+            prompt.AppendLine(
+                "- Do not turn relationship context into a checklist. " +
+                "Use it selectively and naturally, as a real person would."
             );
 
             prompt.AppendLine(@"- Archive reflections are the pawn's own previous thoughts. Treat them as continuity of character, not as objective facts. The pawn may reconsider or develop these thoughts over time.");

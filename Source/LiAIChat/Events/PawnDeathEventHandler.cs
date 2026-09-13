@@ -109,8 +109,12 @@ namespace LiAIChat.Events
                     deadPawn.thingIDNumber,
                     Find.TickManager.TicksGame);
 
-            state.LifeEvents.Add(
-                lifeEvent);
+            Faction deadFaction = deadPawn.Faction;
+            lifeEvent.SubjectFactionName = deadFaction != null ? deadFaction.Name : null;
+            lifeEvent.SubjectWasPlayerFaction = deadFaction == Faction.OfPlayer;
+            lifeEvent.SubjectWasHostileToPlayer = deadFaction != null && deadFaction.HostileTo(Faction.OfPlayer);
+
+            state.LifeEvents.Add(lifeEvent);
 
             float importance =
                 wasSpouse

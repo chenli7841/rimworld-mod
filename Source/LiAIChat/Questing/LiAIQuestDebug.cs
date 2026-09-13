@@ -4,7 +4,7 @@ namespace LiAIChat.Questing
 {
     public static class LiAIQuestDebug
     {
-        public static bool Enabled = true;
+        public static bool Enabled = false;
 
         public static void LogTest(
             string nodeName,

@@ -39,5 +39,7 @@ namespace LiAIChat.Background
         // Life goal
         public string LifeGoalTitle = "";
         public string LifeGoalDescription = "";
+
+        public string CurrentRelationships;
     }
 }

@@ -81,6 +81,7 @@
     <Compile Include="AI\OpenAIProactiveDialogueDirector.cs" />
     <Compile Include="AI\OpenAIResponseParser.cs" />
     <Compile Include="AI\OpenAIWorldviewDirector.cs" />
+    <Compile Include="AI\PawnRelationshipContextBuilder.cs" />
     <Compile Include="Archive\AncientArchiveFactory.cs" />
     <Compile Include="Archive\AncientArchiveIdentificationUtility.cs" />
     <Compile Include="Archive\AncientArchiveStudyUtility.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="Civilization\UI\CivilizationKnowledgeNodeVisualState.cs" />
     <Compile Include="Civilization\UI\CivilizationKnowledgeNodeVisualUtility.cs" />
     <Compile Include="Civilization\UI\CivilizationKnowledgeTreeLayout.cs" />
+    <Compile Include="Civilization\UI\MainTabWindow_CivilizationKnowledge.cs" />
     <Compile Include="Civilization\UI\Window_CivilizationKnowledgeTree.cs" />
     <Compile Include="Civilization\Window_CivilizationKnowledge.cs" />
     <Compile Include="Class1.cs" />

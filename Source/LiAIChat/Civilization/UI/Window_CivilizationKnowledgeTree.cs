@@ -9,6 +9,12 @@ namespace LiAIChat.Civilization.UI
     public class Window_CivilizationKnowledgeTree : Window
     {
         private Vector2 scrollPosition = Vector2.zero;
+        private CivilizationKnowledgeDef selectedKnowledge;
+
+        private bool isPanning = false;
+
+        private Vector2 lastPanMousePosition =
+            Vector2.zero;
 
         public override Vector2 InitialSize
         {
@@ -18,12 +24,6 @@ namespace LiAIChat.Civilization.UI
             }
         }
 
-        private CivilizationKnowledgeDef selectedKnowledge;
-
-        private bool isPanning = false;
-
-        private Vector2 lastPanMousePosition =
-            Vector2.zero;
 
         private float zoom = 1.0f;
 

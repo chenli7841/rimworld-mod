@@ -21,6 +21,8 @@ namespace LiAIChat.Background
             snapshot.Name =
                 pawn.LabelShort;
 
+            snapshot.CurrentRelationships = PawnRelationshipContextBuilder.Build(pawn);
+
             if (pawn.story?.traits?.allTraits != null)
             {
                 foreach (Trait trait
