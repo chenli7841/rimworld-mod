@@ -72,10 +72,13 @@
 
   <QuestScriptDef>
     <defName>LiAIChat_LostEarthArchive</defName>
-
+    <rootSelectionWeight>0.40</rootSelectionWeight>
+    <minRefireDays>30</minRefireDays>
     <root Class="QuestNode_Sequence">
       <nodes>
-
+        <li Class="LiAIChat.Questing.QuestNode_RequireColonyAge">
+          <minDays>30</minDays>
+        </li>
         <!-- =================================================== -->
         <!-- 1. Get player's current quest map                   -->
         <!-- =================================================== -->
@@ -187,11 +190,13 @@
 
   <QuestScriptDef>
     <defName>LiAIChat_ScholarsLastCollection</defName>
-
+    <rootSelectionWeight>0.25</rootSelectionWeight>
+    <minRefireDays>45</minRefireDays>
     <root Class="QuestNode_Sequence">
       <nodes>
-
-
+        <li Class="LiAIChat.Questing.QuestNode_RequireColonyAge">
+          <minDays>45</minDays>
+        </li>
         <!-- =================================================== -->
         <!-- 1. Player map                                       -->
         <!-- =================================================== -->
