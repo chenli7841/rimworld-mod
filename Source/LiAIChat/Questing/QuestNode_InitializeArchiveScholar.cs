@@ -11,12 +11,23 @@ namespace LiAIChat.Questing
         public SlateRef<Pawn> pawn;
 
         protected override bool TestRunInt(
-            Slate slate)
+    Slate slate)
         {
             Pawn targetPawn =
                 pawn.GetValue(slate);
 
-            return targetPawn != null;
+            bool result =
+                targetPawn != null;
+
+            LiAIQuestDebug.LogTest(
+                "InitializeArchiveScholar",
+                result,
+                "pawn=" +
+                (targetPawn != null
+                    ? targetPawn.LabelShort
+                    : "<null>"));
+
+            return result;
         }
 
         protected override void RunInt()

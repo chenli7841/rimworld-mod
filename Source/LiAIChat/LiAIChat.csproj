@@ -195,6 +195,7 @@
     <Compile Include="Questing\ArchiveSiteDefenderUtility.cs" />
     <Compile Include="Questing\ArchiveSiteDefenseComponent.cs" />
     <Compile Include="Questing\ArchiveSiteMechanoidUtility.cs" />
+    <Compile Include="Questing\LiAIQuestDebug.cs" />
     <Compile Include="Questing\QuestNode_AddArchiveReward.cs" />
     <Compile Include="Questing\QuestNode_CompleteArchiveScholarStay.cs" />
     <Compile Include="Questing\QuestNode_CreateArchiveRefugees.cs" />

@@ -28,11 +28,62 @@ namespace LiAIChat.Questing
 
             if (pawnEnumerable == null)
             {
+                LiAIQuestDebug.LogTest(
+                    "GiveArchiveToRefugeeGroup",
+                    false,
+                    "pawns=null");
+
                 return false;
             }
 
-            return pawnEnumerable.Any()
-                && !string.IsNullOrEmpty(storeArchiveAs);
+            List<Pawn> refugeeList =
+                pawnEnumerable
+                    .Where(p => p != null)
+                    .ToList();
+
+            if (refugeeList.Count == 0)
+            {
+                LiAIQuestDebug.LogTest(
+                    "GiveArchiveToRefugeeGroup",
+                    false,
+                    "valid refugees=0");
+
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(storeArchiveAs))
+            {
+                return false;
+            }
+
+            // ---------------------------------------------------------
+            // Dry-run Slate values
+            //
+            // Do NOT create a real ArchiveRefugeeGroupState here.
+            // We only provide values required by later TestRun nodes.
+            // ---------------------------------------------------------
+
+            if (!string.IsNullOrEmpty(storeGroupIdAs))
+            {
+                slate.Set(
+                    storeGroupIdAs,
+                    "LiAIChat_TestRefugeeGroup");
+            }
+
+            if (!string.IsNullOrEmpty(storeLeaderAs))
+            {
+                slate.Set(
+                    storeLeaderAs,
+                    refugeeList[0]);
+            }
+            LiAIQuestDebug.LogTest(
+                "GiveArchiveToRefugeeGroup",
+                true,
+                "refugees=" +
+                refugeeList.Count +
+                ", groupIdPrepared=" +
+                (!string.IsNullOrEmpty(storeGroupIdAs)));
+            return true;
         }
 
         protected override void RunInt()

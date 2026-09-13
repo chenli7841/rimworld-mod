@@ -65,6 +65,14 @@ namespace LiAIChat.Questing
                     homeFaction);
             }
 
+            LiAIQuestDebug.LogTest(
+                "CreateArchiveRefugees",
+                true,
+                "count=" +
+                refugees.Count +
+                ", key=" +
+                storeAs);
+
             return true;
         }
 

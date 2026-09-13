@@ -15,13 +15,23 @@ namespace LiAIChat.Questing
 
 
         protected override bool TestRunInt(
-            Slate slate)
+    Slate slate)
         {
             string id =
                 groupId.GetValue(slate);
 
-            return
+            bool result =
                 !string.IsNullOrEmpty(id);
+
+            LiAIQuestDebug.LogTest(
+                "FinalizeArchiveRefugeeStay",
+                result,
+                "groupId=" +
+                (string.IsNullOrEmpty(id)
+                    ? "<null>"
+                    : id));
+
+            return result;
         }
 
 

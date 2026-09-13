@@ -19,7 +19,13 @@ namespace LiAIChat.Questing
                     null);
 
             if (pawn == null)
+            {
+                LiAIQuestDebug.LogTest(
+                    "CreateArchiveScholar",
+                    false,
+                    "PawnGenerator returned null");
                 return false;
+            }
 
             slate.Set(
                 storeAs,
@@ -31,6 +37,14 @@ namespace LiAIChat.Questing
                     storeAs + "Faction",
                     pawn.Faction);
             }
+
+            LiAIQuestDebug.LogTest(
+                "CreateArchiveScholar",
+                true,
+                "pawn=" +
+                pawn.LabelShort +
+                ", key=" +
+                storeAs);
 
             return true;
         }
