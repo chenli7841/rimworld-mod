@@ -73,6 +73,7 @@
   <QuestScriptDef>
     <defName>LiAIChat_LostEarthArchive</defName>
     <rootSelectionWeight>0.40</rootSelectionWeight>
+    <expireDaysRange>20~30</expireDaysRange>
     <minRefireDays>30</minRefireDays>
     <root Class="QuestNode_Sequence">
       <nodes>
@@ -191,6 +192,7 @@
   <QuestScriptDef>
     <defName>LiAIChat_ScholarsLastCollection</defName>
     <rootSelectionWeight>0.25</rootSelectionWeight>
+    <expireDaysRange>12~18</expireDaysRange>
     <minRefireDays>45</minRefireDays>
     <root Class="QuestNode_Sequence">
       <nodes>

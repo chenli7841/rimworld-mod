@@ -9,7 +9,7 @@ namespace LiAIChat.Events
     public static class PawnDeathEventHandler
     {
         public static void HandleDeath(
-            Pawn deadPawn)
+            Pawn deadPawn, DamageInfo? dinfo)
         {
             if (deadPawn == null)
                 return;
@@ -54,14 +54,16 @@ namespace LiAIChat.Events
                 RecordDeath(
                     observer,
                     state,
-                    deadPawn);
+                    deadPawn,
+                    dinfo);
             }
         }
 
         private static void RecordDeath(
             Pawn observer,
             PawnAIState state,
-            Pawn deadPawn)
+            Pawn deadPawn,
+            DamageInfo? dinfo)
         {
             foreach (PawnLifeEvent existing
                      in state.LifeEvents)
@@ -113,6 +115,8 @@ namespace LiAIChat.Events
             lifeEvent.SubjectFactionName = deadFaction != null ? deadFaction.Name : null;
             lifeEvent.SubjectWasPlayerFaction = deadFaction == Faction.OfPlayer;
             lifeEvent.SubjectWasHostileToPlayer = deadFaction != null && deadFaction.HostileTo(Faction.OfPlayer);
+            lifeEvent.DeathContext = BuildDeathContext(deadPawn, dinfo);
+            CaptureRelationshipToDeadPawn(observer, deadPawn, lifeEvent);
 
             state.LifeEvents.Add(lifeEvent);
 
@@ -138,9 +142,86 @@ namespace LiAIChat.Events
                 state.Meaning.Belonging.ToString("0.00") +
                 ", Coherence=" +
                 state.Meaning.Coherence.ToString("0.00"));
+        }
 
+        private static string BuildDeathContext(Pawn deadPawn, DamageInfo? dinfo)
+        {
+            if (deadPawn == null)
+            {
+                return null;
+            }
 
+            Faction deadFaction =
+                deadPawn.Faction;
 
+            bool deadPawnWasHostile =
+                deadFaction != null &&
+                deadFaction.HostileTo(Faction.OfPlayer);
+
+            if (dinfo.HasValue)
+            {
+                Thing instigator =
+                    dinfo.Value.Instigator;
+
+                if (deadPawnWasHostile &&
+                    instigator != null &&
+                    instigator.Faction == Faction.OfPlayer)
+                {
+                    return "Killed during hostile combat with the player's colony.";
+                }
+            }
+
+            if (deadPawnWasHostile)
+            {
+                return "Died while belonging to a faction hostile to the player's colony.";
+            }
+
+            return "Died under circumstances not identified as hostile combat.";
+        }
+
+        private static void CaptureRelationshipToDeadPawn(
+            Pawn observer,
+            Pawn deadPawn,
+            PawnLifeEvent lifeEvent)
+        {
+            if (observer == null ||
+                deadPawn == null ||
+                lifeEvent == null ||
+                observer.relations == null)
+            {
+                return;
+            }
+
+            DirectPawnRelation bestRelation = null;
+
+            foreach (DirectPawnRelation relation
+                     in observer.relations.DirectRelations)
+            {
+                if (relation == null ||
+                    relation.def == null ||
+                    relation.otherPawn != deadPawn)
+                {
+                    continue;
+                }
+
+                if (bestRelation == null ||
+                    relation.def.importance >
+                    bestRelation.def.importance)
+                {
+                    bestRelation = relation;
+                }
+            }
+
+            if (bestRelation == null)
+            {
+                return;
+            }
+
+            lifeEvent.SubjectRelationshipDefName =
+                bestRelation.def.defName;
+
+            lifeEvent.SubjectRelationshipLabel =
+                bestRelation.def.label;
         }
         private static void ApplyMeaningImpact(MeaningState meaning, bool wasSpouse)
         {

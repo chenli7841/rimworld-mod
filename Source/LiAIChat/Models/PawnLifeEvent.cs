@@ -1,4 +1,5 @@
-﻿using Verse;
+﻿using RimWorld;
+using Verse;
 
 namespace LiAIChat.Models
 {
@@ -17,10 +18,15 @@ namespace LiAIChat.Models
 
         public bool SubjectWasPlayerFaction;
 
+        public string SubjectRelationshipDefName;
+        public string SubjectRelationshipLabel;
+
         /// <summary>
         /// 避免一个LifeEvent 永远让 Pawn 反复主动找你
         /// </summary>
         public bool ProactiveDialogueUsed = false;
+
+        public string DeathContext;
         public PawnLifeEvent()
         {
         }
@@ -77,6 +83,18 @@ namespace LiAIChat.Models
                 ref SubjectWasPlayerFaction,
                 "subjectWasPlayerFaction",
                 false);
+
+            Scribe_Values.Look(
+                ref SubjectRelationshipDefName,
+                "subjectRelationshipDefName");
+
+            Scribe_Values.Look(
+                ref SubjectRelationshipLabel,
+                "subjectRelationshipLabel");
+
+            Scribe_Values.Look(
+                ref DeathContext,
+                "deathContext");
         }
     }
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Defs>
+
+  <MainButtonDef>
+    <defName>LiAIChat_CivilizationKnowledge</defName>
+    <label>civilization</label>
+    <description>View the reconstructed knowledge of ancient Earth preserved by your colony.</description>
+    <tabWindowClass>LiAIChat.Civilization.UI.MainTabWindow_CivilizationKnowledge</tabWindowClass>
+    <order>66</order>
+    <closesWorldView>true</closesWorldView>
+  </MainButtonDef>
+
+</Defs>

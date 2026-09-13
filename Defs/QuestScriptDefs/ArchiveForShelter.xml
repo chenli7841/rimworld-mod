@@ -4,6 +4,7 @@
   <QuestScriptDef>
     <defName>LiAIChat_ArchiveForShelter</defName>
     <rootSelectionWeight>0.20</rootSelectionWeight>
+    <expireDaysRange>8~12</expireDaysRange>
     <minRefireDays>60</minRefireDays>
     <root Class="QuestNode_Sequence">
       <nodes>

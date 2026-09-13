@@ -633,6 +633,19 @@ namespace LiAIChat.AI
                     {
                         prompt.AppendLine("  Relationship to colony: Hostile to the player's colony.");
                     }
+
+                    if (!string.IsNullOrWhiteSpace(lifeEvent.SubjectRelationshipLabel))
+                    {
+                        prompt.AppendLine(
+                            "  Personal relationship to you: " +
+                            lifeEvent.SubjectRelationshipLabel + ".");
+                    }
+                    else
+                    {
+                        prompt.AppendLine(
+                            "  Personal relationship to you: " +
+                            "No known close direct relationship.");
+                    }
                 }
             }
 
@@ -648,6 +661,15 @@ namespace LiAIChat.AI
             prompt.AppendLine(
                 "The character may naturally refer to them when relevant, " +
                 "but should not force them into every conversation.");
+
+            prompt.AppendLine(
+                "A person's faction role and personal relationship can conflict. " +
+                "For example, someone may have been hostile to the colony while also being your relative, lover, spouse, or former companion. " +
+                "When that happens, preserve both facts and allow the character to have conflicted feelings.");
+
+            prompt.AppendLine(
+                "Do not treat a hostile stranger as a lost colony member. " +
+                "Conversely, do not erase a genuine personal relationship merely because the dead person belonged to a hostile faction.");
 
             prompt.AppendLine();
 
