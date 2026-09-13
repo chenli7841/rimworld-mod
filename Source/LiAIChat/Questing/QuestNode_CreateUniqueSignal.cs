@@ -11,10 +11,27 @@ namespace LiAIChat.Questing
         public string prefix;
 
         protected override bool TestRunInt(
-            Slate slate)
+    Slate slate)
         {
-            return !string.IsNullOrEmpty(
-                storeAs);
+            if (string.IsNullOrEmpty(storeAs))
+                return false;
+
+            string actualPrefix =
+                string.IsNullOrEmpty(prefix)
+                    ? "LiAIChat_Signal"
+                    : prefix;
+
+            string signal =
+                actualPrefix +
+                "_TEST_" +
+                Guid.NewGuid()
+                    .ToString("N");
+
+            slate.Set(
+                storeAs,
+                signal);
+
+            return true;
         }
 
         protected override void RunInt()

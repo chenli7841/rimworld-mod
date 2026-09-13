@@ -10,7 +10,29 @@ namespace LiAIChat.Questing
 
         protected override bool TestRunInt(Slate slate)
         {
-            return !string.IsNullOrEmpty(storeAs);
+            if (string.IsNullOrEmpty(storeAs))
+                return false;
+
+            Pawn pawn =
+                PawnGenerator.GeneratePawn(
+                    PawnKindDefOf.SpaceRefugee,
+                    null);
+
+            if (pawn == null)
+                return false;
+
+            slate.Set(
+                storeAs,
+                pawn);
+
+            if (pawn.Faction != null)
+            {
+                slate.Set(
+                    storeAs + "Faction",
+                    pawn.Faction);
+            }
+
+            return true;
         }
 
         protected override void RunInt()

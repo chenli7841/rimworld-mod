@@ -13,7 +13,59 @@ namespace LiAIChat.Questing
 
         protected override bool TestRunInt(Slate slate)
         {
-            return !string.IsNullOrEmpty(storeAs);
+            if (string.IsNullOrEmpty(storeAs))
+                return false;
+
+            int refugeeCount =
+                Rand.RangeInclusive(3, 5);
+
+            List<Pawn> refugees =
+                new List<Pawn>();
+
+            Pawn firstPawn =
+                PawnGenerator.GeneratePawn(
+                    PawnKindDefOf.SpaceRefugee,
+                    null);
+
+            if (firstPawn == null)
+                return false;
+
+            refugees.Add(firstPawn);
+
+            Faction homeFaction =
+                firstPawn.Faction;
+
+            for (int i = 1;
+                 i < refugeeCount;
+                 i++)
+            {
+                Pawn pawn =
+                    PawnGenerator.GeneratePawn(
+                        PawnKindDefOf.SpaceRefugee,
+                        homeFaction);
+
+                if (pawn != null)
+                {
+                    refugees.Add(pawn);
+                }
+            }
+
+            if (refugees.Count == 0)
+                return false;
+
+            slate.Set(
+                storeAs,
+                refugees);
+
+            if (homeFaction != null &&
+                !string.IsNullOrEmpty(storeFactionAs))
+            {
+                slate.Set(
+                    storeFactionAs,
+                    homeFaction);
+            }
+
+            return true;
         }
 
         protected override void RunInt()
