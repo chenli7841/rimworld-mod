@@ -67,7 +67,7 @@ namespace LiAIChat.Patches
                     }
                 };
             }
-
+            /*
             yield return new Command_Action
             {
                 defaultLabel = "Identify Ancient Archive",
@@ -155,6 +155,7 @@ namespace LiAIChat.Patches
                     }
                 };
             }
+            */
         }
         private static void GenerateArchiveTestQuest()
         {

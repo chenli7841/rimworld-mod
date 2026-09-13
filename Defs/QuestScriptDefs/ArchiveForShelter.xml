@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <Defs>
-
   <QuestScriptDef>
     <defName>LiAIChat_ArchiveForShelter</defName>
 
     <root Class="QuestNode_Sequence">
-
       <nodes>
 
         <li Class="LiAIChat.Questing.QuestNode_CreateArchiveRefugees">
           <storeAs>refugees</storeAs>
           <storeFactionAs>refugeeFaction</storeFactionAs>
         </li>
+
+        <!-- 先生成两个唯一 signal -->
+        <li Class="LiAIChat.Questing.QuestNode_CreateUniqueSignal">
+          <storeAs>refugeeExitSignal</storeAs>
+          <prefix>LiAIChat_RefugeesExited</prefix>
+        </li>
+
+        <li Class="LiAIChat.Questing.QuestNode_CreateUniqueSignal">
+          <storeAs>refugeeFailureSignal</storeAs>
+          <prefix>LiAIChat_RefugeesFailed</prefix>
+        </li>
+
+        <!-- 然后才能把 signal 传给 group state -->
         <li Class="LiAIChat.Questing.QuestNode_GiveArchiveToRefugeeGroup">
           <pawns>$refugees</pawns>
           <storeArchiveAs>refugeeArchive</storeArchiveAs>
@@ -21,6 +32,7 @@
           <exitSignal>$refugeeExitSignal</exitSignal>
           <failureSignal>$refugeeFailureSignal</failureSignal>
         </li>
+
         <li Class="QuestNode_ExtraFaction">
           <faction>$refugeeFaction</faction>
           <pawns>$refugees</pawns>
@@ -37,38 +49,24 @@
           <sendStandardLetter>false</sendStandardLetter>
         </li>
 
-        <li Class="LiAIChat.Questing.QuestNode_CreateUniqueSignal">
-          <storeAs>refugeeExitSignal</storeAs>
-          <prefix>LiAIChat_RefugeesExited</prefix>
-        </li>
-
-        <li Class="LiAIChat.Questing.QuestNode_CreateUniqueSignal">
-          <storeAs>refugeeFailureSignal</storeAs>
-          <prefix>LiAIChat_RefugeesFailed</prefix>
-        </li>
-
+        <!-- 正确字段名是 outSignalComplete -->
         <li Class="QuestNode_Delay">
           <delayTicks>600</delayTicks>
-          <outSignal>RefugeeStayFinished</outSignal>
-        </li>
 
-        <li Class="LiAIChat.Questing.QuestNode_FinalizeArchiveRefugeeStay">
-          <inSignal>RefugeeStayFinished</inSignal>
-          <groupId>$refugeeGroupId</groupId>
-          <pawns>$refugees</pawns>
+          <node Class="LiAIChat.Questing.QuestNode_FinalizeArchiveRefugeeStay">
+            <groupId>$refugeeGroupId</groupId>
+            <pawns>$refugees</pawns>
+          </node>
         </li>
 
       </nodes>
-
     </root>
-
 
     <questNameRules>
       <rulesStrings>
         <li>questName->Archive for Shelter</li>
       </rulesStrings>
     </questNameRules>
-
 
     <questDescriptionRules>
       <rulesStrings>
@@ -77,5 +75,4 @@
     </questDescriptionRules>
 
   </QuestScriptDef>
-
 </Defs>
