@@ -34,6 +34,61 @@ namespace LiAIChat.Civilization
             return state;
         }
 
+        public static void EvaluateAllStatuses()
+        {
+            foreach (CivilizationKnowledgeNode node
+                     in CivilizationKnowledgeDatabase.Nodes)
+            {
+                EvaluateNodeAvailability(
+                    node);
+            }
+        }
+
+        private static void EvaluateNodeAvailability(
+    CivilizationKnowledgeNode node)
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            CivilizationKnowledgeNodeState state =
+                GetState(
+                    node.Id);
+
+            if (state.Status ==
+                    CivilizationKnowledgeStatus.InProgress ||
+                state.Status ==
+                    CivilizationKnowledgeStatus.Recovered)
+            {
+                return;
+            }
+
+            if (node.ParentId == null)
+            {
+                state.Status =
+                    CivilizationKnowledgeStatus.Available;
+
+                return;
+            }
+
+            CivilizationKnowledgeNodeState parentState =
+                GetState(
+                    node.ParentId);
+
+            if (parentState.Status ==
+                CivilizationKnowledgeStatus.Recovered)
+            {
+                state.Status =
+                    CivilizationKnowledgeStatus.Available;
+            }
+            else
+            {
+                state.Status =
+                    CivilizationKnowledgeStatus.Locked;
+            }
+        }
+
         private static CivilizationKnowledgeNodeState
             CreateDefaultState(
                 string nodeId)

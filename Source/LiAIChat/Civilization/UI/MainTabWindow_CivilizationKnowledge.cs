@@ -190,47 +190,18 @@ namespace LiAIChat.Civilization.UI
 
             y += 28f;
 
-            CivilizationKnowledgeNodeState state =
-                CivilizationKnowledgeStateManager.GetState(
-                    node.Id);
-
-            Widgets.Label(
-                new Rect(
-                    innerRect.x,
-                    y,
-                    innerRect.width,
-                    25f),
-                "Status: " +
-                state.Status);
-
+            CivilizationKnowledgeDef knowledgeDef = FindKnowledgeDef(node);
+            string statusText = GetKnowledgeStatusText(knowledgeDef);
+            Widgets.Label(new Rect(innerRect.x, y, innerRect.width, 25f), "Status: " + statusText);
             y += 28f;
 
-            Widgets.Label(
-                new Rect(
-                    innerRect.x,
-                    y,
-                    innerRect.width,
-                    40f),
-                "Parent: " +
-                GetParentLabel(node));
-
+            Widgets.Label(new Rect(innerRect.x, y, innerRect.width, 40f), "Parent: " + GetParentLabel(node));
             y += 45f;
 
-            Widgets.DrawLineHorizontal(
-                innerRect.x,
-                y,
-                innerRect.width);
-
+            Widgets.DrawLineHorizontal(innerRect.x, y, innerRect.width);
             y += 12f;
 
-            Widgets.Label(
-                new Rect(
-                    innerRect.x,
-                    y,
-                    innerRect.width,
-                    25f),
-                "Description");
-
+            Widgets.Label(new Rect(innerRect.x, y, innerRect.width, 25f), "Description");
             y += 28f;
 
             float descriptionHeight =
@@ -245,6 +216,52 @@ namespace LiAIChat.Civilization.UI
                     innerRect.width,
                     descriptionHeight),
                 node.Description);
+        }
+
+        private CivilizationKnowledgeDef FindKnowledgeDef(CivilizationKnowledgeNode node)
+        {
+            if (node == null)
+            {
+                return null;
+            }
+
+            return DefDatabase<CivilizationKnowledgeDef>.GetNamedSilentFail(node.Id);
+        }
+        private string GetKnowledgeStatusText(CivilizationKnowledgeDef knowledgeDef)
+        {
+            if (knowledgeDef == null)
+            {
+                return "Unknown";
+            }
+
+            CivilizationKnowledgeState state = CivilizationKnowledgeManager.GetState(knowledgeDef);
+
+            if (state == null)
+            {
+                return "Unknown";
+            }
+
+            if (!state.Unlocked)
+            {
+                return "Locked";
+            }
+
+            if (state.AwaitingReactivation)
+            {
+                return "Awaiting Reactivation";
+            }
+
+            if (state.Dormant)
+            {
+                return "Dormant";
+            }
+
+            if (state.Unstable)
+            {
+                return "Unstable";
+            }
+
+            return "Active";
         }
 
         private void DrawTreeViewport(
@@ -517,14 +534,10 @@ namespace LiAIChat.Civilization.UI
                 }
 
                 bool selected = node.Id == selectedNodeId;
-                CivilizationKnowledgeNodeState state =
-    CivilizationKnowledgeStateManager.GetState(
-        node.Id);
-                DrawNode(
-    nodeRect,
-    node.Label,
-    selected,
-    state.Status);
+                CivilizationKnowledgeDef knowledgeDef = FindKnowledgeDef(node);
+
+                CivilizationKnowledgeState state = knowledgeDef != null ? CivilizationKnowledgeManager.GetState(knowledgeDef) : null;
+                DrawNode(nodeRect, node.Label, selected, state);
             }
         }
         private List<CivilizationKnowledgeNode> GetNodesForTier(List<CivilizationKnowledgeNode> nodes, int tier)
@@ -652,47 +665,27 @@ namespace LiAIChat.Civilization.UI
 
             return maxTier;
         }
-        private void DrawNode(
-    Rect rect,
-    string label,
-    bool selected,
-    CivilizationKnowledgeStatus status)
+        private void DrawNode(Rect rect, string label, bool selected, CivilizationKnowledgeState state)
         {
-            Widgets.DrawMenuSection(
-                rect);
+            Widgets.DrawMenuSection(rect);
 
-            if (status ==
-                CivilizationKnowledgeStatus.Locked)
+            bool locked = state == null || !state.Unlocked;
+
+            if (locked)
             {
-                GUI.color =
-                    new Color(
-                        0.55f,
-                        0.55f,
-                        0.55f,
-                        1f);
+                GUI.color = new Color(0.55f, 0.55f, 0.55f, 1f);
             }
 
             if (selected)
             {
-                Widgets.DrawHighlight(
-                    rect);
+                Widgets.DrawHighlight(rect);
             }
 
-            TextAnchor oldAnchor =
-                Text.Anchor;
-
-            Text.Anchor =
-                TextAnchor.MiddleCenter;
-
-            Widgets.Label(
-                rect.ContractedBy(6f),
-                label);
-
-            Text.Anchor =
-                oldAnchor;
-
-            GUI.color =
-                Color.white;
+            TextAnchor oldAnchor = Text.Anchor;
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Widgets.Label(rect.ContractedBy(6f), label);
+            Text.Anchor = oldAnchor;
+            GUI.color = Color.white;
         }
 
         private void DrawBranch(Rect parentRect, Rect[] childRects)
