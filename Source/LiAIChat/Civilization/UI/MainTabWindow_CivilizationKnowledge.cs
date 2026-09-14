@@ -96,7 +96,7 @@ namespace LiAIChat.Civilization.UI
                     detailPanelWidth,
                     inRect.height -
                     45f);
-            HandleZoom(viewportRect);
+            
             DrawTreeViewport(
                 viewportRect);
 
@@ -104,7 +104,7 @@ namespace LiAIChat.Civilization.UI
                 detailRect);
         }
 
-        private void HandleZoom(
+        private void HandleTreeZoom(
     Rect viewportRect)
         {
             Event currentEvent =
@@ -151,24 +151,23 @@ namespace LiAIChat.Civilization.UI
                     MinZoom,
                     MaxZoom);
 
-            if (Mathf.Approximately(
+            if (!Mathf.Approximately(
                     oldZoom,
                     zoom))
             {
-                currentEvent.Use();
+                Vector2 mouseInViewport =
+                    mousePosition -
+                    viewportRect.position;
 
-                return;
+                AdjustCanvasOffsetForZoom(
+                    mouseInViewport,
+                    oldZoom,
+                    zoom);
             }
 
-            Vector2 mouseInViewport =
-                mousePosition -
-                viewportRect.position;
-
-            AdjustCanvasOffsetForZoom(
-                mouseInViewport,
-                oldZoom,
-                zoom);
-
+            // 非常重要：
+            // 阻止这个 scroll event 继续被 RimWorld
+            // 背后的 CameraDriver 使用。
             currentEvent.Use();
         }
         private void AdjustCanvasOffsetForZoom(
@@ -198,7 +197,7 @@ namespace LiAIChat.Civilization.UI
         // ============================================================
 
         private void DrawTreeViewport(
-            Rect viewportRect)
+    Rect viewportRect)
         {
             Widgets.DrawMenuSection(
                 viewportRect);
@@ -215,6 +214,9 @@ namespace LiAIChat.Civilization.UI
                     true;
             }
 
+            HandleTreeZoom(
+                viewportRect);
+
             HandleCanvasPan(
                 viewportRect);
 
@@ -224,8 +226,6 @@ namespace LiAIChat.Civilization.UI
             DrawKnowledgeTree();
 
             Widgets.EndGroup();
-
-            DrawZoomControls(viewportRect);
         }
 
         private void DrawZoomControls(
@@ -481,17 +481,21 @@ namespace LiAIChat.Civilization.UI
 
             float x =
                 canvasOffset.x +
-                def.treeX * zoom;
+                def.treeX *
+                zoom;
 
             float y =
                 canvasOffset.y +
-                def.treeY * zoom;
+                def.treeY *
+                zoom;
 
             float width =
-                NodeWidth * zoom;
+                NodeWidth *
+                zoom;
 
             float height =
-                NodeHeight * zoom;
+                NodeHeight *
+                zoom;
 
             return new Rect(
                 x,
