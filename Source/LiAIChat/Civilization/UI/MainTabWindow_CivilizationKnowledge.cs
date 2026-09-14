@@ -44,32 +44,25 @@ namespace LiAIChat.Civilization.UI
         private void DrawKnowledgeTree(Rect rect)
         {
             List<CivilizationKnowledgeNode> nodes = CivilizationKnowledgeDatabase.Nodes;
-
             Dictionary<string, Rect> nodeRects = new Dictionary<string, Rect>();
-
-            int maxTier = GetMaxTier(nodes);
-
-            for (int tier = 0; tier <= maxTier; tier++)
+            CivilizationKnowledgeNode root = null;
+            foreach (CivilizationKnowledgeNode node in nodes)
             {
-                List<CivilizationKnowledgeNode> tierNodes = GetNodesForTier(nodes, tier);
-
-                if (tierNodes.Count == 0)
+                if (node.ParentId == null)
                 {
-                    continue;
-                }
-
-                float totalWidth = tierNodes.Count * NodeWidth + (tierNodes.Count - 1) * HorizontalGap;
-                float startX = rect.center.x - totalWidth / 2f;
-                float y = rect.y + 40f + tier * (NodeHeight + VerticalGap);
-
-                for (int i = 0; i < tierNodes.Count; i++)
-                {
-                    CivilizationKnowledgeNode node = tierNodes[i];
-                    Rect nodeRect = new Rect(startX + i * (NodeWidth + HorizontalGap), y, NodeWidth, NodeHeight);
-                    nodeRects[node.Id] = nodeRect;
+                    root = node;
+                    break;
                 }
             }
 
+            if (root == null)
+            {
+                return;
+            }
+
+            Rect rootRect = new Rect(rect.center.x - NodeWidth / 2f, rect.y + 40f, NodeWidth, NodeHeight);
+            nodeRects[root.Id] = rootRect;
+            LayoutChildren(root, nodes, nodeRects);
             DrawConnections(nodes, nodeRects);
             DrawNodes(nodes, nodeRects);
         }
@@ -144,6 +137,55 @@ namespace LiAIChat.Civilization.UI
             }
 
             return result;
+        }
+
+        private List<CivilizationKnowledgeNode> GetChildren(List<CivilizationKnowledgeNode> nodes, string parentId)
+        {
+            List<CivilizationKnowledgeNode> result = new List<CivilizationKnowledgeNode>();
+
+            foreach (CivilizationKnowledgeNode node in nodes)
+            {
+                if (node.ParentId == parentId)
+                {
+                    result.Add(node);
+                }
+            }
+
+            return result;
+        }
+
+        private void LayoutChildren(CivilizationKnowledgeNode parent, List<CivilizationKnowledgeNode> nodes, Dictionary<string, Rect> nodeRects)
+        {
+            List<CivilizationKnowledgeNode> children = GetChildren(nodes, parent.Id);
+
+            if (children.Count == 0)
+            {
+                return;
+            }
+
+            Rect parentRect;
+
+            if (!nodeRects.TryGetValue(parent.Id, out parentRect))
+            {
+                return;
+            }
+
+            float totalWidth = children.Count * NodeWidth + (children.Count - 1) * HorizontalGap;
+
+            float startX = parentRect.center.x - totalWidth / 2f;
+
+            float childY = parentRect.yMax + VerticalGap;
+
+            for (int i = 0; i < children.Count; i++)
+            {
+                CivilizationKnowledgeNode child = children[i];
+
+                Rect childRect = new Rect(startX + i * (NodeWidth + HorizontalGap), childY, NodeWidth, NodeHeight);
+
+                nodeRects[child.Id] = childRect;
+
+                LayoutChildren(child, nodes, nodeRects);
+            }
         }
 
         private int GetMaxTier(List<CivilizationKnowledgeNode> nodes)
