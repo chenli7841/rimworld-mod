@@ -22,6 +22,8 @@ namespace LiAIChat.Civilization.UI
 
         private Vector2 canvasOffset = Vector2.zero;
         private bool canvasInitialized;
+        private bool isDraggingCanvas;
+        private Vector2 lastMousePosition;
 
         public override void DoWindowContents(Rect inRect)
         {
@@ -32,18 +34,95 @@ namespace LiAIChat.Civilization.UI
             DrawTreeViewport(viewportRect);
         }
 
-        private void DrawTreeViewport(Rect viewportRect)
+        private void DrawTreeViewport(
+    Rect viewportRect)
         {
-            Widgets.DrawMenuSection(viewportRect);
+            Widgets.DrawMenuSection(
+                viewportRect);
+
             if (!canvasInitialized)
             {
-                canvasOffset = new Vector2(viewportRect.width / 2f - CanvasWidth / 2f, 0f);
+                canvasOffset =
+                    new Vector2(
+                        viewportRect.width / 2f -
+                        CanvasWidth / 2f,
+                        0f);
+
                 canvasInitialized = true;
             }
-            Widgets.BeginGroup(viewportRect);
-            Rect canvasRect = new Rect(canvasOffset.x, canvasOffset.y, CanvasWidth, CanvasHeight);
-            DrawKnowledgeTree(canvasRect);
+
+            HandleCanvasPan(
+                viewportRect);
+
+            Widgets.BeginGroup(
+                viewportRect);
+
+            Rect canvasRect =
+                new Rect(
+                    canvasOffset.x,
+                    canvasOffset.y,
+                    CanvasWidth,
+                    CanvasHeight);
+
+            DrawKnowledgeTree(
+                canvasRect);
+
             Widgets.EndGroup();
+        }
+        private void HandleCanvasPan(
+    Rect viewportRect)
+        {
+            Event currentEvent =
+                Event.current;
+
+            Vector2 mousePosition =
+                currentEvent.mousePosition;
+
+            if (currentEvent.type ==
+                    EventType.MouseDown &&
+                currentEvent.button == 0 &&
+                viewportRect.Contains(
+                    mousePosition))
+            {
+                isDraggingCanvas = true;
+
+                lastMousePosition =
+                    mousePosition;
+
+                currentEvent.Use();
+
+                return;
+            }
+
+            if (currentEvent.type ==
+                    EventType.MouseDrag &&
+                currentEvent.button == 0 &&
+                isDraggingCanvas)
+            {
+                Vector2 delta =
+                    mousePosition -
+                    lastMousePosition;
+
+                canvasOffset +=
+                    delta;
+
+                lastMousePosition =
+                    mousePosition;
+
+                currentEvent.Use();
+
+                return;
+            }
+
+            if (currentEvent.type ==
+                    EventType.MouseUp &&
+                currentEvent.button == 0 &&
+                isDraggingCanvas)
+            {
+                isDraggingCanvas = false;
+
+                currentEvent.Use();
+            }
         }
         private void DrawKnowledgeTree(Rect rect)
         {
