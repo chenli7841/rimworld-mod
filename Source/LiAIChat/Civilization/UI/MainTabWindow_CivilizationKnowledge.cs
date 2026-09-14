@@ -66,7 +66,27 @@ namespace LiAIChat.Civilization.UI
             DrawConnections(nodes, nodeRects);
             DrawNodes(nodes, nodeRects);
         }
+        private float CalculateSubtreeWidth(CivilizationKnowledgeNode node, List<CivilizationKnowledgeNode> nodes)
+        {
+            List<CivilizationKnowledgeNode> children = GetChildren(nodes, node.Id);
+            if (children.Count == 0)
+            {
+                return NodeWidth;
+            }
 
+            float childrenWidth = 0f;
+            for (int i = 0; i < children.Count; i++)
+            {
+                childrenWidth += CalculateSubtreeWidth(children[i], nodes);
+
+                if (i < children.Count - 1)
+                {
+                    childrenWidth += HorizontalGap;
+                }
+            }
+
+            return Mathf.Max(NodeWidth, childrenWidth);
+        }
         private void DrawConnections(List<CivilizationKnowledgeNode> nodes, Dictionary<string, Rect> nodeRects)
         {
             foreach (CivilizationKnowledgeNode node in nodes)
@@ -154,9 +174,15 @@ namespace LiAIChat.Civilization.UI
             return result;
         }
 
-        private void LayoutChildren(CivilizationKnowledgeNode parent, List<CivilizationKnowledgeNode> nodes, Dictionary<string, Rect> nodeRects)
+        private void LayoutChildren(
+    CivilizationKnowledgeNode parent,
+    List<CivilizationKnowledgeNode> nodes,
+    Dictionary<string, Rect> nodeRects)
         {
-            List<CivilizationKnowledgeNode> children = GetChildren(nodes, parent.Id);
+            List<CivilizationKnowledgeNode> children =
+                GetChildren(
+                    nodes,
+                    parent.Id);
 
             if (children.Count == 0)
             {
@@ -165,26 +191,67 @@ namespace LiAIChat.Civilization.UI
 
             Rect parentRect;
 
-            if (!nodeRects.TryGetValue(parent.Id, out parentRect))
+            if (!nodeRects.TryGetValue(
+                    parent.Id,
+                    out parentRect))
             {
                 return;
             }
 
-            float totalWidth = children.Count * NodeWidth + (children.Count - 1) * HorizontalGap;
+            float totalWidth = 0f;
 
-            float startX = parentRect.center.x - totalWidth / 2f;
-
-            float childY = parentRect.yMax + VerticalGap;
-
-            for (int i = 0; i < children.Count; i++)
+            foreach (CivilizationKnowledgeNode child
+                     in children)
             {
-                CivilizationKnowledgeNode child = children[i];
+                totalWidth +=
+                    CalculateSubtreeWidth(
+                        child,
+                        nodes);
+            }
 
-                Rect childRect = new Rect(startX + i * (NodeWidth + HorizontalGap), childY, NodeWidth, NodeHeight);
+            totalWidth +=
+                (children.Count - 1) *
+                HorizontalGap;
 
-                nodeRects[child.Id] = childRect;
+            float currentX =
+                parentRect.center.x -
+                totalWidth / 2f;
 
-                LayoutChildren(child, nodes, nodeRects);
+            float childY =
+                parentRect.yMax +
+                VerticalGap;
+
+            foreach (CivilizationKnowledgeNode child
+                     in children)
+            {
+                float subtreeWidth =
+                    CalculateSubtreeWidth(
+                        child,
+                        nodes);
+
+                float childCenterX =
+                    currentX +
+                    subtreeWidth / 2f;
+
+                Rect childRect =
+                    new Rect(
+                        childCenterX -
+                        NodeWidth / 2f,
+                        childY,
+                        NodeWidth,
+                        NodeHeight);
+
+                nodeRects[child.Id] =
+                    childRect;
+
+                LayoutChildren(
+                    child,
+                    nodes,
+                    nodeRects);
+
+                currentX +=
+                    subtreeWidth +
+                    HorizontalGap;
             }
         }
 
