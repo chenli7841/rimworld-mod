@@ -49,6 +49,8 @@ namespace LiAIChat.Civilization.UI
             Rect philosophyRect = new Rect(rootRect.x - NodeWidth - HorizontalGap, rootRect.y + NodeHeight + VerticalGap, NodeWidth, NodeHeight);
             Rect scienceRect = new Rect(rootRect.x + NodeWidth + HorizontalGap, rootRect.y + NodeHeight + VerticalGap, NodeWidth, NodeHeight);
 
+            DrawConnection(rootRect, philosophyRect);
+            DrawConnection(rootRect, scienceRect);;
             DrawNode(rootRect, "Ancient Earth\nFoundations");
             DrawNode(philosophyRect, "Philosophy");
             DrawNode(scienceRect, "Science");
@@ -60,6 +62,20 @@ namespace LiAIChat.Civilization.UI
             Text.Anchor = TextAnchor.MiddleCenter;
             Widgets.Label(rect.ContractedBy(6f), label);
             Text.Anchor = oldAnchor;
+        }
+
+        private void DrawConnection(Rect parentRect, Rect childRect)
+        {
+            Vector2 parentBottomCenter = new Vector2(parentRect.center.x, parentRect.yMax);
+            Vector2 childTopCenter = new Vector2(childRect.center.x, childRect.y);
+            float middleY = (parentBottomCenter.y + childTopCenter.y) / 2f;
+
+            Vector2 firstCorner = new Vector2(parentBottomCenter.x, middleY);
+            Vector2 secondCorner = new Vector2(childTopCenter.x, middleY);
+
+            Widgets.DrawLine(parentBottomCenter, firstCorner, Color.gray, 2f);
+            Widgets.DrawLine(firstCorner, secondCorner, Color.gray, 2f);
+            Widgets.DrawLine(secondCorner, childTopCenter, Color.gray, 2f);
         }
     }
 }
