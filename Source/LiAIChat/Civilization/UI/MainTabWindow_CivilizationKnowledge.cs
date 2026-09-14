@@ -190,6 +190,21 @@ namespace LiAIChat.Civilization.UI
 
             y += 28f;
 
+            CivilizationKnowledgeNodeState state =
+                CivilizationKnowledgeStateManager.GetState(
+                    node.Id);
+
+            Widgets.Label(
+                new Rect(
+                    innerRect.x,
+                    y,
+                    innerRect.width,
+                    25f),
+                "Status: " +
+                state.Status);
+
+            y += 28f;
+
             Widgets.Label(
                 new Rect(
                     innerRect.x,
@@ -229,7 +244,6 @@ namespace LiAIChat.Civilization.UI
                     y,
                     innerRect.width,
                     descriptionHeight),
-                node.Description);
                 node.Description);
         }
 
@@ -503,7 +517,14 @@ namespace LiAIChat.Civilization.UI
                 }
 
                 bool selected = node.Id == selectedNodeId;
-                DrawNode(nodeRect, node.Label, selected);
+                CivilizationKnowledgeNodeState state =
+    CivilizationKnowledgeStateManager.GetState(
+        node.Id);
+                DrawNode(
+    nodeRect,
+    node.Label,
+    selected,
+    state.Status);
             }
         }
         private List<CivilizationKnowledgeNode> GetNodesForTier(List<CivilizationKnowledgeNode> nodes, int tier)
@@ -634,10 +655,22 @@ namespace LiAIChat.Civilization.UI
         private void DrawNode(
     Rect rect,
     string label,
-    bool selected)
+    bool selected,
+    CivilizationKnowledgeStatus status)
         {
             Widgets.DrawMenuSection(
                 rect);
+
+            if (status ==
+                CivilizationKnowledgeStatus.Locked)
+            {
+                GUI.color =
+                    new Color(
+                        0.55f,
+                        0.55f,
+                        0.55f,
+                        1f);
+            }
 
             if (selected)
             {
@@ -657,6 +690,9 @@ namespace LiAIChat.Civilization.UI
 
             Text.Anchor =
                 oldAnchor;
+
+            GUI.color =
+                Color.white;
         }
 
         private void DrawBranch(Rect parentRect, Rect[] childRects)
