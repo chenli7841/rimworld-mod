@@ -1,60 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <Defs>
+
+  <!-- ========================================================= -->
+  <!-- Ancient Greek Philosophy                                 -->
+  <!-- 古希腊哲学                                                -->
+  <!-- ========================================================= -->
+
   <LiAIChat.Civilization.CivilizationKnowledgeDef>
     <defName>LiAIChat_CivKnowledge_AncientGreekPhilosophy</defName>
-
     <label>Ancient Greek Philosophy</label>
-
     <title>Ancient Greek Philosophy</title>
     <titleChinese>古希腊哲学</titleChinese>
-
     <description>The reconstructed philosophical traditions of ancient Greece, including foundational works associated with Plato and Aristotle.</description>
-
+    <descriptionChinese>对古希腊哲学传统的重建，包括柏拉图、亚里士多德等思想家的奠基性著作，以及他们对知识、现实、伦理与政治秩序的探索。</descriptionChinese>
     <category>Philosophy</category>
-
     <requiredTexts>
       <li>LiAIChat_Text_Plato_Republic</li>
     </requiredTexts>
-
-    <treeX>0</treeX>
-    <treeY>1</treeY>
+    <gracePeriodDays>10</gracePeriodDays>
+    <dormantAfterDays>30</dormantAfterDays>
+    <treeX>850</treeX>
+    <treeY>160</treeY>
   </LiAIChat.Civilization.CivilizationKnowledgeDef>
+
+
+  <!-- ========================================================= -->
+  <!-- Classical Greek Ethics                                   -->
+  <!-- 古典希腊伦理学                                            -->
+  <!-- ========================================================= -->
+
+  <LiAIChat.Civilization.CivilizationKnowledgeDef>
+    <defName>LiAIChat_CivKnowledge_GreekEthics</defName>
+    <label>Classical Greek Ethics</label>
+    <title>Classical Greek Ethics</title>
+    <titleChinese>古典希腊伦理学</titleChinese>
+    <description>Reconstructed understanding of virtue, character, moral excellence, practical wisdom, and the good life in classical Greek philosophy.</description>
+    <descriptionChinese>对古典希腊伦理思想的重建，探讨德性、品格、道德卓越、实践智慧以及何为美好人生等核心问题。</descriptionChinese>
+    <category>Philosophy</category>
+    <prerequisites>
+      <li>LiAIChat_CivKnowledge_AncientGreekPhilosophy</li>
+    </prerequisites>
+    <requiredTexts>
+      <li>LiAIChat_Text_Aristotle_NicomacheanEthics</li>
+    </requiredTexts>
+    <gracePeriodDays>10</gracePeriodDays>
+    <dormantAfterDays>30</dormantAfterDays>
+    <treeX>600</treeX>
+    <treeY>380</treeY>
+  </LiAIChat.Civilization.CivilizationKnowledgeDef>
+
+
+  <!-- ========================================================= -->
+  <!-- Classical Greek Political Thought                        -->
+  <!-- 古典希腊政治思想                                          -->
+  <!-- ========================================================= -->
+
   <LiAIChat.Civilization.CivilizationKnowledgeDef>
     <defName>LiAIChat_CivKnowledge_ClassicalGreekPoliticalThought</defName>
     <label>Classical Greek Political Thought</label>
     <title>Classical Greek Political Thought</title>
     <titleChinese>古典希腊政治思想</titleChinese>
-    <description>Reconstructed understanding of major classical Greek political ideas concerning the polis, citizenship, justice, constitutions, and political order.</description>
+    <description>Reconstructed understanding of major classical Greek political ideas concerning the polis, citizenship, justice, constitutions, political authority, and political order.</description>
+    <descriptionChinese>对古典希腊政治思想的重建，涵盖城邦、公民身份、正义、政体、政治权威与政治秩序等重要观念。</descriptionChinese>
     <category>PoliticalThought</category>
     <prerequisites>
-        <li>LiAIChat_CivKnowledge_AncientGreekPhilosophy</li>
+      <li>LiAIChat_CivKnowledge_AncientGreekPhilosophy</li>
     </prerequisites>
     <requiredTexts>
-        <li>LiAIChat_Text_Plato_Republic</li>
-        <li>LiAIChat_Text_Aristotle_Politics</li>
+      <li>LiAIChat_Text_Plato_Republic</li>
+      <li>LiAIChat_Text_Aristotle_Politics</li>
     </requiredTexts>
     <gracePeriodDays>10</gracePeriodDays>
     <dormantAfterDays>30</dormantAfterDays>
-    <treeX>1</treeX>
-    <treeY>0</treeY>
+    <treeX>1100</treeX>
+    <treeY>380</treeY>
   </LiAIChat.Civilization.CivilizationKnowledgeDef>
-  <LiAIChat.Civilization.CivilizationKnowledgeDef>
-    <defName>LiAIChat_CivKnowledge_GreekEthics</defName>
 
-    <label>Classical Greek Ethics</label>
-    <title>Classical Greek Ethics</title>
-    <titleChinese>古典希腊伦理学</titleChinese>
-    <description>Reconstructed understanding of virtue, character and the good life in classical Greek philosophy.</description>
-    <category>Philosophy</category>
-    <prerequisites>
-        <li>LiAIChat_CivKnowledge_AncientGreekPhilosophy</li>
-    </prerequisites>
-    <requiredTexts>
-        <li>LiAIChat_Text_Aristotle_NicomacheanEthics</li>
-    </requiredTexts>
-    <treeX>1</treeX>
-    <treeY>2</treeY>
-  </LiAIChat.Civilization.CivilizationKnowledgeDef>
+
+  <!-- ========================================================= -->
+  <!-- FUTURE PHILOSOPHY BRANCHES                               -->
+  <!-- 后续哲学知识分支                                           -->
+  <!--                                                          -->
+  <!-- 暂时不创建实际 Def。                                      -->
+  <!-- 原因：对应的 EarthTextDef 尚未全部建立。                   -->
+  <!--                                                          -->
+  <!-- 建议后续逐步加入：                                         -->
+  <!--                                                          -->
+  <!-- Hellenistic Philosophy / 希腊化哲学                       -->
+  <!--   Epicurus / 伊壁鸠鲁                                     -->
+  <!--   Epictetus / 爱比克泰德                                  -->
+  <!--   Marcus Aurelius / 马可·奥勒留                           -->
+  <!--                                                          -->
+  <!-- Medieval Philosophy / 中世纪哲学                          -->
+  <!--   Augustine / 奥古斯丁                                    -->
+  <!--   Thomas Aquinas / 托马斯·阿奎那                          -->
+  <!--                                                          -->
+  <!-- Rationalism / 理性主义                                    -->
+  <!--   Descartes / 笛卡尔                                      -->
+  <!--   Spinoza / 斯宾诺莎                                      -->
+  <!--   Leibniz / 莱布尼茨                                      -->
+  <!--                                                          -->
+  <!-- British Empiricism / 英国经验主义                         -->
+  <!--   Locke / 洛克                                            -->
+  <!--   Berkeley / 贝克莱                                       -->
+  <!--   Hume / 休谟                                             -->
+  <!--                                                          -->
+  <!-- Kantian Philosophy / 康德哲学                             -->
+  <!--   Critique of Pure Reason / 纯粹理性批判                  -->
+  <!--   Groundwork / 道德形而上学奠基                           -->
+  <!--                                                          -->
+  <!-- German Idealism / 德国唯心主义                            -->
+  <!--   Hegel / 黑格尔                                          -->
+  <!--                                                          -->
+  <!-- Utilitarianism / 功利主义                                 -->
+  <!--   Bentham / 边沁                                          -->
+  <!--   J. S. Mill / 约翰·斯图亚特·密尔                         -->
+  <!--                                                          -->
+  <!-- Existentialism / 存在主义                                 -->
+  <!--   Kierkegaard / 克尔凯郭尔                                -->
+  <!--   Nietzsche / 尼采                                        -->
+  <!--   Sartre / 萨特                                           -->
+  <!--                                                          -->
+  <!-- Phenomenology / 现象学                                    -->
+  <!--   Husserl / 胡塞尔                                        -->
+  <!--                                                          -->
+  <!-- Philosophy of Science / 科学哲学                          -->
+  <!--   Bacon / 培根                                            -->
+  <!--   Popper / 波普尔                                         -->
+  <!--   Kuhn / 库恩                                             -->
+  <!--                                                          -->
+  <!-- Analytic Philosophy / 分析哲学                            -->
+  <!--   Frege / 弗雷格                                          -->
+  <!--   Russell / 罗素                                          -->
+  <!--   Wittgenstein / 维特根斯坦                               -->
+  <!-- ========================================================= -->
 
 </Defs>

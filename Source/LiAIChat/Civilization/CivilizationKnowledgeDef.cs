@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+
 using LiAIChat.Archive;
+
 using Verse;
 
 namespace LiAIChat.Civilization
@@ -9,6 +11,8 @@ namespace LiAIChat.Civilization
         public string title;
 
         public string titleChinese;
+
+        public string descriptionChinese;
 
         public CivilizationKnowledgeCategory category;
 

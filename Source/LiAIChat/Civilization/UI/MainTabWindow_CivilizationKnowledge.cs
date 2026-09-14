@@ -5,35 +5,57 @@ using Verse;
 
 namespace LiAIChat.Civilization.UI
 {
-    public class MainTabWindow_CivilizationKnowledge : MainTabWindow
+    public class MainTabWindow_CivilizationKnowledge
+        : MainTabWindow
     {
         private const float NodeWidth = 180f;
         private const float NodeHeight = 70f;
 
-        private const float HorizontalGap = 120f;
-        private const float VerticalGap = 90f;
-
         private const float CanvasWidth = 3000f;
         private const float CanvasHeight = 2000f;
+
+        private const float DragThreshold = 6f;
+
+        private Vector2 canvasOffset =
+            Vector2.zero;
+
+        private bool canvasInitialized;
+
+        private bool isDraggingCanvas;
+
+        private Vector2 lastMousePosition;
+
+        private bool mousePressedInViewport;
+
+        private Vector2 mouseDownPosition;
+
+        private string selectedNodeId;
+
+        private readonly Dictionary<string, Rect>
+            currentNodeRects =
+                new Dictionary<string, Rect>();
+
+
         public override Vector2 RequestedTabSize
         {
-            get { return new Vector2(1200f, 760f); }
+            get
+            {
+                return new Vector2(
+                    1200f,
+                    760f);
+            }
         }
 
-        private Vector2 canvasOffset = Vector2.zero;
-        private bool canvasInitialized;
-        private bool isDraggingCanvas;
-        private Vector2 lastMousePosition;
-        private string selectedNodeId;
-        private bool mousePressedInViewport;
-        private Vector2 mouseDownPosition;
-        private const float DragThreshold = 6f;
-        private readonly Dictionary<string, Rect> currentNodeRects = new Dictionary<string, Rect>();
+
+        // ============================================================
+        // Main Window
+        // ============================================================
 
         public override void DoWindowContents(
-    Rect inRect)
+            Rect inRect)
         {
-            Text.Font = GameFont.Medium;
+            Text.Font =
+                GameFont.Medium;
 
             Widgets.Label(
                 new Rect(
@@ -43,7 +65,8 @@ namespace LiAIChat.Civilization.UI
                     35f),
                 "Civilization Knowledge");
 
-            Text.Font = GameFont.Small;
+            Text.Font =
+                GameFont.Small;
 
             float detailPanelWidth =
                 300f;
@@ -58,7 +81,8 @@ namespace LiAIChat.Civilization.UI
                     inRect.width -
                     detailPanelWidth -
                     gap,
-                    inRect.height - 45f);
+                    inRect.height -
+                    45f);
 
             Rect detailRect =
                 new Rect(
@@ -66,7 +90,8 @@ namespace LiAIChat.Civilization.UI
                     gap,
                     45f,
                     detailPanelWidth,
-                    inRect.height - 45f);
+                    inRect.height -
+                    45f);
 
             DrawTreeViewport(
                 viewportRect);
@@ -74,180 +99,14 @@ namespace LiAIChat.Civilization.UI
             DrawNodeDetailPanel(
                 detailRect);
         }
-        private List<CivilizationKnowledgeDef>
-    GetKnowledgeDefs()
-        {
-            return DefDatabase<
-                CivilizationKnowledgeDef>
-                .AllDefsListForReading;
-        }
-        private CivilizationKnowledgeNode FindNodeById(string nodeId)
-        {
-            if (nodeId == null)
-            {
-                return null;
-            }
 
-            foreach (CivilizationKnowledgeNode node in CivilizationKnowledgeDatabase.Nodes)
-            {
-                if (node.Id == nodeId)
-                {
-                    return node;
-                }
-            }
 
-            return null;
-        }
-        private string GetParentLabel(
-    CivilizationKnowledgeNode node)
-        {
-            if (node == null)
-            {
-                return "";
-            }
-
-            if (node.ParentId == null)
-            {
-                return "None";
-            }
-
-            CivilizationKnowledgeNode parent =
-                FindNodeById(
-                    node.ParentId);
-
-            if (parent == null)
-            {
-                return node.ParentId;
-            }
-
-            return parent.Label;
-        }
-        private CivilizationKnowledgeDef FindKnowledgeDefById(string defName)
-        {
-            if (string.IsNullOrEmpty(defName))
-            {
-                return null;
-            }
-
-            return DefDatabase<CivilizationKnowledgeDef>.GetNamedSilentFail(defName);
-        }
-        private void DrawNodeDetailPanel(Rect rect)
-        {
-            Widgets.DrawMenuSection(rect);
-
-            Rect innerRect = rect.ContractedBy(12f);
-
-            if (selectedNodeId == null)
-            {
-                Text.Anchor = TextAnchor.MiddleCenter;
-                Widgets.Label(innerRect, "Select a knowledge node.");
-                Text.Anchor = TextAnchor.UpperLeft;
-                return;
-            }
-
-            CivilizationKnowledgeDef def = FindKnowledgeDefById(selectedNodeId);
-            CivilizationKnowledgeNode node = FindNodeById(selectedNodeId);
-
-            if (node == null)
-            {
-                return;
-            }
-
-            float y = innerRect.y;
-            Text.Font = GameFont.Medium;
-            Widgets.Label(new Rect(innerRect.x, y, innerRect.width, 35f), node.Label);
-            y += 45f;
-
-            Text.Font = GameFont.Small;
-            Widgets.Label(new Rect(innerRect.x, y, innerRect.width, 25f), "Id: " + node.Id);
-            y += 28f;
-
-            Widgets.Label(
-                new Rect(
-                    innerRect.x,
-                    y,
-                    innerRect.width,
-                    25f),
-                "Tier: " + node.Tier);
-
-            y += 28f;
-
-            CivilizationKnowledgeDef knowledgeDef = FindKnowledgeDef(node);
-            string statusText = GetKnowledgeStatusText(knowledgeDef);
-            Widgets.Label(new Rect(innerRect.x, y, innerRect.width, 25f), "Status: " + statusText);
-            y += 28f;
-
-            Widgets.Label(new Rect(innerRect.x, y, innerRect.width, 40f), "Parent: " + GetParentLabel(node));
-            y += 45f;
-
-            Widgets.DrawLineHorizontal(innerRect.x, y, innerRect.width);
-            y += 12f;
-
-            Widgets.Label(new Rect(innerRect.x, y, innerRect.width, 25f), "Description");
-            y += 28f;
-
-            float descriptionHeight =
-    Text.CalcHeight(
-        node.Description,
-        innerRect.width);
-
-            Widgets.Label(
-                new Rect(
-                    innerRect.x,
-                    y,
-                    innerRect.width,
-                    descriptionHeight),
-                node.Description);
-        }
-
-        private CivilizationKnowledgeDef FindKnowledgeDef(CivilizationKnowledgeNode node)
-        {
-            if (node == null)
-            {
-                return null;
-            }
-
-            return DefDatabase<CivilizationKnowledgeDef>.GetNamedSilentFail(node.Id);
-        }
-        private string GetKnowledgeStatusText(CivilizationKnowledgeDef knowledgeDef)
-        {
-            if (knowledgeDef == null)
-            {
-                return "Unknown";
-            }
-
-            CivilizationKnowledgeState state = CivilizationKnowledgeManager.GetState(knowledgeDef);
-
-            if (state == null)
-            {
-                return "Unknown";
-            }
-
-            if (!state.Unlocked)
-            {
-                return "Locked";
-            }
-
-            if (state.AwaitingReactivation)
-            {
-                return "Awaiting Reactivation";
-            }
-
-            if (state.Dormant)
-            {
-                return "Dormant";
-            }
-
-            if (state.Unstable)
-            {
-                return "Unstable";
-            }
-
-            return "Active";
-        }
+        // ============================================================
+        // Tree Viewport
+        // ============================================================
 
         private void DrawTreeViewport(
-    Rect viewportRect)
+            Rect viewportRect)
         {
             Widgets.DrawMenuSection(
                 viewportRect);
@@ -258,9 +117,10 @@ namespace LiAIChat.Civilization.UI
                     new Vector2(
                         viewportRect.width / 2f -
                         CanvasWidth / 2f,
-                        0f);
+                        20f);
 
-                canvasInitialized = true;
+                canvasInitialized =
+                    true;
             }
 
             HandleCanvasPan(
@@ -269,23 +129,26 @@ namespace LiAIChat.Civilization.UI
             Widgets.BeginGroup(
                 viewportRect);
 
-            Rect canvasRect =
-                new Rect(
-                    canvasOffset.x,
-                    canvasOffset.y,
-                    CanvasWidth,
-                    CanvasHeight);
-
-            DrawKnowledgeTree(
-                canvasRect);
+            DrawKnowledgeTree();
 
             Widgets.EndGroup();
         }
+
+
+        // ============================================================
+        // Mouse Interaction
+        // ============================================================
+
         private void HandleCanvasPan(
-    Rect viewportRect)
+            Rect viewportRect)
         {
             Event currentEvent =
                 Event.current;
+
+            if (currentEvent == null)
+            {
+                return;
+            }
 
             Vector2 mousePosition =
                 currentEvent.mousePosition;
@@ -296,9 +159,11 @@ namespace LiAIChat.Civilization.UI
                 viewportRect.Contains(
                     mousePosition))
             {
-                mousePressedInViewport = true;
+                mousePressedInViewport =
+                    true;
 
-                isDraggingCanvas = false;
+                isDraggingCanvas =
+                    false;
 
                 mouseDownPosition =
                     mousePosition;
@@ -314,15 +179,22 @@ namespace LiAIChat.Civilization.UI
                 currentEvent.button == 0 &&
                 mousePressedInViewport)
             {
-                float dragDistance =
-                    Vector2.Distance(
-                        mouseDownPosition,
-                        mousePosition);
-
-                if (!isDraggingCanvas &&
-                    dragDistance >= DragThreshold)
+                if (!isDraggingCanvas)
                 {
-                    isDraggingCanvas = true;
+                    float distance =
+                        Vector2.Distance(
+                            mouseDownPosition,
+                            mousePosition);
+
+                    if (distance >=
+                        DragThreshold)
+                    {
+                        isDraggingCanvas =
+                            true;
+
+                        lastMousePosition =
+                            mousePosition;
+                    }
                 }
 
                 if (isDraggingCanvas)
@@ -348,44 +220,44 @@ namespace LiAIChat.Civilization.UI
                 currentEvent.button == 0 &&
                 mousePressedInViewport)
             {
-                if (isDraggingCanvas)
+                bool wasDragging =
+                    isDraggingCanvas;
+
+                mousePressedInViewport =
+                    false;
+
+                isDraggingCanvas =
+                    false;
+
+                if (wasDragging)
                 {
-                    isDraggingCanvas = false;
-
-                    mousePressedInViewport = false;
-
                     currentEvent.Use();
-
                     return;
                 }
 
                 HandleNodeClick(
                     viewportRect,
                     mousePosition);
-
-                mousePressedInViewport =
-                    false;
             }
         }
+
+
         private void HandleNodeClick(
-    Rect viewportRect,
-    Vector2 mousePosition)
+            Rect viewportRect,
+            Vector2 mousePosition)
         {
             Vector2 viewportPosition =
                 mousePosition -
                 viewportRect.position;
 
-            Vector2 treePosition =
-                ViewportToTreePosition(
-                    viewportPosition);
-
             string nodeId =
                 GetNodeAtPosition(
-                    treePosition);
+                    viewportPosition);
 
             if (nodeId == null)
             {
-                selectedNodeId = null;
+                selectedNodeId =
+                    null;
 
                 return;
             }
@@ -393,36 +265,17 @@ namespace LiAIChat.Civilization.UI
             selectedNodeId =
                 nodeId;
         }
-        private void DrawKnowledgeTree(Rect rect)
-        {
-            currentNodeRects.Clear();
 
-            List<CivilizationKnowledgeDef> defs = GetKnowledgeDefs();
 
-            foreach (CivilizationKnowledgeDef def in defs)
-            {
-                Rect nodeRect = CreateNodeRect(rect, def);
-
-                currentNodeRects[def.defName] = nodeRect;
-            }
-
-            DrawConnections(defs, currentNodeRects);
-            DrawNodes(defs, currentNodeRects);
-        }
-        private Rect CreateNodeRect(Rect treeRect, CivilizationKnowledgeDef def)
-        {
-            float x = treeRect.x + def.treeX;
-            float y = treeRect.y + def.treeY;
-            return new Rect(x, y, NodeWidth, NodeHeight);
-        }
         private string GetNodeAtPosition(
-    Vector2 treePosition)
+            Vector2 viewportPosition)
         {
-            foreach (KeyValuePair<string, Rect> pair
-                     in currentNodeRects)
+            foreach (
+                KeyValuePair<string, Rect> pair
+                in currentNodeRects)
             {
                 if (pair.Value.Contains(
-                        treePosition))
+                        viewportPosition))
                 {
                     return pair.Key;
                 }
@@ -430,43 +283,114 @@ namespace LiAIChat.Civilization.UI
 
             return null;
         }
-        private Vector2 ViewportToTreePosition(
-    Vector2 viewportPosition)
+
+
+        // ============================================================
+        // Knowledge Tree
+        // ============================================================
+
+        private void DrawKnowledgeTree()
         {
-            return viewportPosition -
-                canvasOffset;
-        }
-        private float CalculateSubtreeWidth(CivilizationKnowledgeNode node, List<CivilizationKnowledgeNode> nodes)
-        {
-            List<CivilizationKnowledgeNode> children = GetChildren(nodes, node.Id);
-            if (children.Count == 0)
+            currentNodeRects.Clear();
+
+            List<CivilizationKnowledgeDef> defs =
+                DefDatabase<
+                    CivilizationKnowledgeDef>
+                .AllDefsListForReading;
+
+            if (defs == null)
             {
-                return NodeWidth;
+                return;
             }
 
-            float childrenWidth = 0f;
-            for (int i = 0; i < children.Count; i++)
+            foreach (
+                CivilizationKnowledgeDef def
+                in defs)
             {
-                childrenWidth += CalculateSubtreeWidth(children[i], nodes);
-
-                if (i < children.Count - 1)
-                {
-                    childrenWidth += HorizontalGap;
-                }
-            }
-
-            return Mathf.Max(NodeWidth, childrenWidth);
-        }
-        private void DrawConnections(List<CivilizationKnowledgeDef> defs, Dictionary<string, Rect> nodeRects)
-        {
-            foreach (CivilizationKnowledgeDef def in defs)
-            {
-                if (def.prerequisites == null)
+                if (def == null)
                 {
                     continue;
                 }
 
-                foreach (CivilizationKnowledgeDef prerequisite in def.prerequisites)
+                Rect nodeRect =
+                    CreateNodeRect(
+                        def);
+
+                currentNodeRects[
+                    def.defName] =
+                    nodeRect;
+            }
+
+            DrawConnections(
+                defs);
+
+            DrawNodes(
+                defs);
+        }
+
+
+        private Rect CreateNodeRect(
+            CivilizationKnowledgeDef def)
+        {
+            if (def == null)
+            {
+                return Rect.zero;
+            }
+
+            /*
+             * treeX / treeY are coordinates
+             * inside the large knowledge canvas.
+             *
+             * canvasOffset moves the complete tree
+             * around inside the visible viewport.
+             */
+
+            float x =
+                canvasOffset.x +
+                def.treeX;
+
+            float y =
+                canvasOffset.y +
+                def.treeY;
+
+            return new Rect(
+                x,
+                y,
+                NodeWidth,
+                NodeHeight);
+        }
+
+
+        // ============================================================
+        // Connections
+        // ============================================================
+
+        private void DrawConnections(
+            List<CivilizationKnowledgeDef> defs)
+        {
+            foreach (
+                CivilizationKnowledgeDef def
+                in defs)
+            {
+                if (def == null ||
+                    def.prerequisites == null)
+                {
+                    continue;
+                }
+
+                Rect childRect;
+
+                if (!currentNodeRects
+                    .TryGetValue(
+                        def.defName,
+                        out childRect))
+                {
+                    continue;
+                }
+
+                foreach (
+                    CivilizationKnowledgeDef prerequisite
+                    in def.prerequisites)
                 {
                     if (prerequisite == null)
                     {
@@ -475,200 +399,123 @@ namespace LiAIChat.Civilization.UI
 
                     Rect parentRect;
 
-                    if (!nodeRects.TryGetValue(prerequisite.defName, out parentRect))
+                    if (!currentNodeRects
+                        .TryGetValue(
+                            prerequisite.defName,
+                            out parentRect))
                     {
                         continue;
                     }
 
-                    Rect childRect;
-
-                    if (!nodeRects.TryGetValue(def.defName, out childRect))
-                    {
-                        continue;
-                    }
-
-                    DrawConnection(parentRect, childRect);
+                    DrawConnection(
+                        parentRect,
+                        childRect);
                 }
             }
         }
 
-        private void DrawConnection(Rect parentRect, Rect childRect)
+
+        private void DrawConnection(
+            Rect parentRect,
+            Rect childRect)
         {
-            Vector2 parentBottom = new Vector2(parentRect.center.x, parentRect.yMax);
+            Vector2 start =
+                new Vector2(
+                    parentRect.center.x,
+                    parentRect.yMax);
 
-            Vector2 childTop = new Vector2(childRect.center.x, childRect.yMin);
+            Vector2 end =
+                new Vector2(
+                    childRect.center.x,
+                    childRect.yMin);
 
-            float middleY = (parentBottom.y + childTop.y) / 2f;
+            float middleY =
+                start.y +
+                (end.y - start.y) /
+                2f;
 
-            Vector2 point1 = new Vector2(parentBottom.x, middleY);
+            Vector2 firstCorner =
+                new Vector2(
+                    start.x,
+                    middleY);
 
-            Vector2 point2 = new Vector2(childTop.x, middleY);
+            Vector2 secondCorner =
+                new Vector2(
+                    end.x,
+                    middleY);
 
-            Widgets.DrawLine(parentBottom, point1, Color.gray, 2f);
-            Widgets.DrawLine(point1, point2, Color.gray, 2f);
-            Widgets.DrawLine(point2, childTop, Color.gray, 2f);
+            Widgets.DrawLine(
+                start,
+                firstCorner,
+                Color.gray,
+                2f);
+
+            Widgets.DrawLine(
+                firstCorner,
+                secondCorner,
+                Color.gray,
+                2f);
+
+            Widgets.DrawLine(
+                secondCorner,
+                end,
+                Color.gray,
+                2f);
         }
-        private void DrawNodes(List<CivilizationKnowledgeDef> defs, Dictionary<string, Rect> nodeRects)
+
+
+        // ============================================================
+        // Nodes
+        // ============================================================
+
+        private void DrawNodes(
+            List<CivilizationKnowledgeDef> defs)
         {
-            foreach (CivilizationKnowledgeDef def in defs)
+            foreach (
+                CivilizationKnowledgeDef def
+                in defs)
             {
-                Rect nodeRect;
-                if (!nodeRects.TryGetValue(def.defName, out nodeRect))
+                if (def == null)
                 {
                     continue;
                 }
-                bool selected = def.defName == selectedNodeId;
-                CivilizationKnowledgeState state = CivilizationKnowledgeManager.GetState(def);
-                DrawNode(nodeRect, GetNodeLabel(def), selected, state);
-            }
-        }
-        private string GetNodeLabel(CivilizationKnowledgeDef def)
-        {
-            if (def == null)
-            {
-                return "";
-            }
 
-            if (!string.IsNullOrEmpty(def.title))
-            {
-                return def.title;
-            }
+                Rect nodeRect;
 
-            return def.defName;
-        }
-        private List<CivilizationKnowledgeNode> GetNodesForTier(List<CivilizationKnowledgeNode> nodes, int tier)
-        {
-            List<CivilizationKnowledgeNode> result = new List<CivilizationKnowledgeNode>();
-
-            foreach (CivilizationKnowledgeNode node in nodes)
-            {
-                if (node.Tier == tier)
+                if (!currentNodeRects
+                    .TryGetValue(
+                        def.defName,
+                        out nodeRect))
                 {
-                    result.Add(node);
+                    continue;
                 }
-            }
 
-            return result;
-        }
+                bool selected =
+                    def.defName ==
+                    selectedNodeId;
 
-        private List<CivilizationKnowledgeNode> GetChildren(List<CivilizationKnowledgeNode> nodes, string parentId)
-        {
-            List<CivilizationKnowledgeNode> result = new List<CivilizationKnowledgeNode>();
+                CivilizationKnowledgeState state =
+                    CivilizationKnowledgeManager
+                        .GetState(
+                            def);
 
-            foreach (CivilizationKnowledgeNode node in nodes)
-            {
-                if (node.ParentId == parentId)
-                {
-                    result.Add(node);
-                }
-            }
-
-            return result;
-        }
-
-        private void LayoutChildren(
-    CivilizationKnowledgeNode parent,
-    List<CivilizationKnowledgeNode> nodes,
-    Dictionary<string, Rect> nodeRects)
-        {
-            List<CivilizationKnowledgeNode> children =
-                GetChildren(
-                    nodes,
-                    parent.Id);
-
-            if (children.Count == 0)
-            {
-                return;
-            }
-
-            Rect parentRect;
-
-            if (!nodeRects.TryGetValue(
-                    parent.Id,
-                    out parentRect))
-            {
-                return;
-            }
-
-            float totalWidth = 0f;
-
-            foreach (CivilizationKnowledgeNode child
-                     in children)
-            {
-                totalWidth +=
-                    CalculateSubtreeWidth(
-                        child,
-                        nodes);
-            }
-
-            totalWidth +=
-                (children.Count - 1) *
-                HorizontalGap;
-
-            float currentX =
-                parentRect.center.x -
-                totalWidth / 2f;
-
-            float childY =
-                parentRect.yMax +
-                VerticalGap;
-
-            foreach (CivilizationKnowledgeNode child
-                     in children)
-            {
-                float subtreeWidth =
-                    CalculateSubtreeWidth(
-                        child,
-                        nodes);
-
-                float childCenterX =
-                    currentX +
-                    subtreeWidth / 2f;
-
-                Rect childRect =
-                    new Rect(
-                        childCenterX -
-                        NodeWidth / 2f,
-                        childY,
-                        NodeWidth,
-                        NodeHeight);
-
-                nodeRects[child.Id] =
-                    childRect;
-
-                LayoutChildren(
-                    child,
-                    nodes,
-                    nodeRects);
-
-                currentX +=
-                    subtreeWidth +
-                    HorizontalGap;
+                DrawNode(
+                    nodeRect,
+                    GetNodeLabel(def),
+                    selected,
+                    state);
             }
         }
 
-        private int GetMaxTier(List<CivilizationKnowledgeNode> nodes)
-        {
-            int maxTier = 0;
 
-            foreach (CivilizationKnowledgeNode node in nodes)
-            {
-                if (node.Tier > maxTier)
-                {
-                    maxTier = node.Tier;
-                }
-            }
-
-            return maxTier;
-        }
         private void DrawNode(
-    Rect rect,
-    string label,
-    bool selected,
-    CivilizationKnowledgeState state)
+            Rect rect,
+            string label,
+            bool selected,
+            CivilizationKnowledgeState state)
         {
-            Widgets.DrawMenuSection(
-                rect);
+            Color oldColor =
+                GUI.color;
 
             bool locked =
                 state == null ||
@@ -684,6 +531,9 @@ namespace LiAIChat.Civilization.UI
                         1f);
             }
 
+            Widgets.DrawMenuSection(
+                rect);
+
             if (selected)
             {
                 Widgets.DrawHighlight(
@@ -697,58 +547,371 @@ namespace LiAIChat.Civilization.UI
                 TextAnchor.MiddleCenter;
 
             Widgets.Label(
-                rect.ContractedBy(6f),
+                rect.ContractedBy(
+                    6f),
                 label);
 
             Text.Anchor =
                 oldAnchor;
 
             GUI.color =
-                Color.white;
+                oldColor;
         }
 
-        private void DrawBranch(Rect parentRect, Rect[] childRects)
+
+        private string GetNodeLabel(
+            CivilizationKnowledgeDef def)
         {
-            if (childRects == null || childRects.Length == 0)
+            if (def == null)
             {
+                return "";
+            }
+
+            if (!string.IsNullOrEmpty(
+                    def.title))
+            {
+                return def.title;
+            }
+
+            return def.defName;
+        }
+
+
+        // ============================================================
+        // Detail Panel
+        // ============================================================
+
+        private void DrawNodeDetailPanel(
+            Rect rect)
+        {
+            Widgets.DrawMenuSection(
+                rect);
+
+            Rect innerRect =
+                rect.ContractedBy(
+                    12f);
+
+            if (string.IsNullOrEmpty(
+                    selectedNodeId))
+            {
+                TextAnchor oldAnchor =
+                    Text.Anchor;
+
+                Text.Anchor =
+                    TextAnchor.MiddleCenter;
+
+                Widgets.Label(
+                    innerRect,
+                    "Select a knowledge node.");
+
+                Text.Anchor =
+                    oldAnchor;
+
                 return;
             }
 
-            Vector2 parentBottom = new Vector2(parentRect.center.x, parentRect.yMax);
+            CivilizationKnowledgeDef def =
+                FindKnowledgeDefById(
+                    selectedNodeId);
 
-            float branchY = parentRect.yMax + VerticalGap / 2f;
-
-            Vector2 branchStart = new Vector2(parentBottom.x, branchY);
-
-            // Parent → branch
-            Widgets.DrawLine(parentBottom, branchStart, Color.gray, 2f);
-
-            float leftX = childRects[0].center.x;
-            float rightX = childRects[0].center.x;
-
-            foreach (Rect childRect in childRects)
+            if (def == null)
             {
-                if (childRect.center.x < leftX)
-                {
-                    leftX = childRect.center.x;
-                }
+                Widgets.Label(
+                    innerRect,
+                    "Knowledge definition not found.");
 
-                if (childRect.center.x > rightX)
+                return;
+            }
+
+            CivilizationKnowledgeState state =
+                CivilizationKnowledgeManager
+                    .GetState(
+                        def);
+
+            float y =
+                innerRect.y;
+
+
+            // --------------------------------------------------------
+            // Title
+            // --------------------------------------------------------
+
+            Text.Font =
+                GameFont.Medium;
+
+            Widgets.Label(
+                new Rect(
+                    innerRect.x,
+                    y,
+                    innerRect.width,
+                    35f),
+                GetNodeLabel(
+                    def));
+
+            y += 42f;
+
+            Text.Font =
+                GameFont.Small;
+
+
+            // --------------------------------------------------------
+            // Status
+            // --------------------------------------------------------
+
+            string status =
+                GetKnowledgeStatusText(
+                    state);
+
+            Widgets.Label(
+                new Rect(
+                    innerRect.x,
+                    y,
+                    innerRect.width,
+                    25f),
+                "Status: " +
+                status);
+
+            y += 27f;
+
+
+            // --------------------------------------------------------
+            // ID
+            // --------------------------------------------------------
+
+            Widgets.Label(
+                new Rect(
+                    innerRect.x,
+                    y,
+                    innerRect.width,
+                    25f),
+                "ID: " +
+                def.defName);
+
+            y += 27f;
+
+
+            // --------------------------------------------------------
+            // Category
+            // --------------------------------------------------------
+
+            Widgets.Label(
+                new Rect(
+                    innerRect.x,
+                    y,
+                    innerRect.width,
+                    25f),
+                "Category: " +
+                def.category);
+
+            y += 34f;
+
+
+            // --------------------------------------------------------
+            // Separator
+            // --------------------------------------------------------
+
+            Widgets.DrawLineHorizontal(
+                innerRect.x,
+                y,
+                innerRect.width);
+
+            y += 12f;
+
+
+            // --------------------------------------------------------
+            // Prerequisites
+            // --------------------------------------------------------
+
+            Widgets.Label(
+                new Rect(
+                    innerRect.x,
+                    y,
+                    innerRect.width,
+                    25f),
+                "Prerequisites");
+
+            y += 25f;
+
+            if (def.prerequisites == null ||
+                def.prerequisites.Count == 0)
+            {
+                Widgets.Label(
+                    new Rect(
+                        innerRect.x + 10f,
+                        y,
+                        innerRect.width - 10f,
+                        22f),
+                    "None");
+
+                y += 22f;
+            }
+            else
+            {
+                foreach (
+                    CivilizationKnowledgeDef prerequisite
+                    in def.prerequisites)
                 {
-                    rightX = childRect.center.x;
+                    if (prerequisite == null)
+                    {
+                        continue;
+                    }
+
+                    Widgets.Label(
+                        new Rect(
+                            innerRect.x + 10f,
+                            y,
+                            innerRect.width - 10f,
+                            22f),
+                        "• " +
+                        GetNodeLabel(
+                            prerequisite));
+
+                    y += 22f;
                 }
             }
 
-            // Horizontal branch
-            Widgets.DrawLine(new Vector2(leftX, branchY), new Vector2(rightX, branchY), Color.gray, 2f);
 
-            // Branch → children
-            foreach (Rect childRect in childRects)
+            y += 8f;
+
+
+            // --------------------------------------------------------
+            // Required Texts
+            // --------------------------------------------------------
+
+            Widgets.Label(
+                new Rect(
+                    innerRect.x,
+                    y,
+                    innerRect.width,
+                    25f),
+                "Required Texts");
+
+            y += 25f;
+
+            if (def.requiredTexts == null ||
+                def.requiredTexts.Count == 0)
             {
-                Vector2 childTop = new Vector2(childRect.center.x, childRect.yMin);
-                Vector2 childBranchPoint = new Vector2(childRect.center.x, branchY);
-                Widgets.DrawLine(childBranchPoint, childTop, Color.gray, 2f);
+                Widgets.Label(
+                    new Rect(
+                        innerRect.x + 10f,
+                        y,
+                        innerRect.width - 10f,
+                        22f),
+                    "None");
+
+                y += 22f;
             }
+            else
+            {
+                foreach (var textDef
+                         in def.requiredTexts)
+                {
+                    if (textDef == null)
+                    {
+                        continue;
+                    }
+
+                    string textName =
+                        textDef.label;
+
+                    if (string.IsNullOrEmpty(
+                            textName))
+                    {
+                        textName =
+                            textDef.defName;
+                    }
+
+                    Widgets.Label(
+                        new Rect(
+                            innerRect.x + 10f,
+                            y,
+                            innerRect.width - 10f,
+                            22f),
+                        "• " +
+                        textName);
+
+                    y += 22f;
+                }
+            }
+
+
+            y += 8f;
+
+
+            // --------------------------------------------------------
+            // Stability
+            // --------------------------------------------------------
+
+            Widgets.Label(
+                new Rect(
+                    innerRect.x,
+                    y,
+                    innerRect.width,
+                    25f),
+                "Grace Period: " +
+                def.gracePeriodDays +
+                " days");
+
+            y += 24f;
+
+            Widgets.Label(
+                new Rect(
+                    innerRect.x,
+                    y,
+                    innerRect.width,
+                    25f),
+                "Dormant After: " +
+                def.dormantAfterDays +
+                " days");
+        }
+
+
+        // ============================================================
+        // Lookup
+        // ============================================================
+
+        private CivilizationKnowledgeDef
+            FindKnowledgeDefById(
+                string defName)
+        {
+            if (string.IsNullOrEmpty(
+                    defName))
+            {
+                return null;
+            }
+
+            return DefDatabase<
+                    CivilizationKnowledgeDef>
+                .GetNamedSilentFail(
+                    defName);
+        }
+
+
+        private string GetKnowledgeStatusText(
+            CivilizationKnowledgeState state)
+        {
+            if (state == null ||
+                !state.Unlocked)
+            {
+                return "Locked";
+            }
+
+            if (state.AwaitingReactivation)
+            {
+                return "Awaiting Reactivation";
+            }
+
+            if (state.Dormant)
+            {
+                return "Dormant";
+            }
+
+            if (state.Unstable)
+            {
+                return "Unstable";
+            }
+
+            return "Active";
         }
     }
 }
