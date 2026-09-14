@@ -35,6 +35,10 @@ namespace LiAIChat.Civilization.UI
             currentNodeRects =
                 new Dictionary<string, Rect>();
 
+        private float zoom = 1f;
+        private const float MinZoom = 0.6f;
+        private const float MaxZoom = 1.4f;
+        private const float ZoomStep = 0.1f;
 
         public override Vector2 RequestedTabSize
         {
@@ -92,12 +96,100 @@ namespace LiAIChat.Civilization.UI
                     detailPanelWidth,
                     inRect.height -
                     45f);
-
+            HandleZoom(viewportRect);
             DrawTreeViewport(
                 viewportRect);
 
             DrawNodeDetailPanel(
                 detailRect);
+        }
+
+        private void HandleZoom(
+    Rect viewportRect)
+        {
+            Event currentEvent =
+                Event.current;
+
+            if (currentEvent == null)
+            {
+                return;
+            }
+
+            if (currentEvent.type !=
+                EventType.ScrollWheel)
+            {
+                return;
+            }
+
+            Vector2 mousePosition =
+                currentEvent.mousePosition;
+
+            if (!viewportRect.Contains(
+                    mousePosition))
+            {
+                return;
+            }
+
+            float oldZoom =
+                zoom;
+
+            if (currentEvent.delta.y < 0f)
+            {
+                zoom +=
+                    ZoomStep;
+            }
+            else if (
+                currentEvent.delta.y > 0f)
+            {
+                zoom -=
+                    ZoomStep;
+            }
+
+            zoom =
+                Mathf.Clamp(
+                    zoom,
+                    MinZoom,
+                    MaxZoom);
+
+            if (Mathf.Approximately(
+                    oldZoom,
+                    zoom))
+            {
+                currentEvent.Use();
+
+                return;
+            }
+
+            Vector2 mouseInViewport =
+                mousePosition -
+                viewportRect.position;
+
+            AdjustCanvasOffsetForZoom(
+                mouseInViewport,
+                oldZoom,
+                zoom);
+
+            currentEvent.Use();
+        }
+        private void AdjustCanvasOffsetForZoom(
+    Vector2 mousePosition,
+    float oldZoom,
+    float newZoom)
+        {
+            if (oldZoom <= 0f)
+            {
+                return;
+            }
+
+            Vector2 worldPosition =
+                (mousePosition -
+                 canvasOffset) /
+                oldZoom;
+
+            canvasOffset =
+                mousePosition -
+                worldPosition *
+                newZoom;
         }
 
 
@@ -132,6 +224,56 @@ namespace LiAIChat.Civilization.UI
             DrawKnowledgeTree();
 
             Widgets.EndGroup();
+
+            DrawZoomControls(viewportRect);
+        }
+
+        private void DrawZoomControls(
+    Rect viewportRect)
+        {
+            Rect resetRect =
+                new Rect(
+                    viewportRect.x + 8f,
+                    viewportRect.y + 8f,
+                    70f,
+                    28f);
+
+            if (Widgets.ButtonText(
+                    resetRect,
+                    "Reset"))
+            {
+                zoom =
+                    1f;
+
+                canvasOffset =
+                    Vector2.zero;
+            }
+
+
+            string zoomText =
+                Mathf.RoundToInt(
+                    zoom * 100f) +
+                "%";
+
+            Rect zoomRect =
+                new Rect(
+                    resetRect.xMax + 8f,
+                    resetRect.y,
+                    60f,
+                    28f);
+
+            TextAnchor oldAnchor =
+                Text.Anchor;
+
+            Text.Anchor =
+                TextAnchor.MiddleCenter;
+
+            Widgets.Label(
+                zoomRect,
+                zoomText);
+
+            Text.Anchor =
+                oldAnchor;
         }
 
 
@@ -330,34 +472,32 @@ namespace LiAIChat.Civilization.UI
 
 
         private Rect CreateNodeRect(
-            CivilizationKnowledgeDef def)
+    CivilizationKnowledgeDef def)
         {
             if (def == null)
             {
                 return Rect.zero;
             }
 
-            /*
-             * treeX / treeY are coordinates
-             * inside the large knowledge canvas.
-             *
-             * canvasOffset moves the complete tree
-             * around inside the visible viewport.
-             */
-
             float x =
                 canvasOffset.x +
-                def.treeX;
+                def.treeX * zoom;
 
             float y =
                 canvasOffset.y +
-                def.treeY;
+                def.treeY * zoom;
+
+            float width =
+                NodeWidth * zoom;
+
+            float height =
+                NodeHeight * zoom;
 
             return new Rect(
                 x,
                 y,
-                NodeWidth,
-                NodeHeight);
+                width,
+                height);
         }
 
 
@@ -580,7 +720,7 @@ namespace LiAIChat.Civilization.UI
 
             Widgets.Label(
                 rect.ContractedBy(
-                    8f),
+                    8f * zoom),
                 label);
 
             Text.Anchor =
@@ -646,10 +786,12 @@ namespace LiAIChat.Civilization.UI
 
             Rect markerRect =
                 new Rect(
-                    rect.xMax - 24f,
-                    rect.y + 4f,
-                    20f,
-                    18f);
+                    rect.xMax -
+                        24f * zoom,
+                    rect.y +
+                        4f * zoom,
+                    20f * zoom,
+                    18f * zoom);
 
             TextAnchor oldAnchor =
                 Text.Anchor;
@@ -669,6 +811,36 @@ namespace LiAIChat.Civilization.UI
 
             Text.Font =
                 oldFont;
+
+            Text.Anchor =
+                oldAnchor;
+        }
+
+        private void DrawZoomIndicator(
+    Rect viewportRect)
+        {
+            string text =
+                "Zoom: " +
+                Mathf.RoundToInt(
+                    zoom * 100f) +
+                "%";
+
+            Rect rect =
+                new Rect(
+                    viewportRect.xMax - 100f,
+                    viewportRect.y + 8f,
+                    90f,
+                    24f);
+
+            TextAnchor oldAnchor =
+                Text.Anchor;
+
+            Text.Anchor =
+                TextAnchor.MiddleRight;
+
+            Widgets.Label(
+                rect,
+                text);
 
             Text.Anchor =
                 oldAnchor;
