@@ -1,4 +1,5 @@
 ﻿using RimWorld;
+using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
@@ -42,17 +43,60 @@ namespace LiAIChat.Civilization.UI
         }
         private void DrawKnowledgeTree(Rect rect)
         {
-            float centerX = rect.x + rect.width / 2f;
+            List<CivilizationKnowledgeNode> nodes = CivilizationKnowledgeDatabase.Nodes;
+
+            CivilizationKnowledgeNode root = null;
+
+            foreach (CivilizationKnowledgeNode node in nodes)
+            {
+                if (node.ParentId == null)
+                {
+                    root = node;
+                    break;
+                }
+            }
+
+            if (root == null)
+            {
+                return;
+            }
+
+            float centerX = rect.center.x;
+
             float topY = rect.y + 40f;
 
             Rect rootRect = new Rect(centerX - NodeWidth / 2f, topY, NodeWidth, NodeHeight);
-            Rect philosophyRect = new Rect(rootRect.x - NodeWidth - HorizontalGap, rootRect.y + NodeHeight + VerticalGap, NodeWidth, NodeHeight);
-            Rect scienceRect = new Rect(rootRect.x + NodeWidth + HorizontalGap, rootRect.y + NodeHeight + VerticalGap, NodeWidth, NodeHeight);
 
-            DrawBranch(rootRect, new Rect[] { philosophyRect, scienceRect });
-            DrawNode(rootRect, "Ancient Earth\nFoundations");
-            DrawNode(philosophyRect, "Philosophy");
-            DrawNode(scienceRect, "Science");
+            List<CivilizationKnowledgeNode> children = new List<CivilizationKnowledgeNode>();
+
+            foreach (CivilizationKnowledgeNode node in nodes)
+            {
+                if (node.ParentId == root.Id)
+                {
+                    children.Add(node);
+                }
+            }
+
+            Rect[] childRects = new Rect[children.Count];
+
+            float totalWidth = children.Count * NodeWidth + (children.Count - 1) * HorizontalGap;
+
+            float startX = centerX - totalWidth / 2f;
+
+            float childY = rootRect.yMax + VerticalGap;
+
+            for (int i = 0; i < children.Count; i++)
+            {
+                childRects[i] = new Rect(startX + i * (NodeWidth + HorizontalGap), childY, NodeWidth, NodeHeight);
+            }
+
+            DrawBranch(rootRect, childRects);
+            DrawNode(rootRect, root.Label);
+
+            for (int i = 0; i < children.Count; i++)
+            {
+                DrawNode(childRects[i], children[i].Label);
+            }
         }
         private void DrawNode(Rect rect, string label)
         {
