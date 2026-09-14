@@ -49,8 +49,7 @@ namespace LiAIChat.Civilization.UI
             Rect philosophyRect = new Rect(rootRect.x - NodeWidth - HorizontalGap, rootRect.y + NodeHeight + VerticalGap, NodeWidth, NodeHeight);
             Rect scienceRect = new Rect(rootRect.x + NodeWidth + HorizontalGap, rootRect.y + NodeHeight + VerticalGap, NodeWidth, NodeHeight);
 
-            DrawConnection(rootRect, philosophyRect);
-            DrawConnection(rootRect, scienceRect);;
+            DrawBranch(rootRect, new Rect[] { philosophyRect, scienceRect });
             DrawNode(rootRect, "Ancient Earth\nFoundations");
             DrawNode(philosophyRect, "Philosophy");
             DrawNode(scienceRect, "Science");
@@ -76,6 +75,50 @@ namespace LiAIChat.Civilization.UI
             Widgets.DrawLine(parentBottomCenter, firstCorner, Color.gray, 2f);
             Widgets.DrawLine(firstCorner, secondCorner, Color.gray, 2f);
             Widgets.DrawLine(secondCorner, childTopCenter, Color.gray, 2f);
+        }
+
+        private void DrawBranch(Rect parentRect, Rect[] childRects)
+        {
+            if (childRects == null || childRects.Length == 0)
+            {
+                return;
+            }
+
+            Vector2 parentBottom = new Vector2(parentRect.center.x, parentRect.yMax);
+
+            float branchY = parentRect.yMax + VerticalGap / 2f;
+
+            Vector2 branchStart = new Vector2(parentBottom.x, branchY);
+
+            // Parent → branch
+            Widgets.DrawLine(parentBottom, branchStart, Color.gray, 2f);
+
+            float leftX = childRects[0].center.x;
+            float rightX = childRects[0].center.x;
+
+            foreach (Rect childRect in childRects)
+            {
+                if (childRect.center.x < leftX)
+                {
+                    leftX = childRect.center.x;
+                }
+
+                if (childRect.center.x > rightX)
+                {
+                    rightX = childRect.center.x;
+                }
+            }
+
+            // Horizontal branch
+            Widgets.DrawLine(new Vector2(leftX, branchY), new Vector2(rightX, branchY), Color.gray, 2f);
+
+            // Branch → children
+            foreach (Rect childRect in childRects)
+            {
+                Vector2 childTop = new Vector2(childRect.center.x, childRect.yMin);
+                Vector2 childBranchPoint = new Vector2(childRect.center.x, branchY);
+                Widgets.DrawLine(childBranchPoint, childTop, Color.gray, 2f);
+            }
         }
     }
 }
