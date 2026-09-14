@@ -10,9 +10,9 @@
   <LiAIChat.Civilization.CivilizationKnowledgeDef>
     <defName>LiAIChat_CivKnowledge_AncientGreekPhilosophy</defName>
     <label>Ancient Greek Philosophy</label>
-    <title>Ancient Greek Philosophy</title>
+    <title>古希腊哲学</title>
     <titleChinese>古希腊哲学</titleChinese>
-    <description>The reconstructed philosophical traditions of ancient Greece, including foundational works associated with Plato and Aristotle.</description>
+    <description>对古希腊哲学传统的重建，包括柏拉图、亚里士多德等思想家的奠基性著作，以及他们对知识、现实、伦理与政治秩序的探索。</description>
     <descriptionChinese>对古希腊哲学传统的重建，包括柏拉图、亚里士多德等思想家的奠基性著作，以及他们对知识、现实、伦理与政治秩序的探索。</descriptionChinese>
     <category>Philosophy</category>
     <requiredTexts>
@@ -33,9 +33,9 @@
   <LiAIChat.Civilization.CivilizationKnowledgeDef>
     <defName>LiAIChat_CivKnowledge_GreekEthics</defName>
     <label>Classical Greek Ethics</label>
-    <title>Classical Greek Ethics</title>
+    <title>古典希腊伦理学</title>
     <titleChinese>古典希腊伦理学</titleChinese>
-    <description>Reconstructed understanding of virtue, character, moral excellence, practical wisdom, and the good life in classical Greek philosophy.</description>
+    <description>对古典希腊伦理思想的重建，探讨德性、品格、道德卓越、实践智慧以及何为美好人生等核心问题。</description>
     <descriptionChinese>对古典希腊伦理思想的重建，探讨德性、品格、道德卓越、实践智慧以及何为美好人生等核心问题。</descriptionChinese>
     <category>Philosophy</category>
     <prerequisites>
@@ -59,9 +59,9 @@
   <LiAIChat.Civilization.CivilizationKnowledgeDef>
     <defName>LiAIChat_CivKnowledge_ClassicalGreekPoliticalThought</defName>
     <label>Classical Greek Political Thought</label>
-    <title>Classical Greek Political Thought</title>
+    <title>古典希腊政治思想</title>
     <titleChinese>古典希腊政治思想</titleChinese>
-    <description>Reconstructed understanding of major classical Greek political ideas concerning the polis, citizenship, justice, constitutions, political authority, and political order.</description>
+    <description>对古典希腊政治思想的重建，涵盖城邦、公民身份、正义、政体、政治权威与政治秩序等重要观念。</description>
     <descriptionChinese>对古典希腊政治思想的重建，涵盖城邦、公民身份、正义、政体、政治权威与政治秩序等重要观念。</descriptionChinese>
     <category>PoliticalThought</category>
     <prerequisites>

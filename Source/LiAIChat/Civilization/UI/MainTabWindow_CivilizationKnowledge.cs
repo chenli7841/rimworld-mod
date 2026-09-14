@@ -407,17 +407,28 @@ namespace LiAIChat.Civilization.UI
                         continue;
                     }
 
+                    CivilizationKnowledgeState prerequisiteState =
+    CivilizationKnowledgeManager
+        .GetState(
+            prerequisite);
+
+                    bool prerequisiteUnlocked =
+                        prerequisiteState != null &&
+                        prerequisiteState.Unlocked;
+
                     DrawConnection(
                         parentRect,
-                        childRect);
+                        childRect,
+                        prerequisiteUnlocked);
                 }
             }
         }
 
 
         private void DrawConnection(
-            Rect parentRect,
-            Rect childRect)
+    Rect parentRect,
+    Rect childRect,
+    bool prerequisiteUnlocked)
         {
             Vector2 start =
                 new Vector2(
@@ -444,22 +455,43 @@ namespace LiAIChat.Civilization.UI
                     end.x,
                     middleY);
 
+            Color lineColor;
+
+            if (prerequisiteUnlocked)
+            {
+                lineColor =
+                    new Color(
+                        0.70f,
+                        0.70f,
+                        0.70f,
+                        1f);
+            }
+            else
+            {
+                lineColor =
+                    new Color(
+                        0.35f,
+                        0.35f,
+                        0.35f,
+                        1f);
+            }
+
             Widgets.DrawLine(
                 start,
                 firstCorner,
-                Color.gray,
+                lineColor,
                 2f);
 
             Widgets.DrawLine(
                 firstCorner,
                 secondCorner,
-                Color.gray,
+                lineColor,
                 2f);
 
             Widgets.DrawLine(
                 secondCorner,
                 end,
-                Color.gray,
+                lineColor,
                 2f);
         }
 
@@ -509,36 +541,36 @@ namespace LiAIChat.Civilization.UI
 
 
         private void DrawNode(
-            Rect rect,
-            string label,
-            bool selected,
-            CivilizationKnowledgeState state)
+    Rect rect,
+    string label,
+    bool selected,
+    CivilizationKnowledgeState state)
         {
             Color oldColor =
                 GUI.color;
 
-            bool locked =
-                state == null ||
-                !state.Unlocked;
+            Color nodeColor =
+                GetNodeStatusColor(
+                    state);
 
-            if (locked)
-            {
-                GUI.color =
-                    new Color(
-                        0.55f,
-                        0.55f,
-                        0.55f,
-                        1f);
-            }
+            GUI.color =
+                nodeColor;
 
             Widgets.DrawMenuSection(
                 rect);
+
+            GUI.color =
+                oldColor;
 
             if (selected)
             {
                 Widgets.DrawHighlight(
                     rect);
             }
+
+            DrawNodeStatusMarker(
+                rect,
+                state);
 
             TextAnchor oldAnchor =
                 Text.Anchor;
@@ -548,14 +580,125 @@ namespace LiAIChat.Civilization.UI
 
             Widgets.Label(
                 rect.ContractedBy(
-                    6f),
+                    8f),
                 label);
 
             Text.Anchor =
                 oldAnchor;
 
-            GUI.color =
-                oldColor;
+            TooltipHandler.TipRegion(
+                rect,
+                label +
+                "\nStatus: " +
+                GetKnowledgeStatusText(state));
+        }
+
+        private Color GetNodeStatusColor(
+    CivilizationKnowledgeState state)
+        {
+            if (state == null ||
+                !state.Unlocked)
+            {
+                return new Color(
+                    0.45f,
+                    0.45f,
+                    0.45f,
+                    1f);
+            }
+
+            if (state.AwaitingReactivation)
+            {
+                return new Color(
+                    0.65f,
+                    0.90f,
+                    0.90f,
+                    1f);
+            }
+
+            if (state.Dormant)
+            {
+                return new Color(
+                    0.50f,
+                    0.58f,
+                    0.68f,
+                    1f);
+            }
+
+            if (state.Unstable)
+            {
+                return new Color(
+                    0.95f,
+                    0.82f,
+                    0.45f,
+                    1f);
+            }
+
+            return Color.white;
+        }
+
+        private void DrawNodeStatusMarker(
+    Rect rect,
+    CivilizationKnowledgeState state)
+        {
+            string marker =
+                GetNodeStatusMarker(
+                    state);
+
+            Rect markerRect =
+                new Rect(
+                    rect.xMax - 24f,
+                    rect.y + 4f,
+                    20f,
+                    18f);
+
+            TextAnchor oldAnchor =
+                Text.Anchor;
+
+            GameFont oldFont =
+                Text.Font;
+
+            Text.Anchor =
+                TextAnchor.MiddleCenter;
+
+            Text.Font =
+                GameFont.Tiny;
+
+            Widgets.Label(
+                markerRect,
+                marker);
+
+            Text.Font =
+                oldFont;
+
+            Text.Anchor =
+                oldAnchor;
+        }
+
+        private string GetNodeStatusMarker(
+    CivilizationKnowledgeState state)
+        {
+            if (state == null ||
+                !state.Unlocked)
+            {
+                return "L";
+            }
+
+            if (state.AwaitingReactivation)
+            {
+                return "R";
+            }
+
+            if (state.Dormant)
+            {
+                return "D";
+            }
+
+            if (state.Unstable)
+            {
+                return "U";
+            }
+
+            return "A";
         }
 
 
