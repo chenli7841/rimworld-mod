@@ -9,16 +9,20 @@
 
         public int Tier;
 
+        public string Description;
+
         public CivilizationKnowledgeNode(
             string id,
             string label,
             string parentId,
-            int tier)
+            int tier,
+            string description)
         {
             Id = id;
             Label = label;
             ParentId = parentId;
             Tier = tier;
+            Description = description;
         }
     }
 }

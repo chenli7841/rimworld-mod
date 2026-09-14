@@ -30,13 +30,207 @@ namespace LiAIChat.Civilization.UI
         private const float DragThreshold = 6f;
         private readonly Dictionary<string, Rect> currentNodeRects = new Dictionary<string, Rect>();
 
-        public override void DoWindowContents(Rect inRect)
+        public override void DoWindowContents(
+    Rect inRect)
         {
             Text.Font = GameFont.Medium;
-            Widgets.Label(new Rect(0f, 0f, inRect.width, 35f), "Civilization Knowledge");
+
+            Widgets.Label(
+                new Rect(
+                    0f,
+                    0f,
+                    inRect.width,
+                    35f),
+                "Civilization Knowledge");
+
             Text.Font = GameFont.Small;
-            Rect viewportRect = new Rect(0f, 45f, inRect.width, inRect.height - 45f);
-            DrawTreeViewport(viewportRect);
+
+            float detailPanelWidth =
+                300f;
+
+            float gap =
+                12f;
+
+            Rect viewportRect =
+                new Rect(
+                    0f,
+                    45f,
+                    inRect.width -
+                    detailPanelWidth -
+                    gap,
+                    inRect.height - 45f);
+
+            Rect detailRect =
+                new Rect(
+                    viewportRect.xMax +
+                    gap,
+                    45f,
+                    detailPanelWidth,
+                    inRect.height - 45f);
+
+            DrawTreeViewport(
+                viewportRect);
+
+            DrawNodeDetailPanel(
+                detailRect);
+        }
+        private CivilizationKnowledgeNode
+    FindNodeById(
+        string nodeId)
+        {
+            if (nodeId == null)
+            {
+                return null;
+            }
+
+            foreach (CivilizationKnowledgeNode node
+                     in CivilizationKnowledgeDatabase.Nodes)
+            {
+                if (node.Id == nodeId)
+                {
+                    return node;
+                }
+            }
+
+            return null;
+        }
+        private string GetParentLabel(
+    CivilizationKnowledgeNode node)
+        {
+            if (node == null)
+            {
+                return "";
+            }
+
+            if (node.ParentId == null)
+            {
+                return "None";
+            }
+
+            CivilizationKnowledgeNode parent =
+                FindNodeById(
+                    node.ParentId);
+
+            if (parent == null)
+            {
+                return node.ParentId;
+            }
+
+            return parent.Label;
+        }
+        private void DrawNodeDetailPanel(
+    Rect rect)
+        {
+            Widgets.DrawMenuSection(
+                rect);
+
+            Rect innerRect =
+                rect.ContractedBy(12f);
+
+            if (selectedNodeId == null)
+            {
+                Text.Anchor =
+                    TextAnchor.MiddleCenter;
+
+                Widgets.Label(
+                    innerRect,
+                    "Select a knowledge node.");
+
+                Text.Anchor =
+                    TextAnchor.UpperLeft;
+
+                return;
+            }
+
+            CivilizationKnowledgeNode node =
+                FindNodeById(
+                    selectedNodeId);
+
+            if (node == null)
+            {
+                return;
+            }
+
+            float y =
+                innerRect.y;
+
+            Text.Font =
+                GameFont.Medium;
+
+            Widgets.Label(
+                new Rect(
+                    innerRect.x,
+                    y,
+                    innerRect.width,
+                    35f),
+                node.Label);
+
+            y += 45f;
+
+            Text.Font =
+                GameFont.Small;
+
+            Widgets.Label(
+                new Rect(
+                    innerRect.x,
+                    y,
+                    innerRect.width,
+                    25f),
+                "Id: " + node.Id);
+
+            y += 28f;
+
+            Widgets.Label(
+                new Rect(
+                    innerRect.x,
+                    y,
+                    innerRect.width,
+                    25f),
+                "Tier: " + node.Tier);
+
+            y += 28f;
+
+            Widgets.Label(
+                new Rect(
+                    innerRect.x,
+                    y,
+                    innerRect.width,
+                    40f),
+                "Parent: " +
+                GetParentLabel(node));
+
+            y += 45f;
+
+            Widgets.DrawLineHorizontal(
+                innerRect.x,
+                y,
+                innerRect.width);
+
+            y += 12f;
+
+            Widgets.Label(
+                new Rect(
+                    innerRect.x,
+                    y,
+                    innerRect.width,
+                    25f),
+                "Description");
+
+            y += 28f;
+
+            float descriptionHeight =
+    Text.CalcHeight(
+        node.Description,
+        innerRect.width);
+
+            Widgets.Label(
+                new Rect(
+                    innerRect.x,
+                    y,
+                    innerRect.width,
+                    descriptionHeight),
+                node.Description);
+                node.Description);
         }
 
         private void DrawTreeViewport(
