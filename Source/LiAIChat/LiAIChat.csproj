@@ -137,16 +137,11 @@
     <Compile Include="Background\PawnAISnapshotBuilder.cs" />
     <Compile Include="Bootstrap.cs" />
     <Compile Include="Civilization\CivilizationKnowledgeCategory.cs" />
-    <Compile Include="Civilization\CivilizationKnowledgeDatabase.cs" />
     <Compile Include="Civilization\CivilizationKnowledgeDef.cs" />
     <Compile Include="Civilization\CivilizationKnowledgeEvaluator.cs" />
     <Compile Include="Civilization\CivilizationKnowledgeGameComponent.cs" />
     <Compile Include="Civilization\CivilizationKnowledgeManager.cs" />
-    <Compile Include="Civilization\CivilizationKnowledgeNode.cs" />
-    <Compile Include="Civilization\CivilizationKnowledgeNodeState.cs" />
     <Compile Include="Civilization\CivilizationKnowledgeState.cs" />
-    <Compile Include="Civilization\CivilizationKnowledgeStateManager.cs" />
-    <Compile Include="Civilization\CivilizationKnowledgeStatus.cs" />
     <Compile Include="Civilization\CivilizationKnowledgeUtility.cs" />
     <Compile Include="Civilization\UI\CivilizationKnowledgeNodeVisualState.cs" />
     <Compile Include="Civilization\UI\CivilizationKnowledgeNodeVisualUtility.cs" />
