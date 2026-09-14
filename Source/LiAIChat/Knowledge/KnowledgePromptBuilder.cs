@@ -83,28 +83,6 @@ namespace LiAIChat.Knowledge
             }
 
             sb.AppendLine();
-
-            sb.AppendLine(
-                "Knowledge rules:");
-
-            sb.AppendLine(
-                "- Use this knowledge naturally when relevant.");
-
-            sb.AppendLine(
-                "- Familiarity represents approximate understanding, not perfect recall.");
-
-            sb.AppendLine(
-                "- The descriptions above define the core Ancient Earth knowledge the pawn has acquired.");
-
-            sb.AppendLine(
-                "- Do not silently expand this knowledge into expert-level knowledge.");
-
-            sb.AppendLine(
-                "- Do not claim detailed Ancient Earth knowledge outside known topics.");
-
-            sb.AppendLine(
-                "- Low familiarity should result in uncertainty, partial recall, or questions.");
-
             return sb.ToString();
         }
 

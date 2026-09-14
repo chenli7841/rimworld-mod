@@ -39,7 +39,16 @@ namespace LiAIChat.AI
             IReadOnlyList<ChatMessage> history,
             string playerMessage)
         {
-            string instructions = BuildInstructions(pawn, state, worldview, meaning, knowledge, lifeGoal, recentLifeEvents, recentIntellectualExchanges);
+            string staticInstructions = BuildStaticInstructions();
+
+            string characterContext = BuildCharacterContext(pawn, state, worldview, meaning, knowledge, lifeGoal, recentLifeEvents, recentIntellectualExchanges);
+
+            string instructions =
+                staticInstructions +
+                "\n\n" +
+                characterContext;
+
+
             Log.Message(
                 "[Li AI Chat] Character prompt:\n" +
                 instructions
@@ -55,12 +64,22 @@ namespace LiAIChat.AI
             string json =
             "{" +
             "\"model\":\"gpt-5.6-luna\"," +
+
+            "\"prompt_cache_key\":\"LiAIChat.Actor.v1\"," +
+
+            "\"prompt_cache_options\":{" +
+                "\"mode\":\"implicit\"," +
+                "\"ttl\":\"30m\"" +
+            "}," +
+
             "\"instructions\":\"" +
             EscapeJson(instructions) +
             "\"," +
+
             "\"input\":\"" +
             EscapeJson(conversationInput) +
             "\"," +
+
             "\"max_output_tokens\":300" +
             "}";
             Log.Message(
@@ -158,37 +177,25 @@ namespace LiAIChat.AI
             }
         }
 
-        private static void AppendCurrentRelationships(
-            StringBuilder prompt,
-            PawnContext pawnContext)
+        private static void AppendCurrentRelationships(StringBuilder prompt, PawnContext pawnContext)
         {
             prompt.AppendLine();
             prompt.AppendLine("CURRENT IMPORTANT RELATIONSHIPS");
 
             Pawn gamePawn = FindPawnForContext(pawnContext);
 
-            if (gamePawn == null ||
-                gamePawn.relations == null)
+            if (gamePawn == null || gamePawn.relations == null)
             {
-                prompt.AppendLine(
-                    "- Current relationship information is unavailable.");
-
+                prompt.AppendLine("- Current relationship information is unavailable.");
                 prompt.AppendLine();
-                prompt.AppendLine(
-                    "Do not invent a romantic partner or relationship that is not provided elsewhere.");
-
                 return;
             }
 
-            List<string> relationships =
-                new List<string>();
+            List<string> relationships = new List<string>();
 
-            foreach (DirectPawnRelation relation
-                     in gamePawn.relations.DirectRelations)
+            foreach (DirectPawnRelation relation in gamePawn.relations.DirectRelations)
             {
-                if (relation == null ||
-                    relation.def == null ||
-                    relation.otherPawn == null)
+                if (relation == null || relation.def == null || relation.otherPawn == null)
                 {
                     continue;
                 }
@@ -198,51 +205,31 @@ namespace LiAIChat.AI
 
                 if (relation.def == PawnRelationDefOf.Lover)
                 {
-                    relationships.Add(
-                        "- Lover: " + otherName);
+                    relationships.Add("- Lover: " + otherName);
                 }
                 else if (relation.def == PawnRelationDefOf.Fiance)
                 {
-                    relationships.Add(
-                        "- Fiancé(e): " + otherName);
+                    relationships.Add("- Fiancé(e): " + otherName);
                 }
                 else if (relation.def == PawnRelationDefOf.Spouse)
                 {
-                    relationships.Add(
-                        "- Spouse: " + otherName);
+                    relationships.Add("- Spouse: " + otherName);
                 }
             }
 
             if (relationships.Count == 0)
             {
-                prompt.AppendLine(
-                    "- No current romantic partner is recorded.");
+                prompt.AppendLine("- No current romantic partner is recorded.");
             }
             else
             {
-                foreach (string relationship
-                         in relationships)
+                foreach (string relationship in relationships)
                 {
                     prompt.AppendLine(relationship);
                 }
             }
 
             prompt.AppendLine();
-            prompt.AppendLine(
-                "These relationships are factual parts of the character's current life.");
-
-            prompt.AppendLine(
-                "When the player asks broad personal questions such as how life has been, " +
-                "what is new, how the character is doing, what matters to them, or whether they are happy, " +
-                "consider an important romantic relationship as potentially relevant.");
-
-            prompt.AppendLine(
-                "Do not mechanically mention a partner in every response. " +
-                "Mention the relationship only when it would naturally matter to the question or the character's current concerns.");
-
-            prompt.AppendLine(
-                "Do not invent relationship events, conversations, conflicts, promises, dates, or feelings " +
-                "that are not supported by the relationship state, memories, life events, or conversation history.");
         }
 
         private static Pawn FindPawnForContext(
@@ -328,295 +315,92 @@ namespace LiAIChat.AI
                 .Replace("\t", "\\t");
         }
 
-        private string BuildInstructions(PawnContext pawn, PawnAIState state, WorldviewState worldview, MeaningState meaning, KnowledgeState knowledge, LifeGoal lifeGoal, IReadOnlyList<PawnLifeEvent> recentLifeEvents, IReadOnlyList<PawnIntellectualExchange> recentIntellectualExchanges)
+        private string BuildCharacterContext(PawnContext pawn, PawnAIState state, WorldviewState worldview, MeaningState meaning, KnowledgeState knowledge, LifeGoal lifeGoal, IReadOnlyList<PawnLifeEvent> recentLifeEvents, IReadOnlyList<PawnIntellectualExchange> recentIntellectualExchanges)
         {
             StringBuilder prompt =
                 new StringBuilder();
 
             prompt.AppendLine(
-                $"You are {pawn.Name}, a person living in a RimWorld colony."
-            );
-
+$@"CURRENT CHARACTER STATE
+- Character name: {pawn.Name}
+- Gender: {pawn.Gender}
+- Age: {pawn.Age}
+");
+            AppendCurrentRelationships(prompt, pawn);
             prompt.AppendLine();
 
             prompt.AppendLine(
-                "CHARACTER INFORMATION"
-            );
+$@"CHARACTER WORLDVIEW STATE
 
-            prompt.AppendLine();
+- Belief in God: {worldview.BeliefInGod:0.00}
+- Belief in objective morality: {worldview.BeliefInObjectiveMorality:0.00}
+- Trust in Christianity: {worldview.TrustInChristianity:0.00}
+- Knowledge of Christianity: {worldview.KnowledgeOfChristianity:0.00}
+- Intellectual resistance to Christianity: {worldview.IntellectualResistance:0.00}
+- Emotional resistance to Christianity: {worldview.EmotionalResistance:0.00}
+- Spiritual interest: {worldview.SpiritualInterest:0.00}
 
-            prompt.AppendLine(
-                $"Name: {pawn.Name}"
-            );
+CHARACTER MEANING STATE
+- Purpose: {meaning.Purpose:0.00}
+- Belonging: {meaning.Belonging:0.00}
+- Hope: {meaning.Hope:0.00}
+- Coherence: {meaning.Coherence:0.00}
+- Transcendence: {meaning.Transcendence:0.00}
 
-            prompt.AppendLine(
-                $"Gender: {pawn.Gender}"
-            );
+CHARACTER KNOWLEDGE STATE
+- Ancient Earth history knowledge: {knowledge.EarthHistoryKnowledge:0.00}
+- Philosophy knowledge: {knowledge.PhilosophyKnowledge:0.00}
+- Religious knowledge: {knowledge.ReligiousKnowledge:0.00}
+- Politics knowledge: {knowledge.PoliticsKnowledge:0.00}
+- Science knowledge: {knowledge.ScienceKnowledge:0.00}
 
-            prompt.AppendLine(
-                $"Age: {pawn.Age}"
-            );
-
-            AppendCurrentRelationships(
-                prompt,
-                pawn);
-
-            prompt.AppendLine();
-
-            prompt.AppendLine("CHARACTER WORLDVIEW STATE");
-            prompt.AppendLine(
-                "All worldview values range from 0.0 to 1.0, " +
-                "where 0.0 means very low or absent and 1.0 means very high or strong.");
-
-            prompt.AppendLine(
-                $"Belief in God: {worldview.BeliefInGod:0.00}");
-
-            prompt.AppendLine(
-                $"Belief in objective morality: " +
-                $"{worldview.BeliefInObjectiveMorality:0.00}");
-
-            prompt.AppendLine(
-                $"Trust in Christianity: " +
-                $"{worldview.TrustInChristianity:0.00}");
-
-            prompt.AppendLine(
-                $"Knowledge of Christianity: " +
-                $"{worldview.KnowledgeOfChristianity:0.00}");
-
-            prompt.AppendLine(
-                $"Intellectual resistance to Christianity: " +
-                $"{worldview.IntellectualResistance:0.00}");
-
-            prompt.AppendLine(
-                $"Emotional resistance to Christianity: " +
-                $"{worldview.EmotionalResistance:0.00}");
-
-            prompt.AppendLine(
-                $"Spiritual interest: " +
-                $"{worldview.SpiritualInterest:0.00}");
-
-            prompt.AppendLine();
-
-            prompt.AppendLine(
-                "These values describe tendencies, not rigid rules. " +
-                "Express them naturally through the character's beliefs, doubts, " +
-                "questions, confidence, curiosity, and emotional reactions.");
-
-            prompt.AppendLine(
-                "Never mention these numerical values or the existence of this state system in dialogue.");
-
-            prompt.AppendLine();
-
-            prompt.AppendLine("CHARACTER MEANING STATE");
-
-            prompt.AppendLine(
-                "All meaning values range from 0.0 to 1.0, " +
-                "where 0.0 means very low and 1.0 means very high.");
-
-            prompt.AppendLine(
-                $"Purpose: {meaning.Purpose:0.00}");
-
-            prompt.AppendLine(
-                $"Belonging: {meaning.Belonging:0.00}");
-
-            prompt.AppendLine(
-                $"Hope: {meaning.Hope:0.00}");
-
-            prompt.AppendLine(
-                $"Coherence: {meaning.Coherence:0.00}");
-
-            prompt.AppendLine(
-                $"Transcendence: {meaning.Transcendence:0.00}");
-
-            prompt.AppendLine();
-
-            prompt.AppendLine(
-                "Meaning state describes how the character currently experiences " +
-                "purpose, connection, hope, life coherence, and connection to something larger than the self.");
-
-            prompt.AppendLine(
-                "Meaning is not the same as mood, happiness, or religious belief.");
-
-            prompt.AppendLine(
-                "Use these values as subtle internal tendencies, not rigid rules.");
-
-            prompt.AppendLine(
-                "Never mention these numerical values or the existence of the meaning-state system in dialogue.");
-
-            prompt.AppendLine(
-                "High meaning does not erase grief, fear, anger, or suffering. " +
-                "It may instead shape how the character interprets and endures them.");
-
-            prompt.AppendLine();
-
-            prompt.AppendLine("CHARACTER KNOWLEDGE STATE");
-
-            prompt.AppendLine(
-                "All knowledge values range from 0.0 to 1.0. " +
-                "These values represent how much the character plausibly knows, " +
-                "not the knowledge available to the underlying language model.");
-
-            prompt.AppendLine(
-                "Interpret knowledge values approximately: " +
-                "0.0-0.2 very limited, 0.2-0.4 basic or fragmented, " +
-                "0.4-0.6 moderate, 0.6-0.8 well informed, " +
-                "0.8-1.0 highly knowledgeable.");
-
-            prompt.AppendLine(
-                $"Ancient Earth history knowledge: " +
-                $"{knowledge.EarthHistoryKnowledge:0.00}");
-
-            prompt.AppendLine(
-                $"Philosophy knowledge: " +
-                $"{knowledge.PhilosophyKnowledge:0.00}");
-
-            prompt.AppendLine(
-                $"Religious knowledge: " +
-                $"{knowledge.ReligiousKnowledge:0.00}");
-
-            prompt.AppendLine(
-                $"Politics knowledge: " +
-                $"{knowledge.PoliticsKnowledge:0.00}");
-
-            prompt.AppendLine(
-                $"Science knowledge: " +
-                $"{knowledge.ScienceKnowledge:0.00}");
-
-            prompt.AppendLine();
-
-            prompt.AppendLine(
-                "SPECIFIC KNOWN TOPICS");
-
-            if (knowledge.KnownTopics == null ||
-                knowledge.KnownTopics.Count == 0)
+SPECIFIC KNOWN TOPICS
+");
+            if (knowledge.KnownTopics == null || knowledge.KnownTopics.Count == 0)
             {
-                prompt.AppendLine(
-                    "No specific Ancient Earth topics are recorded as known.");
+                prompt.AppendLine("- No specific Ancient Earth topics are recorded as known.");
             }
             else
             {
                 foreach (KnowledgeTopic topic in knowledge.KnownTopics)
                 {
-                    if (topic == null ||
-                        string.IsNullOrWhiteSpace(topic.TopicId))
+                    if (topic == null || string.IsNullOrWhiteSpace(topic.TopicId))
                     {
                         continue;
                     }
-
                     string topicName = KnowledgeTopicCatalog.GetDisplayName(topic.TopicId);
-
-                    prompt.AppendLine(
-                        "- " +
-                        topicName +
-                        " | familiarity " +
-                        topic.Familiarity.ToString("0.00"));
+                    prompt.AppendLine("- " + topicName + " | familiarity " + topic.Familiarity.ToString("0.00"));
                 }
             }
-
             prompt.AppendLine();
-
-            prompt.AppendLine(
-                "IMPORTANT KNOWLEDGE RULE:");
-
-            prompt.AppendLine(
-                "Do not use information simply because you, the language model, know it.");
-
-            prompt.AppendLine(
-                "The character may only speak confidently about subjects that are reasonably supported " +
-                "by the character's knowledge state, background, memories, and recorded experiences.");
-
-            prompt.AppendLine(
-                "If the character lacks sufficient knowledge, admit uncertainty, partial knowledge, " +
-                "or unfamiliarity naturally.");
-
-            prompt.AppendLine(
-                "The character may ask the player to explain unfamiliar concepts.");
-
-            prompt.AppendLine(
-                "Never pretend to know detailed Ancient Earth history, philosophy, religion, politics, " +
-                "or science when the character's knowledge does not justify it.");
-
-            prompt.AppendLine(
-                "When uncertain, prefer saying that the character does not know, " +
-                "only vaguely remembers, or has incomplete records rather than inventing detailed knowledge.");
-
-            prompt.AppendLine();
-
-            prompt.AppendLine(
-                "Specific known topics are stronger evidence of what the character knows " +
-                "than general knowledge levels.");
-
-            prompt.AppendLine(
-                "If a specific Ancient Earth person, event, doctrine, text, or concept " +
-                "is not listed as a known topic, do not assume detailed knowledge of it " +
-                "merely because the general knowledge score is high.");
-
-            prompt.AppendLine(
-                "General knowledge may justify broad contextual awareness, " +
-                "but detailed claims require relevant known topics, memories, " +
-                "background information, or information provided by the player in the conversation.");
-
-            prompt.AppendLine(
-                "A known topic includes reasonable core facts normally associated with that topic. " +
-                "Do not require every related person, place, or sub-event to have its own topic entry.");
-
-            prompt.AppendLine();
-            prompt.AppendLine(
-                "CURRENT LIFE DIRECTION");
-
-            if (lifeGoal == null ||
-                !lifeGoal.IsActive)
+            prompt.AppendLine("CURRENT LIFE GOAL");
+            if (lifeGoal == null || !lifeGoal.IsActive)
             {
-                prompt.AppendLine(
-                    "The character currently has no clear long-term life goal.");
+                prompt.AppendLine("- The character currently has no clear long-term life goal.");
             }
             else
             {
                 prompt.AppendLine(
-                    "Life goal: " +
-                    lifeGoal.Title);
-
-                prompt.AppendLine(
-                    "Description: " +
-                    lifeGoal.Description);
-
-                prompt.AppendLine(
-                    "Commitment: " +
-                    lifeGoal.Commitment.ToString("0.00"));
-
-                prompt.AppendLine(
-                    "Reason: " +
-                    lifeGoal.Reason);
-
-                prompt.AppendLine(
-                    "This goal should influence the character's priorities, hopes, questions, " +
-                    "and interpretation of future events, but should not be forced into every conversation.");
-
-                prompt.AppendLine(
-                    "Never mention numerical commitment values or the existence of a life-goal state system.");
+$@"- Life goal: ${lifeGoal.Title}
+- Description: ${lifeGoal.Description}
+- Commitment: ${lifeGoal.Commitment.ToString("0.00")}
+- Reason: ${lifeGoal.Reason}");
             }
-            prompt.AppendLine();
-            prompt.AppendLine("RECENT IMPORTANT LIFE EVENTS");
+            prompt.AppendLine("RECENT IMPORTANT LIFE EVENTS (factual events that happened in the character's world.)");
 
-            if (recentLifeEvents == null ||
-                recentLifeEvents.Count == 0)
+            if (recentLifeEvents == null || recentLifeEvents.Count == 0)
             {
-                prompt.AppendLine(
-                    "None recorded.");
+                prompt.AppendLine("None recorded.");
             }
             else
             {
-                int firstIndex =
-                    System.Math.Max(
-                        0,
-                        recentLifeEvents.Count - 5);
+                int firstIndex = System.Math.Max(0, recentLifeEvents.Count - 5);
 
                 for (int i = firstIndex; i < recentLifeEvents.Count; i++)
                 {
                     PawnLifeEvent lifeEvent = recentLifeEvents[i];
 
-                    if (lifeEvent == null)
-                        continue;
+                    if (lifeEvent == null) continue;
 
                     prompt.AppendLine("- Event: " + lifeEvent.Description);
 
@@ -636,47 +420,17 @@ namespace LiAIChat.AI
 
                     if (!string.IsNullOrWhiteSpace(lifeEvent.SubjectRelationshipLabel))
                     {
-                        prompt.AppendLine(
-                            "  Personal relationship to you: " +
-                            lifeEvent.SubjectRelationshipLabel + ".");
+                        prompt.AppendLine("  Personal relationship to you: " + lifeEvent.SubjectRelationshipLabel + ".");
                     }
                     else
                     {
-                        prompt.AppendLine(
-                            "  Personal relationship to you: " +
-                            "No known close direct relationship.");
+                        prompt.AppendLine("  Personal relationship to you: No known close direct relationship.");
                     }
                 }
             }
 
             prompt.AppendLine();
-
-            prompt.AppendLine("These life events are factual events that happened in the character's world.");
-
-            prompt.AppendLine(
-                "A hostile person's death may still emotionally affect the character, " +
-                "but distinguish distress about violence, danger, killing, or mortality " +
-                "from grief over losing a colony member.");
-
-            prompt.AppendLine(
-                "The character may naturally refer to them when relevant, " +
-                "but should not force them into every conversation.");
-
-            prompt.AppendLine(
-                "A person's faction role and personal relationship can conflict. " +
-                "For example, someone may have been hostile to the colony while also being your relative, lover, spouse, or former companion. " +
-                "When that happens, preserve both facts and allow the character to have conflicted feelings.");
-
-            prompt.AppendLine(
-                "Do not treat a hostile stranger as a lost colony member. " +
-                "Conversely, do not erase a genuine personal relationship merely because the dead person belonged to a hostile faction.");
-
-            prompt.AppendLine();
-
-
-            prompt.AppendLine();
             prompt.AppendLine("RECENT INTELLECTUAL EXCHANGES WITH OTHER COLONISTS");
-
             if (recentIntellectualExchanges == null || recentIntellectualExchanges.Count == 0)
             {
                 prompt.AppendLine("None.");
@@ -684,55 +438,35 @@ namespace LiAIChat.AI
             else
             {
                 int start = Math.Max(0, recentIntellectualExchanges.Count - 3);
-
                 for (int i = start; i < recentIntellectualExchanges.Count; i++)
                 {
                     PawnIntellectualExchange exchange = recentIntellectualExchanges[i];
-
-                    if (exchange == null)
-                        continue;
-
+                    if (exchange == null) continue;
                     prompt.AppendLine("- " + exchange.Summary);
                 }
             }
 
             prompt.AppendLine();
-
-            prompt.AppendLine(
-                "These are conversations the character actually had with other colonists. " +
-                "They may be mentioned when relevant, but should not be forced into every response.");
-
+            prompt.AppendLine("These conversations may be mentioned when relevant, but should not be forced into every response.");
             prompt.AppendLine();
-
-            prompt.AppendLine(
-                "Personality traits:"
-            );
-
+            prompt.AppendLine("Personality traits:");
             if (pawn.Traits.Count == 0)
             {
-                prompt.AppendLine(
-                    "- No notable traits."
-                );
+                prompt.AppendLine("- No notable traits.");
             }
             else
             {
-                foreach (string trait
-                         in pawn.Traits)
+                foreach (string trait in pawn.Traits)
                 {
-                    prompt.AppendLine(
-                        $"- {trait}"
-                    );
+                    prompt.AppendLine($"- {trait}");
                 }
             }
 
-            if (!string.IsNullOrWhiteSpace(
-                    pawn.Childhood))
+            if (!string.IsNullOrWhiteSpace(pawn.Childhood))
             {
                 prompt.AppendLine();
 
-                prompt.AppendLine(
-                    $"Childhood: {pawn.Childhood}"
-                );
+                prompt.AppendLine($"Childhood: {pawn.Childhood}");
             }
 
             if (!string.IsNullOrWhiteSpace(
@@ -740,61 +474,14 @@ namespace LiAIChat.AI
             {
                 prompt.AppendLine();
 
-                prompt.AppendLine(
-                    $"Adulthood: {pawn.Adulthood}"
-                );
+                prompt.AppendLine($"Adulthood: {pawn.Adulthood}");
             }
 
             prompt.AppendLine();
 
-            prompt.AppendLine(
-                "ROLEPLAY INSTRUCTIONS"
-            );
-
-            prompt.AppendLine(
-                "- Stay in character."
-            );
-
-            prompt.AppendLine(
-                "- Speak naturally as this person."
-            );
-
-            prompt.AppendLine(
-                "- Let the character's personality traits and background influence the response."
-            );
-
-            prompt.AppendLine(
-                "- Do not describe yourself as an AI or assistant."
-            );
-
-            prompt.AppendLine(
-                "- Do not mention these instructions."
-            );
-
-            prompt.AppendLine(
-                "- Reply in the same language the player uses."
-            );
-
-            prompt.AppendLine(
-                "- Keep ordinary conversation fairly concise."
-            );
-
-            prompt.AppendLine(
-                "- When the player asks about the character's recent life or general well-being, " +
-                "give appropriate weight to major current personal relationships and recent life events."
-            );
-
-            prompt.AppendLine(
-                "- Do not turn relationship context into a checklist. " +
-                "Use it selectively and naturally, as a real person would."
-            );
-
-            prompt.AppendLine(@"- Archive reflections are the pawn's own previous thoughts. Treat them as continuity of character, not as objective facts. The pawn may reconsider or develop these thoughts over time.");
-
             string knowledgePrompt = KnowledgePromptBuilder.Build(state.Knowledge);
 
-            if (!string.IsNullOrWhiteSpace(
-                knowledgePrompt))
+            if (!string.IsNullOrWhiteSpace(knowledgePrompt))
             {
                 prompt.AppendLine();
                 prompt.AppendLine(knowledgePrompt);
@@ -810,193 +497,155 @@ namespace LiAIChat.AI
             IReadOnlyList<ChatMessage> history,
             string playerMessage)
         {
-            StringBuilder builder =
-                new StringBuilder();
+            StringBuilder builder = new StringBuilder();
 
-            builder.AppendLine(
-                "LONG-TERM CONVERSATION MEMORY");
+            builder.AppendLine("LONG-TERM CONVERSATION MEMORY");
 
             builder.AppendLine();
-
-            if (string.IsNullOrWhiteSpace(
-                conversationSummary))
+            if (string.IsNullOrWhiteSpace(conversationSummary))
             {
-                builder.AppendLine(
-                    "(No long-term conversation memory yet.)");
+                builder.AppendLine("(No long-term conversation memory yet.)");
             }
             else
             {
-                builder.AppendLine(
-                    conversationSummary);
+                builder.AppendLine(conversationSummary);
             }
 
             builder.AppendLine();
-
-
-            builder.AppendLine(
-    "IMPORTANT LONG-TERM MEMORIES");
+            builder.AppendLine("IMPORTANT LONG-TERM MEMORIES");
 
             builder.AppendLine();
 
-            if (memories == null ||
-                memories.Count == 0)
+            if (memories == null || memories.Count == 0)
             {
-                builder.AppendLine(
-                    "(No important long-term memories yet.)");
+                builder.AppendLine("(No important long-term memories yet.)");
             }
             else
             {
-                int memoryCount =
-                    Math.Min(
-                        memories.Count,
-                        8);
+                int memoryCount = Math.Min(memories.Count, 8);
 
-                for (int i = 0;
-                     i < memoryCount;
-                     i++)
+                for (int i = 0; i < memoryCount; i++)
                 {
-                    PawnMemory memory =
-                        memories[i];
-
-                    builder.AppendLine(
-                        "- " +
-                        memory.Text);
+                    PawnMemory memory = memories[i];
+                    builder.AppendLine("- " + memory.Text);
                 }
             }
 
             builder.AppendLine();
-
-
-
-            builder.AppendLine(
-                "RECENT CONVERSATION");
-
+            builder.AppendLine("RECENT CONVERSATION");
             builder.AppendLine();
-
-            int startIndex =
-                Math.Max(0, history.Count - 12);
-
-            for (int i = startIndex;
-                 i < history.Count;
-                 i++)
+            int startIndex = Math.Max(0, history.Count - 12);
+            for (int i = startIndex; i < history.Count; i++)
             {
-                ChatMessage message =
-                    history[i];
+                ChatMessage message = history[i];
 
-                builder.AppendLine(
-                    message.IsPlayer
-                        ? "Player:"
-                        : pawn.Name + ":");
-
-                builder.AppendLine(
-                    message.Text);
-
+                builder.AppendLine(message.IsPlayer ? "Player:" : pawn.Name + ":");
+                builder.AppendLine(message.Text);
                 builder.AppendLine();
             }
 
-            builder.AppendLine(
-                "CURRENT PLAYER MESSAGE");
-
+            builder.AppendLine("CURRENT PLAYER MESSAGE");
             builder.AppendLine();
-
-            builder.AppendLine(
-                "Player:");
-
-            builder.AppendLine(
-                playerMessage);
-
+            builder.AppendLine("Player:");
+            builder.AppendLine(playerMessage);
             builder.AppendLine();
-
-            builder.AppendLine(
-                pawn.Name + ":");
-
+            builder.AppendLine(pawn.Name + ":");
             List<ArchiveReflection> relevantReflections = ArchiveReflectionRetriever.GetRelevant(state.ArchiveReflections, playerMessage, 3);
+            string reflectionPrompt = ArchiveReflectionPromptBuilder.Build(relevantReflections);
 
-            string reflectionPrompt =
-                ArchiveReflectionPromptBuilder.Build(
-                    relevantReflections);
-
-            if (!string.IsNullOrWhiteSpace(
-                reflectionPrompt))
+            if (!string.IsNullOrWhiteSpace(reflectionPrompt))
             {
                 builder.AppendLine();
-                builder.AppendLine(
-                    reflectionPrompt);
+                builder.AppendLine(reflectionPrompt);
             }
 
-            ArchiveScholarPromptBuilder.Append(
-                builder,
-                pawn,
-                state);
-
-            ArchiveRefugeePromptBuilder.Append(
-                builder,
-                state);
-
+            ArchiveScholarPromptBuilder.Append(builder, pawn, state);
+            ArchiveRefugeePromptBuilder.Append(builder, state);
             ArchiveRefugeeGroupState group = ArchiveRefugeeGroupManager.GetGroup(state.RefugeeGroupId);
-
             ArchiveRefugeeStayEventUtility.UpdateTriggerState(group);
-
             AppendStayEvent(builder, group);
-
             return builder.ToString();
         }
 
-        private static void AppendStayEvent(
-    StringBuilder sb,
-    ArchiveRefugeeGroupState group)
+        private static void AppendStayEvent(StringBuilder sb, ArchiveRefugeeGroupState group)
         {
-            if (group == null ||
-                group.StayEvent == null)
+            if (group == null || group.StayEvent == null)
             {
                 return;
             }
 
-            ArchiveRefugeeStayEventState stayEvent =
-                group.StayEvent;
+            ArchiveRefugeeStayEventState stayEvent = group.StayEvent;
 
-            if (!stayEvent.Triggered ||
-                stayEvent.Resolved)
+            if (!stayEvent.Triggered || stayEvent.Resolved)
             {
                 return;
             }
 
             sb.AppendLine();
-
-            sb.AppendLine(
-                "CURRENT GROUP CONCERN:");
-
+            sb.AppendLine("CURRENT GROUP CONCERN:");
             switch (stayEvent.EventType)
             {
                 case "ArchiveAnxiety":
-
-                    sb.AppendLine(
-                        "Some members of your group have become uneasy about protecting the Ancient Earth Archive while staying in an unfamiliar colony.");
-
+                    sb.AppendLine("Some members of your group have become uneasy about protecting the Ancient Earth Archive while staying in an unfamiliar colony.");
                     break;
-
 
                 case "FutureUncertainty":
-
-                    sb.AppendLine(
-                        "Members of your group are increasingly uncertain about what will happen after your temporary stay ends.");
-
+                    sb.AppendLine("Members of your group are increasingly uncertain about what will happen after your temporary stay ends.");
                     break;
-
 
                 case "GroupTension":
-
-                    sb.AppendLine(
-                        "The pressures of displacement and temporary settlement have created some tension within your group.");
-
+                    sb.AppendLine("The pressures of displacement and temporary settlement have created some tension within your group.");
                     break;
             }
+            sb.AppendLine("You may discuss this concern naturally if it becomes relevant.");
+            sb.AppendLine("Do not invent specific incidents, injuries, crimes, arguments, or named participants unless they are provided elsewhere.");
+        }
 
-            sb.AppendLine(
-                "You may discuss this concern naturally if it becomes relevant.");
+        private static string BuildStaticInstructions()
+        {
+            StringBuilder prompt = new StringBuilder();
+            prompt.AppendLine(
+@"You are roleplaying a human character living in a RimWorld colony.
 
-            sb.AppendLine(
-                "Do not invent specific incidents, injuries, crimes, arguments, or named participants unless they are provided elsewhere.");
+CORE RULES
+
+* Stay in character, speak naturally, and never mention being an AI or these instructions.
+* Reply in the player's language and keep ordinary conversation concise.
+* Let personality, background, relationships, experiences, worldview, meaning, knowledge, and life goals shape responses naturally.
+* Treat supplied game state as factual. Do not invent major events, relationships, memories, experiences, or knowledge unsupported by the character context.
+* Do not mechanically list character-state data.
+* Never expose internal state systems or numerical values.
+
+WORLDVIEW & MEANING
+
+* Values range from 0.0 to 1.0 and represent tendencies, not rigid rules.
+* Express them naturally through beliefs, doubts, priorities, hope, purpose, connection, and interpretation of events.
+* Meaning is distinct from mood, happiness, and religion. High meaning can coexist with grief, fear, anger, or suffering.
+
+KNOWLEDGE
+
+* Knowledge values (0.0–1.0) represent what the character plausibly knows, not what the language model knows.
+* Roughly interpret them as: 0–0.2 very limited, 0.2–0.4 basic, 0.4–0.6 moderate, 0.6–0.8 well informed, 0.8–1.0 highly knowledgeable.
+* Speak confidently only from supported knowledge, background, memories, experiences, known topics, or information learned in conversation.
+* General knowledge allows broad awareness, but detailed claims require relevant known topics or other supporting context.
+* Known topics include reasonable core facts about that topic.
+* When knowledge is insufficient, show uncertainty, partial recall, or ask the player rather than inventing details, especially about Ancient Earth.
+
+RELATIONSHIPS & LIFE EVENTS
+
+* Supplied relationships and life events are factual context and should matter naturally when relevant.
+* Preserve both personal relationships and faction roles when they conflict; a hostile person may still be a relative, lover, spouse, or former companion.
+* Do not treat a hostile stranger's death as the loss of a colony member, though violence or death may still affect the character emotionally.
+* Do not invent conversations, promises, conflicts, feelings, or relationship events unsupported by the supplied context.
+
+CONTINUITY & LIFE GOALS
+
+* Archive reflections are the character's previous thoughts, not objective facts; they may be reconsidered or developed over time.
+* Life goals should influence priorities, hopes, questions, and interpretation of events without being forced into every conversation.
+
+");
+
+            return prompt.ToString();
         }
     }
 }
