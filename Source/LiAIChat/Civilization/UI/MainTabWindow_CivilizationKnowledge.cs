@@ -74,17 +74,21 @@ namespace LiAIChat.Civilization.UI
             DrawNodeDetailPanel(
                 detailRect);
         }
-        private CivilizationKnowledgeNode
-    FindNodeById(
-        string nodeId)
+        private List<CivilizationKnowledgeDef>
+    GetKnowledgeDefs()
+        {
+            return DefDatabase<
+                CivilizationKnowledgeDef>
+                .AllDefsListForReading;
+        }
+        private CivilizationKnowledgeNode FindNodeById(string nodeId)
         {
             if (nodeId == null)
             {
                 return null;
             }
 
-            foreach (CivilizationKnowledgeNode node
-                     in CivilizationKnowledgeDatabase.Nodes)
+            foreach (CivilizationKnowledgeNode node in CivilizationKnowledgeDatabase.Nodes)
             {
                 if (node.Id == nodeId)
                 {
@@ -118,66 +122,44 @@ namespace LiAIChat.Civilization.UI
 
             return parent.Label;
         }
-        private void DrawNodeDetailPanel(
-    Rect rect)
+        private CivilizationKnowledgeDef FindKnowledgeDefById(string defName)
         {
-            Widgets.DrawMenuSection(
-                rect);
+            if (string.IsNullOrEmpty(defName))
+            {
+                return null;
+            }
 
-            Rect innerRect =
-                rect.ContractedBy(12f);
+            return DefDatabase<CivilizationKnowledgeDef>.GetNamedSilentFail(defName);
+        }
+        private void DrawNodeDetailPanel(Rect rect)
+        {
+            Widgets.DrawMenuSection(rect);
+
+            Rect innerRect = rect.ContractedBy(12f);
 
             if (selectedNodeId == null)
             {
-                Text.Anchor =
-                    TextAnchor.MiddleCenter;
-
-                Widgets.Label(
-                    innerRect,
-                    "Select a knowledge node.");
-
-                Text.Anchor =
-                    TextAnchor.UpperLeft;
-
+                Text.Anchor = TextAnchor.MiddleCenter;
+                Widgets.Label(innerRect, "Select a knowledge node.");
+                Text.Anchor = TextAnchor.UpperLeft;
                 return;
             }
 
-            CivilizationKnowledgeNode node =
-                FindNodeById(
-                    selectedNodeId);
+            CivilizationKnowledgeDef def = FindKnowledgeDefById(selectedNodeId);
+            CivilizationKnowledgeNode node = FindNodeById(selectedNodeId);
 
             if (node == null)
             {
                 return;
             }
 
-            float y =
-                innerRect.y;
-
-            Text.Font =
-                GameFont.Medium;
-
-            Widgets.Label(
-                new Rect(
-                    innerRect.x,
-                    y,
-                    innerRect.width,
-                    35f),
-                node.Label);
-
+            float y = innerRect.y;
+            Text.Font = GameFont.Medium;
+            Widgets.Label(new Rect(innerRect.x, y, innerRect.width, 35f), node.Label);
             y += 45f;
 
-            Text.Font =
-                GameFont.Small;
-
-            Widgets.Label(
-                new Rect(
-                    innerRect.x,
-                    y,
-                    innerRect.width,
-                    25f),
-                "Id: " + node.Id);
-
+            Text.Font = GameFont.Small;
+            Widgets.Label(new Rect(innerRect.x, y, innerRect.width, 25f), "Id: " + node.Id);
             y += 28f;
 
             Widgets.Label(
@@ -414,28 +396,24 @@ namespace LiAIChat.Civilization.UI
         private void DrawKnowledgeTree(Rect rect)
         {
             currentNodeRects.Clear();
-            List<CivilizationKnowledgeNode> nodes = CivilizationKnowledgeDatabase.Nodes;
-            Dictionary<string, Rect> nodeRects = currentNodeRects;
-            CivilizationKnowledgeNode root = null;
-            foreach (CivilizationKnowledgeNode node in nodes)
+
+            List<CivilizationKnowledgeDef> defs = GetKnowledgeDefs();
+
+            foreach (CivilizationKnowledgeDef def in defs)
             {
-                if (node.ParentId == null)
-                {
-                    root = node;
-                    break;
-                }
+                Rect nodeRect = CreateNodeRect(rect, def);
+
+                currentNodeRects[def.defName] = nodeRect;
             }
 
-            if (root == null)
-            {
-                return;
-            }
-
-            Rect rootRect = new Rect(rect.center.x - NodeWidth / 2f, rect.y + 40f, NodeWidth, NodeHeight);
-            nodeRects[root.Id] = rootRect;
-            LayoutChildren(root, nodes, nodeRects);
-            DrawConnections(nodes, nodeRects);
-            DrawNodes(nodes, nodeRects);
+            DrawConnections(defs, currentNodeRects);
+            DrawNodes(defs, currentNodeRects);
+        }
+        private Rect CreateNodeRect(Rect treeRect, CivilizationKnowledgeDef def)
+        {
+            float x = treeRect.x + def.treeX;
+            float y = treeRect.y + def.treeY;
+            return new Rect(x, y, NodeWidth, NodeHeight);
         }
         private string GetNodeAtPosition(
     Vector2 treePosition)
@@ -479,30 +457,38 @@ namespace LiAIChat.Civilization.UI
 
             return Mathf.Max(NodeWidth, childrenWidth);
         }
-        private void DrawConnections(List<CivilizationKnowledgeNode> nodes, Dictionary<string, Rect> nodeRects)
+        private void DrawConnections(List<CivilizationKnowledgeDef> defs, Dictionary<string, Rect> nodeRects)
         {
-            foreach (CivilizationKnowledgeNode node in nodes)
+            foreach (CivilizationKnowledgeDef def in defs)
             {
-                if (node.ParentId == null)
+                if (def.prerequisites == null)
                 {
                     continue;
                 }
 
-                Rect parentRect;
-
-                if (!nodeRects.TryGetValue(node.ParentId, out parentRect))
+                foreach (CivilizationKnowledgeDef prerequisite in def.prerequisites)
                 {
-                    continue;
+                    if (prerequisite == null)
+                    {
+                        continue;
+                    }
+
+                    Rect parentRect;
+
+                    if (!nodeRects.TryGetValue(prerequisite.defName, out parentRect))
+                    {
+                        continue;
+                    }
+
+                    Rect childRect;
+
+                    if (!nodeRects.TryGetValue(def.defName, out childRect))
+                    {
+                        continue;
+                    }
+
+                    DrawConnection(parentRect, childRect);
                 }
-
-                Rect childRect;
-
-                if (!nodeRects.TryGetValue(node.Id, out childRect))
-                {
-                    continue;
-                }
-
-                DrawConnection(parentRect, childRect);
             }
         }
 
@@ -522,23 +508,33 @@ namespace LiAIChat.Civilization.UI
             Widgets.DrawLine(point1, point2, Color.gray, 2f);
             Widgets.DrawLine(point2, childTop, Color.gray, 2f);
         }
-        private void DrawNodes(List<CivilizationKnowledgeNode> nodes, Dictionary<string, Rect> nodeRects)
+        private void DrawNodes(List<CivilizationKnowledgeDef> defs, Dictionary<string, Rect> nodeRects)
         {
-            foreach (CivilizationKnowledgeNode node in nodes)
+            foreach (CivilizationKnowledgeDef def in defs)
             {
                 Rect nodeRect;
-
-                if (!nodeRects.TryGetValue(node.Id, out nodeRect))
+                if (!nodeRects.TryGetValue(def.defName, out nodeRect))
                 {
                     continue;
                 }
-
-                bool selected = node.Id == selectedNodeId;
-                CivilizationKnowledgeDef knowledgeDef = FindKnowledgeDef(node);
-
-                CivilizationKnowledgeState state = knowledgeDef != null ? CivilizationKnowledgeManager.GetState(knowledgeDef) : null;
-                DrawNode(nodeRect, node.Label, selected, state);
+                bool selected = def.defName == selectedNodeId;
+                CivilizationKnowledgeState state = CivilizationKnowledgeManager.GetState(def);
+                DrawNode(nodeRect, GetNodeLabel(def), selected, state);
             }
+        }
+        private string GetNodeLabel(CivilizationKnowledgeDef def)
+        {
+            if (def == null)
+            {
+                return "";
+            }
+
+            if (!string.IsNullOrEmpty(def.title))
+            {
+                return def.title;
+            }
+
+            return def.defName;
         }
         private List<CivilizationKnowledgeNode> GetNodesForTier(List<CivilizationKnowledgeNode> nodes, int tier)
         {
@@ -665,27 +661,50 @@ namespace LiAIChat.Civilization.UI
 
             return maxTier;
         }
-        private void DrawNode(Rect rect, string label, bool selected, CivilizationKnowledgeState state)
+        private void DrawNode(
+    Rect rect,
+    string label,
+    bool selected,
+    CivilizationKnowledgeState state)
         {
-            Widgets.DrawMenuSection(rect);
+            Widgets.DrawMenuSection(
+                rect);
 
-            bool locked = state == null || !state.Unlocked;
+            bool locked =
+                state == null ||
+                !state.Unlocked;
 
             if (locked)
             {
-                GUI.color = new Color(0.55f, 0.55f, 0.55f, 1f);
+                GUI.color =
+                    new Color(
+                        0.55f,
+                        0.55f,
+                        0.55f,
+                        1f);
             }
 
             if (selected)
             {
-                Widgets.DrawHighlight(rect);
+                Widgets.DrawHighlight(
+                    rect);
             }
 
-            TextAnchor oldAnchor = Text.Anchor;
-            Text.Anchor = TextAnchor.MiddleCenter;
-            Widgets.Label(rect.ContractedBy(6f), label);
-            Text.Anchor = oldAnchor;
-            GUI.color = Color.white;
+            TextAnchor oldAnchor =
+                Text.Anchor;
+
+            Text.Anchor =
+                TextAnchor.MiddleCenter;
+
+            Widgets.Label(
+                rect.ContractedBy(6f),
+                label);
+
+            Text.Anchor =
+                oldAnchor;
+
+            GUI.color =
+                Color.white;
         }
 
         private void DrawBranch(Rect parentRect, Rect[] childRects)
