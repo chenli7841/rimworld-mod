@@ -582,7 +582,7 @@ namespace LiAIChat.Civilization.UI
         // ============================================================
 
         private void DrawNodeDetailPanel(
-            Rect rect)
+    Rect rect)
         {
             Widgets.DrawMenuSection(
                 rect);
@@ -632,9 +632,9 @@ namespace LiAIChat.Civilization.UI
                 innerRect.y;
 
 
-            // --------------------------------------------------------
+            // ============================================================
             // Title
-            // --------------------------------------------------------
+            // ============================================================
 
             Text.Font =
                 GameFont.Medium;
@@ -654,61 +654,33 @@ namespace LiAIChat.Civilization.UI
                 GameFont.Small;
 
 
-            // --------------------------------------------------------
-            // Status
-            // --------------------------------------------------------
-
-            string status =
-                GetKnowledgeStatusText(
-                    state);
+            // ============================================================
+            // General Information
+            // ============================================================
 
             Widgets.Label(
                 new Rect(
                     innerRect.x,
                     y,
                     innerRect.width,
-                    25f),
+                    24f),
                 "Status: " +
-                status);
+                GetKnowledgeStatusText(
+                    state));
 
-            y += 27f;
-
-
-            // --------------------------------------------------------
-            // ID
-            // --------------------------------------------------------
+            y += 24f;
 
             Widgets.Label(
                 new Rect(
                     innerRect.x,
                     y,
                     innerRect.width,
-                    25f),
-                "ID: " +
-                def.defName);
-
-            y += 27f;
-
-
-            // --------------------------------------------------------
-            // Category
-            // --------------------------------------------------------
-
-            Widgets.Label(
-                new Rect(
-                    innerRect.x,
-                    y,
-                    innerRect.width,
-                    25f),
+                    24f),
                 "Category: " +
                 def.category);
 
-            y += 34f;
+            y += 32f;
 
-
-            // --------------------------------------------------------
-            // Separator
-            // --------------------------------------------------------
 
             Widgets.DrawLineHorizontal(
                 innerRect.x,
@@ -718,10 +690,65 @@ namespace LiAIChat.Civilization.UI
             y += 12f;
 
 
-            // --------------------------------------------------------
+            // ============================================================
             // Prerequisites
-            // --------------------------------------------------------
+            // ============================================================
 
+            y =
+                DrawPrerequisiteProgress(
+                    innerRect,
+                    y,
+                    def);
+
+
+            y += 10f;
+
+
+            Widgets.DrawLineHorizontal(
+                innerRect.x,
+                y,
+                innerRect.width);
+
+            y += 12f;
+
+
+            // ============================================================
+            // Required Texts
+            // ============================================================
+
+            y =
+                DrawRequiredTextProgress(
+                    innerRect,
+                    y,
+                    def);
+
+
+            y += 10f;
+
+
+            Widgets.DrawLineHorizontal(
+                innerRect.x,
+                y,
+                innerRect.width);
+
+            y += 12f;
+
+
+            // ============================================================
+            // Overall Unlock Requirements
+            // ============================================================
+
+            DrawUnlockRequirementSummary(
+                innerRect,
+                y,
+                def);
+        }
+
+        private float DrawPrerequisiteProgress(
+    Rect innerRect,
+    float y,
+    CivilizationKnowledgeDef def)
+        {
             Widgets.Label(
                 new Rect(
                     innerRect.x,
@@ -730,7 +757,8 @@ namespace LiAIChat.Civilization.UI
                     25f),
                 "Prerequisites");
 
-            y += 25f;
+            y += 27f;
+
 
             if (def.prerequisites == null ||
                 def.prerequisites.Count == 0)
@@ -743,41 +771,92 @@ namespace LiAIChat.Civilization.UI
                         22f),
                     "None");
 
+                y += 24f;
+
+                return y;
+            }
+
+
+            List<CivilizationKnowledgeDef>
+                missingPrerequisites =
+                    CivilizationKnowledgeUtility
+                        .GetMissingPrerequisites(
+                            def);
+
+
+            int total =
+                0;
+
+            int completed =
+                0;
+
+
+            foreach (
+                CivilizationKnowledgeDef prerequisite
+                in def.prerequisites)
+            {
+                if (prerequisite == null)
+                {
+                    continue;
+                }
+
+                total++;
+
+                bool satisfied =
+                    !missingPrerequisites.Contains(
+                        prerequisite);
+
+                if (satisfied)
+                {
+                    completed++;
+                }
+
+
+                string prefix =
+                    satisfied
+                        ? "✓ "
+                        : "✗ ";
+
+
+                Widgets.Label(
+                    new Rect(
+                        innerRect.x + 10f,
+                        y,
+                        innerRect.width - 10f,
+                        22f),
+                    prefix +
+                    GetNodeLabel(
+                        prerequisite));
+
                 y += 22f;
             }
-            else
-            {
-                foreach (
-                    CivilizationKnowledgeDef prerequisite
-                    in def.prerequisites)
-                {
-                    if (prerequisite == null)
-                    {
-                        continue;
-                    }
-
-                    Widgets.Label(
-                        new Rect(
-                            innerRect.x + 10f,
-                            y,
-                            innerRect.width - 10f,
-                            22f),
-                        "• " +
-                        GetNodeLabel(
-                            prerequisite));
-
-                    y += 22f;
-                }
-            }
 
 
-            y += 8f;
+            y += 3f;
 
 
-            // --------------------------------------------------------
-            // Required Texts
-            // --------------------------------------------------------
+            Widgets.Label(
+                new Rect(
+                    innerRect.x + 10f,
+                    y,
+                    innerRect.width - 10f,
+                    22f),
+                "Progress: " +
+                completed +
+                " / " +
+                total);
 
+            y += 24f;
+
+
+            return y;
+        }
+
+        private float DrawRequiredTextProgress(
+    Rect innerRect,
+    float y,
+    CivilizationKnowledgeDef def)
+        {
             Widgets.Label(
                 new Rect(
                     innerRect.x,
@@ -786,7 +865,8 @@ namespace LiAIChat.Civilization.UI
                     25f),
                 "Required Texts");
 
-            y += 25f;
+            y += 27f;
+
 
             if (def.requiredTexts == null ||
                 def.requiredTexts.Count == 0)
@@ -799,70 +879,161 @@ namespace LiAIChat.Civilization.UI
                         22f),
                     "None");
 
+                y += 24f;
+
+                return y;
+            }
+
+
+            List<LiAIChat.Archive.EarthTextDef>
+                missingTexts =
+                    CivilizationKnowledgeUtility
+                        .GetMissingRequiredTexts(
+                            def);
+
+
+            int total =
+                0;
+
+            int recovered =
+                0;
+
+
+            foreach (
+                LiAIChat.Archive.EarthTextDef textDef
+                in def.requiredTexts)
+            {
+                if (textDef == null)
+                {
+                    continue;
+                }
+
+                total++;
+
+                bool hasText =
+                    !missingTexts.Contains(
+                        textDef);
+
+                if (hasText)
+                {
+                    recovered++;
+                }
+
+
+                string prefix =
+                    hasText
+                        ? "✓ "
+                        : "✗ ";
+
+
+                Widgets.Label(
+                    new Rect(
+                        innerRect.x + 10f,
+                        y,
+                        innerRect.width - 10f,
+                        22f),
+                    prefix +
+                    GetEarthTextLabel(
+                        textDef));
+
                 y += 22f;
             }
-            else
-            {
-                foreach (var textDef
-                         in def.requiredTexts)
-                {
-                    if (textDef == null)
-                    {
-                        continue;
-                    }
-
-                    string textName =
-                        textDef.label;
-
-                    if (string.IsNullOrEmpty(
-                            textName))
-                    {
-                        textName =
-                            textDef.defName;
-                    }
-
-                    Widgets.Label(
-                        new Rect(
-                            innerRect.x + 10f,
-                            y,
-                            innerRect.width - 10f,
-                            22f),
-                        "• " +
-                        textName);
-
-                    y += 22f;
-                }
-            }
 
 
-            y += 8f;
+            y += 3f;
 
-
-            // --------------------------------------------------------
-            // Stability
-            // --------------------------------------------------------
 
             Widgets.Label(
                 new Rect(
-                    innerRect.x,
+                    innerRect.x + 10f,
                     y,
-                    innerRect.width,
-                    25f),
-                "Grace Period: " +
-                def.gracePeriodDays +
-                " days");
+                    innerRect.width - 10f,
+                    22f),
+                "Progress: " +
+                recovered +
+                " / " +
+                total);
 
             y += 24f;
 
+
+            return y;
+        }
+
+        private string GetEarthTextLabel(
+    LiAIChat.Archive.EarthTextDef textDef)
+        {
+            if (textDef == null)
+            {
+                return "";
+            }
+
+            if (!string.IsNullOrEmpty(
+                    textDef.label))
+            {
+                return textDef.label;
+            }
+
+            return textDef.defName;
+        }
+        private void DrawUnlockRequirementSummary(
+    Rect innerRect,
+    float y,
+    CivilizationKnowledgeDef def)
+        {
             Widgets.Label(
                 new Rect(
                     innerRect.x,
                     y,
                     innerRect.width,
                     25f),
-                "Dormant After: " +
-                def.dormantAfterDays +
-                " days");
+                "Unlock Requirements");
+
+            y += 28f;
+
+
+            bool prerequisitesComplete =
+                CivilizationKnowledgeUtility
+                    .HasPrerequisites(
+                        def);
+
+            bool textsComplete =
+                CivilizationKnowledgeUtility
+                    .HasRequiredTexts(
+                        def);
+
+
+            string prerequisiteText =
+                prerequisitesComplete
+                    ? "Complete"
+                    : "Incomplete";
+
+            string textRequirementText =
+                textsComplete
+                    ? "Complete"
+                    : "Incomplete";
+
+
+            Widgets.Label(
+                new Rect(
+                    innerRect.x + 10f,
+                    y,
+                    innerRect.width - 10f,
+                    22f),
+                "Prerequisites: " +
+                prerequisiteText);
+
+            y += 22f;
+
+
+            Widgets.Label(
+                new Rect(
+                    innerRect.x + 10f,
+                    y,
+                    innerRect.width - 10f,
+                    22f),
+                "Required Texts: " +
+                textRequirementText);
         }
 
 
