@@ -40,19 +40,7 @@ namespace LiAIChat.AI
             string playerMessage)
         {
             string staticInstructions = BuildStaticInstructions();
-
             string characterContext = BuildCharacterContext(pawn, state, worldview, meaning, knowledge, lifeGoal, recentLifeEvents, recentIntellectualExchanges);
-
-            string instructions =
-                staticInstructions +
-                "\n\n" +
-                characterContext;
-
-
-            Log.Message(
-                "[Li AI Chat] Character prompt:\n" +
-                instructions
-            );
             string conversationInput = BuildConversationInput(
                 pawn,
                 state,
@@ -68,24 +56,53 @@ namespace LiAIChat.AI
             "\"prompt_cache_key\":\"LiAIChat.Actor.v1\"," +
 
             "\"prompt_cache_options\":{" +
-                "\"mode\":\"implicit\"," +
+                "\"mode\":\"explicit\"," +
                 "\"ttl\":\"30m\"" +
             "}," +
 
-            "\"instructions\":\"" +
-            EscapeJson(instructions) +
-            "\"," +
+            "\"input\":[" +
 
-            "\"input\":\"" +
-            EscapeJson(conversationInput) +
-            "\"," +
+                "{" +
+                    "\"role\":\"developer\"," +
+                    "\"content\":[" +
+                        "{" +
+                            "\"type\":\"input_text\"," +
+                            "\"text\":\"" +
+                                EscapeJson(staticInstructions) +
+                            "\"," +
+                            "\"prompt_cache_breakpoint\":{" +
+                                "\"mode\":\"explicit\"" +
+                            "}" +
+                        "}" +
+                    "]" +
+                "}," +
+
+                "{" +
+                    "\"role\":\"developer\"," +
+                    "\"content\":\"" +
+                        EscapeJson(characterContext) +
+                    "\"" +
+                "}," +
+
+                "{" +
+                    "\"role\":\"user\"," +
+                    "\"content\":\"" +
+                        EscapeJson(conversationInput) +
+                    "\"" +
+                "}" +
+
+            "]," +
 
             "\"max_output_tokens\":300" +
             "}";
-            Log.Message(
-                "[Li AI Chat] Conversation input:\n" +
-                conversationInput
-            );
+            Verse.Log.Message(
+                "[Li AI Chat] Prompt lengths: " +
+                "StaticChars=" +
+                staticInstructions.Length +
+                ", CharacterChars=" +
+                characterContext.Length +
+                ", ConversationChars=" +
+                conversationInput.Length);
             using (var request =
                 new HttpRequestMessage(
                     HttpMethod.Post,
