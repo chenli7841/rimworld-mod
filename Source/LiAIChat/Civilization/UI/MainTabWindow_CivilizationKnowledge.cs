@@ -45,58 +45,120 @@ namespace LiAIChat.Civilization.UI
         {
             List<CivilizationKnowledgeNode> nodes = CivilizationKnowledgeDatabase.Nodes;
 
-            CivilizationKnowledgeNode root = null;
+            Dictionary<string, Rect> nodeRects = new Dictionary<string, Rect>();
 
+            int maxTier = GetMaxTier(nodes);
+
+            for (int tier = 0; tier <= maxTier; tier++)
+            {
+                List<CivilizationKnowledgeNode> tierNodes = GetNodesForTier(nodes, tier);
+
+                if (tierNodes.Count == 0)
+                {
+                    continue;
+                }
+
+                float totalWidth = tierNodes.Count * NodeWidth + (tierNodes.Count - 1) * HorizontalGap;
+                float startX = rect.center.x - totalWidth / 2f;
+                float y = rect.y + 40f + tier * (NodeHeight + VerticalGap);
+
+                for (int i = 0; i < tierNodes.Count; i++)
+                {
+                    CivilizationKnowledgeNode node = tierNodes[i];
+                    Rect nodeRect = new Rect(startX + i * (NodeWidth + HorizontalGap), y, NodeWidth, NodeHeight);
+                    nodeRects[node.Id] = nodeRect;
+                }
+            }
+
+            DrawConnections(nodes, nodeRects);
+            DrawNodes(nodes, nodeRects);
+        }
+
+        private void DrawConnections(List<CivilizationKnowledgeNode> nodes, Dictionary<string, Rect> nodeRects)
+        {
             foreach (CivilizationKnowledgeNode node in nodes)
             {
                 if (node.ParentId == null)
                 {
-                    root = node;
-                    break;
+                    continue;
                 }
-            }
 
-            if (root == null)
+                Rect parentRect;
+
+                if (!nodeRects.TryGetValue(node.ParentId, out parentRect))
+                {
+                    continue;
+                }
+
+                Rect childRect;
+
+                if (!nodeRects.TryGetValue(node.Id, out childRect))
+                {
+                    continue;
+                }
+
+                DrawConnection(parentRect, childRect);
+            }
+        }
+
+        private void DrawConnection(Rect parentRect, Rect childRect)
+        {
+            Vector2 parentBottom = new Vector2(parentRect.center.x, parentRect.yMax);
+
+            Vector2 childTop = new Vector2(childRect.center.x, childRect.yMin);
+
+            float middleY = (parentBottom.y + childTop.y) / 2f;
+
+            Vector2 point1 = new Vector2(parentBottom.x, middleY);
+
+            Vector2 point2 = new Vector2(childTop.x, middleY);
+
+            Widgets.DrawLine(parentBottom, point1, Color.gray, 2f);
+            Widgets.DrawLine(point1, point2, Color.gray, 2f);
+            Widgets.DrawLine(point2, childTop, Color.gray, 2f);
+        }
+        private void DrawNodes(List<CivilizationKnowledgeNode> nodes, Dictionary<string, Rect> nodeRects)
+        {
+            foreach (CivilizationKnowledgeNode node in nodes)
             {
-                return;
+                Rect nodeRect;
+
+                if (!nodeRects.TryGetValue(node.Id, out nodeRect))
+                {
+                    continue;
+                }
+
+                DrawNode(nodeRect, node.Label);
             }
-
-            float centerX = rect.center.x;
-
-            float topY = rect.y + 40f;
-
-            Rect rootRect = new Rect(centerX - NodeWidth / 2f, topY, NodeWidth, NodeHeight);
-
-            List<CivilizationKnowledgeNode> children = new List<CivilizationKnowledgeNode>();
+        }
+        private List<CivilizationKnowledgeNode> GetNodesForTier(List<CivilizationKnowledgeNode> nodes, int tier)
+        {
+            List<CivilizationKnowledgeNode> result = new List<CivilizationKnowledgeNode>();
 
             foreach (CivilizationKnowledgeNode node in nodes)
             {
-                if (node.ParentId == root.Id)
+                if (node.Tier == tier)
                 {
-                    children.Add(node);
+                    result.Add(node);
                 }
             }
 
-            Rect[] childRects = new Rect[children.Count];
+            return result;
+        }
 
-            float totalWidth = children.Count * NodeWidth + (children.Count - 1) * HorizontalGap;
+        private int GetMaxTier(List<CivilizationKnowledgeNode> nodes)
+        {
+            int maxTier = 0;
 
-            float startX = centerX - totalWidth / 2f;
-
-            float childY = rootRect.yMax + VerticalGap;
-
-            for (int i = 0; i < children.Count; i++)
+            foreach (CivilizationKnowledgeNode node in nodes)
             {
-                childRects[i] = new Rect(startX + i * (NodeWidth + HorizontalGap), childY, NodeWidth, NodeHeight);
+                if (node.Tier > maxTier)
+                {
+                    maxTier = node.Tier;
+                }
             }
 
-            DrawBranch(rootRect, childRects);
-            DrawNode(rootRect, root.Label);
-
-            for (int i = 0; i < children.Count; i++)
-            {
-                DrawNode(childRects[i], children[i].Label);
-            }
+            return maxTier;
         }
         private void DrawNode(Rect rect, string label)
         {
@@ -105,20 +167,6 @@ namespace LiAIChat.Civilization.UI
             Text.Anchor = TextAnchor.MiddleCenter;
             Widgets.Label(rect.ContractedBy(6f), label);
             Text.Anchor = oldAnchor;
-        }
-
-        private void DrawConnection(Rect parentRect, Rect childRect)
-        {
-            Vector2 parentBottomCenter = new Vector2(parentRect.center.x, parentRect.yMax);
-            Vector2 childTopCenter = new Vector2(childRect.center.x, childRect.y);
-            float middleY = (parentBottomCenter.y + childTopCenter.y) / 2f;
-
-            Vector2 firstCorner = new Vector2(parentBottomCenter.x, middleY);
-            Vector2 secondCorner = new Vector2(childTopCenter.x, middleY);
-
-            Widgets.DrawLine(parentBottomCenter, firstCorner, Color.gray, 2f);
-            Widgets.DrawLine(firstCorner, secondCorner, Color.gray, 2f);
-            Widgets.DrawLine(secondCorner, childTopCenter, Color.gray, 2f);
         }
 
         private void DrawBranch(Rect parentRect, Rect[] childRects)
