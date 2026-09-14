@@ -12,34 +12,38 @@ namespace LiAIChat.Civilization.UI
 
         private const float HorizontalGap = 120f;
         private const float VerticalGap = 90f;
+
+        private const float CanvasWidth = 3000f;
+        private const float CanvasHeight = 2000f;
         public override Vector2 RequestedTabSize
         {
-            get
-            {
-                return new Vector2(
-                    1200f,
-                    760f);
-            }
+            get { return new Vector2(1200f, 760f); }
         }
 
-        public override void DoWindowContents(
-            Rect inRect)
+        private Vector2 canvasOffset = Vector2.zero;
+        private bool canvasInitialized;
+
+        public override void DoWindowContents(Rect inRect)
         {
             Text.Font = GameFont.Medium;
-
-            Widgets.Label(
-                new Rect(
-                    0f,
-                    0f,
-                    inRect.width,
-                    35f),
-                "Civilization Knowledge");
-
+            Widgets.Label(new Rect(0f, 0f, inRect.width, 35f), "Civilization Knowledge");
             Text.Font = GameFont.Small;
+            Rect viewportRect = new Rect(0f, 45f, inRect.width, inRect.height - 45f);
+            DrawTreeViewport(viewportRect);
+        }
 
-            Rect treeRect = new Rect(0f, 45f, inRect.width, inRect.height - 45f);
-
-            DrawKnowledgeTree(treeRect);
+        private void DrawTreeViewport(Rect viewportRect)
+        {
+            Widgets.DrawMenuSection(viewportRect);
+            if (!canvasInitialized)
+            {
+                canvasOffset = new Vector2(viewportRect.width / 2f - CanvasWidth / 2f, 0f);
+                canvasInitialized = true;
+            }
+            Widgets.BeginGroup(viewportRect);
+            Rect canvasRect = new Rect(canvasOffset.x, canvasOffset.y, CanvasWidth, CanvasHeight);
+            DrawKnowledgeTree(canvasRect);
+            Widgets.EndGroup();
         }
         private void DrawKnowledgeTree(Rect rect)
         {
