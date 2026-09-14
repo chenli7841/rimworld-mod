@@ -24,6 +24,11 @@ namespace LiAIChat.Civilization.UI
         private bool canvasInitialized;
         private bool isDraggingCanvas;
         private Vector2 lastMousePosition;
+        private string selectedNodeId;
+        private bool mousePressedInViewport;
+        private Vector2 mouseDownPosition;
+        private const float DragThreshold = 6f;
+        private readonly Dictionary<string, Rect> currentNodeRects = new Dictionary<string, Rect>();
 
         public override void DoWindowContents(Rect inRect)
         {
@@ -84,12 +89,15 @@ namespace LiAIChat.Civilization.UI
                 viewportRect.Contains(
                     mousePosition))
             {
-                isDraggingCanvas = true;
+                mousePressedInViewport = true;
+
+                isDraggingCanvas = false;
+
+                mouseDownPosition =
+                    mousePosition;
 
                 lastMousePosition =
                     mousePosition;
-
-                currentEvent.Use();
 
                 return;
             }
@@ -97,19 +105,33 @@ namespace LiAIChat.Civilization.UI
             if (currentEvent.type ==
                     EventType.MouseDrag &&
                 currentEvent.button == 0 &&
-                isDraggingCanvas)
+                mousePressedInViewport)
             {
-                Vector2 delta =
-                    mousePosition -
-                    lastMousePosition;
+                float dragDistance =
+                    Vector2.Distance(
+                        mouseDownPosition,
+                        mousePosition);
 
-                canvasOffset +=
-                    delta;
+                if (!isDraggingCanvas &&
+                    dragDistance >= DragThreshold)
+                {
+                    isDraggingCanvas = true;
+                }
 
-                lastMousePosition =
-                    mousePosition;
+                if (isDraggingCanvas)
+                {
+                    Vector2 delta =
+                        mousePosition -
+                        lastMousePosition;
 
-                currentEvent.Use();
+                    canvasOffset +=
+                        delta;
+
+                    lastMousePosition =
+                        mousePosition;
+
+                    currentEvent.Use();
+                }
 
                 return;
             }
@@ -117,17 +139,58 @@ namespace LiAIChat.Civilization.UI
             if (currentEvent.type ==
                     EventType.MouseUp &&
                 currentEvent.button == 0 &&
-                isDraggingCanvas)
+                mousePressedInViewport)
             {
-                isDraggingCanvas = false;
+                if (isDraggingCanvas)
+                {
+                    isDraggingCanvas = false;
 
-                currentEvent.Use();
+                    mousePressedInViewport = false;
+
+                    currentEvent.Use();
+
+                    return;
+                }
+
+                HandleNodeClick(
+                    viewportRect,
+                    mousePosition);
+
+                mousePressedInViewport =
+                    false;
             }
+        }
+        private void HandleNodeClick(
+    Rect viewportRect,
+    Vector2 mousePosition)
+        {
+            Vector2 viewportPosition =
+                mousePosition -
+                viewportRect.position;
+
+            Vector2 treePosition =
+                ViewportToTreePosition(
+                    viewportPosition);
+
+            string nodeId =
+                GetNodeAtPosition(
+                    treePosition);
+
+            if (nodeId == null)
+            {
+                selectedNodeId = null;
+
+                return;
+            }
+
+            selectedNodeId =
+                nodeId;
         }
         private void DrawKnowledgeTree(Rect rect)
         {
+            currentNodeRects.Clear();
             List<CivilizationKnowledgeNode> nodes = CivilizationKnowledgeDatabase.Nodes;
-            Dictionary<string, Rect> nodeRects = new Dictionary<string, Rect>();
+            Dictionary<string, Rect> nodeRects = currentNodeRects;
             CivilizationKnowledgeNode root = null;
             foreach (CivilizationKnowledgeNode node in nodes)
             {
@@ -148,6 +211,27 @@ namespace LiAIChat.Civilization.UI
             LayoutChildren(root, nodes, nodeRects);
             DrawConnections(nodes, nodeRects);
             DrawNodes(nodes, nodeRects);
+        }
+        private string GetNodeAtPosition(
+    Vector2 treePosition)
+        {
+            foreach (KeyValuePair<string, Rect> pair
+                     in currentNodeRects)
+            {
+                if (pair.Value.Contains(
+                        treePosition))
+                {
+                    return pair.Key;
+                }
+            }
+
+            return null;
+        }
+        private Vector2 ViewportToTreePosition(
+    Vector2 viewportPosition)
+        {
+            return viewportPosition -
+                canvasOffset;
         }
         private float CalculateSubtreeWidth(CivilizationKnowledgeNode node, List<CivilizationKnowledgeNode> nodes)
         {
@@ -224,7 +308,8 @@ namespace LiAIChat.Civilization.UI
                     continue;
                 }
 
-                DrawNode(nodeRect, node.Label);
+                bool selected = node.Id == selectedNodeId;
+                DrawNode(nodeRect, node.Label, selected);
             }
         }
         private List<CivilizationKnowledgeNode> GetNodesForTier(List<CivilizationKnowledgeNode> nodes, int tier)
@@ -352,13 +437,32 @@ namespace LiAIChat.Civilization.UI
 
             return maxTier;
         }
-        private void DrawNode(Rect rect, string label)
+        private void DrawNode(
+    Rect rect,
+    string label,
+    bool selected)
         {
-            Widgets.DrawMenuSection(rect);
-            TextAnchor oldAnchor = Text.Anchor;
-            Text.Anchor = TextAnchor.MiddleCenter;
-            Widgets.Label(rect.ContractedBy(6f), label);
-            Text.Anchor = oldAnchor;
+            Widgets.DrawMenuSection(
+                rect);
+
+            if (selected)
+            {
+                Widgets.DrawHighlight(
+                    rect);
+            }
+
+            TextAnchor oldAnchor =
+                Text.Anchor;
+
+            Text.Anchor =
+                TextAnchor.MiddleCenter;
+
+            Widgets.Label(
+                rect.ContractedBy(6f),
+                label);
+
+            Text.Anchor =
+                oldAnchor;
         }
 
         private void DrawBranch(Rect parentRect, Rect[] childRects)
