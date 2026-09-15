@@ -36,9 +36,11 @@ namespace LiAIChat.Civilization.UI
                 new Dictionary<string, Rect>();
 
         private float zoom = 1f;
-        private const float MinZoom = 0.6f;
+        private const float MinZoom =
+    0.35f;
         private const float MaxZoom = 1.4f;
         private const float ZoomStep = 0.1f;
+        private const float FitPadding = 50f;
 
         public override Vector2 RequestedTabSize
         {
@@ -104,6 +106,171 @@ namespace LiAIChat.Civilization.UI
                 detailRect);
         }
 
+        private Rect GetKnowledgeTreeBounds()
+        {
+            List<CivilizationKnowledgeDef> defs =
+                DefDatabase<
+                    CivilizationKnowledgeDef>
+                .AllDefsListForReading;
+
+            if (defs == null ||
+                defs.Count == 0)
+            {
+                return Rect.zero;
+            }
+
+            bool hasNode =
+                false;
+
+            float minX =
+                0f;
+
+            float minY =
+                0f;
+
+            float maxX =
+                0f;
+
+            float maxY =
+                0f;
+
+            foreach (
+                CivilizationKnowledgeDef def
+                in defs)
+            {
+                if (def == null)
+                {
+                    continue;
+                }
+
+                float left =
+                    def.treeX;
+
+                float top =
+                    def.treeY;
+
+                float right =
+                    def.treeX +
+                    NodeWidth;
+
+                float bottom =
+                    def.treeY +
+                    NodeHeight;
+
+                if (!hasNode)
+                {
+                    minX =
+                        left;
+
+                    minY =
+                        top;
+
+                    maxX =
+                        right;
+
+                    maxY =
+                        bottom;
+
+                    hasNode =
+                        true;
+
+                    continue;
+                }
+
+                minX =
+                    Mathf.Min(
+                        minX,
+                        left);
+
+                minY =
+                    Mathf.Min(
+                        minY,
+                        top);
+
+                maxX =
+                    Mathf.Max(
+                        maxX,
+                        right);
+
+                maxY =
+                    Mathf.Max(
+                        maxY,
+                        bottom);
+            }
+
+            if (!hasNode)
+            {
+                return Rect.zero;
+            }
+
+            return Rect.MinMaxRect(
+                minX,
+                minY,
+                maxX,
+                maxY);
+        }
+
+        private void FitTreeToViewport(
+    Rect viewportRect)
+        {
+            Rect treeBounds =
+                GetKnowledgeTreeBounds();
+
+            if (treeBounds.width <= 0f ||
+                treeBounds.height <= 0f)
+            {
+                return;
+            }
+
+            float availableWidth =
+                viewportRect.width -
+                FitPadding * 2f;
+
+            float availableHeight =
+                viewportRect.height -
+                FitPadding * 2f;
+
+            if (availableWidth <= 0f ||
+                availableHeight <= 0f)
+            {
+                return;
+            }
+
+            float zoomX =
+                availableWidth /
+                treeBounds.width;
+
+            float zoomY =
+                availableHeight /
+                treeBounds.height;
+
+            float fitZoom =
+                Mathf.Min(
+                    zoomX,
+                    zoomY);
+
+            zoom =
+                Mathf.Clamp(
+                    fitZoom,
+                    MinZoom,
+                    MaxZoom);
+
+            Vector2 treeCenter =
+                treeBounds.center;
+
+            Vector2 viewportCenter =
+                new Vector2(
+                    viewportRect.width /
+                        2f,
+                    viewportRect.height /
+                        2f);
+
+            canvasOffset =
+                viewportCenter -
+                treeCenter *
+                zoom;
+        }
+
         private void HandleTreeZoom(
     Rect viewportRect)
         {
@@ -125,6 +292,14 @@ namespace LiAIChat.Civilization.UI
                 currentEvent.mousePosition;
 
             if (!viewportRect.Contains(
+        mousePosition))
+            {
+                return;
+            }
+
+            if (GetTreeControlsRect(
+                    viewportRect)
+                .Contains(
                     mousePosition))
             {
                 return;
@@ -204,11 +379,8 @@ namespace LiAIChat.Civilization.UI
 
             if (!canvasInitialized)
             {
-                canvasOffset =
-                    new Vector2(
-                        viewportRect.width / 2f -
-                        CanvasWidth / 2f,
-                        20f);
+                FitTreeToViewport(
+                    viewportRect);
 
                 canvasInitialized =
                     true;
@@ -226,6 +398,63 @@ namespace LiAIChat.Civilization.UI
             DrawKnowledgeTree();
 
             Widgets.EndGroup();
+
+            DrawTreeControls(
+                viewportRect);
+        }
+
+        private void DrawTreeControls(
+    Rect viewportRect)
+        {
+            Rect fitRect =
+                new Rect(
+                    viewportRect.x + 10f,
+                    viewportRect.y + 10f,
+                    90f,
+                    28f);
+
+            if (Widgets.ButtonText(
+                    fitRect,
+                    "Fit Tree"))
+            {
+                FitTreeToViewport(
+                    viewportRect);
+            }
+
+            string zoomText =
+                Mathf.RoundToInt(
+                    zoom * 100f) +
+                "%";
+
+            Rect zoomRect =
+                new Rect(
+                    fitRect.xMax + 8f,
+                    fitRect.y,
+                    60f,
+                    fitRect.height);
+
+            TextAnchor oldAnchor =
+                Text.Anchor;
+
+            Text.Anchor =
+                TextAnchor.MiddleCenter;
+
+            Widgets.Label(
+                zoomRect,
+                zoomText);
+
+            Text.Anchor =
+                oldAnchor;
+        }
+
+        private Rect GetTreeControlsRect(
+    Rect viewportRect)
+        {
+            return new Rect(
+                viewportRect.x + 6f,
+                viewportRect.y + 6f,
+                170f,
+                36f);
         }
 
         private void DrawZoomControls(
@@ -296,11 +525,21 @@ namespace LiAIChat.Civilization.UI
                 currentEvent.mousePosition;
 
             if (currentEvent.type ==
-                    EventType.MouseDown &&
-                currentEvent.button == 0 &&
-                viewportRect.Contains(
-                    mousePosition))
+        EventType.MouseDown &&
+    currentEvent.button == 0 &&
+    viewportRect.Contains(
+        mousePosition))
             {
+                Rect controlsRect =
+                    GetTreeControlsRect(
+                        viewportRect);
+
+                if (controlsRect.Contains(
+                        mousePosition))
+                {
+                    return;
+                }
+
                 mousePressedInViewport =
                     true;
 
