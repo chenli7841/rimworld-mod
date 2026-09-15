@@ -46,7 +46,7 @@
     </requiredTexts>
     <gracePeriodDays>10</gracePeriodDays>
     <dormantAfterDays>30</dormantAfterDays>
-    <treeX>600</treeX>
+    <treeX>450</treeX>
     <treeY>380</treeY>
   </LiAIChat.Civilization.CivilizationKnowledgeDef>
 
@@ -73,8 +73,115 @@
     </requiredTexts>
     <gracePeriodDays>10</gracePeriodDays>
     <dormantAfterDays>30</dormantAfterDays>
-    <treeX>1100</treeX>
+    <treeX>850</treeX>
     <treeY>380</treeY>
+  </LiAIChat.Civilization.CivilizationKnowledgeDef>
+
+  <LiAIChat.Civilization.CivilizationKnowledgeDef>
+    <defName>LiAIChat_CivKnowledge_HellenisticPhilosophy</defName>
+    <title>Hellenistic Philosophy</title>
+    <titleChinese>希腊化哲学</titleChinese>
+    <description>Reconstruction of major philosophical traditions of the Hellenistic and Roman worlds, especially approaches to virtue, reason, self-discipline, suffering, and the good life.</description>
+    <descriptionChinese>对希腊化时代及罗马时期主要哲学传统的重建，重点涉及德性、理性、自我节制、苦难以及何为美好人生等问题。</descriptionChinese>
+    <category>Philosophy</category>
+    <prerequisites>
+      <li>LiAIChat_CivKnowledge_AncientGreekPhilosophy</li>
+    </prerequisites>
+    <requiredTexts>
+      <li>LiAIChat_Text_MarcusAurelius_Meditations</li>
+    </requiredTexts>
+    <treeX>1250</treeX>
+    <treeY>380</treeY>
+  </LiAIChat.Civilization.CivilizationKnowledgeDef>
+
+  <LiAIChat.Civilization.CivilizationKnowledgeDef>
+    <defName>LiAIChat_CivKnowledge_MedievalPhilosophy</defName>
+    <title>Medieval Philosophy</title>
+    <titleChinese>中世纪哲学</titleChinese>
+    <description>Reconstruction of medieval philosophical thought concerning God, reason, faith, human nature, history, morality, and political order.</description>
+    <descriptionChinese>对中世纪哲学思想的重建，涵盖上帝、理性与信仰、人的本性、历史、道德以及政治秩序等核心问题。</descriptionChinese>
+    <category>Philosophy</category>
+    <prerequisites>
+      <li>LiAIChat_CivKnowledge_HellenisticPhilosophy</li>
+    </prerequisites>
+    <requiredTexts>
+      <li>LiAIChat_Text_Augustine_Confessions</li>
+      <li>LiAIChat_Text_Augustine_CityOfGod</li>
+    </requiredTexts>
+    <treeX>1250</treeX>
+    <treeY>600</treeY>
+  </LiAIChat.Civilization.CivilizationKnowledgeDef>
+
+  <LiAIChat.Civilization.CivilizationKnowledgeDef>
+    <defName>LiAIChat_CivKnowledge_EarlyModernPhilosophy</defName>
+    <title>Early Modern Philosophy</title>
+    <titleChinese>近代早期哲学</titleChinese>
+    <description>Reconstruction of the early modern transformation of philosophy, including new approaches to knowledge, method, reason, observation, and the investigation of nature.</description>
+    <descriptionChinese>对近代早期哲学转型的重建，包括关于知识、方法、理性、观察以及自然研究的新思想。</descriptionChinese>
+    <category>Philosophy</category>
+    <prerequisites>
+      <li>LiAIChat_CivKnowledge_MedievalPhilosophy</li>
+    </prerequisites>
+    <requiredTexts>
+      <li>LiAIChat_Text_Bacon_NovumOrganum</li>
+    </requiredTexts>
+    <treeX>1250</treeX>
+    <treeY>820</treeY>
+  </LiAIChat.Civilization.CivilizationKnowledgeDef>
+
+  <LiAIChat.Civilization.CivilizationKnowledgeDef>
+    <defName>LiAIChat_CivKnowledge_Rationalism</defName>
+    <title>Rationalism</title>
+    <titleChinese>理性主义</titleChinese>
+    <description>Reconstruction of the early modern rationalist tradition emphasizing reason, systematic doubt, and the search for foundations of certain knowledge.</description>
+    <descriptionChinese>对近代理性主义传统的重建，强调理性、系统性怀疑，以及对确定知识基础的探索。</descriptionChinese>
+    <category>Philosophy</category>
+    <prerequisites>
+      <li>LiAIChat_CivKnowledge_EarlyModernPhilosophy</li>
+    </prerequisites>
+    <requiredTexts>
+      <li>LiAIChat_Text_Descartes_Meditations</li>
+    </requiredTexts>
+    <treeX>1000</treeX>
+    <treeY>1040</treeY>
+  </LiAIChat.Civilization.CivilizationKnowledgeDef>
+
+  <LiAIChat.Civilization.CivilizationKnowledgeDef>
+    <defName>LiAIChat_CivKnowledge_Empiricism</defName>
+    <title>Empiricism</title>
+    <titleChinese>经验主义</titleChinese>
+    <description>Reconstruction of the empiricist tradition emphasizing experience, observation, and critical investigation of the origins and limits of human knowledge.</description>
+    <descriptionChinese>对经验主义传统的重建，强调经验与观察，并批判性地考察人类知识的来源及其界限。</descriptionChinese>
+    <category>Philosophy</category>
+    <prerequisites>
+      <li>LiAIChat_CivKnowledge_EarlyModernPhilosophy</li>
+    </prerequisites>
+    <requiredTexts>
+      <li>LiAIChat_Text_Locke_EssayHumanUnderstanding</li>
+      <li>LiAIChat_Text_Hume_EnquiryHumanUnderstanding</li>
+    </requiredTexts>
+    <treeX>1500</treeX>
+    <treeY>1040</treeY>
+  </LiAIChat.Civilization.CivilizationKnowledgeDef>
+
+  <LiAIChat.Civilization.CivilizationKnowledgeDef>
+    <defName>LiAIChat_CivKnowledge_KantianPhilosophy</defName>
+
+    <title>Kantian Philosophy</title>
+    <titleChinese>康德哲学</titleChinese>
+    <description>Reconstruction of Kant's critical philosophy, addressing the conditions and limits of human knowledge, moral reason, freedom, and the relation between experience and rational thought.</description>
+    <descriptionChinese>对康德批判哲学的重建，探讨人类知识的条件与界限、道德理性、自由，以及经验与理性思维之间的关系。</descriptionChinese>
+    <category>Philosophy</category>
+    <prerequisites>
+      <li>LiAIChat_CivKnowledge_Rationalism</li>
+      <li>LiAIChat_CivKnowledge_Empiricism</li>
+    </prerequisites>
+    <requiredTexts>
+      <li>LiAIChat_Text_Kant_CritiqueOfPureReason</li>
+      <li>LiAIChat_Text_Kant_CritiqueOfPracticalReason</li>
+    </requiredTexts>
+    <treeX>1250</treeX>
+    <treeY>1260</treeY>
   </LiAIChat.Civilization.CivilizationKnowledgeDef>
 
 
