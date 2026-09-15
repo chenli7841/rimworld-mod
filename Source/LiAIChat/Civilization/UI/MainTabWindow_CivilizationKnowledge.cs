@@ -5,9 +5,14 @@ using Verse;
 
 namespace LiAIChat.Civilization.UI
 {
-    public class MainTabWindow_CivilizationKnowledge
-        : MainTabWindow
+    public class MainTabWindow_CivilizationKnowledge : MainTabWindow
     {
+        private enum TreeZoomLevel
+        {
+            Overview,
+            Compact,
+            Detailed
+        }
         private const float NodeWidth = 180f;
         private const float NodeHeight = 70f;
 
@@ -208,6 +213,21 @@ namespace LiAIChat.Civilization.UI
                 minY,
                 maxX,
                 maxY);
+        }
+
+        private TreeZoomLevel GetTreeZoomLevel()
+        {
+            if (zoom < 0.50f)
+            {
+                return TreeZoomLevel.Overview;
+            }
+
+            if (zoom < 0.80f)
+            {
+                return TreeZoomLevel.Compact;
+            }
+
+            return TreeZoomLevel.Detailed;
         }
 
         private void FitTreeToViewport(
@@ -424,13 +444,14 @@ namespace LiAIChat.Civilization.UI
             string zoomText =
                 Mathf.RoundToInt(
                     zoom * 100f) +
-                "%";
+                "% " +
+                GetTreeZoomLevel();
 
             Rect zoomRect =
                 new Rect(
                     fitRect.xMax + 8f,
                     fitRect.y,
-                    60f,
+                    120f,
                     fitRect.height);
 
             TextAnchor oldAnchor =
@@ -453,8 +474,8 @@ namespace LiAIChat.Civilization.UI
             return new Rect(
                 viewportRect.x + 6f,
                 viewportRect.y + 6f,
-                170f,
-                36f);
+                235f,
+                38f);
         }
 
         private void DrawZoomControls(
@@ -859,23 +880,36 @@ namespace LiAIChat.Civilization.UI
                         1f);
             }
 
+            float lineWidth =
+    GetConnectionLineWidth();
+
             Widgets.DrawLine(
                 start,
                 firstCorner,
                 lineColor,
-                2f);
+                lineWidth);
 
             Widgets.DrawLine(
                 firstCorner,
                 secondCorner,
                 lineColor,
-                2f);
+                lineWidth);
 
             Widgets.DrawLine(
                 secondCorner,
                 end,
                 lineColor,
-                2f);
+                lineWidth);
+        }
+
+        private string GetNodeTooltip(
+    string label,
+    CivilizationKnowledgeState state)
+        {
+            return label +
+                "\nStatus: " +
+                GetKnowledgeStatusText(
+                    state);
         }
 
 
@@ -951,6 +985,51 @@ namespace LiAIChat.Civilization.UI
                     rect);
             }
 
+            TreeZoomLevel zoomLevel =
+                GetTreeZoomLevel();
+
+            switch (zoomLevel)
+            {
+                case TreeZoomLevel.Detailed:
+
+                    DrawDetailedNodeContent(
+                        rect,
+                        label,
+                        state);
+
+                    break;
+
+
+                case TreeZoomLevel.Compact:
+
+                    DrawCompactNodeContent(
+                        rect,
+                        label);
+
+                    break;
+
+
+                case TreeZoomLevel.Overview:
+
+                    DrawOverviewNodeContent(
+                        rect,
+                        state);
+
+                    break;
+            }
+
+            TooltipHandler.TipRegion(
+                rect,
+                GetNodeTooltip(
+                    label,
+                    state));
+        }
+
+        private void DrawDetailedNodeContent(
+    Rect rect,
+    string label,
+    CivilizationKnowledgeState state)
+        {
             DrawNodeStatusMarker(
                 rect,
                 state);
@@ -958,22 +1037,108 @@ namespace LiAIChat.Civilization.UI
             TextAnchor oldAnchor =
                 Text.Anchor;
 
+            GameFont oldFont =
+                Text.Font;
+
             Text.Anchor =
                 TextAnchor.MiddleCenter;
 
-            Widgets.Label(
+            Text.Font =
+                GameFont.Small;
+
+            Rect labelRect =
                 rect.ContractedBy(
-                    8f * zoom),
+                    8f * zoom);
+
+            Widgets.Label(
+                labelRect,
                 label);
+
+            Text.Font =
+                oldFont;
 
             Text.Anchor =
                 oldAnchor;
+        }
 
-            TooltipHandler.TipRegion(
+        private void DrawCompactNodeContent(
+    Rect rect,
+    string label)
+        {
+            TextAnchor oldAnchor =
+                Text.Anchor;
+
+            GameFont oldFont =
+                Text.Font;
+
+            Text.Anchor =
+                TextAnchor.MiddleCenter;
+
+            Text.Font =
+                GameFont.Tiny;
+
+            Rect labelRect =
+                rect.ContractedBy(
+                    4f);
+
+            Widgets.Label(
+                labelRect,
+                label);
+
+            Text.Font =
+                oldFont;
+
+            Text.Anchor =
+                oldAnchor;
+        }
+
+        private void DrawOverviewNodeContent(
+    Rect rect,
+    CivilizationKnowledgeState state)
+        {
+            string marker =
+                GetNodeStatusMarker(
+                    state);
+
+            TextAnchor oldAnchor =
+                Text.Anchor;
+
+            GameFont oldFont =
+                Text.Font;
+
+            Text.Anchor =
+                TextAnchor.MiddleCenter;
+
+            Text.Font =
+                GameFont.Tiny;
+
+            Widgets.Label(
                 rect,
-                label +
-                "\nStatus: " +
-                GetKnowledgeStatusText(state));
+                marker);
+
+            Text.Font =
+                oldFont;
+
+            Text.Anchor =
+                oldAnchor;
+        }
+
+        private float GetConnectionLineWidth()
+        {
+            TreeZoomLevel zoomLevel =
+                GetTreeZoomLevel();
+
+            switch (zoomLevel)
+            {
+                case TreeZoomLevel.Overview:
+                    return 1f;
+
+                case TreeZoomLevel.Compact:
+                    return 1.5f;
+
+                default:
+                    return 2f;
+            }
         }
 
         private Color GetNodeStatusColor(
