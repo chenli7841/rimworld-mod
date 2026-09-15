@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using LiAIChat.Civilization;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using Verse;
@@ -120,7 +121,15 @@ namespace LiAIChat.Archive
 
         public void Identify()
         {
+            if (identified)
+            {
+                return;
+            }
+
             identified = true;
+
+            CivilizationKnowledgeEvaluator
+                .NotifyLibraryMayHaveChanged();
         }
 
         /// <summary>
@@ -142,25 +151,6 @@ namespace LiAIChat.Archive
                 discoveryTick =
                     Find.TickManager?.TicksGame ?? -1;
             }
-        }
-
-        private void AssignRandomContent()
-        {
-            var allContents =
-                DefDatabase<ArchiveContentDef>
-                    .AllDefsListForReading;
-
-            if (allContents == null ||
-                allContents.Count == 0)
-            {
-                Log.Warning(
-                    "[Li AI Chat] No ArchiveContentDefs available.");
-
-                return;
-            }
-
-            content =
-                allContents.RandomElement();
         }
 
         /// <summary>
