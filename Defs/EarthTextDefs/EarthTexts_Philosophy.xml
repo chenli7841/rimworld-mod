@@ -61,4 +61,72 @@
     <primaryTopicId>earth.philosophy.kant</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>
 
+  <!-- ========================================================= -->
+  <!-- Hellenistic Philosophy                                    -->
+  <!-- ========================================================= -->
+
+  <LiAIChat.Archive.EarthTextDef>
+    <defName>LiAIChat_Text_MarcusAurelius_Meditations</defName>
+    <label>Meditations</label>
+    <title>Meditations</title>
+    <titleChinese>沉思录</titleChinese>
+    <author>Marcus Aurelius</author>
+    <year>180</year>
+    <primaryTopicId>philosophy</primaryTopicId>
+  </LiAIChat.Archive.EarthTextDef>
+
+
+  <!-- ========================================================= -->
+  <!-- Early Modern Philosophy                                   -->
+  <!-- ========================================================= -->
+
+  <LiAIChat.Archive.EarthTextDef>
+    <defName>LiAIChat_Text_Bacon_NovumOrganum</defName>
+    <label>Novum Organum</label>
+    <title>Novum Organum</title>
+    <titleChinese>新工具</titleChinese>
+    <author>Francis Bacon</author>
+    <year>1620</year>
+    <primaryTopicId>philosophy</primaryTopicId>
+  </LiAIChat.Archive.EarthTextDef>
+
+
+  <!-- ========================================================= -->
+  <!-- Rationalism                                               -->
+  <!-- ========================================================= -->
+
+  <LiAIChat.Archive.EarthTextDef>
+    <defName>LiAIChat_Text_Descartes_Meditations</defName>
+    <label>Meditations on First Philosophy</label>
+    <title>Meditations on First Philosophy</title>
+    <titleChinese>第一哲学沉思集</titleChinese>
+    <author>René Descartes</author>
+    <year>1641</year>
+    <primaryTopicId>philosophy</primaryTopicId>
+  </LiAIChat.Archive.EarthTextDef>
+
+
+  <!-- ========================================================= -->
+  <!-- Empiricism                                                -->
+  <!-- ========================================================= -->
+
+  <LiAIChat.Archive.EarthTextDef>
+    <defName>LiAIChat_Text_Locke_EssayHumanUnderstanding</defName>
+    <label>An Essay Concerning Human Understanding</label>
+    <title>An Essay Concerning Human Understanding</title>
+    <titleChinese>人类理解论</titleChinese>
+    <author>John Locke</author>
+    <year>1689</year>
+    <primaryTopicId>philosophy</primaryTopicId>
+  </LiAIChat.Archive.EarthTextDef>
+
+  <LiAIChat.Archive.EarthTextDef>
+    <defName>LiAIChat_Text_Hume_EnquiryHumanUnderstanding</defName>
+    <label>An Enquiry Concerning Human Understanding</label>
+    <title>An Enquiry Concerning Human Understanding</title>
+    <titleChinese>人类理解研究</titleChinese>
+    <author>David Hume</author>
+    <year>1748</year>
+    <primaryTopicId>philosophy</primaryTopicId>
+  </LiAIChat.Archive.EarthTextDef>
 </Defs>
