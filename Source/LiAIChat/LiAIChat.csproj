@@ -113,6 +113,7 @@
     <Compile Include="Archive\ArchiveStudyCalculator.cs" />
     <Compile Include="Archive\ArchiveTerminalInvestigationCalculator.cs" />
     <Compile Include="Archive\ArchiveTerminalRiskAssessment.cs" />
+    <Compile Include="Archive\BookOutcomeDoer_AncientArchiveKnowledge.cs" />
     <Compile Include="Archive\Building_AncientArchiveSignalTerminal.cs" />
     <Compile Include="Archive\ColonyLibrary.cs" />
     <Compile Include="Archive\ColonyLibraryEntry.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="Archive\OpenAIArchiveReflectionGenerator.cs" />
     <Compile Include="Archive\OpenAIArchiveScholarConversationDirector.cs" />
     <Compile Include="Archive\Patches\PawnGenerator_ArchivePatch.cs" />
+    <Compile Include="Archive\ReadingOutcomeProperties_AncientArchiveKnowledge.cs" />
     <Compile Include="Archive\ThingDefOfArchive.cs" />
     <Compile Include="Archive\Thing_AncientEarthArchiveFragment.cs" />
     <Compile Include="Background\IntellectualExchangeSnapshot.cs" />

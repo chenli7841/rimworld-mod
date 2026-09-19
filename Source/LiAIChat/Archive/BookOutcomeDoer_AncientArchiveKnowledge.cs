@@ -1,4 +1,7 @@
-﻿using RimWorld;
+﻿using LiAIChat.Knowledge;
+using LiAIChat.Models;
+using LiAIChat.State;
+using RimWorld;
 using Verse;
 
 namespace LiAIChat.Archive
@@ -6,12 +9,14 @@ namespace LiAIChat.Archive
     public class BookOutcomeDoer_AncientArchiveKnowledge
         : BookOutcomeDoer
     {
-        private const float LearningInterval = 2500f;
-
-        private float accumulatedReading;
+        public new ReadingOutcomeProperties_AncientArchiveKnowledge Props =>
+            (ReadingOutcomeProperties_AncientArchiveKnowledge)props;
 
         public override bool DoesProvidesOutcome(Pawn reader)
         {
+            if (reader == null)
+                return false;
+
             Thing_AncientEarthArchiveFragment archive =
                 Parent as Thing_AncientEarthArchiveFragment;
 
@@ -21,11 +26,19 @@ namespace LiAIChat.Archive
             if (!archive.Identified)
                 return false;
 
-            if (archive.EarthText == null)
+            if (string.IsNullOrWhiteSpace(
+                archive.KnowledgeTopicId))
+            {
                 return false;
+            }
 
-            return !string.IsNullOrEmpty(
-                archive.KnowledgeTopicId);
+            if (string.IsNullOrWhiteSpace(
+                archive.StudyIdentityId))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public override void OnReadingTick(
@@ -35,29 +48,62 @@ namespace LiAIChat.Archive
             if (!DoesProvidesOutcome(reader))
                 return;
 
-            accumulatedReading += factor;
+            Thing_AncientEarthArchiveFragment archive =
+                Parent as Thing_AncientEarthArchiveFragment;
 
-            if (accumulatedReading < LearningInterval)
+            if (archive == null)
                 return;
 
-            accumulatedReading -= LearningInterval;
+            PawnAIState state =
+                PawnAIStateManager.GetState(reader);
 
-            ApplyKnowledge(reader);
+            if (state == null)
+                return;
+
+            string studyId =
+                archive.StudyIdentityId;
+
+            float progress = 0f;
+
+            state.ArchiveReadingProgress.TryGetValue(
+                studyId,
+                out progress);
+
+            progress += factor;
+
+            while (progress >= Props.learningInterval)
+            {
+                progress -= Props.learningInterval;
+
+                ApplyKnowledge(
+                    state,
+                    archive);
+            }
+
+            state.ArchiveReadingProgress[studyId] =
+                progress;
         }
 
-        private void ApplyKnowledge(Pawn reader)
+        private void ApplyKnowledge(
+            PawnAIState state,
+            Thing_AncientEarthArchiveFragment archive)
         {
-            // 下一小步实现
-        }
+            KnowledgeAcquisition acquisition =
+                new KnowledgeAcquisition
+                {
+                    TopicId =
+                        archive.KnowledgeTopicId,
 
-        public override void PostExposeData()
-        {
-            base.PostExposeData();
+                    LearningStrength =
+                        Props.learningStrength,
 
-            Scribe_Values.Look(
-                ref accumulatedReading,
-                "liAIChatAccumulatedReading",
-                0f);
+                    Reason =
+                        "Reading ancient Earth archive"
+                };
+
+            KnowledgeUpdater.Apply(
+                state.Knowledge,
+                acquisition);
         }
     }
 }

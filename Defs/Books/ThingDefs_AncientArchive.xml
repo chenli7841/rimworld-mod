@@ -66,6 +66,10 @@
         </verticalGraphic>
         <doers>
           <li Class="BookOutcomeProperties_JoyFactorModifier" />
+          <li Class="LiAIChat.Archive.ReadingOutcomeProperties_AncientArchiveKnowledge">
+            <learningInterval>2500</learningInterval>
+            <learningStrength>0.01</learningStrength>
+          </li>
         </doers>
       </li>
     </comps>
