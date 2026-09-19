@@ -63,11 +63,8 @@ namespace LiAIChat.Archive
             string studyId =
                 archive.StudyIdentityId;
 
-            float progress = 0f;
 
-            state.ArchiveReadingProgress.TryGetValue(
-                studyId,
-                out progress);
+            float progress = state.GetArchiveReadingProgress(studyId);
 
             progress += factor;
 
@@ -80,8 +77,7 @@ namespace LiAIChat.Archive
                     archive);
             }
 
-            state.ArchiveReadingProgress[studyId] =
-                progress;
+            state.SetArchiveReadingProgress(studyId, progress);
         }
 
         private void ApplyKnowledge(

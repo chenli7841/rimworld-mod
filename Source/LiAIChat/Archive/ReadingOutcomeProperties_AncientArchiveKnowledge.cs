@@ -10,12 +10,7 @@ namespace LiAIChat.Archive
 
         public float learningStrength = 0.01f;
 
-        public ReadingOutcomeProperties_AncientArchiveKnowledge()
-        {
-            doerClass =
-                typeof(BookOutcomeDoer_AncientArchiveKnowledge);
-        }
-
-        public override Type DoerClass => throw new NotImplementedException();
+        public override Type DoerClass =>
+            typeof(BookOutcomeDoer_AncientArchiveKnowledge);
     }
 }
