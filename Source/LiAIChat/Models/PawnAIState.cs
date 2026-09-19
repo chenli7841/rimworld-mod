@@ -42,6 +42,7 @@ namespace LiAIChat.Models
         public List<PawnIntellectualExchange> IntellectualExchanges = new List<PawnIntellectualExchange>();
 
         public List<string> StudiedArchiveContentIds = new List<string>();
+        public Dictionary<string, float> ArchiveReadingProgress = new Dictionary<string, float>();
         public List<ArchiveReflection> ArchiveReflections = new List<ArchiveReflection>();
 
         public ArchiveScholarProfile ScholarProfile;
@@ -79,6 +80,7 @@ namespace LiAIChat.Models
             Scribe_Values.Look(ref PendingProactiveDialogue, "pendingProactiveDialogue", "");
             Scribe_Collections.Look(ref IntellectualExchanges, "intellectualExchanges", LookMode.Deep);
             Scribe_Collections.Look(ref StudiedArchiveContentIds, "studiedArchiveContentIds", LookMode.Value);
+            Scribe_Collections.Look(ref ArchiveReadingProgress, "archiveReadingProgress", LookMode.Value, LookMode.Value);
             Scribe_Collections.Look(ref ArchiveReflections, "archiveReflections", LookMode.Deep);
             Scribe_Deep.Look(ref ScholarProfile, "scholarProfile");
             Scribe_Values.Look(ref AllowsPlayerConversation, "allowsPlayerConversation", false);
@@ -128,6 +130,11 @@ namespace LiAIChat.Models
                 {
                     StudiedArchiveContentIds =
                         new List<string>();
+                }
+                if (ArchiveReadingProgress == null)
+                {
+                    ArchiveReadingProgress =
+                        new Dictionary<string, float>();
                 }
                 if (ArchiveReflections == null)
                 {
