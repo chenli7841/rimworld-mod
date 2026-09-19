@@ -85,6 +85,7 @@
     <Compile Include="Archive\AncientArchiveFactory.cs" />
     <Compile Include="Archive\AncientArchiveIdentificationUtility.cs" />
     <Compile Include="Archive\AncientArchiveStudyUtility.cs" />
+    <Compile Include="Archive\AncientArchiveVaultGenerator.cs" />
     <Compile Include="Archive\AncientRuinArchiveMapComponent.cs" />
     <Compile Include="Archive\AncientRuinArchiveSpawner.cs" />
     <Compile Include="Archive\AncientRuinDetector.cs" />
@@ -120,6 +121,8 @@
     <Compile Include="Archive\ColonyLibraryIndex.cs" />
     <Compile Include="Archive\EarthTextDef.cs" />
     <Compile Include="Archive\EarthTextSelector.cs" />
+    <Compile Include="Archive\GenStep_AncientArchiveSite.cs" />
+    <Compile Include="Archive\GenStep_AncientArchiveThreat.cs" />
     <Compile Include="Archive\IArchiveReflectionGenerator.cs" />
     <Compile Include="Archive\IArchiveScholarConversationDirector.cs" />
     <Compile Include="Archive\JobDriver_IdentifyAncientArchive.cs" />

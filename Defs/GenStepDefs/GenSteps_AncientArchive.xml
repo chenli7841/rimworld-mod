@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <GenStepDef>
+    <defName>LiAIChat_AncientArchiveSite</defName>
+    <linkWithSite>LiAIChat_AncientArchiveSite</linkWithSite>
+    <order>400</order>
+    <genStep Class="LiAIChat.Archive.GenStep_AncientArchiveSite"/>
+  </GenStepDef>
+
+
+  <GenStepDef>
+    <defName>LiAIChat_AncientArchiveThreat</defName>
+    <linkWithSite>LiAIChat_AncientArchiveSite</linkWithSite>
+    <order>410</order>
+    <genStep Class="LiAIChat.Archive.GenStep_AncientArchiveThreat"/>
+  </GenStepDef>
+
+</Defs>

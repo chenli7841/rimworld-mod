@@ -3,17 +3,10 @@
 
   <SitePartDef>
     <defName>LiAIChat_AncientArchiveSite</defName>
-
     <label>ancient Earth archive site</label>
-
-    <description>
-      A ruined site containing traces of preserved records
-      from ancient Earth.
-    </description>
-
-    <workerClass>
-      LiAIChat.Archive.SitePartWorker_AncientArchive
-    </workerClass>
+    <description>A ruined site containing traces of preserved recordsfrom ancient Earth.</description>
+    <workerClass>LiAIChat.Archive.SitePartWorker_AncientArchive</workerClass>
+    <wantsThreatPoints>true</wantsThreatPoints>
   </SitePartDef>
 
 </Defs>
