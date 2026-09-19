@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <RulePackDef>
+    <defName>Namer_AncientEarthArchiveDescription</defName>
+    <rulePack>
+      <rulesStrings>
+        <!-- The grammar engine picks one 'title' pattern at random -->
+        <li>title->A damaged archive fragment containing partially recovered knowledge from ancient Earth. Its contents may preserve fragments of ancient history, philosophy, religion, science, or culture.</li>
+      </rulesStrings>
+    </rulePack>
+  </RulePackDef>
+
+
+  
+  <RulePackDef>
+    <defName>Description_TheCritiqueOfPracticalReason</defName>
+    <include>
+      <li>ArtDescriptionUtility_Global</li>
+    </include>
+    <rulePack>
+      <rulesStrings>
+        <!-- Roots -->
+        <li>desc->一本从古代地球遗迹中发掘出的哲学著作，扉页上依稀可辨“伊曼努尔·康德”的署名。幸存的章节反复出现“理性”“自由”“义务”与“道德法则”等词汇，似乎记录着古代地球人对自身行为准则的一场漫长争论。作者认为，人不应仅因欲望、利益或奖赏而行动，而能够服从某种由理性自身发现的道德要求。</li>
+        <li>desc->许多历史背景已经无法考证。我们不知道当时的人为何如此执着于自由与义务，也不知道他们是否真正按照这些原则生活。那个世界已经消失，但这本残卷证明：在古代地球文明尚未湮灭之前，他们也曾认真追问过——一个人究竟应当怎样活着。</li>
+      </rulesStrings>
+    </rulePack>
+  </RulePackDef>
+</Defs>

@@ -6,7 +6,9 @@
     <label>The Republic</label>
     <title>The Republic</title>
     <titleChinese>理想国</titleChinese>
-    <author>Plato</author>
+    <description>一本从古代地球文明遗迹中复原的哲学著作，署名“柏拉图”。书中保存着一场关于正义、政治与理想社会的漫长讨论。作者借苏格拉底与不同人物的对话，追问何为正义的人、何为正义的城邦，并设想由真正理解善与真理的哲学家承担统治责任。\n\n残卷中还出现了洞穴、太阳与灵魂等奇特比喻，似乎表明古代地球人不仅关心制度如何建立，也试图理解知识、教育与人的本性。那个文明留下了无数国家与战争的遗迹，而这部著作记录的，却是他们对一个或许从未真正存在过的理想社会的想象。</description>
+    <shortDescription>一本从古代地球遗迹中复原的哲学著作，署名“柏拉图”。残存文字围绕正义、政治、教育与理想社会展开，并追问怎样的人才有资格治理共同体。那个文明早已消逝，而它对理想社会的想象仍保存在这些残卷之中。</shortDescription>
+    <author>柏拉图</author>
     <year>-375</year>
     <primaryTopicId>earth.philosophy.plato</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>
@@ -16,7 +18,9 @@
     <label>Apology</label>
     <title>Apology</title>
     <titleChinese>申辩篇</titleChinese>
-    <author>Plato</author>
+    <description>一份从古代地球文献残片中复原的哲学记录，署名“柏拉图”。文本似乎保存了思想家苏格拉底在一次审判中的申辩。他被自己的城邦指控不敬神明并腐蚀青年，却拒绝以迎合审判者的方式换取安全，坚持自己不断质问、检验人生的使命。\n\n我们已经很难确定这场审判的全部历史细节，但残存文字表明，古代地球人曾认真争论个人良知、公共权威与死亡之间的关系。苏格拉底最终没有逃脱死刑，而他的学生却将这场失败的申辩保存下来，使一个消失已久的人的声音穿越了漫长年代。</description>
+    <shortDescription>一份从古代地球文献中复原的审判记录，署名“柏拉图”。其中保存了苏格拉底面对死刑指控时关于真理、良知与死亡的申辩。城邦最终判他有罪，而他的声音却比那个审判他的世界留存得更加长久。</shortDescription>
+    <author>柏拉图</author>
     <year>-399</year>
     <primaryTopicId>earth.philosophy.plato</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>
@@ -26,7 +30,9 @@
     <label>Politics</label>
     <title>Politics</title>
     <titleChinese>政治学</titleChinese>
-    <author>Aristotle</author>
+    <description>一本从古代地球遗迹中复原的政治哲学著作，署名“亚里士多德”。残存章节分析了家庭、城邦、公民、政体与法律，并比较了古代地球多个政治共同体的制度。作者似乎相信，人天然生活于政治共同体之中，而政治的目的不仅是维持生存，也与一种良好的共同生活有关。\n\n书中对君主制、贵族制、民主制与寡头制的讨论显示，那个遥远时代的人已经观察到权力如何因利益与阶层而发生变化。那些城邦如今只剩考古遗迹，但他们关于谁应当统治、法律为何存在的争论并没有随废墟一同消失。</description>
+    <shortDescription>一本从古代地球遗迹中复原的政治哲学著作，署名“亚里士多德”。残篇讨论城邦、公民、法律与不同政体，试图理解人为何组成政治共同体，以及怎样的制度能够维持良好的共同生活。</shortDescription>
+    <author>亚里士多德</author>
     <year>-350</year>
     <primaryTopicId>earth.philosophy.aristotle</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>
@@ -36,7 +42,9 @@
     <label>Nicomachean Ethics</label>
     <title>Nicomachean Ethics</title>
     <titleChinese>尼各马可伦理学</titleChinese>
-    <author>Aristotle</author>
+    <description>一本从古代地球文明遗迹中保存下来的伦理学著作，署名“亚里士多德”。残存文字反复讨论幸福、德性、选择、友谊与人的习惯，似乎试图回答一个朴素却困难的问题：怎样的一生才算真正活得好？作者认为德性并非单纯拥有某种知识，而是在长期行动与习惯中逐渐形成的品格。\n\n书中的社会背景早已成为考古学研究对象，但其中关于勇敢、节制、正义和友谊的讨论仍显得异常熟悉。那个文明的人与今天的人生活在完全不同的世界，却似乎面对着相同的问题——一个人的品格究竟是怎样形成的。</description>
+    <shortDescription>一本从古代地球遗迹中保存下来的伦理学著作，署名“亚里士多德”。残篇讨论幸福、德性、选择与友谊，并认为良好品格需要通过长期行动与习惯形成。文明已经消逝，对“怎样活得好”的追问却留了下来。</shortDescription>
+    <author>亚里士多德</author>
     <year>-340</year>
     <primaryTopicId>earth.philosophy.aristotle</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>
@@ -46,7 +54,9 @@
     <label>Critique of Pure Reason</label>
     <title>Critique of Pure Reason</title>
     <titleChinese>纯粹理性批判</titleChinese>
-    <author>Immanuel Kant</author>
+    <description>一本从古代地球遗迹中复原的哲学巨著，署名“伊曼努尔·康德”。幸存章节充满关于经验、理性、空间、时间与因果性的复杂论证。作者似乎试图划定人类认识能力的边界：我们能够知道什么，又有哪些问题虽然无法停止追问，却可能永远超出经验所能证明的范围。\n\n许多术语的准确含义需要结合早已残缺的思想传统才能理解，但这部著作显示，古代地球人曾将自己的理性本身作为研究对象。他们不仅试图认识宇宙，也开始怀疑用于认识宇宙的心灵是否存在无法跨越的界限。</description>
+    <shortDescription>一本从古代地球遗迹中复原的哲学巨著，署名“伊曼努尔·康德”。残篇研究经验、理性、空间、时间与因果，并试图划定人类知识的边界：我们能够知道什么，又有什么可能永远无法被知道。</shortDescription>
+    <author>伊曼努尔·康德</author>
     <year>1781</year>
     <primaryTopicId>earth.philosophy.kant</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>
@@ -54,9 +64,11 @@
   <LiAIChat.Archive.EarthTextDef>
     <defName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</defName>
     <label>Critique of Practical Reason</label>
-    <title>Critique of Practical Reason</title>
-    <titleChinese>实践理性批判</titleChinese>
-    <author>Immanuel Kant</author>
+    <title>实践理性批判</title>
+    <titleChinese></titleChinese>
+    <description>一本从古代地球遗迹中发掘出的哲学著作，扉页上依稀可辨“伊曼努尔·康德”的署名。幸存的章节反复出现“理性”“自由”“义务”与“道德法则”等词汇，似乎记录着古代地球人对自身行为准则的一场漫长争论。作者认为，人不应仅因欲望、利益或奖赏而行动，而能够服从某种由理性自身发现的道德要求。\n\n许多历史背景已经无法考证。我们不知道当时的人为何如此执着于自由与义务，也不知道他们是否真正按照这些原则生活。那个世界已经消失，但这本残卷证明：在古代地球文明尚未湮灭之前，他们也曾认真追问过——一个人究竟应当怎样活着。</description>
+    <shortDescription>一本从古代地球遗迹中发掘出的哲学著作，署名“伊曼努尔·康德”。残存文字探讨理性、自由、义务与道德法则，追问人在欲望与责任冲突时应当如何行动。那个文明早已消逝，而它对道德与自由的追问仍留存于残卷之中。</shortDescription>
+    <author>伊曼努尔·康德</author>
     <year>1788</year>
     <primaryTopicId>earth.philosophy.kant</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>
@@ -70,7 +82,9 @@
     <label>Meditations</label>
     <title>Meditations</title>
     <titleChinese>沉思录</titleChinese>
-    <author>Marcus Aurelius</author>
+    <description>一本从古代地球遗迹中发现的私人哲学笔记，署名“马可·奥勒留”。考证表明，作者可能曾是一个庞大帝国的最高统治者，但这些文字很少谈论征服与权力，反而不断提醒自己接受不可控制之事、约束欲望、履行责任，并以理性面对死亡与命运。\n\n这似乎并不是为后世写成的正式著作，而是一个人在战争、疾病与政治责任之间留下的自我劝诫。那个帝国早已成为废墟，皇帝的命令也无人遵从，唯有这些写给自己的话意外地保存了下来。</description>
+    <shortDescription>一册从古代地球遗迹中发现的私人笔记，署名“马可·奥勒留”。作者似乎曾统治一个庞大帝国，却反复告诫自己克制欲望、履行责任并接受命运。帝国早已消失，这些写给自己的话却保存至今。</shortDescription>
+    <author>马可·奥勒留</author>
     <year>180</year>
     <primaryTopicId>philosophy</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>
@@ -85,7 +99,9 @@
     <label>Novum Organum</label>
     <title>Novum Organum</title>
     <titleChinese>新工具</titleChinese>
-    <author>Francis Bacon</author>
+    <description>一本从古代地球文明遗迹中复原的思想著作，署名“弗朗西斯·培根”。残篇批评人类容易被传统、语言、习惯与自身偏见欺骗，并提出应通过有组织的观察、实验和归纳逐步获得关于自然的可靠知识。\n\n从后世留下的技术遗迹来看，这个时代似乎处在古代地球科学发生巨大转变的前夕。书中那些关于知识方法的讨论，也许只是一个漫长变化中的微小环节，却透露出一种新的信念：自然不应仅由权威解释，而应接受反复观察与检验。</description>
+    <shortDescription>一本从古代地球遗迹中复原的思想著作，署名“弗朗西斯·培根”。残篇警告人类容易被偏见与传统欺骗，并主张通过观察、实验和归纳认识自然。它似乎来自古代地球科学发生巨大转变的时代。</shortDescription>
+    <author>弗朗西斯·培根</author>
     <year>1620</year>
     <primaryTopicId>philosophy</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>
@@ -100,7 +116,9 @@
     <label>Meditations on First Philosophy</label>
     <title>Meditations on First Philosophy</title>
     <titleChinese>第一哲学沉思集</titleChinese>
-    <author>René Descartes</author>
+    <description>一本从古代地球档案中复原的哲学著作，署名“勒内·笛卡尔”。作者似乎进行了一场极端的思想实验：暂时怀疑感官、外部世界乃至过去相信的一切，希望找到某种绝对无法怀疑的起点。残存章节随后讨论心灵、身体、上帝以及人如何可能获得确定知识。\n\n对于那个时代的人为何如此担忧知识的可靠性，我们只能从其他残片中推测。但这部著作留下了一个异常清晰的思想痕迹：在相信世界之前，作者首先要求确认那个正在怀疑世界的自己确实存在。</description>
+    <shortDescription>一本从古代地球档案中复原的哲学著作，署名“勒内·笛卡尔”。作者试图怀疑一切可以怀疑之物，以寻找知识不可动摇的起点。那个文明留下了无数答案，而这份残卷首先保存下来的却是怀疑。</shortDescription>
+    <author>勒内·笛卡尔</author>
     <year>1641</year>
     <primaryTopicId>philosophy</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>
@@ -115,7 +133,9 @@
     <label>An Essay Concerning Human Understanding</label>
     <title>An Essay Concerning Human Understanding</title>
     <titleChinese>人类理解论</titleChinese>
-    <author>John Locke</author>
+    <description>一本从古代地球遗迹中复原的哲学著作，署名“约翰·洛克”。大量篇幅用于研究观念从何而来、人类如何形成知识，以及理性的能力究竟存在怎样的界限。作者反对某些知识天生存在于心灵中的观点，并将感觉与经验视为形成观念的重要来源。\n\n这些讨论来自一个尚未拥有现代神经科学的时代，当时的人只能通过观察、语言与内省研究自己的心灵。然而残卷显示，他们已经开始系统地追问一个后来反复出现的问题：人的思想究竟有多少来自自身，又有多少来自所经历的世界。</description>
+    <shortDescription>一本从古代地球遗迹中复原的哲学著作，署名“约翰·洛克”。残篇研究观念、经验与知识的来源，并追问人的心灵如何理解世界。在缺乏现代神经科学的时代，他们已经开始系统研究思想本身。</shortDescription>
+    <author>约翰·洛克</author>
     <year>1689</year>
     <primaryTopicId>philosophy</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>
@@ -125,8 +145,11 @@
     <label>An Enquiry Concerning Human Understanding</label>
     <title>An Enquiry Concerning Human Understanding</title>
     <titleChinese>人类理解研究</titleChinese>
-    <author>David Hume</author>
+    <description>一本从古代地球文明档案中复原的哲学著作，署名“大卫·休谟”。残篇对人类习以为常的知识提出了令人不安的质疑：我们看到一件事反复跟随另一件事发生，是否真的能够证明两者之间存在必然的因果联系？作者将经验、习惯与概率置于许多判断的基础之上，并怀疑理性能够给予人们多少绝对确定性。\n\n那个文明后来掌握了远超作者时代的科学与技术，但这份早期文献仍提醒研究者：即使能够预测世界，也不等于已经理解为什么世界必然如此运行。</description>
+    <shortDescription>一本从古代地球档案中复原的哲学著作，署名“大卫·休谟”。残篇研究经验、因果、习惯与知识的界限，并质疑人是否真的能够从过去证明未来。一个高度技术化文明的早期思想中，已经存在对确定性的深刻怀疑。</shortDescription>
+    <author>大卫·休谟</author>
     <year>1748</year>
     <primaryTopicId>philosophy</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>
+
 </Defs>

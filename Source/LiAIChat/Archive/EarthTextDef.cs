@@ -17,6 +17,11 @@ namespace LiAIChat.Archive
         public string titleChinese;
 
         /// <summary>
+        /// Better to keep within 100 characters. To show in the bottom-left intro box.
+        /// </summary>
+        public string shortDescription;
+
+        /// <summary>
         /// Author display name.
         /// Example: Plato
         /// </summary>

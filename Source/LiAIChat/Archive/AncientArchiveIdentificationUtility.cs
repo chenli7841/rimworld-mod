@@ -48,11 +48,16 @@ namespace LiAIChat.Archive
                     MessageTypeDefOf.RejectInput);
 
                 return;
+            } else
+            {
+                Messages.Message(
+                    "Found " + archives.Count + " ancient Earth archives are reachable.",
+                    MessageTypeDefOf.PositiveEvent);
             }
 
-            ShowSelectionMenu(
-                pawn,
-                archives);
+                ShowSelectionMenu(
+                    pawn,
+                    archives);
         }
 
         private static void ShowSelectionMenu(

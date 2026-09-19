@@ -7,7 +7,7 @@ using Verse;
 namespace LiAIChat.Archive
 {
     public class Thing_AncientEarthArchiveFragment
-        : ThingWithComps
+        : Book
     {
         private ArchiveContentDef content;
 
@@ -54,6 +54,14 @@ namespace LiAIChat.Archive
 
                 return DefDatabase<EarthTextDef>.GetNamedSilentFail(
                     earthTextDefName);
+            }
+        }
+
+        public override bool IsReadable
+        {
+            get
+            {
+                return Identified;
             }
         }
 
@@ -174,80 +182,38 @@ namespace LiAIChat.Archive
             {
                 if (!Identified)
                 {
-                    return "Unknown Ancient Earth Archive";
+                    return "未知远古地球文献";
                 }
-                string earthTextDisplay = GetEarthTextDisplayText();
+                string earthTextDisplay = EarthText == null ? "" : EarthText.title;
 
                 if (!string.IsNullOrEmpty(earthTextDisplay))
                 {
                     return earthTextDisplay;
                 }
 
-                return "Ancient Earth Archive Fragment";
+                return "远古地球文献残片";
+            }
+        }
+        public override string DescriptionDetailed
+        {
+            get
+            {
+                if (identified && EarthText != null)
+                    return EarthText.description;
+
+                return base.DescriptionDetailed;
             }
         }
         public override string GetInspectString()
         {
-            string baseText =
-                base.GetInspectString();
-
-            List<string> lines =
-                new List<string>();
-
-            if (content != null && identified)
+            if (identified)
             {
-                string earthTextDisplay = GetEarthTextDisplayText();
-
-                if (!string.IsNullOrEmpty(earthTextDisplay))
-                {
-                    if (!string.IsNullOrEmpty(baseText))
-                    {
-                        baseText += "\n";
-                    }
-
-                    baseText += earthTextDisplay;
-                }
+                return EarthText == null ? "" : EarthText.shortDescription;
             }
-            if (!string.IsNullOrWhiteSpace(
-                baseText))
+            else
             {
-                lines.Add(baseText);
+                return "内容尚未被识别。";
             }
-
-            if (content != null)
-            {
-                if (identified)
-                {
-                    lines.Add(
-                        "Archive: " +
-                        content.title);
-                }
-                else
-                {
-                    lines.Add(
-                        "Archive: Unknown");
-
-                    string difficulty =
-                        ArchiveIdentificationCalculator
-                            .GetDifficultyLabel(this);
-
-                    lines.Add(
-                        "Identification difficulty: " +
-                        difficulty);
-                }
-            }
-
-            if (!string.IsNullOrWhiteSpace(
-                sourceDescription))
-            {
-                lines.Add(
-                    "Origin: " +
-                    sourceDescription);
-            }
-
-            return string.Join(
-                "\n",
-                lines);
         }
 
         public void SetProvenance(
@@ -263,39 +229,9 @@ namespace LiAIChat.Archive
                 Find.TickManager?.TicksGame ?? -1;
         }
 
-        public void SetContent(
-    ArchiveContentDef newContent)
+        public void SetContent(ArchiveContentDef newContent)
         {
             content = newContent;
-        }
-
-        public string GetEarthTextDisplayText()
-        {
-            EarthTextDef text = EarthText;
-
-            if (text == null)
-            {
-                return null;
-            }
-
-            string result = text.title;
-
-            if (!string.IsNullOrEmpty(text.titleChinese))
-            {
-                result += "\n" + text.titleChinese;
-            }
-
-            if (!string.IsNullOrEmpty(text.author))
-            {
-                result += "\n\n" + text.author;
-            }
-
-            if (!string.IsNullOrEmpty(text.YearDisplay))
-            {
-                result += "\n" + text.YearDisplay;
-            }
-
-            return result;
         }
     }
 }

@@ -17,11 +17,12 @@ namespace LiAIChat.Patches
     {
         public static IEnumerable<Gizmo> Postfix(IEnumerable<Gizmo> __result, Pawn __instance)
         {
+            
             foreach (Gizmo gizmo in __result)
             {
                 yield return gizmo;
             }
-
+            
             if (__instance == null)
             {
                 yield break;
@@ -67,7 +68,8 @@ namespace LiAIChat.Patches
                     }
                 };
             }
-            /*
+            
+            
             yield return new Command_Action
             {
                 defaultLabel = "Identify Ancient Archive",
@@ -155,7 +157,7 @@ namespace LiAIChat.Patches
                     }
                 };
             }
-            */
+            
         }
         private static void GenerateArchiveTestQuest()
         {

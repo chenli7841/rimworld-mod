@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <RulePackDef>
+    <defName>Namer_AncientEarthArchiveTitle</defName>
+    <rulePack>
+      <rulesStrings>
+        <!-- The grammar engine picks one 'title' pattern at random -->
+        <li>title->Ancient Earth Archive Fragment</li>
+      </rulesStrings>
+    </rulePack>
+  </RulePackDef>
+</Defs>

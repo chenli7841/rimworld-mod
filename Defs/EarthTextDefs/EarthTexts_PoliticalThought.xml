@@ -4,9 +4,11 @@
   <LiAIChat.Archive.EarthTextDef>
     <defName>LiAIChat_Text_Hobbes_Leviathan</defName>
     <label>Leviathan</label>
-    <title>Leviathan</title>
-    <titleChinese>利维坦</titleChinese>
-    <author>Thomas Hobbes</author>
+    <title>利维坦</title>
+    <titleChinese></titleChinese>
+    <description>一本从古代地球文明遗迹中复原的政治哲学著作，署名“托马斯·霍布斯”。残存章节描绘了一个没有共同权威约束的世界：人们因恐惧、竞争与猜疑而彼此冲突，生命与财产始终处于危险之中。作者由此主张，人们为了获得和平与安全，可以彼此订立契约，将足够强大的权力交给一个共同的政治权威。\n\n书名中的“利维坦”似乎借用了古代宗教传说中的巨大生物，用以象征由无数个人共同组成的国家。那个文明后来建立过形形色色的政府，又经历了无数战争与革命。这份残卷留下的，是一个古老而冷峻的问题：为了摆脱混乱，人究竟愿意把多少自由交给权力。</description>
+    <shortDescription>一本从古代地球遗迹中复原的政治哲学著作，署名“托马斯·霍布斯”。残篇从恐惧、冲突与生存出发，探讨人为何建立国家并服从共同权威。那个文明早已消逝，而自由与秩序之间的难题仍未消失。</shortDescription>
+    <author>托马斯·霍布斯</author>
     <year>1651</year>
     <primaryTopicId>earth.politics.modern</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>
@@ -14,9 +16,11 @@
   <LiAIChat.Archive.EarthTextDef>
     <defName>LiAIChat_Text_Locke_TwoTreatises</defName>
     <label>Two Treatises of Government</label>
-    <title>Two Treatises of Government</title>
-    <titleChinese>政府论</titleChinese>
-    <author>John Locke</author>
+    <title>政府论</title>
+    <titleChinese></titleChinese>
+    <description>一本从古代地球文明档案中复原的政治哲学著作，署名“约翰·洛克”。残存文字讨论自然权利、财产、政治权力与政府的起源，并反对统治者仅凭血统或绝对权威支配他人。作者认为，人建立政府是为了更可靠地保护自身的生命、自由与财产，而政治权力的正当性最终来自被统治者的同意。\n\n后世资料显示，这些观念曾进入古代地球关于宪政、革命与个人权利的长期争论，并影响多个政治共同体。那些国家的疆界与制度大多早已消失，但这份残卷仍保存着一个危险而持久的思想：如果政府背离了建立它的目的，人民是否仍有义务服从。</description>
+    <shortDescription>一本从古代地球档案中复原的政治哲学著作，署名“约翰·洛克”。残篇讨论自然权利、财产、政府与被统治者的同意，并追问政治权力何以正当，以及当政府背离其目的时人民是否仍应服从。</shortDescription>
+    <author>约翰·洛克</author>
     <year>1689</year>
     <primaryTopicId>earth.politics.liberalism</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>

@@ -4,9 +4,11 @@
   <LiAIChat.Archive.EarthTextDef>
     <defName>LiAIChat_Text_Augustine_Confessions</defName>
     <label>Confessions</label>
-    <title>Confessions</title>
-    <titleChinese>忏悔录</titleChinese>
-    <author>Augustine of Hippo</author>
+    <title>忏悔录</title>
+    <titleChinese></titleChinese>
+    <description>一本从古代地球文明遗迹中复原的宗教与哲学著作，署名“希波的奥古斯丁”。作者以祷告和回忆的形式记录自己的青年时代、欲望、求知、迷惘与最终归信基督教的经历，并不断追问记忆、时间、自由意志、罪与恩典的意义。\n\n这并非一份冷静的历史档案，而像是一个早已死去的人直接向他的上帝诉说自己的生命。城市、帝国和同时代的人都已消失，然而在残存文字中，一个古代地球人的内心世界仍异常清晰：他试图理解自己为何不断寻找满足，又为何相信人的心只有归向创造者才能得到真正的安息。</description>
+    <shortDescription>一本从古代地球遗迹中复原的宗教自传，署名“希波的奥古斯丁”。作者回顾欲望、求知、迷惘与归信，并追问罪、恩典、记忆和时间。帝国早已消逝，一个古代地球人的祷告却仍保存于残卷之中。</shortDescription>
+    <author>希波的奥古斯丁</author>
     <year>400</year>
     <primaryTopicId>earth.religion.christianity</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>
@@ -14,9 +16,11 @@
   <LiAIChat.Archive.EarthTextDef>
     <defName>LiAIChat_Text_Augustine_CityOfGod</defName>
     <label>The City of God</label>
-    <title>The City of God</title>
-    <titleChinese>上帝之城</titleChinese>
-    <author>Augustine of Hippo</author>
+    <title>上帝之城</title>
+    <titleChinese></titleChinese>
+    <description>一部从古代地球文明遗迹中复原的宗教思想著作，署名“希波的奥古斯丁”。文献产生于一个古老帝国陷入严重危机的年代。当时有人将帝国的衰败归咎于一种以基督为核心、正在广泛传播的信仰，作者则试图重新解释国家兴亡与人类历史的意义，将追求世俗权力与荣耀的“地上之城”和以爱上帝为归宿的“上帝之城”加以区分。\n\n那个帝国的疆界、民族与制度如今大多只能从残缺档案中辨认，但书中保存的历史观仍十分清晰：没有任何国家、城市或政治秩序能够永存，人类历史的最终意义也不由任何地上的帝国决定。作者生活的世界最终确实化为历史尘埃，而他关于“永恒之城”的文字却意外流传了下来。</description>
+    <shortDescription>一部从古代地球废墟中复原的宗教思想著作，署名“希波的奥古斯丁”。作者曾在一个摇摇欲坠的帝国中写下“地上之城”与“上帝之城”的区别。如今那个帝国连疆界都已难以考证，而他关于何物能够永存的文字仍躺在这份残卷之中。</shortDescription>
+    <author>希波的奥古斯丁</author>
     <year>426</year>
     <primaryTopicId>earth.religion.christianity</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>
@@ -24,9 +28,11 @@
   <LiAIChat.Archive.EarthTextDef>
     <defName>LiAIChat_Text_Luther_NinetyFiveTheses</defName>
     <label>Ninety-Five Theses</label>
-    <title>Ninety-Five Theses</title>
-    <titleChinese>九十五条论纲</titleChinese>
-    <author>Martin Luther</author>
+    <title>九十五条论纲</title>
+    <titleChinese></titleChinese>
+    <description>一份从古代地球宗教档案中复原的短篇文献，署名“马丁·路德”。文本由九十五条争论命题组成，主要质疑当时一个庞大宗教组织有关悔改、赦免与宗教权威的一些实践。它原本似乎只是一次神学辩论的邀请，却意外成为一场巨大宗教变革的象征。\n\n后世残存资料显示，由这些争论引发的冲突最终远远超出了最初的神学问题，改变了古代地球多个社会的宗教、政治与文化。对于今天的研究者而言，最令人惊异的或许不是这些命题本身，而是一份篇幅并不庞大的文本，竟成为一个遥远文明发生重大分裂与重组的历史标记。</description>
+    <shortDescription>一份从古代地球宗教档案中复原的争论文本，署名“马丁·路德”。九十五条命题原本针对赎罪券、悔改与教会实践，却成为宗教改革的象征。一份并不庞大的文献，最终与一个时代的巨大变革联系在一起。</shortDescription>
+    <author>马丁·路德</author>
     <year>1517</year>
     <primaryTopicId>earth.christianity.reformation</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>
@@ -34,9 +40,11 @@
   <LiAIChat.Archive.EarthTextDef>
     <defName>LiAIChat_Text_Calvin_Institutes</defName>
     <label>Institutes of the Christian Religion</label>
-    <title>Institutes of the Christian Religion</title>
-    <titleChinese>基督教要义</titleChinese>
-    <author>John Calvin</author>
+    <title>基督教要义</title>
+    <titleChinese></titleChinese>
+    <description>一部从古代地球宗教档案中复原的系统神学著作，署名“约翰·加尔文”。残存章节试图系统解释上帝、创造、人类的罪、基督、救恩、圣灵、信仰共同体与公共生活。与零散的讲道或争论文献不同，它似乎试图把一个庞大而古老的信仰传统整理成彼此关联的整体。\n\n这部著作似乎形成于古代地球宗教秩序发生剧烈分裂与重组的年代，并对后来多个信仰群体产生了长期影响。那些组织、制度与争论如今大多只能从残缺档案中辨认，但书中仍保存着作者坚定的信念：人并非宇宙的中心，理解自身必须首先从认识创造者开始。</description>
+    <shortDescription>一部从古代地球宗教档案中复原的神学著作，署名“约翰·加尔文”。残篇系统讨论上帝、人、罪、救恩与教会，并成为宗教改革时代的重要文献。那个世界已经远去，其关于上帝与人的宏大解释仍保存于残卷之中。</shortDescription>
+    <author>约翰·加尔文</author>
     <year>1536</year>
     <primaryTopicId>earth.christianity.reformation</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>

@@ -4,9 +4,11 @@
   <LiAIChat.Archive.EarthTextDef>
     <defName>LiAIChat_Text_Copernicus_DeRevolutionibus</defName>
     <label>De revolutionibus orbium coelestium</label>
-    <title>De revolutionibus orbium coelestium</title>
+    <title>天体运行论</title>
     <titleChinese>天体运行论</titleChinese>
-    <author>Nicolaus Copernicus</author>
+    <description>一本从古代地球文明遗迹中复原的天文学著作，署名“尼古拉·哥白尼”。书中以数学方法重新安排太阳、地球与行星的位置，提出地球并非宇宙静止的中心，而是一颗绕太阳运行、同时自行旋转的行星。\n\n对于早已能够穿越行星与恒星之间的后来者而言，这些结论显得近乎寻常。但残卷提醒我们，古代地球人曾长期只能站在一颗行星表面仰望天空，并依靠有限的观测与计算，一点点发现自己脚下的世界其实也在宇宙中运动。</description>
+    <shortDescription>一本从古代地球遗迹中复原的天文学著作，署名“尼古拉·哥白尼”。作者提出地球并非宇宙静止的中心，而是绕太阳运行的行星。对星际时代而言这是常识，对当时的人却意味着重新认识自身在宇宙中的位置。</shortDescription>
+    <author>尼古拉·哥白尼</author>
     <year>1543</year>
     <primaryTopicId>earth.science.scientific_revolution</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>
@@ -14,9 +16,11 @@
   <LiAIChat.Archive.EarthTextDef>
     <defName>LiAIChat_Text_Newton_Principia</defName>
     <label>Philosophiæ Naturalis Principia Mathematica</label>
-    <title>Philosophiæ Naturalis Principia Mathematica</title>
+    <title>自然哲学的数学原理</title>
     <titleChinese>自然哲学的数学原理</titleChinese>
-    <author>Isaac Newton</author>
+    <description>一本从古代地球科学档案中复原的著作，署名“艾萨克·牛顿”。残存章节以数学描述物体的运动，并提出一种普遍存在的引力，使地面的坠落、月球的运行与行星的轨道能够由同一套规律解释。古代地球人似乎第一次如此清晰地意识到，天空与地面并不遵循两套不同的自然法则。\n\n后来的人类以远比这些公式复杂的理论建造飞船、跨越星际，但这部古老著作记录了一个重要的转折：一个尚未离开母星的文明，已经开始相信整个宇宙可以服从统一而能够被数学描述的规律。</description>
+    <shortDescription>一本从古代地球档案中复原的科学著作，署名“艾萨克·牛顿”。残篇以数学描述运动与引力，将地面物体和天体置于同一套自然规律之下。那个尚未离开母星的文明，已经开始寻找支配整个宇宙的共同法则。</shortDescription>
+    <author>艾萨克·牛顿</author>
     <year>1687</year>
     <primaryTopicId>earth.science.scientific_revolution</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>
@@ -24,9 +28,11 @@
   <LiAIChat.Archive.EarthTextDef>
     <defName>LiAIChat_Text_Darwin_OriginOfSpecies</defName>
     <label>On the Origin of Species</label>
-    <title>On the Origin of Species</title>
+    <title>物种起源</title>
     <titleChinese>物种起源</titleChinese>
-    <author>Charles Darwin</author>
+    <description>一本从古代地球文明遗迹中复原的生物学著作，署名“查尔斯·达尔文”。作者依据对动物、植物、化石与人工育种的观察，提出不同生物并非永远保持固定形态，而会在漫长世代中通过遗传变异与自然选择逐渐改变，共同祖先由此分化出不同的生命形式。\n\n对于后来能够进行基因编辑、人工创造生命甚至适应异星环境的人类而言，这只是生命科学漫长历史的早期篇章。然而残卷记录了一个深刻的发现：古代地球人开始意识到，包括他们自己在内的生命并非自然之外的旁观者，而同样属于一段延续了亿万年的演化历史。</description>
+    <shortDescription>一本从古代地球遗迹中复原的生物学著作，署名“查尔斯·达尔文”。残篇以自然选择解释物种如何在漫长世代中改变，并将人类重新置于生命演化的历史之中。这是后来基因时代仍可辨认的一块思想基石。</shortDescription>
+    <author>查尔斯·达尔文</author>
     <year>1859</year>
     <primaryTopicId>earth.science.evolution</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>

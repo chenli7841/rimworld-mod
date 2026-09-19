@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Defs>
+
+  <ThingDef>
+    <defName>LiAIChat_AncientEarthArchiveFragment</defName>
+    <label>远古地球文献残片</label>
+    <description>一段文献残片，包含远古地球的知识，可能涉及到远古地球历史、哲学、宗教信仰、远古科学、或文明.</description>
+    <thingClass>LiAIChat.Archive.Thing_AncientEarthArchiveFragment</thingClass>
+    <!-- ================================
+         Basic Thing settings
+         ================================ -->
+
+    <category>Item</category>
+    <selectable>true</selectable>
+    <rotatable>True</rotatable>
+    <altitudeLayer>Item</altitudeLayer>
+    <tickerType>Rare</tickerType>
+    <alwaysHaulable>true</alwaysHaulable>
+    <burnableByRecipe>true</burnableByRecipe>
+    <useHitPoints>true</useHitPoints>
+    <healthAffectsPrice>true</healthAffectsPrice>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <tradeNeverStack>true</tradeNeverStack>
+    <neverMultiSelect>true</neverMultiSelect>
+    <stackLimit>1</stackLimit>
+    <tradeNeverGenerateStacked>true</tradeNeverGenerateStacked>
+
+    <graphicData>
+      <texPath>Things/Item/Book/Novel/Novel</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>0.8</drawSize>
+    </graphicData>
+    <uiIconPath>Things/Item/Book/Novel/Novel</uiIconPath>
+    <statBases>
+      <MarketValue>160</MarketValue>
+      <MaxHitPoints>60</MaxHitPoints>
+      <DeteriorationRate>5</DeteriorationRate>
+      <Mass>0.50</Mass>
+      <Flammability>1</Flammability>
+      <Beauty>1</Beauty>
+    </statBases>
+
+
+    <thingCategories><li>Books</li></thingCategories>
+    <inspectorTabs><li>ITab_Book</li></inspectorTabs>  
+
+    <comps>
+      <li Class="CompProperties_Forbiddable" />
+        <li>
+          <compClass>CompQuality</compClass>
+        </li>
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Novel</nameMaker>
+        <descriptionMaker>Description_TheCritiqueOfPracticalReason</descriptionMaker>
+        <ageYearsRange>100~200</ageYearsRange>
+        <openGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Open</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <drawSize>0.7</drawSize>
+        </openGraphic>
+        <verticalGraphic>
+          <texPath>Things/Item/Book/Novel/Novel_Vertical</texPath>
+          <graphicClass>Graphic_Multi</graphicClass>
+          <addTopAltitudeBias>true</addTopAltitudeBias>
+        </verticalGraphic>
+        <doers>
+          <li Class="BookOutcomeProperties_JoyFactorModifier" />
+        </doers>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>
