@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <SitePartDef>
+    <defName>LiAIChat_AncientArchiveSite</defName>
+
+    <label>ancient Earth archive site</label>
+
+    <description>
+      A ruined site containing traces of preserved records
+      from ancient Earth.
+    </description>
+
+    <workerClass>
+      LiAIChat.Archive.SitePartWorker_AncientArchive
+    </workerClass>
+  </SitePartDef>
+
+</Defs>

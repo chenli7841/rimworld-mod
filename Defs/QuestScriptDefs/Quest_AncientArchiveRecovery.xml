@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <QuestScriptDef>
+    <defName>LiAIChat_AncientArchiveRecovery</defName>
+
+    <root Class="QuestNode_Root_Site">
+      <sitePartDef>LiAIChat_AncientArchiveSite</sitePartDef>
+      <worldObjectDef>Site</worldObjectDef>
+      <distanceFromColonyRange>
+        <min>4</min>
+        <max>12</max>
+      </distanceFromColonyRange>
+
+      <canBeSpace>false</canBeSpace>
+
+    </root>
+
+  </QuestScriptDef>
+
+</Defs>

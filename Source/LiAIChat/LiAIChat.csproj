@@ -130,6 +130,7 @@
     <Compile Include="Archive\OpenAIArchiveScholarConversationDirector.cs" />
     <Compile Include="Archive\Patches\PawnGenerator_ArchivePatch.cs" />
     <Compile Include="Archive\ReadingOutcomeProperties_AncientArchiveKnowledge.cs" />
+    <Compile Include="Archive\SitePartWorker_AncientArchive.cs" />
     <Compile Include="Archive\ThingDefOfArchive.cs" />
     <Compile Include="Archive\Thing_AncientEarthArchiveFragment.cs" />
     <Compile Include="Background\IntellectualExchangeSnapshot.cs" />

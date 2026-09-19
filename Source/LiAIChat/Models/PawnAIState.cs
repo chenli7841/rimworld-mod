@@ -145,5 +145,48 @@ namespace LiAIChat.Models
                 // 这里不用 PostLoadInit 强制创建LifeGoal。因为：Pawn 没有人生目标是合法状态。
             }
         }
+
+        public float GetArchiveReadingProgress(string studyId)
+        {
+            if (string.IsNullOrEmpty(studyId))
+                return 0f;
+
+            if (ArchiveReadingProgress == null)
+                return 0f;
+
+            float progress;
+
+            if (ArchiveReadingProgress.TryGetValue(
+                studyId,
+                out progress))
+            {
+                return progress;
+            }
+
+            return 0f;
+        }
+
+        public void SetArchiveReadingProgress(string studyId, float progress)
+        {
+            if (string.IsNullOrEmpty(studyId))
+                return;
+
+            if (ArchiveReadingProgress == null)
+            {
+                ArchiveReadingProgress =
+                    new Dictionary<string, float>();
+            }
+
+            if (progress <= 0f)
+            {
+                ArchiveReadingProgress.Remove(
+                    studyId);
+
+                return;
+            }
+
+            ArchiveReadingProgress[studyId] =
+                progress;
+        }
     }
 }
