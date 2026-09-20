@@ -68,9 +68,48 @@ namespace LiAIChat.Pawns
                     pawn.story.Adulthood.title;
             }
 
+            // -----------------------------------------
+            // Skills and learning passions
+            // -----------------------------------------
+
+            if (pawn.skills?.skills != null)
+            {
+                foreach (SkillRecord skill in pawn.skills.skills)
+                {
+                    if (skill == null || skill.def == null ||
+                        skill.TotallyDisabled)
+                    {
+                        continue;
+                    }
+
+                    context.Skills.Add(
+                        new PawnSkillContext
+                        {
+                            Name = skill.def.LabelCap,
+                            Level = skill.Level,
+                            Passion = GetPassionLabel(skill.passion)
+                        });
+                }
+            }
+
             context.CurrentGameTick = Find.TickManager.TicksGame;
 
             return context;
+        }
+
+        private static string GetPassionLabel(Passion passion)
+        {
+            switch (passion)
+            {
+                case Passion.Major:
+                    return "major";
+
+                case Passion.Minor:
+                    return "minor";
+
+                default:
+                    return "none";
+            }
         }
     }
 }

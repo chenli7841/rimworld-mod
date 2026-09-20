@@ -193,6 +193,7 @@
     <Compile Include="Models\PawnIntellectualExchange.cs" />
     <Compile Include="Models\PawnLifeEvent.cs" />
     <Compile Include="Models\PawnMemory.cs" />
+    <Compile Include="Models\PawnSkillContext.cs" />
     <Compile Include="Models\WorldviewChange.cs" />
     <Compile Include="Models\WorldviewState.cs" />
     <Compile Include="Patches\MapFinalizeInitPatch.cs" />

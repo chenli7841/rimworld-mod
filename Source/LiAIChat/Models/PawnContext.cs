@@ -17,6 +17,9 @@ namespace LiAIChat.Models
 
         public string Adulthood { get; set; }
 
+        public List<PawnSkillContext> Skills { get; set; }
+            = new List<PawnSkillContext>();
+
         public int CurrentGameTick { get; set; }
     }
 }

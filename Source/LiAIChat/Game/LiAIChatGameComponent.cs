@@ -17,6 +17,10 @@ namespace LiAIChat.Game
         private int lastProactiveCheckTick = 0;
         private int lastIntellectualExchangeCheckTick = 0;
 
+        // One in-game day. Proactive dialogue should be occasional and
+        // should not repeatedly scan every colonist while nothing changed.
+        private const int ProactiveCheckIntervalTicks = 60000;
+
         public int RuntimeGameId { get; private set; }
         private static int nextRuntimeGameId = 1;
 
@@ -84,8 +88,9 @@ namespace LiAIChat.Game
             int currentTick =
                 Find.TickManager.TicksGame;
 
-            // 每 2500 ticks 检查一次。2500 ticks ≈ 1 in-game hour
-            if (currentTick - lastProactiveCheckTick < 2500)
+            // 每游戏日检查一次，避免频繁扫描所有殖民者。
+            if (currentTick - lastProactiveCheckTick <
+                ProactiveCheckIntervalTicks)
             {
                 return;
             }

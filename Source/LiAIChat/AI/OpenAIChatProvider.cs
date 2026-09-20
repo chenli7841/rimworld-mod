@@ -345,6 +345,7 @@ $@"CURRENT CHARACTER STATE
 - Age: {pawn.Age}
 ");
             AppendCurrentRelationships(prompt, pawn);
+            AppendSkillsAndPassions(prompt, pawn);
             prompt.AppendLine();
 
             prompt.AppendLine(
@@ -514,6 +515,35 @@ $@"- Life goal: ${lifeGoal.Title}
                 prompt.AppendLine(civilizationContext);
             }
             return prompt.ToString();
+        }
+
+        private static void AppendSkillsAndPassions(
+            StringBuilder prompt,
+            PawnContext pawn)
+        {
+            if (pawn?.Skills == null || pawn.Skills.Count == 0)
+            {
+                return;
+            }
+
+            prompt.AppendLine("CURRENT SKILLS AND LEARNING PASSIONS");
+
+            foreach (PawnSkillContext skill in pawn.Skills)
+            {
+                if (skill == null || string.IsNullOrWhiteSpace(skill.Name))
+                {
+                    continue;
+                }
+
+                prompt.AppendLine(
+                    "- " + skill.Name +
+                    ": level " + skill.Level +
+                    ", passion " + skill.Passion);
+            }
+
+            prompt.AppendLine(
+                "Skill levels and passions are factual. When relevant, let them inform this character's preferences and confidence, especially their preferred combat style, without treating them as absolute rules.");
+            prompt.AppendLine();
         }
 
         private string BuildConversationInput(

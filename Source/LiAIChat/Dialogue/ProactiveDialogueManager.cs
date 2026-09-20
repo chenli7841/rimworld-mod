@@ -59,7 +59,10 @@ namespace LiAIChat.Dialogue
             {
                 List<Pawn> candidates = map.mapPawns.FreeColonistsSpawned;
 
-                Log.Message("[Li AI Chat] Proactive scan: FreeColonistsSpawned count=" + candidates.Count);
+                if (Prefs.DevMode)
+                {
+                    Log.Message("[Li AI Chat] Proactive scan: FreeColonistsSpawned count=" + candidates.Count);
+                }
                 foreach (Pawn pawn in candidates)
                 {
                     PawnAIState state = PawnAIStateManager.GetState(pawn);
@@ -71,15 +74,18 @@ namespace LiAIChat.Dialogue
 
                     bool isScholar = state != null && state.ScholarProfile != null;
 
-                    Log.Message(
-                        "[Li AI Chat] Proactive candidate: " +
-                        pawn.LabelShort +
-                        ", IsColonist=" +
-                        pawn.IsColonist +
-                        ", IsQuestLodger=" +
-                        pawn.IsQuestLodger() +
-                        ", IsScholar=" +
-                        isScholar);
+                    if (Prefs.DevMode)
+                    {
+                        Log.Message(
+                            "[Li AI Chat] Proactive candidate: " +
+                            pawn.LabelShort +
+                            ", IsColonist=" +
+                            pawn.IsColonist +
+                            ", IsQuestLodger=" +
+                            pawn.IsQuestLodger() +
+                            ", IsScholar=" +
+                            isScholar);
+                    }
 
 
 
