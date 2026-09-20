@@ -4,16 +4,82 @@
   <QuestScriptDef>
     <defName>LiAIChat_AncientArchiveRecovery</defName>
 
-    <root Class="QuestNode_Root_Site">
-      <sitePartDef>LiAIChat_AncientArchiveSite</sitePartDef>
-      <worldObjectDef>Site</worldObjectDef>
-      <distanceFromColonyRange>
-        <min>4</min>
-        <max>12</max>
-      </distanceFromColonyRange>
-
-      <canBeSpace>false</canBeSpace>
-
+    <!-- Manual generation while the recovery quest is being developed. -->
+    <rootSelectionWeight>0</rootSelectionWeight>
+    <rootMinPoints>400</rootMinPoints>
+    <autoAccept>true</autoAccept>
+    <questNameRules>
+      <rulesStrings>
+        <li>questName->Ancient Earth archive signal</li>
+      </rulesStrings>
+    </questNameRules>
+    <questDescriptionRules>
+      <rulesStrings>
+        <li>questDescription->An ancient signal has revealed an archive site near [map_definite]. Preserved records from Earth may remain inside. Sleeping mechanoids guard the area.\n\nReach the site within 20 days to investigate and recover any surviving records.</li>
+      </rulesStrings>
+    </questDescriptionRules>
+    <root Class="QuestNode_Sequence">
+      <nodes>
+        <li Class="QuestNode_GetMap">
+          <canBeSpace>false</canBeSpace>
+        </li>
+        <li Class="QuestNode_Set">
+          <name>siteDistRange</name>
+          <value>4~12</value>
+        </li>
+        <li Class="QuestNode_GetSiteTile">
+          <storeAs>siteTile</storeAs>
+          <preferCloserTiles>true</preferCloserTiles>
+          <canSelectSpace>false</canSelectSpace>
+          <selectLandmarkChance>0</selectLandmarkChance>
+        </li>
+        <li Class="QuestNode_GetSitePartDefsByTagsAndFaction">
+          <storeAs>sitePartDefs</storeAs>
+          <storeFactionAs>siteFaction</storeFactionAs>
+          <sitePartsTags>
+            <li>
+              <tag>LiAIChat_AncientArchiveSite</tag>
+              <chance>1</chance>
+            </li>
+            <li>
+              <tag>SleepingMechanoids</tag>
+              <chance>1</chance>
+            </li>
+          </sitePartsTags>
+        </li>
+        <li Class="QuestNode_GetDefaultSitePartsParams">
+          <tile>$siteTile</tile>
+          <faction>$siteFaction</faction>
+          <sitePartDefs>$sitePartDefs</sitePartDefs>
+          <storeSitePartsParamsAs>sitePartsParams</storeSitePartsParamsAs>
+        </li>
+        <li Class="QuestNode_SubScript">
+          <def>Util_GenerateSite</def>
+          <parms>
+            <hiddenSitePartsPossible>false</hiddenSitePartsPossible>
+          </parms>
+        </li>
+        <li Class="QuestNode_SpawnWorldObjects">
+          <worldObjects>$site</worldObjects>
+        </li>
+        <li Class="QuestNode_WorldObjectTimeout">
+          <worldObject>$site</worldObject>
+          <isQuestTimeout>true</isQuestTimeout>
+          <delayTicks>1200000</delayTicks>
+          <inSignalDisable>site.MapGenerated</inSignalDisable>
+          <node Class="QuestNode_End">
+            <outcome>Fail</outcome>
+          </node>
+        </li>
+        <!-- Match vanilla opportunity sites: disappearance ends the quest;
+             it does not prove the player brought an archive home. -->
+        <li Class="QuestNode_NoWorldObject">
+          <worldObject>$site</worldObject>
+          <node Class="QuestNode_End">
+            <outcome>Unknown</outcome>
+          </node>
+        </li>
+      </nodes>
     </root>
 
   </QuestScriptDef>

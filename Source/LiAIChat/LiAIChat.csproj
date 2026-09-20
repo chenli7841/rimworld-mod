@@ -122,7 +122,6 @@
     <Compile Include="Archive\EarthTextDef.cs" />
     <Compile Include="Archive\EarthTextSelector.cs" />
     <Compile Include="Archive\GenStep_AncientArchiveSite.cs" />
-    <Compile Include="Archive\GenStep_AncientArchiveThreat.cs" />
     <Compile Include="Archive\IArchiveReflectionGenerator.cs" />
     <Compile Include="Archive\IArchiveScholarConversationDirector.cs" />
     <Compile Include="Archive\JobDriver_IdentifyAncientArchive.cs" />

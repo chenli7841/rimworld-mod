@@ -8,12 +8,4 @@
     <genStep Class="LiAIChat.Archive.GenStep_AncientArchiveSite"/>
   </GenStepDef>
 
-
-  <GenStepDef>
-    <defName>LiAIChat_AncientArchiveThreat</defName>
-    <linkWithSite>LiAIChat_AncientArchiveSite</linkWithSite>
-    <order>410</order>
-    <genStep Class="LiAIChat.Archive.GenStep_AncientArchiveThreat"/>
-  </GenStepDef>
-
 </Defs>
