@@ -194,6 +194,11 @@ namespace LiAIChat.Archive
 
         public static void CompleteStudy(Pawn pawn, Thing archiveThing)
         {
+            CompleteStudy(pawn, archiveThing, true);
+        }
+
+        public static void CompleteStudy(Pawn pawn, Thing archiveThing, bool generateReflection)
+        {
             if (pawn == null || archiveThing == null)
             {
                 return;
@@ -409,9 +414,12 @@ namespace LiAIChat.Archive
             // AI reflection
             // ---------------------------------------------------------
 
-            ArchiveReflectionService.GenerateReflection(
-                pawn,
-                archive);
+            if (generateReflection)
+            {
+                ArchiveReflectionService.GenerateReflection(
+                    pawn,
+                    archive);
+            }
         }
     }
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <QuestScriptDef>
+    <defName>LiAIChat_ScholarTranslation</defName>
+    <!-- Initial balancing values; refire interval starts at quest appearance. -->
+    <rootSelectionWeight>0.2</rootSelectionWeight>
+    <minRefireDays>30</minRefireDays>
+    <expireDaysRange>5~5</expireDaysRange>
+    <questNameRules><rulesStrings><li>questName->Lost translation: a scholar's inquiry</li></rulesStrings></questNameRules>
+    <questDescriptionRules><rulesStrings>
+      <li>questDescription->A scholar seeks help comparing a damaged translation with [translationTitle] in your library. Accept to host the scholar for up to 10 days. Keep the scholar alive and on this map.\n\nPlace an identified copy on the ground or a shelf. Undraft both participants and keep the scholar awake. Select another colonist and choose Joint research; the scholar will automatically walk to the book. Intellectual skill increases progress; interruptions do not erase it. The original book is kept.\n\nComplete the research to receive a new archive and research notes. No AI connection is required. The scholar leaves when the quest ends.</li>
+    </rulesStrings></questDescriptionRules>
+    <root Class="QuestNode_Sequence"><nodes>
+      <li Class="QuestNode_QuestUnique"><tag>LiAIChat_ScholarTranslation_Active</tag></li>
+      <li Class="QuestNode_GetMap"><canBeSpace>false</canBeSpace></li>
+      <li Class="LiAIChat.Questing.QuestNode_PrepareScholarTranslation" />
+      <li Class="QuestNode_PawnsArrive"><pawns>$translationScholar</pawns><joinPlayer>true</joinPlayer></li>
+      <li Class="QuestNode_LeaveOnCleanup"><pawns>$translationScholar</pawns><sendStandardLetter>false</sendStandardLetter></li>
+      <li Class="QuestNode_Delay">
+        <delayTicks>600000</delayTicks><isQuestTimeout>true</isQuestTimeout>
+        <node Class="QuestNode_End"><outcome>Fail</outcome></node>
+      </li>
+    </nodes></root>
+  </QuestScriptDef>
+</Defs>

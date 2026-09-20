@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_TranslationProgress>Joint research: {0}\nProgress: {1}. Use an identified copy. The scholar will walk to the book when research is ordered.</LiAIChat_TranslationProgress>
+  <LiAIChat_TranslationButton>Joint research</LiAIChat_TranslationButton>
+  <LiAIChat_TranslationInstructions>Place the requested book on the ground or a shelf. Undraft both participants and keep the scholar awake. Select another colonist capable of Intellectual work; the scholar will automatically join them at the book.</LiAIChat_TranslationInstructions>
+  <LiAIChat_TranslationNoBook>No identified copy of the requested text is available on this map.</LiAIChat_TranslationNoBook>
+  <LiAIChat_TranslationNotesTitle>Translation research notes</LiAIChat_TranslationNotesTitle>
+  <LiAIChat_TranslationNotes>The joint comparison of {0} is complete. The notes distinguish surviving passages from uncertain reconstructions, and mark unresolved wording for future study. The original book remains yours. The scholar has provided another archive as payment.\n\nThe colonist who finished the research is eligible for the ordinary study benefits if they have not studied this text before. Civilization knowledge still requires its normal library and prerequisite conditions.</LiAIChat_TranslationNotes>
+</LanguageData>

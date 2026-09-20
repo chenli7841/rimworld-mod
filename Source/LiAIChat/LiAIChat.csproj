@@ -220,6 +220,7 @@
     <Compile Include="Questing\QuestNode_Root_LostEarthArchive .cs" />
     <Compile Include="Questing\QuestNode_StartArchiveScholarStay.cs" />
     <Compile Include="Questing\QuestPart_DeliverArchive.cs" />
+    <Compile Include="Questing\ScholarTranslationQuest.cs" />
     <Compile Include="Questing\QuestNode_WaitForArchiveRecovery.cs" />
     <Compile Include="Questing\QuestPart_WaitForArchiveRecovery.cs" />
     <Compile Include="Questing\QuestPart_WaitForPawnExit.cs" />

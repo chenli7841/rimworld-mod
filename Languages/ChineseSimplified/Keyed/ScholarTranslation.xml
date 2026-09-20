@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_TranslationProgress>联合研究：《{0}》\n进度：{1}。请使用已鉴定的文献，下达研究指令后学者会自动走到书旁。</LiAIChat_TranslationProgress>
+  <LiAIChat_TranslationButton>联合研究</LiAIChat_TranslationButton>
+  <LiAIChat_TranslationInstructions>把指定文献放在地面或书架上，解除双方征召并确保学者清醒。选择另一名能够从事智识工作的殖民者开始联合研究，学者会自动到书旁参与。</LiAIChat_TranslationInstructions>
+  <LiAIChat_TranslationNoBook>当前地图上没有已鉴定的指定文献。</LiAIChat_TranslationNoBook>
+  <LiAIChat_TranslationNotesTitle>译稿研究心得</LiAIChat_TranslationNotesTitle>
+  <LiAIChat_TranslationNotes>对《{0}》的联合校勘已完成。你们在笔记中区分了留存原文与推测性复原，并标出了仍需进一步考证的措辞。原书仍归殖民地所有，学者另赠一本文献作为报酬。\n\n完成最后阶段的殖民者若尚未研究过这本文献，将按普通研究规则获得学习成果。文明知识仍需满足原有藏书及前置节点条件。</LiAIChat_TranslationNotes>
+</LanguageData>

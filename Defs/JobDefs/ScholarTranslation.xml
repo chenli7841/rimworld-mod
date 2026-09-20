@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <JobDef>
+    <defName>LiAIChat_JointTranslation</defName>
+    <driverClass>LiAIChat.Questing.JobDriver_JointTranslation</driverClass>
+    <reportString>comparing an ancient translation with a scholar.</reportString>
+  </JobDef>
+  <JobDef>
+    <defName>LiAIChat_AssistTranslation</defName>
+    <driverClass>LiAIChat.Questing.JobDriver_AssistTranslation</driverClass>
+    <reportString>helping a colonist compare an ancient translation.</reportString>
+  </JobDef>
+</Defs>

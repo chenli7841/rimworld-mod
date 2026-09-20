@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_ScholarTranslation.questNameRules.rulesStrings><li>questName->失落译稿：学者的求证</li></LiAIChat_ScholarTranslation.questNameRules.rulesStrings>
+  <LiAIChat_ScholarTranslation.questDescriptionRules.rulesStrings>
+    <li>questDescription->一位学者希望借助你们收藏的《[translationTitle]》，校勘一份残缺译稿。接受后，学者将到访，最长停留10天。请保障其生存，并让其留在这张地图上。\n\n把已鉴定的指定文献放在地面或书架上，解除双方征召并确保学者清醒。选择另一名殖民者，点击“联合研究”，学者会自动走到书旁参与。智识越高，研究越快；中断不会清除进度。原书不会被消耗。\n\n完成后获得一本文献和研究心得书信；任务不依赖AI连接。任务结束后学者将离开。</li>
+  </LiAIChat_ScholarTranslation.questDescriptionRules.rulesStrings>
+</LanguageData>
