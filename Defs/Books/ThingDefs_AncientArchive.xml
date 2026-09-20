@@ -5,7 +5,7 @@
   <ThingDef>
     <defName>LiAIChat_AncientEarthArchiveFragment</defName>
     <label>远古地球文献残片</label>
-    <description>一段文献残片，包含远古地球的知识，可能涉及到远古地球历史、哲学、宗教信仰、远古科学、或文明.</description>
+    <description>一份来自远古地球的文献，内容尚未鉴定。它可能记载着历史、哲学、宗教、科学或其他文明知识，需要鉴定后才能了解其作者与具体内容。</description>
     <thingClass>LiAIChat.Archive.Thing_AncientEarthArchiveFragment</thingClass>
     <!-- ================================
          Basic Thing settings
@@ -52,7 +52,7 @@
         </li>
       <li Class="CompProperties_Book">
         <nameMaker>Namer_Novel</nameMaker>
-        <descriptionMaker>Description_TheCritiqueOfPracticalReason</descriptionMaker>
+        <descriptionMaker>Namer_AncientEarthArchiveDescription</descriptionMaker>
         <ageYearsRange>100~200</ageYearsRange>
         <openGraphic>
           <texPath>Things/Item/Book/Novel/Novel_Open</texPath>

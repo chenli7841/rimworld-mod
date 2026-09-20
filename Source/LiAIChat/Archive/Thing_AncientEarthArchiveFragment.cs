@@ -215,7 +215,10 @@ namespace LiAIChat.Archive
                 if (identified && EarthText != null)
                     return EarthText.description;
 
-                return base.DescriptionDetailed;
+                // Book.DescriptionDetailed can contain a generated description saved
+                // before identification (including legacy, text-specific descriptions).
+                // Never expose that cache while this archive's identity is unknown.
+                return def.description;
             }
         }
         public override string GetInspectString()

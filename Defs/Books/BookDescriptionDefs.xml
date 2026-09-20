@@ -4,8 +4,8 @@
     <defName>Namer_AncientEarthArchiveDescription</defName>
     <rulePack>
       <rulesStrings>
-        <!-- The grammar engine picks one 'title' pattern at random -->
-        <li>title->A damaged archive fragment containing partially recovered knowledge from ancient Earth. Its contents may preserve fragments of ancient history, philosophy, religion, science, or culture.</li>
+        <!-- Book descriptions resolve the 'desc' root, not 'title'. -->
+        <li>desc->一份来自远古地球的文献，内容尚未鉴定。它可能记载着历史、哲学、宗教、科学或其他文明知识，需要鉴定后才能了解其作者与具体内容。</li>
       </rulesStrings>
     </rulePack>
   </RulePackDef>
