@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_AncientArchiveRecovery.questNameRules.rulesStrings>
+    <li>questName->远古地球档案信号</li>
+  </LiAIChat_AncientArchiveRecovery.questNameRules.rulesStrings>
+  <LiAIChat_AncientArchiveRecovery.questDescriptionRules.rulesStrings>
+    <li>questDescription->一段古老的信号揭示了[map_definite]附近的一处档案遗址。里面可能仍保存着来自地球的文献，但休眠的机械族守卫着这片区域。\n\n请在20天内抵达遗址。遗址地图首次生成后，你还有30天时间，将其中至少一本文献带回任意玩家殖民地。文献仍放在小人或动物的背包中也算回收成功。若所有目标文献均已丢失、损毁或售出，回收任务将失败。</li>
+  </LiAIChat_AncientArchiveRecovery.questDescriptionRules.rulesStrings>
+</LanguageData>

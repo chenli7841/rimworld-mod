@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_RecoveryAwaitingArchives>Recovery progress: No records have been registered yet. Enter the archive site to locate them.</LiAIChat_RecoveryAwaitingArchives>
+  <LiAIChat_RecoveryRemaining>Recovery progress: {0} surviving record(s) from this site have not reached a player colony. Bring at least one home; pawn and animal inventories count.</LiAIChat_RecoveryRemaining>
+  <LiAIChat_RecoveryArrived>Recovery progress: A record has reached a player colony. Completion will be confirmed shortly.</LiAIChat_RecoveryArrived>
+  <LiAIChat_RecoveryLost>Recovery progress: No tracked records remain. The recovery will be marked as failed shortly.</LiAIChat_RecoveryLost>
+</LanguageData>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_RecoveryAwaitingArchives>回收进度：尚未登记目标文献。请进入档案遗址寻找文献。</LiAIChat_RecoveryAwaitingArchives>
+  <LiAIChat_RecoveryRemaining>回收进度：本次遗址还有 {0} 本存留文献尚未抵达殖民地。将至少一本带回任意玩家基地即可；小人或动物背包中的文献也算。</LiAIChat_RecoveryRemaining>
+  <LiAIChat_RecoveryArrived>回收进度：已有文献抵达殖民地，即将确认任务成功。</LiAIChat_RecoveryArrived>
+  <LiAIChat_RecoveryLost>回收进度：所有追踪的文献均已丢失、损毁或售出，即将判定回收失败。</LiAIChat_RecoveryLost>
+</LanguageData>

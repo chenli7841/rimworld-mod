@@ -4,9 +4,11 @@
   <QuestScriptDef>
     <defName>LiAIChat_AncientArchiveRecovery</defName>
 
-    <!-- Manual generation while the recovery quest is being developed. -->
-    <rootSelectionWeight>0</rootSelectionWeight>
+    <!-- Relative storyteller selection weight, not an absolute probability. -->
+    <rootSelectionWeight>0.5</rootSelectionWeight>
     <rootMinPoints>400</rootMinPoints>
+    <!-- Measured from the previous quest's appearance, not its completion. -->
+    <minRefireDays>15</minRefireDays>
     <autoAccept>true</autoAccept>
     <questNameRules>
       <rulesStrings>
@@ -15,11 +17,22 @@
     </questNameRules>
     <questDescriptionRules>
       <rulesStrings>
-        <li>questDescription->An ancient signal has revealed an archive site near [map_definite]. Preserved records from Earth may remain inside. Sleeping mechanoids guard the area.\n\nReach the site within 20 days to investigate and recover any surviving records.</li>
+        <li>questDescription->An ancient signal has revealed an archive site near [map_definite]. Preserved records from Earth may remain inside. Sleeping mechanoids guard the area.\n\nReach the site within 20 days. Once the site map is first generated, you have 30 more days to bring at least one record from this site to any player colony. Records carried in pawn or animal inventories count when they arrive. Losing or selling every record will fail the recovery.</li>
       </rulesStrings>
     </questDescriptionRules>
     <root Class="QuestNode_Sequence">
       <nodes>
+        <!-- Only one ongoing recovery with this tag; ended quests may repeat. -->
+        <li Class="QuestNode_QuestUnique">
+          <tag>LiAIChat_AncientArchiveRecovery_Active</tag>
+        </li>
+        <!-- This version always includes mechanoids; respect difficulty settings. -->
+        <li Class="QuestNode_ViolentQuestsAllowed" />
+        <li Class="QuestNode_EqualOrFail">
+          <value1>$allowViolentQuests</value1>
+          <value2>true</value2>
+          <compareAs>System.Boolean</compareAs>
+        </li>
         <li Class="QuestNode_GetMap">
           <canBeSpace>false</canBeSpace>
         </li>
@@ -71,12 +84,17 @@
             <outcome>Fail</outcome>
           </node>
         </li>
-        <!-- Match vanilla opportunity sites: disappearance ends the quest;
-             it does not prove the player brought an archive home. -->
-        <li Class="QuestNode_NoWorldObject">
-          <worldObject>$site</worldObject>
+        <li Class="LiAIChat.Questing.QuestNode_WaitForArchiveRecovery">
+          <site>$site</site>
+        </li>
+        <!-- Starts when the site map is first generated, not on quest appearance. -->
+        <li Class="QuestNode_Delay">
+          <inSignalEnable>site.MapGenerated</inSignalEnable>
+          <delayTicks>1800000</delayTicks>
+          <reactivatable>false</reactivatable>
+          <isQuestTimeout>true</isQuestTimeout>
           <node Class="QuestNode_End">
-            <outcome>Unknown</outcome>
+            <outcome>Fail</outcome>
           </node>
         </li>
       </nodes>

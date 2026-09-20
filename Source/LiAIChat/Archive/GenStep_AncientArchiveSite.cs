@@ -54,6 +54,8 @@ namespace LiAIChat.Archive
                 archive,
                 cell,
                 map);
+            LiAIChat.Questing.QuestPart_WaitForArchiveRecovery.Register(
+                map.Parent as RimWorld.Planet.Site, archive);
         }
     }
 }

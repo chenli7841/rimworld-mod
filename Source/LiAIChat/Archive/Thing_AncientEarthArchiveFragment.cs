@@ -10,6 +10,19 @@ namespace LiAIChat.Archive
         : Book
     {
         private ArchiveContentDef content;
+        private bool soldByPlayer;
+
+        public bool SoldByPlayer => soldByPlayer;
+
+        public override void PreTraded(RimWorld.TradeAction action, Pawn playerNegotiator,
+            RimWorld.ITrader trader)
+        {
+            base.PreTraded(action, playerNegotiator, trader);
+            if (action == RimWorld.TradeAction.PlayerSells)
+                soldByPlayer = true;
+            else if (action == RimWorld.TradeAction.PlayerBuys)
+                soldByPlayer = false;
+        }
 
         public ArchiveContentDef Content =>
             content;
@@ -170,6 +183,7 @@ namespace LiAIChat.Archive
             base.ExposeData();
 
             Scribe_Defs.Look(ref content, "archiveContent");
+            Scribe_Values.Look(ref soldByPlayer, "archiveSoldByPlayer", false);
             Scribe_Values.Look(ref sourceType, "archiveSourceType", ArchiveSourceType.Unknown);
             Scribe_Values.Look(ref sourceDescription, "archiveSourceDescription", "");
             Scribe_Values.Look(ref discoveryTick, "archiveDiscoveryTick", -1);
