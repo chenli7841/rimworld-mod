@@ -37,8 +37,8 @@ namespace LiAIChat.Patches
             {
                 yield return new Command_Action
                 {
-                    defaultLabel = "Civilization Knowledge",
-                    defaultDesc = "View this colonist's Ancient Earth knowledge, topics, and studied texts.",
+                    defaultLabel = "文明知识",
+                    defaultDesc = "查看该殖民者的远古地球知识、主题与已研读文献。",
                     icon = LiAIChatTextures.StudyArchive,
                     action = () =>
                     {

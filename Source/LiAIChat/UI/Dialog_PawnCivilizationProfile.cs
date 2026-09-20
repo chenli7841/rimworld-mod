@@ -43,26 +43,26 @@ namespace LiAIChat.UI
 
             if (pawn == null || state == null || state.Knowledge == null)
             {
-                Widgets.Label(inRect, "Civilization knowledge is unavailable for this pawn.");
+                Widgets.Label(inRect, "该殖民者的文明知识不可用。 ");
                 return;
             }
 
             Text.Font = GameFont.Medium;
             Widgets.Label(
                 new Rect(inRect.x, inRect.y, inRect.width, 32f),
-                pawn.LabelShort + " — Civilization Knowledge");
+                pawn.LabelShort + " — 文明知识");
 
             Text.Font = GameFont.Small;
             int knownTextCount = GetKnownTexts(state).Count;
             Widgets.Label(
                 new Rect(inRect.x, inRect.y + 34f, inRect.width, 22f),
-                "Individual knowledge, used by dialogue and future cultural creations. " +
-                knownTextCount + " Earth texts recorded.");
+                "个人知识会影响对话与未来的文化创作。已记录 " +
+                knownTextCount + " 本远古地球文献。");
 
             float tabsY = inRect.y + 64f;
-            DrawTab(new Rect(inRect.x, tabsY, 120f, 28f), ProfileTab.Overview, "Overview");
-            DrawTab(new Rect(inRect.x + 126f, tabsY, 120f, 28f), ProfileTab.Topics, "Topics");
-            DrawTab(new Rect(inRect.x + 252f, tabsY, 120f, 28f), ProfileTab.Texts, "Texts");
+            DrawTab(new Rect(inRect.x, tabsY, 120f, 28f), ProfileTab.Overview, "总览");
+            DrawTab(new Rect(inRect.x + 126f, tabsY, 120f, 28f), ProfileTab.Topics, "主题");
+            DrawTab(new Rect(inRect.x + 252f, tabsY, 120f, 28f), ProfileTab.Texts, "文献");
 
             Rect outerRect = new Rect(
                 inRect.x,
@@ -129,26 +129,26 @@ namespace LiAIChat.UI
         {
             float y = 0f;
 
-            Widgets.Label(new Rect(rect.x, y, rect.width, 24f), "Civilization Domains");
+            Widgets.Label(new Rect(rect.x, y, rect.width, 24f), "文明知识领域");
             y += 30f;
 
-            y = DrawDomainBar(rect, y, "Ancient Earth history", state.Knowledge.EarthHistoryKnowledge);
-            y = DrawDomainBar(rect, y, "Philosophy", state.Knowledge.PhilosophyKnowledge);
-            y = DrawDomainBar(rect, y, "Religion", state.Knowledge.ReligiousKnowledge);
-            y = DrawDomainBar(rect, y, "Political thought", state.Knowledge.PoliticsKnowledge);
-            y = DrawDomainBar(rect, y, "Science", state.Knowledge.ScienceKnowledge);
+            y = DrawDomainBar(rect, y, "远古地球历史", state.Knowledge.EarthHistoryKnowledge);
+            y = DrawDomainBar(rect, y, "哲学", state.Knowledge.PhilosophyKnowledge);
+            y = DrawDomainBar(rect, y, "宗教", state.Knowledge.ReligiousKnowledge);
+            y = DrawDomainBar(rect, y, "政治思想", state.Knowledge.PoliticsKnowledge);
+            y = DrawDomainBar(rect, y, "科学", state.Knowledge.ScienceKnowledge);
 
             y += 12f;
             Widgets.DrawLineHorizontal(rect.x, y, rect.width);
             y += 12f;
 
             List<KnowledgeTopic> topics = GetKnownTopics(state).Take(3).ToList();
-            Widgets.Label(new Rect(rect.x, y, rect.width, 24f), "Strongest Current Influences");
+            Widgets.Label(new Rect(rect.x, y, rect.width, 24f), "当前最强的知识影响");
             y += 28f;
 
             if (topics.Count == 0)
             {
-                Widgets.Label(new Rect(rect.x + 10f, y, rect.width - 10f, 24f), "No specific Ancient Earth topics are known yet.");
+                Widgets.Label(new Rect(rect.x + 10f, y, rect.width - 10f, 24f), "尚未掌握具体的远古地球主题。 ");
                 return;
             }
 
@@ -156,7 +156,7 @@ namespace LiAIChat.UI
             {
                 Widgets.Label(
                     new Rect(rect.x + 10f, y, rect.width - 10f, 24f),
-                    KnowledgeTopicCatalog.GetDisplayName(topic.TopicId) +
+                    KnowledgeTopicCatalog.GetChineseDisplayName(topic.TopicId) +
                     " — " + GetFamiliarityLabel(topic.Familiarity));
                 y += 26f;
             }
@@ -179,12 +179,12 @@ namespace LiAIChat.UI
             float y = 0f;
             List<KnowledgeTopic> topics = GetKnownTopics(state);
 
-            Widgets.Label(new Rect(rect.x, y, rect.width, 24f), "Known Topics");
+            Widgets.Label(new Rect(rect.x, y, rect.width, 24f), "已了解主题");
             y += 28f;
 
             if (topics.Count == 0)
             {
-                Widgets.Label(new Rect(rect.x + 10f, y, rect.width - 10f, 24f), "No specific topics have been learned.");
+                Widgets.Label(new Rect(rect.x + 10f, y, rect.width - 10f, 24f), "尚未学习具体主题。 ");
                 return;
             }
 
@@ -192,7 +192,7 @@ namespace LiAIChat.UI
             {
                 Widgets.Label(
                     new Rect(rect.x, y, rect.width - 130f, 22f),
-                    KnowledgeTopicCatalog.GetDisplayName(topic.TopicId));
+                    KnowledgeTopicCatalog.GetChineseDisplayName(topic.TopicId));
                 Text.Anchor = TextAnchor.UpperRight;
                 Widgets.Label(
                     new Rect(rect.x + rect.width - 126f, y, 126f, 22f),
@@ -209,20 +209,22 @@ namespace LiAIChat.UI
             float y = 0f;
             List<EarthTextDef> texts = GetKnownTexts(state);
 
-            Widgets.Label(new Rect(rect.x, y, rect.width, 24f), "Earth Text Study Record");
+            Widgets.Label(new Rect(rect.x, y, rect.width, 24f), "远古地球文献研读记录");
             y += 28f;
 
             if (texts.Count == 0)
             {
-                Widgets.Label(new Rect(rect.x + 10f, y, rect.width - 10f, 24f), "This pawn has not studied a specific Earth text yet.");
+                Widgets.Label(new Rect(rect.x + 10f, y, rect.width - 10f, 24f), "该殖民者尚未研读具体的远古地球文献。 ");
                 return;
             }
 
             foreach (EarthTextDef text in texts)
             {
                 float familiarity = state.GetEarthTextFamiliarity(text.defName);
-                string title = string.IsNullOrWhiteSpace(text.title) ? text.label : text.title;
-                string author = string.IsNullOrWhiteSpace(text.author) ? "Unknown author" : text.author;
+                string title = !string.IsNullOrWhiteSpace(text.titleChinese)
+                    ? text.titleChinese
+                    : (string.IsNullOrWhiteSpace(text.title) ? text.label : text.title);
+                string author = string.IsNullOrWhiteSpace(text.author) ? "作者不详" : text.author;
 
                 Widgets.Label(new Rect(rect.x, y, rect.width, 22f), title);
                 y += 22f;
@@ -240,7 +242,7 @@ namespace LiAIChat.UI
                 : state.Knowledge.KnownTopics
                     .Where(topic => topic != null && topic.Familiarity > 0.01f)
                     .OrderByDescending(topic => topic.Familiarity)
-                    .ThenBy(topic => KnowledgeTopicCatalog.GetDisplayName(topic.TopicId))
+                    .ThenBy(topic => KnowledgeTopicCatalog.GetChineseDisplayName(topic.TopicId))
                     .ToList();
         }
 
@@ -257,30 +259,30 @@ namespace LiAIChat.UI
         {
             if (familiarity >= 0.99f)
             {
-                return "Deeply understood";
+                return "深入掌握";
             }
 
             if (familiarity >= 0.80f)
             {
-                return "Very familiar";
+                return "非常熟悉";
             }
 
             if (familiarity >= 0.60f)
             {
-                return "Familiar";
+                return "较为熟悉";
             }
 
             if (familiarity >= 0.35f)
             {
-                return "Some understanding";
+                return "有所了解";
             }
 
             if (familiarity >= 0.15f)
             {
-                return "Basic familiarity";
+                return "初步了解";
             }
 
-            return "Barely familiar";
+            return "略有耳闻";
         }
     }
 }
