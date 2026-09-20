@@ -166,6 +166,9 @@
     <Compile Include="Dialogue\ProactiveDialogueRules.cs" />
     <Compile Include="Events\PawnDeathEventHandler.cs" />
     <Compile Include="Game\LiAIChatGameComponent.cs" />
+    <Compile Include="Heritage\CivilizationHeritageWork.cs" />
+    <Compile Include="Heritage\CivilizationHeritageService.cs" />
+    <Compile Include="Heritage\OpenAICivilizationHeritageGenerator.cs" />
     <Compile Include="Goals\LifeGoalUpdater.cs" />
     <Compile Include="Knowledge\KnowledgeInitializer.cs" />
     <Compile Include="Knowledge\KnowledgePromptBuilder.cs" />
@@ -193,6 +196,7 @@
     <Compile Include="Models\WorldviewChange.cs" />
     <Compile Include="Models\WorldviewState.cs" />
     <Compile Include="Patches\MapFinalizeInitPatch.cs" />
+    <Compile Include="Patches\GenRecipeHeritagePatch.cs" />
     <Compile Include="Patches\PawnDeathPatch.cs" />
     <Compile Include="Patches\PawnExitMapArchiveRefugeePatch.cs" />
     <Compile Include="Patches\PawnExitMapArchiveScholarPatch.cs" />
@@ -200,6 +204,7 @@
     <Compile Include="Patches\PawnKillArchiveRefugeePatch.cs" />
     <Compile Include="Patches\PawnKillArchiveScholarPatch.cs" />
     <Compile Include="Patches\Pawn_Kill_ArchiveScholar_Patch.cs" />
+    <Compile Include="Patches\ThingDescriptionHeritagePatch.cs" />
     <Compile Include="PawnConversationEligibility.cs" />
     <Compile Include="Pawns\PawnContextBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,5 +1,6 @@
 ﻿using LiAIChat.Background;
 using LiAIChat.Dialogue;
+using LiAIChat.Heritage;
 using LiAIChat.Models;
 using LiAIChat.Social;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ namespace LiAIChat.Game
     public class LiAIChatGameComponent : GameComponent
     {
         public List<PawnAIState> PawnStates = new List<PawnAIState>();
+        public List<CivilizationHeritageWork> CivilizationHeritageWorks =
+            new List<CivilizationHeritageWork>();
 
         private int lastProactiveCheckTick = 0;
         private int lastIntellectualExchangeCheckTick = 0;
@@ -31,6 +34,11 @@ namespace LiAIChat.Game
                 "pawnStates",
                 LookMode.Deep);
 
+            Scribe_Collections.Look(
+                ref CivilizationHeritageWorks,
+                "civilizationHeritageWorks",
+                LookMode.Deep);
+
             if (Scribe.mode ==
                 LoadSaveMode.PostLoadInit)
             {
@@ -40,11 +48,29 @@ namespace LiAIChat.Game
                         new List<PawnAIState>();
                 }
 
+                if (CivilizationHeritageWorks == null)
+                {
+                    CivilizationHeritageWorks =
+                        new List<CivilizationHeritageWork>();
+                }
+
                 Log.Message(
                     "[Li AI Chat] Loaded " +
                     PawnStates.Count +
                     " pawn AI states.");
             }
+        }
+
+        public CivilizationHeritageWork GetCivilizationHeritageWork(
+            int thingId)
+        {
+            if (CivilizationHeritageWorks == null || thingId < 0)
+            {
+                return null;
+            }
+
+            return CivilizationHeritageWorks.Find(
+                work => work != null && work.ThingId == thingId);
         }
 
         public override void GameComponentTick()
