@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using LiAIChat.Archive;
+using LiAIChat.Civilization;
 using LiAIChat.State;
 using RimWorld;
 using RimWorld.QuestGen;
@@ -149,8 +150,10 @@ namespace LiAIChat.Questing
                 return;
             finishingResearcher = researcher;
             studiedBook = book;
-            progress = System.Math.Min(RequiredWork, progress +
-                1f + researcher.skills.GetSkill(SkillDefOf.Intellectual).Level * 0.05f);
+            float work =
+                (1f + researcher.skills.GetSkill(SkillDefOf.Intellectual).Level * 0.05f) *
+                CivilizationKnowledgeEffectUtility.GetScholarTranslationSpeedFactor();
+            progress = System.Math.Min(RequiredWork, progress + work);
             researcher.skills.Learn(SkillDefOf.Intellectual, 0.03f);
         }
 

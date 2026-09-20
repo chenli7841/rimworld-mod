@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Verse;
+using LiAIChat.Archive;
 
 namespace LiAIChat.Civilization.UI
 {
@@ -12,6 +13,17 @@ namespace LiAIChat.Civilization.UI
             Overview,
             Compact,
             Detailed
+        }
+
+        private enum KnowledgeStatusFilter
+        {
+            All,
+            Locked,
+            Active,
+            GracePeriod,
+            Unstable,
+            Dormant,
+            AwaitingReactivation
         }
         private const float NodeWidth = 180f;
         private const float NodeHeight = 70f;
@@ -35,6 +47,23 @@ namespace LiAIChat.Civilization.UI
         private Vector2 mouseDownPosition;
 
         private string selectedNodeId;
+
+        private string selectedEarthTextId;
+
+        private string searchText =
+            string.Empty;
+
+        private CivilizationKnowledgeCategory?
+            categoryFilter;
+
+        private KnowledgeStatusFilter statusFilter =
+            KnowledgeStatusFilter.All;
+
+        private Vector2 treeViewportSize =
+            Vector2.zero;
+
+        private Vector2 detailScrollPosition =
+            Vector2.zero;
 
         private readonly Dictionary<string, Rect>
             currentNodeRects =
@@ -72,7 +101,7 @@ namespace LiAIChat.Civilization.UI
                 new Rect(
                     0f,
                     0f,
-                    inRect.width,
+                    260f,
                     35f),
                 "Civilization Knowledge");
 
@@ -85,24 +114,34 @@ namespace LiAIChat.Civilization.UI
             float gap =
                 12f;
 
+            float headerHeight =
+                78f;
+
+            DrawNavigationControls(
+                new Rect(
+                    275f,
+                    0f,
+                    inRect.width - 275f,
+                    34f));
+
             Rect viewportRect =
                 new Rect(
                     0f,
-                    45f,
+                    headerHeight,
                     inRect.width -
                     detailPanelWidth -
                     gap,
                     inRect.height -
-                    45f);
+                    headerHeight);
 
             Rect detailRect =
                 new Rect(
                     viewportRect.xMax +
                     gap,
-                    45f,
+                    headerHeight,
                     detailPanelWidth,
                     inRect.height -
-                    45f);
+                    headerHeight);
             
             DrawTreeViewport(
                 viewportRect);
@@ -111,12 +150,422 @@ namespace LiAIChat.Civilization.UI
                 detailRect);
         }
 
+        private void DrawNavigationControls(
+            Rect rect)
+        {
+            float x =
+                rect.x;
+
+            Rect searchRect =
+                new Rect(
+                    x,
+                    rect.y + 2f,
+                    190f,
+                    28f);
+
+            searchText =
+                Widgets.TextField(
+                    searchRect,
+                    searchText ?? string.Empty);
+
+            x = searchRect.xMax + 6f;
+
+            if (Widgets.ButtonText(
+                    new Rect(
+                        x,
+                        rect.y + 2f,
+                        58f,
+                        28f),
+                    "Find"))
+            {
+                SelectFirstSearchResult();
+            }
+
+            x += 64f;
+
+            string categoryLabel =
+                categoryFilter.HasValue
+                    ? categoryFilter.Value.ToString()
+                    : "All categories";
+
+            if (Widgets.ButtonText(
+                    new Rect(
+                        x,
+                        rect.y + 2f,
+                        135f,
+                        28f),
+                    categoryLabel))
+            {
+                OpenCategoryFilterMenu();
+            }
+
+            x += 141f;
+
+            if (Widgets.ButtonText(
+                    new Rect(
+                        x,
+                        rect.y + 2f,
+                        145f,
+                        28f),
+                    GetStatusFilterLabel(
+                        statusFilter)))
+            {
+                OpenStatusFilterMenu();
+            }
+
+            x += 151f;
+
+            if (Widgets.ButtonText(
+                    new Rect(
+                        x,
+                        rect.y + 2f,
+                        78f,
+                        28f),
+                    "Overview"))
+            {
+                selectedNodeId =
+                    null;
+
+                selectedEarthTextId =
+                    null;
+
+                detailScrollPosition =
+                    Vector2.zero;
+            }
+        }
+
+        private void OpenCategoryFilterMenu()
+        {
+            List<FloatMenuOption> options =
+                new List<FloatMenuOption>();
+
+            options.Add(
+                new FloatMenuOption(
+                    "All categories",
+                    delegate
+                    {
+                        categoryFilter = null;
+                        OnFilterChanged();
+                    }));
+
+            foreach (CivilizationKnowledgeCategory category
+                in System.Enum.GetValues(
+                    typeof(CivilizationKnowledgeCategory)))
+            {
+                CivilizationKnowledgeCategory selectedCategory =
+                    category;
+
+                options.Add(
+                    new FloatMenuOption(
+                        category.ToString(),
+                        delegate
+                        {
+                            categoryFilter =
+                                selectedCategory;
+
+                            OnFilterChanged();
+                        }));
+            }
+
+            Find.WindowStack.Add(
+                new FloatMenu(options));
+        }
+
+        private void OpenStatusFilterMenu()
+        {
+            List<FloatMenuOption> options =
+                new List<FloatMenuOption>();
+
+            foreach (KnowledgeStatusFilter filter
+                in System.Enum.GetValues(
+                    typeof(KnowledgeStatusFilter)))
+            {
+                KnowledgeStatusFilter selectedFilter =
+                    filter;
+
+                options.Add(
+                    new FloatMenuOption(
+                        GetStatusFilterLabel(filter),
+                        delegate
+                        {
+                            statusFilter =
+                                selectedFilter;
+
+                            OnFilterChanged();
+                        }));
+            }
+
+            Find.WindowStack.Add(
+                new FloatMenu(options));
+        }
+
+        private string GetStatusFilterLabel(
+            KnowledgeStatusFilter filter)
+        {
+            switch (filter)
+            {
+                case KnowledgeStatusFilter.GracePeriod:
+                    return "Grace period";
+
+                case KnowledgeStatusFilter.AwaitingReactivation:
+                    return "Awaiting reactivation";
+
+                case KnowledgeStatusFilter.All:
+                    return "All statuses";
+
+                default:
+                    return filter.ToString();
+            }
+        }
+
+        private void OnFilterChanged()
+        {
+            selectedNodeId =
+                null;
+
+            selectedEarthTextId =
+                null;
+
+            detailScrollPosition =
+                Vector2.zero;
+
+            canvasInitialized =
+                false;
+        }
+
+        private List<CivilizationKnowledgeDef>
+            GetFilteredKnowledgeDefs()
+        {
+            List<CivilizationKnowledgeDef> result =
+                new List<CivilizationKnowledgeDef>();
+
+            List<CivilizationKnowledgeDef> defs =
+                DefDatabase<CivilizationKnowledgeDef>
+                    .AllDefsListForReading;
+
+            if (defs == null)
+            {
+                return result;
+            }
+
+            foreach (CivilizationKnowledgeDef def
+                in defs)
+            {
+                if (def == null)
+                {
+                    continue;
+                }
+
+                if (categoryFilter.HasValue &&
+                    def.category !=
+                        categoryFilter.Value)
+                {
+                    continue;
+                }
+
+                if (!MatchesStatusFilter(def))
+                {
+                    continue;
+                }
+
+                result.Add(def);
+            }
+
+            return result;
+        }
+
+        private bool MatchesStatusFilter(
+            CivilizationKnowledgeDef def)
+        {
+            if (statusFilter ==
+                KnowledgeStatusFilter.All)
+            {
+                return true;
+            }
+
+            CivilizationKnowledgeState state =
+                CivilizationKnowledgeManager
+                    .GetState(def);
+
+            switch (statusFilter)
+            {
+                case KnowledgeStatusFilter.Locked:
+                    return state == null ||
+                        !state.Unlocked;
+
+                case KnowledgeStatusFilter.Active:
+                    return state != null &&
+                        state.Unlocked &&
+                        !state.Unstable &&
+                        !state.Dormant &&
+                        !state.AwaitingReactivation &&
+                        !CivilizationKnowledgeUtility
+                            .IsUnlockedButIncomplete(def);
+
+                case KnowledgeStatusFilter.GracePeriod:
+                    return state != null &&
+                        state.Unlocked &&
+                        !state.Unstable &&
+                        !state.Dormant &&
+                        !state.AwaitingReactivation &&
+                        CivilizationKnowledgeUtility
+                            .IsUnlockedButIncomplete(def);
+
+                case KnowledgeStatusFilter.Unstable:
+                    return state != null &&
+                        state.Unlocked &&
+                        state.Unstable;
+
+                case KnowledgeStatusFilter.Dormant:
+                    return state != null &&
+                        state.Unlocked &&
+                        state.Dormant;
+
+                case KnowledgeStatusFilter.AwaitingReactivation:
+                    return state != null &&
+                        state.Unlocked &&
+                        state.AwaitingReactivation;
+
+                default:
+                    return true;
+            }
+        }
+
+        private void SelectFirstSearchResult()
+        {
+            string query =
+                searchText == null
+                    ? string.Empty
+                    : searchText.Trim();
+
+            if (query.Length == 0)
+            {
+                return;
+            }
+
+            foreach (CivilizationKnowledgeDef def
+                in GetFilteredKnowledgeDefs())
+            {
+                if (!KnowledgeMatchesSearch(
+                        def,
+                        query))
+                {
+                    continue;
+                }
+
+                SelectAndCenterNode(def);
+                return;
+            }
+
+            Messages.Message(
+                "No civilization knowledge matches \"" +
+                query +
+                "\" in the current filters.",
+                MessageTypeDefOf.RejectInput);
+        }
+
+        private bool KnowledgeMatchesSearch(
+            CivilizationKnowledgeDef def,
+            string query)
+        {
+            if (def == null)
+            {
+                return false;
+            }
+
+            return ContainsIgnoreCase(
+                    def.defName,
+                    query) ||
+                ContainsIgnoreCase(
+                    def.label,
+                    query) ||
+                ContainsIgnoreCase(
+                    def.title,
+                    query) ||
+                ContainsIgnoreCase(
+                    def.titleChinese,
+                    query) ||
+                ContainsIgnoreCase(
+                    def.description,
+                    query) ||
+                ContainsIgnoreCase(
+                    def.descriptionChinese,
+                    query);
+        }
+
+        private bool ContainsIgnoreCase(
+            string value,
+            string query)
+        {
+            return !string.IsNullOrEmpty(value) &&
+                value.IndexOf(
+                    query,
+                    System.StringComparison
+                        .OrdinalIgnoreCase) >= 0;
+        }
+
+        private void SelectAndCenterNode(
+            CivilizationKnowledgeDef def)
+        {
+            if (def == null)
+            {
+                return;
+            }
+
+            bool hiddenByCategory =
+                categoryFilter.HasValue &&
+                def.category !=
+                    categoryFilter.Value;
+
+            bool hiddenByStatus =
+                !MatchesStatusFilter(def);
+
+            if (hiddenByCategory ||
+                hiddenByStatus)
+            {
+                categoryFilter =
+                    null;
+
+                statusFilter =
+                    KnowledgeStatusFilter.All;
+            }
+
+            selectedNodeId =
+                def.defName;
+
+            selectedEarthTextId =
+                null;
+
+            detailScrollPosition =
+                Vector2.zero;
+
+            if (zoom < 0.8f)
+            {
+                zoom = 0.8f;
+            }
+
+            if (treeViewportSize.x <= 0f ||
+                treeViewportSize.y <= 0f)
+            {
+                return;
+            }
+
+            Vector2 nodeCenter =
+                new Vector2(
+                    def.treeX +
+                        NodeWidth * 0.5f,
+                    def.treeY +
+                        NodeHeight * 0.5f);
+
+            canvasOffset =
+                treeViewportSize * 0.5f -
+                nodeCenter * zoom;
+        }
+
         private Rect GetKnowledgeTreeBounds()
         {
             List<CivilizationKnowledgeDef> defs =
-                DefDatabase<
-                    CivilizationKnowledgeDef>
-                .AllDefsListForReading;
+                GetFilteredKnowledgeDefs();
 
             if (defs == null ||
                 defs.Count == 0)
@@ -394,6 +843,9 @@ namespace LiAIChat.Civilization.UI
         private void DrawTreeViewport(
     Rect viewportRect)
         {
+            treeViewportSize =
+                viewportRect.size;
+
             Widgets.DrawMenuSection(
                 viewportRect);
 
@@ -416,6 +868,26 @@ namespace LiAIChat.Civilization.UI
                 viewportRect);
 
             DrawKnowledgeTree();
+
+            if (currentNodeRects.Count == 0)
+            {
+                TextAnchor oldAnchor =
+                    Text.Anchor;
+
+                Text.Anchor =
+                    TextAnchor.MiddleCenter;
+
+                Widgets.Label(
+                    new Rect(
+                        0f,
+                        0f,
+                        viewportRect.width,
+                        viewportRect.height),
+                    "No knowledge nodes match the current filters.");
+
+                Text.Anchor =
+                    oldAnchor;
+            }
 
             Widgets.EndGroup();
 
@@ -661,11 +1133,26 @@ namespace LiAIChat.Civilization.UI
                 selectedNodeId =
                     null;
 
+                selectedEarthTextId =
+                    null;
+
+                detailScrollPosition =
+                    Vector2.zero;
+
                 return;
+            }
+
+            if (selectedNodeId != nodeId)
+            {
+                detailScrollPosition =
+                    Vector2.zero;
             }
 
             selectedNodeId =
                 nodeId;
+
+            selectedEarthTextId =
+                null;
         }
 
 
@@ -696,9 +1183,7 @@ namespace LiAIChat.Civilization.UI
             currentNodeRects.Clear();
 
             List<CivilizationKnowledgeDef> defs =
-                DefDatabase<
-                    CivilizationKnowledgeDef>
-                .AllDefsListForReading;
+                GetFilteredKnowledgeDefs();
 
             if (defs == null)
             {
@@ -904,11 +1389,13 @@ namespace LiAIChat.Civilization.UI
 
         private string GetNodeTooltip(
     string label,
+    CivilizationKnowledgeDef def,
     CivilizationKnowledgeState state)
         {
             return label +
                 "\nStatus: " +
                 GetKnowledgeStatusText(
+                    def,
                     state);
         }
 
@@ -950,6 +1437,7 @@ namespace LiAIChat.Civilization.UI
 
                 DrawNode(
                     nodeRect,
+                    def,
                     GetNodeLabel(def),
                     selected,
                     state);
@@ -959,6 +1447,7 @@ namespace LiAIChat.Civilization.UI
 
         private void DrawNode(
     Rect rect,
+    CivilizationKnowledgeDef def,
     string label,
     bool selected,
     CivilizationKnowledgeState state)
@@ -1022,6 +1511,7 @@ namespace LiAIChat.Civilization.UI
                 rect,
                 GetNodeTooltip(
                     label,
+                    def,
                     state));
         }
 
@@ -1314,21 +1804,20 @@ namespace LiAIChat.Civilization.UI
                 rect.ContractedBy(
                     12f);
 
+            if (!string.IsNullOrEmpty(
+                    selectedEarthTextId))
+            {
+                DrawEarthTextDetailPanel(
+                    innerRect);
+
+                return;
+            }
+
             if (string.IsNullOrEmpty(
                     selectedNodeId))
             {
-                TextAnchor oldAnchor =
-                    Text.Anchor;
-
-                Text.Anchor =
-                    TextAnchor.MiddleCenter;
-
-                Widgets.Label(
-                    innerRect,
-                    "Select a knowledge node.");
-
-                Text.Anchor =
-                    oldAnchor;
+                DrawCivilizationOverview(
+                    innerRect);
 
                 return;
             }
@@ -1351,8 +1840,31 @@ namespace LiAIChat.Civilization.UI
                     .GetState(
                         def);
 
+            Rect scrollOutRect =
+                innerRect;
+
+            float viewWidth =
+                Mathf.Max(
+                    1f,
+                    scrollOutRect.width - 16f);
+
+            Rect viewRect =
+                new Rect(
+                    0f,
+                    0f,
+                    viewWidth,
+                    CalculateDetailContentHeight(
+                        viewWidth,
+                        def,
+                        state));
+
+            Widgets.BeginScrollView(
+                scrollOutRect,
+                ref detailScrollPosition,
+                viewRect);
+
             float y =
-                innerRect.y;
+                viewRect.y;
 
 
             // ============================================================
@@ -1364,9 +1876,9 @@ namespace LiAIChat.Civilization.UI
 
             Widgets.Label(
                 new Rect(
-                    innerRect.x,
+                    viewRect.x,
                     y,
-                    innerRect.width,
+                    viewRect.width,
                     35f),
                 GetNodeLabel(
                     def));
@@ -1383,32 +1895,58 @@ namespace LiAIChat.Civilization.UI
 
             Widgets.Label(
                 new Rect(
-                    innerRect.x,
+                    viewRect.x,
                     y,
-                    innerRect.width,
+                    viewRect.width,
                     24f),
                 "Status: " +
                 GetKnowledgeStatusText(
+                    def,
                     state));
 
             y += 24f;
 
             Widgets.Label(
                 new Rect(
-                    innerRect.x,
+                    viewRect.x,
                     y,
-                    innerRect.width,
+                    viewRect.width,
                     24f),
                 "Category: " +
                 def.category);
 
             y += 32f;
 
+            y =
+                DrawStatusExplanation(
+                    viewRect,
+                    y,
+                    def,
+                    state);
+
+            y += 8f;
+
+            y =
+                DrawKnowledgeDescription(
+                    viewRect,
+                    y,
+                    def);
+
+            y += 12f;
+
+            y =
+                DrawGameplayEffects(
+                    viewRect,
+                    y,
+                    def);
+
+            y += 12f;
+
 
             Widgets.DrawLineHorizontal(
-                innerRect.x,
+                viewRect.x,
                 y,
-                innerRect.width);
+                viewRect.width);
 
             y += 12f;
 
@@ -1419,7 +1957,7 @@ namespace LiAIChat.Civilization.UI
 
             y =
                 DrawPrerequisiteProgress(
-                    innerRect,
+                    viewRect,
                     y,
                     def);
 
@@ -1428,9 +1966,9 @@ namespace LiAIChat.Civilization.UI
 
 
             Widgets.DrawLineHorizontal(
-                innerRect.x,
+                viewRect.x,
                 y,
-                innerRect.width);
+                viewRect.width);
 
             y += 12f;
 
@@ -1441,7 +1979,7 @@ namespace LiAIChat.Civilization.UI
 
             y =
                 DrawRequiredTextProgress(
-                    innerRect,
+                    viewRect,
                     y,
                     def);
 
@@ -1450,9 +1988,9 @@ namespace LiAIChat.Civilization.UI
 
 
             Widgets.DrawLineHorizontal(
-                innerRect.x,
+                viewRect.x,
                 y,
-                innerRect.width);
+                viewRect.width);
 
             y += 12f;
 
@@ -1461,10 +1999,834 @@ namespace LiAIChat.Civilization.UI
             // Overall Unlock Requirements
             // ============================================================
 
-            DrawUnlockRequirementSummary(
-                innerRect,
+            y =
+                DrawUnlockRequirementSummary(
+                    viewRect,
+                    y,
+                    def);
+
+            y += 12f;
+
+            DrawReactivationControls(
+                viewRect,
                 y,
-                def);
+                def,
+                state);
+
+            Widgets.EndScrollView();
+        }
+
+        private void DrawCivilizationOverview(
+            Rect rect)
+        {
+            List<CivilizationKnowledgeDef> defs =
+                DefDatabase<CivilizationKnowledgeDef>
+                    .AllDefsListForReading;
+
+            List<ColonyLibraryEntry> library =
+                ColonyLibraryIndex.Build();
+
+            float viewHeight =
+                390f +
+                library.Count * 30f +
+                System.Enum.GetValues(
+                    typeof(CivilizationKnowledgeCategory))
+                    .Length * 24f;
+
+            Rect viewRect =
+                new Rect(
+                    0f,
+                    0f,
+                    Mathf.Max(
+                        1f,
+                        rect.width - 16f),
+                    Mathf.Max(
+                        rect.height,
+                        viewHeight));
+
+            Widgets.BeginScrollView(
+                rect,
+                ref detailScrollPosition,
+                viewRect);
+
+            float y =
+                0f;
+
+            Text.Font =
+                GameFont.Medium;
+
+            Widgets.Label(
+                new Rect(
+                    0f,
+                    y,
+                    viewRect.width,
+                    32f),
+                "Civilization Overview");
+
+            y += 40f;
+
+            Text.Font =
+                GameFont.Small;
+
+            int total =
+                0;
+
+            int reconstructed =
+                0;
+
+            int active =
+                0;
+
+            if (defs != null)
+            {
+                foreach (CivilizationKnowledgeDef def
+                    in defs)
+                {
+                    if (def == null)
+                    {
+                        continue;
+                    }
+
+                    total++;
+
+                    if (CivilizationKnowledgeManager
+                        .IsUnlocked(def))
+                    {
+                        reconstructed++;
+                    }
+
+                    if (CivilizationKnowledgeManager
+                        .IsActive(def))
+                    {
+                        active++;
+                    }
+                }
+            }
+
+            y = DrawOverviewProgressBar(
+                viewRect,
+                y,
+                "Reconstructed",
+                reconstructed,
+                total);
+
+            y = DrawOverviewProgressBar(
+                viewRect,
+                y,
+                "Currently active",
+                active,
+                total);
+
+            y += 12f;
+
+            Widgets.DrawLineHorizontal(
+                0f,
+                y,
+                viewRect.width);
+
+            y += 12f;
+
+            Widgets.Label(
+                new Rect(
+                    0f,
+                    y,
+                    viewRect.width,
+                    24f),
+                "Category Progress");
+
+            y += 28f;
+
+            foreach (CivilizationKnowledgeCategory category
+                in System.Enum.GetValues(
+                    typeof(CivilizationKnowledgeCategory)))
+            {
+                int categoryTotal =
+                    0;
+
+                int categoryUnlocked =
+                    0;
+
+                if (defs != null)
+                {
+                    foreach (CivilizationKnowledgeDef def
+                        in defs)
+                    {
+                        if (def == null ||
+                            def.category != category)
+                        {
+                            continue;
+                        }
+
+                        categoryTotal++;
+
+                        if (CivilizationKnowledgeManager
+                            .IsUnlocked(def))
+                        {
+                            categoryUnlocked++;
+                        }
+                    }
+                }
+
+                if (categoryTotal == 0)
+                {
+                    continue;
+                }
+
+                y = DrawDetailLine(
+                    viewRect,
+                    y,
+                    category +
+                    ": " +
+                    categoryUnlocked +
+                    " / " +
+                    categoryTotal);
+            }
+
+            y += 10f;
+
+            Widgets.DrawLineHorizontal(
+                0f,
+                y,
+                viewRect.width);
+
+            y += 12f;
+
+            Widgets.Label(
+                new Rect(
+                    0f,
+                    y,
+                    viewRect.width,
+                    24f),
+                "Colony Library — " +
+                library.Count +
+                " recovered works");
+
+            y += 28f;
+
+            if (library.Count == 0)
+            {
+                y = DrawDetailLine(
+                    viewRect,
+                    y,
+                    "No identified Earth texts are currently stored at a player home.");
+            }
+            else
+            {
+                foreach (ColonyLibraryEntry entry
+                    in library)
+                {
+                    if (entry == null ||
+                        entry.Text == null)
+                    {
+                        continue;
+                    }
+
+                    if (Widgets.ButtonText(
+                            new Rect(
+                                0f,
+                                y,
+                                viewRect.width,
+                                26f),
+                            GetEarthTextLabel(
+                                entry.Text) +
+                            "  ×" +
+                            entry.CopyCount))
+                    {
+                        selectedEarthTextId =
+                            entry.Text.defName;
+
+                        detailScrollPosition =
+                            Vector2.zero;
+                    }
+
+                    y += 30f;
+                }
+            }
+
+            Widgets.EndScrollView();
+        }
+
+        private float DrawOverviewProgressBar(
+            Rect rect,
+            float y,
+            string label,
+            int current,
+            int total)
+        {
+            Widgets.Label(
+                new Rect(
+                    rect.x,
+                    y,
+                    rect.width,
+                    22f),
+                label +
+                ": " +
+                current +
+                " / " +
+                total);
+
+            y += 22f;
+
+            float fillPercent =
+                total <= 0
+                    ? 0f
+                    : current /
+                        (float)total;
+
+            Widgets.FillableBar(
+                new Rect(
+                    rect.x,
+                    y,
+                    rect.width,
+                    12f),
+                Mathf.Clamp01(
+                    fillPercent));
+
+            return y + 20f;
+        }
+
+        private void DrawEarthTextDetailPanel(
+            Rect rect)
+        {
+            EarthTextDef textDef =
+                DefDatabase<EarthTextDef>
+                    .GetNamedSilentFail(
+                        selectedEarthTextId);
+
+            if (textDef == null)
+            {
+                selectedEarthTextId =
+                    null;
+
+                return;
+            }
+
+            List<CivilizationKnowledgeDef> related =
+                GetKnowledgeDefsForText(
+                    textDef);
+
+            float descriptionHeight =
+                string.IsNullOrWhiteSpace(
+                    textDef.shortDescription)
+                    ? 0f
+                    : Text.CalcHeight(
+                        textDef.shortDescription,
+                        rect.width - 16f);
+
+            Rect viewRect =
+                new Rect(
+                    0f,
+                    0f,
+                    Mathf.Max(
+                        1f,
+                        rect.width - 16f),
+                    Mathf.Max(
+                        rect.height,
+                        390f +
+                        descriptionHeight +
+                        related.Count * 34f));
+
+            Widgets.BeginScrollView(
+                rect,
+                ref detailScrollPosition,
+                viewRect);
+
+            float y =
+                0f;
+
+            if (Widgets.ButtonText(
+                    new Rect(
+                        0f,
+                        y,
+                        70f,
+                        26f),
+                    "Back"))
+            {
+                selectedEarthTextId =
+                    null;
+
+                detailScrollPosition =
+                    Vector2.zero;
+            }
+
+            y += 36f;
+
+            Text.Font =
+                GameFont.Medium;
+
+            string title =
+                !string.IsNullOrWhiteSpace(
+                    textDef.title)
+                    ? textDef.title
+                    : textDef.label;
+
+            float titleHeight =
+                Mathf.Max(
+                    32f,
+                    Text.CalcHeight(
+                        title,
+                        viewRect.width));
+
+            Widgets.Label(
+                new Rect(
+                    0f,
+                    y,
+                    viewRect.width,
+                    titleHeight),
+                title);
+
+            y += titleHeight + 4f;
+
+            Text.Font =
+                GameFont.Small;
+
+            if (!string.IsNullOrWhiteSpace(
+                    textDef.titleChinese) &&
+                textDef.titleChinese != title)
+            {
+                y = DrawDetailLine(
+                    viewRect,
+                    y,
+                    textDef.titleChinese);
+            }
+
+            y = DrawDetailLine(
+                viewRect,
+                y,
+                "Author: " +
+                (string.IsNullOrWhiteSpace(
+                    textDef.author)
+                    ? "Unknown"
+                    : textDef.author));
+
+            y = DrawDetailLine(
+                viewRect,
+                y,
+                "Date: " +
+                textDef.YearDisplay);
+
+            y = DrawDetailLine(
+                viewRect,
+                y,
+                "Library copies: " +
+                ColonyLibrary.GetCopyCount(
+                    textDef));
+
+            y = DrawDetailLine(
+                viewRect,
+                y,
+                "Topic: " +
+                (string.IsNullOrWhiteSpace(
+                    textDef.primaryTopicId)
+                    ? "Unclassified"
+                    : textDef.primaryTopicId));
+
+            if (!string.IsNullOrWhiteSpace(
+                    textDef.shortDescription))
+            {
+                y += 10f;
+
+                float height =
+                    Text.CalcHeight(
+                        textDef.shortDescription,
+                        viewRect.width);
+
+                Widgets.Label(
+                    new Rect(
+                        0f,
+                        y,
+                        viewRect.width,
+                        height),
+                    textDef.shortDescription);
+
+                y += height;
+            }
+
+            y += 14f;
+
+            Widgets.DrawLineHorizontal(
+                0f,
+                y,
+                viewRect.width);
+
+            y += 12f;
+
+            Widgets.Label(
+                new Rect(
+                    0f,
+                    y,
+                    viewRect.width,
+                    24f),
+                "Required By");
+
+            y += 28f;
+
+            if (related.Count == 0)
+            {
+                y = DrawDetailLine(
+                    viewRect,
+                    y,
+                    "No civilization knowledge node currently requires this text.");
+            }
+            else
+            {
+                foreach (CivilizationKnowledgeDef def
+                    in related)
+                {
+                    if (Widgets.ButtonText(
+                            new Rect(
+                                0f,
+                                y,
+                                viewRect.width,
+                                28f),
+                            GetNodeLabel(def)))
+                    {
+                        SelectAndCenterNode(def);
+                    }
+
+                    y += 34f;
+                }
+            }
+
+            Widgets.EndScrollView();
+        }
+
+        private List<CivilizationKnowledgeDef>
+            GetKnowledgeDefsForText(
+                EarthTextDef textDef)
+        {
+            List<CivilizationKnowledgeDef> result =
+                new List<CivilizationKnowledgeDef>();
+
+            if (textDef == null)
+            {
+                return result;
+            }
+
+            List<CivilizationKnowledgeDef> defs =
+                DefDatabase<CivilizationKnowledgeDef>
+                    .AllDefsListForReading;
+
+            if (defs == null)
+            {
+                return result;
+            }
+
+            foreach (CivilizationKnowledgeDef def
+                in defs)
+            {
+                if (def == null ||
+                    def.requiredTexts == null)
+                {
+                    continue;
+                }
+
+                if (def.requiredTexts.Contains(
+                        textDef))
+                {
+                    result.Add(def);
+                }
+            }
+
+            return result;
+        }
+
+        private float CalculateDetailContentHeight(
+            float width,
+            CivilizationKnowledgeDef def,
+            CivilizationKnowledgeState state)
+        {
+            int prerequisiteCount =
+                def != null &&
+                def.prerequisites != null
+                    ? def.prerequisites.Count
+                    : 0;
+
+            int requiredTextCount =
+                def != null &&
+                def.requiredTexts != null
+                    ? def.requiredTexts.Count
+                    : 0;
+
+            float descriptionHeight =
+                def != null &&
+                !string.IsNullOrWhiteSpace(
+                    def.description)
+                    ? Text.CalcHeight(
+                        def.description,
+                        width)
+                    : 0f;
+
+            float stateHeight =
+                state != null &&
+                state.Unlocked &&
+                state.MissingSinceTick >= 0
+                    ? 92f
+                    : 48f;
+
+            int effectCount =
+                CivilizationKnowledgeEffectUtility
+                    .GetEffectDescriptions(def)
+                    .Count;
+
+            float effectHeight =
+                effectCount > 0
+                    ? 36f +
+                        effectCount * 24f +
+                        (CivilizationKnowledgeManager
+                            .IsActive(def)
+                                ? 0f
+                                : 24f)
+                    : 0f;
+
+            return Mathf.Max(
+                640f +
+                descriptionHeight +
+                prerequisiteCount * 24f +
+                requiredTextCount * 38f +
+                stateHeight +
+                effectHeight,
+                680f);
+        }
+
+        private float DrawKnowledgeDescription(
+            Rect rect,
+            float y,
+            CivilizationKnowledgeDef def)
+        {
+            Widgets.Label(
+                new Rect(
+                    rect.x,
+                    y,
+                    rect.width,
+                    25f),
+                "Description");
+
+            y += 27f;
+
+            string description =
+                def == null
+                    ? null
+                    : def.description;
+
+            if (string.IsNullOrWhiteSpace(
+                    description))
+            {
+                description =
+                    "No description available.";
+            }
+
+            float height =
+                Mathf.Max(
+                    22f,
+                    Text.CalcHeight(
+                        description,
+                        rect.width - 10f));
+
+            Widgets.Label(
+                new Rect(
+                    rect.x + 10f,
+                    y,
+                    rect.width - 10f,
+                    height),
+                description);
+
+            return y + height;
+        }
+
+        private float DrawGameplayEffects(
+            Rect rect,
+            float y,
+            CivilizationKnowledgeDef def)
+        {
+            List<string> descriptions =
+                CivilizationKnowledgeEffectUtility
+                    .GetEffectDescriptions(def);
+
+            if (descriptions.Count == 0)
+            {
+                return y;
+            }
+
+            Widgets.Label(
+                new Rect(
+                    rect.x,
+                    y,
+                    rect.width,
+                    25f),
+                "Gameplay Effects");
+
+            y += 27f;
+
+            foreach (string description
+                in descriptions)
+            {
+                y = DrawDetailLine(
+                    rect,
+                    y,
+                    "• " + description);
+            }
+
+            if (!CivilizationKnowledgeManager
+                    .IsActive(def))
+            {
+                y = DrawDetailLine(
+                    rect,
+                    y,
+                    "Effects are inactive until this knowledge is Active.");
+            }
+
+            return y;
+        }
+
+        private float DrawStatusExplanation(
+            Rect rect,
+            float y,
+            CivilizationKnowledgeDef def,
+            CivilizationKnowledgeState state)
+        {
+            string explanation;
+
+            if (state == null ||
+                !state.Unlocked)
+            {
+                bool hasPrerequisites =
+                    CivilizationKnowledgeUtility
+                        .HasPrerequisites(def);
+
+                bool hasTexts =
+                    CivilizationKnowledgeUtility
+                        .HasRequiredTexts(def);
+
+                if (!hasPrerequisites &&
+                    !hasTexts)
+                {
+                    explanation =
+                        "Locked: prerequisites and required texts are missing.";
+                }
+                else if (!hasPrerequisites)
+                {
+                    explanation =
+                        "Locked: one or more prerequisite knowledge nodes are missing.";
+                }
+                else if (!hasTexts)
+                {
+                    explanation =
+                        "Locked: recover the missing required texts.";
+                }
+                else
+                {
+                    explanation =
+                        "Ready to be reconstructed.";
+                }
+            }
+            else if (state.AwaitingReactivation)
+            {
+                explanation =
+                    "The required texts have been restored. Reactivation is required before this knowledge becomes active again.";
+            }
+            else if (state.Dormant)
+            {
+                explanation =
+                    "Dormant: required texts have been absent beyond the dormancy threshold.";
+            }
+            else if (state.Unstable)
+            {
+                explanation =
+                    "Unstable: required texts are missing and the grace period has expired.";
+            }
+            else if (CivilizationKnowledgeUtility
+                .IsUnlockedButIncomplete(def))
+            {
+                explanation =
+                    "Grace period: required texts are missing, but this knowledge remains temporarily active.";
+            }
+            else
+            {
+                explanation =
+                    "Active: the colony library currently supports this knowledge.";
+            }
+
+            float explanationHeight =
+                Mathf.Max(
+                    22f,
+                    Text.CalcHeight(
+                        explanation,
+                        rect.width));
+
+            Widgets.Label(
+                new Rect(
+                    rect.x,
+                    y,
+                    rect.width,
+                    explanationHeight),
+                explanation);
+
+            y += explanationHeight;
+
+            if (state == null ||
+                !state.Unlocked ||
+                state.MissingSinceTick < 0)
+            {
+                return y;
+            }
+
+            float missingDays =
+                CivilizationKnowledgeUtility
+                    .GetMissingDurationDays(def);
+
+            float graceRemaining =
+                Mathf.Max(
+                    0f,
+                    def.gracePeriodDays -
+                    missingDays);
+
+            float dormantRemaining =
+                Mathf.Max(
+                    0f,
+                    def.dormantAfterDays -
+                    missingDays);
+
+            y += 4f;
+
+            y = DrawDetailLine(
+                rect,
+                y,
+                "Required texts missing for " +
+                missingDays.ToString("0.0") +
+                " days.");
+
+            y = DrawDetailLine(
+                rect,
+                y,
+                "Grace remaining: " +
+                graceRemaining.ToString("0.0") +
+                " days.");
+
+            y = DrawDetailLine(
+                rect,
+                y,
+                "Dormancy in: " +
+                dormantRemaining.ToString("0.0") +
+                " days.");
+
+            return y;
+        }
+
+        private float DrawDetailLine(
+            Rect rect,
+            float y,
+            string text)
+        {
+            Widgets.Label(
+                new Rect(
+                    rect.x + 10f,
+                    y,
+                    rect.width - 10f,
+                    22f),
+                text);
+
+            return y + 22f;
         }
 
         private float DrawPrerequisiteProgress(
@@ -1541,17 +2903,21 @@ namespace LiAIChat.Civilization.UI
                         : "✗ ";
 
 
-                Widgets.Label(
-                    new Rect(
-                        innerRect.x + 10f,
-                        y,
-                        innerRect.width - 10f,
-                        22f),
-                    prefix +
-                    GetNodeLabel(
-                        prerequisite));
+                if (Widgets.ButtonText(
+                        new Rect(
+                            innerRect.x + 10f,
+                            y,
+                            innerRect.width - 10f,
+                            26f),
+                        prefix +
+                        GetNodeLabel(
+                            prerequisite)))
+                {
+                    SelectAndCenterNode(
+                        prerequisite);
+                }
 
-                y += 22f;
+                y += 30f;
             }
 
 
@@ -1637,6 +3003,11 @@ namespace LiAIChat.Civilization.UI
                     !missingTexts.Contains(
                         textDef);
 
+                int copyCount =
+                    LiAIChat.Archive.ColonyLibrary
+                        .GetCopyCount(
+                            textDef);
+
                 if (hasText)
                 {
                     recovered++;
@@ -1648,18 +3019,32 @@ namespace LiAIChat.Civilization.UI
                         ? "✓ "
                         : "✗ ";
 
+                string ownership =
+                    hasText
+                        ? " — Owned ×" +
+                            copyCount
+                        : " — Missing";
 
-                Widgets.Label(
-                    new Rect(
-                        innerRect.x + 10f,
-                        y,
-                        innerRect.width - 10f,
-                        22f),
-                    prefix +
-                    GetEarthTextLabel(
-                        textDef));
 
-                y += 22f;
+                if (Widgets.ButtonText(
+                        new Rect(
+                            innerRect.x + 10f,
+                            y,
+                            innerRect.width - 10f,
+                            32f),
+                        prefix +
+                        GetEarthTextLabel(
+                            textDef) +
+                        ownership))
+                {
+                    selectedEarthTextId =
+                        textDef.defName;
+
+                    detailScrollPosition =
+                        Vector2.zero;
+                }
+
+                y += 38f;
             }
 
 
@@ -1691,15 +3076,26 @@ namespace LiAIChat.Civilization.UI
                 return "";
             }
 
-            if (!string.IsNullOrEmpty(
-                    textDef.label))
+            string title =
+                !string.IsNullOrWhiteSpace(
+                    textDef.title)
+                    ? textDef.title
+                    : (!string.IsNullOrWhiteSpace(
+                        textDef.label)
+                        ? textDef.label
+                        : textDef.defName);
+
+            if (string.IsNullOrWhiteSpace(
+                    textDef.author))
             {
-                return textDef.label;
+                return title;
             }
 
-            return textDef.defName;
+            return textDef.author +
+                " — " +
+                title;
         }
-        private void DrawUnlockRequirementSummary(
+        private float DrawUnlockRequirementSummary(
     Rect innerRect,
     float y,
     CivilizationKnowledgeDef def)
@@ -1757,6 +3153,58 @@ namespace LiAIChat.Civilization.UI
                     22f),
                 "Required Texts: " +
                 textRequirementText);
+
+            return y + 22f;
+        }
+
+        private void DrawReactivationControls(
+            Rect rect,
+            float y,
+            CivilizationKnowledgeDef def,
+            CivilizationKnowledgeState state)
+        {
+            if (state == null ||
+                !state.AwaitingReactivation)
+            {
+                return;
+            }
+
+            bool canReactivate =
+                CivilizationKnowledgeUtility
+                    .CanReactivate(def);
+
+            if (!canReactivate)
+            {
+                Widgets.Label(
+                    new Rect(
+                        rect.x,
+                        y,
+                        rect.width,
+                        44f),
+                    "Restore all required texts before reactivation.");
+
+                return;
+            }
+
+            if (!Widgets.ButtonText(
+                    new Rect(
+                        rect.x,
+                        y,
+                        rect.width,
+                        32f),
+                    "Reactivate Knowledge"))
+            {
+                return;
+            }
+
+            if (CivilizationKnowledgeManager
+                .Reactivate(def))
+            {
+                Messages.Message(
+                    "Civilization knowledge reactivated: " +
+                    GetNodeLabel(def),
+                    MessageTypeDefOf.PositiveEvent);
+            }
         }
 
 
@@ -1782,6 +3230,7 @@ namespace LiAIChat.Civilization.UI
 
 
         private string GetKnowledgeStatusText(
+            CivilizationKnowledgeDef def,
             CivilizationKnowledgeState state)
         {
             if (state == null ||
@@ -1803,6 +3252,12 @@ namespace LiAIChat.Civilization.UI
             if (state.Unstable)
             {
                 return "Unstable";
+            }
+
+            if (CivilizationKnowledgeUtility
+                .IsUnlockedButIncomplete(def))
+            {
+                return "Grace Period";
             }
 
             return "Active";

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Defs>
+
+  <!-- Socratic inquiry branch -->
+  <LiAIChat.Civilization.CivilizationKnowledgeDef>
+    <defName>LiAIChat_CivKnowledge_SocraticInquiry</defName>
+    <label>Socratic Inquiry</label>
+    <title>苏格拉底式探问</title>
+    <titleChinese>Socratic Inquiry</titleChinese>
+    <description>对苏格拉底式探问传统的重建，以持续追问、概念澄清、自我审视和公开论辩来检验关于德性、知识与正义的主张。</description>
+    <descriptionChinese>Reconstruction of the Socratic tradition of inquiry: testing claims about virtue, knowledge, and justice through persistent questioning, conceptual clarification, self-examination, and public argument.</descriptionChinese>
+    <category>Philosophy</category>
+    <prerequisites>
+      <li>LiAIChat_CivKnowledge_AncientGreekPhilosophy</li>
+    </prerequisites>
+    <requiredTexts>
+      <li>LiAIChat_Text_Plato_Apology</li>
+    </requiredTexts>
+    <effects>
+      <colonyConversationContext>Colonists are familiar with Socratic questioning, self-examination, and testing confident claims through careful dialogue.</colonyConversationContext>
+    </effects>
+    <gracePeriodDays>10</gracePeriodDays>
+    <dormantAfterDays>30</dormantAfterDays>
+    <treeX>50</treeX>
+    <treeY>380</treeY>
+  </LiAIChat.Civilization.CivilizationKnowledgeDef>
+
+  <!-- Modern political thought branch -->
+  <LiAIChat.Civilization.CivilizationKnowledgeDef>
+    <defName>LiAIChat_CivKnowledge_ModernPoliticalThought</defName>
+    <label>Modern Political Thought</label>
+    <title>现代政治思想</title>
+    <titleChinese>Modern Political Thought</titleChinese>
+    <description>对近代国家、主权、社会契约和政治秩序理论的重建，关注人们为何服从共同权威，以及权力如何阻止社会陷入冲突。</description>
+    <descriptionChinese>Reconstruction of early modern theories of the state, sovereignty, social contract, and political order, asking why people submit to common authority and how power prevents social conflict.</descriptionChinese>
+    <category>PoliticalThought</category>
+    <prerequisites>
+      <li>LiAIChat_CivKnowledge_ClassicalGreekPoliticalThought</li>
+    </prerequisites>
+    <requiredTexts>
+      <li>LiAIChat_Text_Hobbes_Leviathan</li>
+    </requiredTexts>
+    <effects>
+      <colonyConversationContext>The colony can frame disputes in terms of social order, common authority, security, and the dangers of unchecked conflict.</colonyConversationContext>
+    </effects>
+    <gracePeriodDays>10</gracePeriodDays>
+    <dormantAfterDays>30</dormantAfterDays>
+    <treeX>650</treeX>
+    <treeY>600</treeY>
+  </LiAIChat.Civilization.CivilizationKnowledgeDef>
+
+  <LiAIChat.Civilization.CivilizationKnowledgeDef>
+    <defName>LiAIChat_CivKnowledge_Liberalism</defName>
+    <label>Liberalism</label>
+    <title>自由主义</title>
+    <titleChinese>Liberalism</titleChinese>
+    <description>对自由主义政治传统的重建，涵盖自然权利、有限政府、财产权、同意原则，以及人民反抗滥用权力之政府的正当性。</description>
+    <descriptionChinese>Reconstruction of the liberal political tradition concerning natural rights, limited government, property, consent, and the legitimacy of resisting governments that abuse their power.</descriptionChinese>
+    <category>PoliticalThought</category>
+    <prerequisites>
+      <li>LiAIChat_CivKnowledge_ModernPoliticalThought</li>
+    </prerequisites>
+    <requiredTexts>
+      <li>LiAIChat_Text_Locke_TwoTreatises</li>
+    </requiredTexts>
+    <effects>
+      <colonyConversationContext>The colony can discuss natural rights, consent, limited government, property, and resistance to abuses of authority.</colonyConversationContext>
+    </effects>
+    <gracePeriodDays>10</gracePeriodDays>
+    <dormantAfterDays>30</dormantAfterDays>
+    <treeX>650</treeX>
+    <treeY>820</treeY>
+  </LiAIChat.Civilization.CivilizationKnowledgeDef>
+
+  <!-- Christianity branch -->
+  <LiAIChat.Civilization.CivilizationKnowledgeDef>
+    <defName>LiAIChat_CivKnowledge_ChristianReformation</defName>
+    <label>Christian Reformation</label>
+    <title>基督教宗教改革</title>
+    <titleChinese>Christian Reformation</titleChinese>
+    <description>对基督教宗教改革主要思想的重建，包括圣经权威、因信称义、教会制度、救恩和世俗权力等问题，以及由此形成的不同新教传统。</description>
+    <descriptionChinese>Reconstruction of major Reformation ideas concerning scriptural authority, justification by faith, church institutions, salvation, secular government, and the Protestant traditions that followed.</descriptionChinese>
+    <category>Religion</category>
+    <prerequisites>
+      <li>LiAIChat_CivKnowledge_MedievalPhilosophy</li>
+    </prerequisites>
+    <requiredTexts>
+      <li>LiAIChat_Text_Luther_NinetyFiveTheses</li>
+      <li>LiAIChat_Text_Calvin_Institutes</li>
+    </requiredTexts>
+    <effects>
+      <colonyConversationContext>The colony knows the major Reformation debates over scripture, faith, salvation, church institutions, and secular rule.</colonyConversationContext>
+    </effects>
+    <gracePeriodDays>10</gracePeriodDays>
+    <dormantAfterDays>30</dormantAfterDays>
+    <treeX>1850</treeX>
+    <treeY>820</treeY>
+  </LiAIChat.Civilization.CivilizationKnowledgeDef>
+
+  <!-- Science branch -->
+  <LiAIChat.Civilization.CivilizationKnowledgeDef>
+    <defName>LiAIChat_CivKnowledge_ScientificRevolution</defName>
+    <label>Scientific Revolution</label>
+    <title>科学革命</title>
+    <titleChinese>Scientific Revolution</titleChinese>
+    <description>对近代科学革命的重建，将数学描述、系统观察和可检验的自然规律结合起来，形成研究宇宙与物质世界的新方法。</description>
+    <descriptionChinese>Reconstruction of the Scientific Revolution, combining mathematical description, systematic observation, and testable natural laws into a new method for studying the cosmos and material world.</descriptionChinese>
+    <category>Science</category>
+    <prerequisites>
+      <li>LiAIChat_CivKnowledge_EarlyModernPhilosophy</li>
+    </prerequisites>
+    <requiredTexts>
+      <li>LiAIChat_Text_Copernicus_DeRevolutionibus</li>
+      <li>LiAIChat_Text_Newton_Principia</li>
+    </requiredTexts>
+    <effects>
+      <archiveIdentificationSpeedFactor>1.15</archiveIdentificationSpeedFactor>
+      <archiveStudySpeedFactor>1.10</archiveStudySpeedFactor>
+      <archiveStudyXpFactor>1.10</archiveStudyXpFactor>
+      <scholarTranslationSpeedFactor>1.10</scholarTranslationSpeedFactor>
+      <colonyConversationContext>The colony can reason about nature through mathematical description, systematic observation, testable claims, and universal physical laws.</colonyConversationContext>
+    </effects>
+    <gracePeriodDays>10</gracePeriodDays>
+    <dormantAfterDays>30</dormantAfterDays>
+    <treeX>1850</treeX>
+    <treeY>1040</treeY>
+  </LiAIChat.Civilization.CivilizationKnowledgeDef>
+
+  <LiAIChat.Civilization.CivilizationKnowledgeDef>
+    <defName>LiAIChat_CivKnowledge_EvolutionaryTheory</defName>
+    <label>Evolutionary Theory</label>
+    <title>演化论</title>
+    <titleChinese>Evolutionary Theory</titleChinese>
+    <description>对生物演化理论的重建，以共同祖先、遗传变异和自然选择解释生命形态如何在漫长时间中发生变化与分化。</description>
+    <descriptionChinese>Reconstruction of evolutionary theory, explaining how life changes and diversifies over deep time through common descent, inherited variation, and natural selection.</descriptionChinese>
+    <category>Science</category>
+    <prerequisites>
+      <li>LiAIChat_CivKnowledge_ScientificRevolution</li>
+    </prerequisites>
+    <requiredTexts>
+      <li>LiAIChat_Text_Darwin_OriginOfSpecies</li>
+    </requiredTexts>
+    <effects>
+      <archiveStudySpeedFactor>1.05</archiveStudySpeedFactor>
+      <archiveStudyXpFactor>1.10</archiveStudyXpFactor>
+      <colonyConversationContext>The colony understands common descent, inherited variation, natural selection, adaptation, and biological change across deep time.</colonyConversationContext>
+    </effects>
+    <gracePeriodDays>10</gracePeriodDays>
+    <dormantAfterDays>30</dormantAfterDays>
+    <treeX>1850</treeX>
+    <treeY>1260</treeY>
+  </LiAIChat.Civilization.CivilizationKnowledgeDef>
+
+</Defs>

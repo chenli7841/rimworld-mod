@@ -18,6 +18,9 @@
     <requiredTexts>
       <li>LiAIChat_Text_Plato_Republic</li>
     </requiredTexts>
+    <effects>
+      <colonyConversationContext>The colony has recovered classical Greek questions about justice, virtue, knowledge, and the proper ordering of a community.</colonyConversationContext>
+    </effects>
     <gracePeriodDays>10</gracePeriodDays>
     <dormantAfterDays>30</dormantAfterDays>
     <treeX>850</treeX>
@@ -125,6 +128,9 @@
     <requiredTexts>
       <li>LiAIChat_Text_Bacon_NovumOrganum</li>
     </requiredTexts>
+    <effects>
+      <colonyConversationContext>The colony recognizes systematic observation, careful method, and the testing of assumptions as valuable ways to investigate nature.</colonyConversationContext>
+    </effects>
     <treeX>1250</treeX>
     <treeY>820</treeY>
   </LiAIChat.Civilization.CivilizationKnowledgeDef>
@@ -180,6 +186,9 @@
       <li>LiAIChat_Text_Kant_CritiqueOfPureReason</li>
       <li>LiAIChat_Text_Kant_CritiqueOfPracticalReason</li>
     </requiredTexts>
+    <effects>
+      <colonyConversationContext>The colony can discuss the limits of human knowledge, moral duty, freedom, and the relationship between experience and reason.</colonyConversationContext>
+    </effects>
     <treeX>1250</treeX>
     <treeY>1260</treeY>
   </LiAIChat.Civilization.CivilizationKnowledgeDef>

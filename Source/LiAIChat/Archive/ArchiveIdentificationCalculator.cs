@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using Verse;
+using LiAIChat.Civilization;
 
 namespace LiAIChat.Archive
 {
@@ -57,6 +58,10 @@ namespace LiAIChat.Archive
 
             float speedMultiplier =
                 1f + intellectualLevel * 0.05f;
+
+            speedMultiplier *=
+                CivilizationKnowledgeEffectUtility
+                    .GetArchiveIdentificationSpeedFactor();
 
             int finalTicks =
                 (int)(baseTicks / speedMultiplier);

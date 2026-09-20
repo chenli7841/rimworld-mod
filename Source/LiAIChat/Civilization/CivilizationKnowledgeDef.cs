@@ -26,8 +26,28 @@ namespace LiAIChat.Civilization
 
         public int dormantAfterDays = 30;
 
+        public CivilizationKnowledgeEffects effects =
+            new CivilizationKnowledgeEffects();
+
         public float treeX;
 
         public float treeY;
+    }
+
+    public class CivilizationKnowledgeEffects
+    {
+        public float archiveIdentificationSpeedFactor =
+            1f;
+
+        public float archiveStudySpeedFactor =
+            1f;
+
+        public float archiveStudyXpFactor =
+            1f;
+
+        public float scholarTranslationSpeedFactor =
+            1f;
+
+        public string colonyConversationContext;
     }
 }

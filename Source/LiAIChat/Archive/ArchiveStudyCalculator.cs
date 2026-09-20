@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using Verse;
+using LiAIChat.Civilization;
 
 namespace LiAIChat.Archive
 {
@@ -10,26 +11,38 @@ namespace LiAIChat.Archive
         public static float GetIntellectualXp(
     Thing_AncientEarthArchiveFragment archive)
         {
+            float baseXp;
+
             if (archive == null ||
                 archive.Content == null)
             {
-                return 200f;
+                baseXp = 200f;
             }
-
-            switch (archive.Content.studyDifficulty)
+            else
             {
-                case ArchiveStudyDifficulty.Easy:
-                    return 150f;
+                switch (archive.Content.studyDifficulty)
+                {
+                    case ArchiveStudyDifficulty.Easy:
+                        baseXp = 150f;
+                        break;
 
-                case ArchiveStudyDifficulty.Moderate:
-                    return 250f;
+                    case ArchiveStudyDifficulty.Moderate:
+                        baseXp = 250f;
+                        break;
 
-                case ArchiveStudyDifficulty.Difficult:
-                    return 400f;
+                    case ArchiveStudyDifficulty.Difficult:
+                        baseXp = 400f;
+                        break;
 
-                default:
-                    return 200f;
+                    default:
+                        baseXp = 200f;
+                        break;
+                }
             }
+
+            return baseXp *
+                CivilizationKnowledgeEffectUtility
+                    .GetArchiveStudyXpFactor();
         }
 
         public static int GetStudyTicks(
@@ -57,6 +70,10 @@ namespace LiAIChat.Archive
 
             float speedMultiplier =
                 1f + intellectualLevel * 0.04f;
+
+            speedMultiplier *=
+                CivilizationKnowledgeEffectUtility
+                    .GetArchiveStudySpeedFactor();
 
             int finalTicks =
                 (int)(baseTicks / speedMultiplier);

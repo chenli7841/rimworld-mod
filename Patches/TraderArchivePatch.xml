@@ -11,7 +11,7 @@
     <value>
 
       <li Class="LiAIChat.Trading.StockGenerator_AncientArchive">
-        <chance>1.0</chance>
+        <chance>0.1</chance>
       </li>
 
     </value>

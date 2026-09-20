@@ -1,4 +1,5 @@
 ﻿using LiAIChat.Archive;
+using LiAIChat.Civilization;
 using LiAIChat.Knowledge;
 using LiAIChat.Models;
 using LiAIChat.Refugees;
@@ -502,6 +503,15 @@ $@"- Life goal: ${lifeGoal.Title}
             {
                 prompt.AppendLine();
                 prompt.AppendLine(knowledgePrompt);
+            }
+
+            string civilizationContext =
+                CivilizationKnowledgeEffectUtility.BuildConversationContext();
+
+            if (!string.IsNullOrWhiteSpace(civilizationContext))
+            {
+                prompt.AppendLine();
+                prompt.AppendLine(civilizationContext);
             }
             return prompt.ToString();
         }
