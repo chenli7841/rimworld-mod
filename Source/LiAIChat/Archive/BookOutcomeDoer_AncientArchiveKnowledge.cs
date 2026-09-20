@@ -84,6 +84,9 @@ namespace LiAIChat.Archive
             PawnAIState state,
             Thing_AncientEarthArchiveFragment archive)
         {
+            string studyId =
+                archive.StudyIdentityId;
+
             KnowledgeAcquisition acquisition =
                 new KnowledgeAcquisition
                 {
@@ -100,6 +103,10 @@ namespace LiAIChat.Archive
             KnowledgeUpdater.Apply(
                 state.Knowledge,
                 acquisition);
+
+            state.LearnEarthText(
+                studyId,
+                Props.learningStrength);
         }
     }
 }

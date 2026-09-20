@@ -324,6 +324,10 @@ namespace LiAIChat.Archive
                 .StudiedArchiveContentIds
                 .Add(contentId);
 
+            state.SetEarthTextFamiliarity(
+                contentId,
+                1f);
+
             // ---------------------------------------------------------
             // Long-term memory
             // ---------------------------------------------------------

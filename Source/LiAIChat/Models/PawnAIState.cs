@@ -43,6 +43,7 @@ namespace LiAIChat.Models
 
         public List<string> StudiedArchiveContentIds = new List<string>();
         public Dictionary<string, float> ArchiveReadingProgress = new Dictionary<string, float>();
+        public Dictionary<string, float> EarthTextFamiliarity = new Dictionary<string, float>();
         public List<ArchiveReflection> ArchiveReflections = new List<ArchiveReflection>();
 
         public ArchiveScholarProfile ScholarProfile;
@@ -81,6 +82,7 @@ namespace LiAIChat.Models
             Scribe_Collections.Look(ref IntellectualExchanges, "intellectualExchanges", LookMode.Deep);
             Scribe_Collections.Look(ref StudiedArchiveContentIds, "studiedArchiveContentIds", LookMode.Value);
             Scribe_Collections.Look(ref ArchiveReadingProgress, "archiveReadingProgress", LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref EarthTextFamiliarity, "earthTextFamiliarity", LookMode.Value, LookMode.Value);
             Scribe_Collections.Look(ref ArchiveReflections, "archiveReflections", LookMode.Deep);
             Scribe_Deep.Look(ref ScholarProfile, "scholarProfile");
             Scribe_Values.Look(ref AllowsPlayerConversation, "allowsPlayerConversation", false);
@@ -136,6 +138,11 @@ namespace LiAIChat.Models
                     ArchiveReadingProgress =
                         new Dictionary<string, float>();
                 }
+                if (EarthTextFamiliarity == null)
+                {
+                    EarthTextFamiliarity =
+                        new Dictionary<string, float>();
+                }
                 if (ArchiveReflections == null)
                 {
                     ArchiveReflections =
@@ -187,6 +194,67 @@ namespace LiAIChat.Models
 
             ArchiveReadingProgress[studyId] =
                 progress;
+        }
+
+        public float GetEarthTextFamiliarity(string studyId)
+        {
+            if (string.IsNullOrEmpty(studyId))
+            {
+                return 0f;
+            }
+
+            float familiarity;
+
+            if (EarthTextFamiliarity != null &&
+                EarthTextFamiliarity.TryGetValue(studyId, out familiarity))
+            {
+                return Clamp01(familiarity);
+            }
+
+            return StudiedArchiveContentIds != null &&
+                StudiedArchiveContentIds.Contains(studyId)
+                    ? 1f
+                    : 0f;
+        }
+
+        public void LearnEarthText(string studyId, float familiarityGain)
+        {
+            if (string.IsNullOrEmpty(studyId) ||
+                familiarityGain <= 0f)
+            {
+                return;
+            }
+
+            SetEarthTextFamiliarity(
+                studyId,
+                GetEarthTextFamiliarity(studyId) + familiarityGain);
+        }
+
+        public void SetEarthTextFamiliarity(string studyId, float familiarity)
+        {
+            if (string.IsNullOrEmpty(studyId))
+            {
+                return;
+            }
+
+            if (EarthTextFamiliarity == null)
+            {
+                EarthTextFamiliarity =
+                    new Dictionary<string, float>();
+            }
+
+            EarthTextFamiliarity[studyId] =
+                Clamp01(familiarity);
+        }
+
+        private static float Clamp01(float value)
+        {
+            if (value < 0f)
+            {
+                return 0f;
+            }
+
+            return value > 1f ? 1f : value;
         }
     }
 }

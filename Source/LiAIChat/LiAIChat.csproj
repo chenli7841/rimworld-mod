@@ -250,6 +250,7 @@
     <Compile Include="State\PawnAIStateManager.cs" />
     <Compile Include="Trading\StockGenerator_AncientArchive.cs" />
     <Compile Include="UI\Dialog_PawnChat.cs" />
+    <Compile Include="UI\Dialog_PawnCivilizationProfile.cs" />
     <Compile Include="UI\LiAIChatTextures.cs" />
     <Compile Include="Worldview\WorldviewChangeRules.cs" />
     <Compile Include="Worldview\WorldviewUpdater.cs" />

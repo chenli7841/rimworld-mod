@@ -33,6 +33,21 @@ namespace LiAIChat.Patches
                 yield break;
             }
 
+            if (__instance.IsColonistPlayerControlled)
+            {
+                yield return new Command_Action
+                {
+                    defaultLabel = "Civilization Knowledge",
+                    defaultDesc = "View this colonist's Ancient Earth knowledge, topics, and studied texts.",
+                    icon = LiAIChatTextures.StudyArchive,
+                    action = () =>
+                    {
+                        Find.WindowStack.Add(
+                            new Dialog_PawnCivilizationProfile(__instance));
+                    }
+                };
+            }
+
             if (!PawnConversationEligibility
     .CanTalkToPlayer(__instance))
             {
