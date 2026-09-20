@@ -5,6 +5,15 @@ namespace LiAIChat.Archive
 {
     public static class EarthTextSelector
     {
+        public static EarthTextDef SelectMissingOrRandom()
+        {
+            List<EarthTextDef> missing = ColonyLibrary.GetMissingTexts(
+                DefDatabase<EarthTextDef>.AllDefsListForReading);
+            return missing.Count > 0
+                ? missing[Rand.Range(0, missing.Count)]
+                : SelectRandom();
+        }
+
         public static EarthTextDef SelectRandom()
         {
             List<EarthTextDef> texts =

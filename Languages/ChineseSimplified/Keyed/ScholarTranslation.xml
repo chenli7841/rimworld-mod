@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
+  <LiAIChat_TranslationReward>约定文献：《{0}》。邀约生成时已确定，之后藏书变化不会改变奖励。</LiAIChat_TranslationReward>
   <LiAIChat_TranslationProgress>联合研究：《{0}》\n进度：{1}。请使用已鉴定的文献，下达研究指令后学者会自动走到书旁。</LiAIChat_TranslationProgress>
   <LiAIChat_TranslationButton>联合研究</LiAIChat_TranslationButton>
   <LiAIChat_TranslationInstructions>把指定文献放在地面或书架上，解除双方征召并确保学者清醒。选择另一名能够从事智识工作的殖民者开始联合研究，学者会自动到书旁参与。</LiAIChat_TranslationInstructions>

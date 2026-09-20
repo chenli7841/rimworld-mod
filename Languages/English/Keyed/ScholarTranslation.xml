@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
+  <LiAIChat_TranslationReward>Promised archive: {0}. Chosen when the invitation was created; later changes to your library do not change it.</LiAIChat_TranslationReward>
   <LiAIChat_TranslationProgress>Joint research: {0}\nProgress: {1}. Use an identified copy. The scholar will walk to the book when research is ordered.</LiAIChat_TranslationProgress>
   <LiAIChat_TranslationButton>Joint research</LiAIChat_TranslationButton>
   <LiAIChat_TranslationInstructions>Place the requested book on the ground or a shelf. Undraft both participants and keep the scholar awake. Select another colonist capable of Intellectual work; the scholar will automatically join them at the book.</LiAIChat_TranslationInstructions>

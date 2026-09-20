@@ -8,6 +8,12 @@ namespace LiAIChat.Archive
     ArchiveSourceType sourceType,
     string sourceDescription)
         {
+            return Create(sourceType, sourceDescription, null);
+        }
+
+        public static Thing_AncientEarthArchiveFragment Create(
+            ArchiveSourceType sourceType, string sourceDescription, EarthTextDef fixedText)
+        {
             Thing_AncientEarthArchiveFragment archive =
                 ThingMaker.MakeThing(
                     ThingDefOfArchive
@@ -23,7 +29,7 @@ namespace LiAIChat.Archive
             ArchiveContentDef content = ArchiveContentSelector.SelectForSource(sourceType);
             archive.SetContent(content);
 
-            EarthTextDef earthText = EarthTextSelector.SelectRandom();
+            EarthTextDef earthText = fixedText ?? EarthTextSelector.SelectRandom();
             archive.SetEarthText(earthText);
 
 
