@@ -3003,27 +3003,10 @@ namespace LiAIChat.Civilization.UI
                     !missingTexts.Contains(
                         textDef);
 
-                int copyCount =
-                    LiAIChat.Archive.ColonyLibrary
-                        .GetCopyCount(
-                            textDef);
-
                 if (hasText)
                 {
                     recovered++;
                 }
-
-
-                string prefix =
-                    hasText
-                        ? "✓ "
-                        : "✗ ";
-
-                string ownership =
-                    hasText
-                        ? " — Owned ×" +
-                            copyCount
-                        : " — Missing";
 
 
                 if (Widgets.ButtonText(
@@ -3032,10 +3015,11 @@ namespace LiAIChat.Civilization.UI
                             y,
                             innerRect.width - 10f,
                             32f),
-                        prefix +
-                        GetEarthTextLabel(
-                            textDef) +
-                        ownership))
+                        GetEarthTextTitle(
+                            textDef),
+                        true,
+                        true,
+                        hasText))
                 {
                     selectedEarthTextId =
                         textDef.defName;
@@ -3068,6 +3052,23 @@ namespace LiAIChat.Civilization.UI
             return y;
         }
 
+        private string GetEarthTextTitle(
+            LiAIChat.Archive.EarthTextDef textDef)
+        {
+            if (textDef == null)
+            {
+                return "";
+            }
+
+            return !string.IsNullOrWhiteSpace(
+                    textDef.title)
+                ? textDef.title
+                : (!string.IsNullOrWhiteSpace(
+                    textDef.label)
+                    ? textDef.label
+                    : textDef.defName);
+        }
+
         private string GetEarthTextLabel(
     LiAIChat.Archive.EarthTextDef textDef)
         {
@@ -3077,13 +3078,7 @@ namespace LiAIChat.Civilization.UI
             }
 
             string title =
-                !string.IsNullOrWhiteSpace(
-                    textDef.title)
-                    ? textDef.title
-                    : (!string.IsNullOrWhiteSpace(
-                        textDef.label)
-                        ? textDef.label
-                        : textDef.defName);
+                GetEarthTextTitle(textDef);
 
             if (string.IsNullOrWhiteSpace(
                     textDef.author))
