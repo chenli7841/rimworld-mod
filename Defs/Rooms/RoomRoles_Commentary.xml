@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <RoomRoleDef>
+    <defName>LiAIChat_LiteraryStudy</defName>
+    <label>文献创作间</label>
+    <workerClass>LiAIChat.Commentary.RoomRoleWorker_LiteraryStudy</workerClass>
+  </RoomRoleDef>
+</Defs>

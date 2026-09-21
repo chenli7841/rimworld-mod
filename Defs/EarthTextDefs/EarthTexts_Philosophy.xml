@@ -86,7 +86,7 @@
     <shortDescription>一册从古代地球遗迹中发现的私人笔记，署名“马可·奥勒留”。作者似乎曾统治一个庞大帝国，却反复告诫自己克制欲望、履行责任并接受命运。帝国早已消失，这些写给自己的话却保存至今。</shortDescription>
     <author>马可·奥勒留</author>
     <year>180</year>
-    <primaryTopicId>philosophy</primaryTopicId>
+    <primaryTopicId>earth.philosophy.stoicism</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>
 
 
@@ -103,7 +103,7 @@
     <shortDescription>一本从古代地球遗迹中复原的思想著作，署名“弗朗西斯·培根”。残篇警告人类容易被偏见与传统欺骗，并主张通过观察、实验和归纳认识自然。它似乎来自古代地球科学发生巨大转变的时代。</shortDescription>
     <author>弗朗西斯·培根</author>
     <year>1620</year>
-    <primaryTopicId>philosophy</primaryTopicId>
+    <primaryTopicId>earth.philosophy.enlightenment</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>
 
 
@@ -120,7 +120,7 @@
     <shortDescription>一本从古代地球档案中复原的哲学著作，署名“勒内·笛卡尔”。作者试图怀疑一切可以怀疑之物，以寻找知识不可动摇的起点。那个文明留下了无数答案，而这份残卷首先保存下来的却是怀疑。</shortDescription>
     <author>勒内·笛卡尔</author>
     <year>1641</year>
-    <primaryTopicId>philosophy</primaryTopicId>
+    <primaryTopicId>earth.philosophy.enlightenment</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>
 
 
@@ -137,7 +137,7 @@
     <shortDescription>一本从古代地球遗迹中复原的哲学著作，署名“约翰·洛克”。残篇研究观念、经验与知识的来源，并追问人的心灵如何理解世界。在缺乏现代神经科学的时代，他们已经开始系统研究思想本身。</shortDescription>
     <author>约翰·洛克</author>
     <year>1689</year>
-    <primaryTopicId>philosophy</primaryTopicId>
+    <primaryTopicId>earth.philosophy.enlightenment</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>
 
   <LiAIChat.Archive.EarthTextDef>
@@ -149,7 +149,7 @@
     <shortDescription>一本从古代地球档案中复原的哲学著作，署名“大卫·休谟”。残篇研究经验、因果、习惯与知识的界限，并质疑人是否真的能够从过去证明未来。一个高度技术化文明的早期思想中，已经存在对确定性的深刻怀疑。</shortDescription>
     <author>大卫·休谟</author>
     <year>1748</year>
-    <primaryTopicId>philosophy</primaryTopicId>
+    <primaryTopicId>earth.philosophy.enlightenment</primaryTopicId>
   </LiAIChat.Archive.EarthTextDef>
 
 </Defs>

@@ -169,6 +169,7 @@
     <Compile Include="Commentary\CommentaryIdleWritingManager.cs" />
     <Compile Include="Commentary\OpenAIEarthCommentaryGenerator.cs" />
     <Compile Include="Commentary\CommentaryResponseService.cs" />
+    <Compile Include="Commentary\RoomRoleWorker_LiteraryStudy.cs" />
     <Compile Include="Config\Config.cs" />
     <Compile Include="Defs\LiAIChatThingDefOf.cs" />
     <Compile Include="Dialogue\ProactiveDialogueManager.cs" />
