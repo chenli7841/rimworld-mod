@@ -18,28 +18,24 @@ namespace LiAIChat.Archive
                 return;
             }
 
-            List<Thing_AncientEarthArchiveFragment>
-                archives =
-                    pawn.Map.listerThings
-                        .ThingsOfDef(
-                            ThingDefOfArchive
-                                .LiAIChat_AncientEarthArchiveFragment)
-                        .OfType<
-                            Thing_AncientEarthArchiveFragment>()
-                        .Where(
-                            archive =>
-                                !archive.Identified &&
-                                archive.Content != null &&
-                                pawn.CanReach(
-                                    archive,
-                                    PathEndMode.Touch,
-                                    Danger.Some))
-                        .OrderBy(
-                            archive =>
-                                pawn.Position
-                                    .DistanceToSquared(
-                                        archive.Position))
-                        .ToList();
+            List<Thing_AncientEarthArchiveFragment> allArchives =
+                pawn.Map.listerThings
+                    .ThingsOfDef(ThingDefOfArchive.LiAIChat_AncientEarthArchiveFragment)
+                    .OfType<Thing_AncientEarthArchiveFragment>()
+                    .ToList();
+
+            // Repair old or externally generated trader stock before applying
+            // the eligibility filter. This is deliberately done only when the
+            // player asks to identify an archive, never during map ticks.
+            foreach (Thing_AncientEarthArchiveFragment archive in allArchives)
+                if (archive != null && !archive.Identified && archive.Content == null)
+                    archive.EnsureMetadata();
+
+            List<Thing_AncientEarthArchiveFragment> archives = allArchives
+                .Where(archive => !archive.Identified && archive.Content != null &&
+                    pawn.CanReach(archive, PathEndMode.Touch, Danger.Some))
+                .OrderBy(archive => pawn.Position.DistanceToSquared(archive.Position))
+                .ToList();
 
             if (archives.Count == 0)
             {

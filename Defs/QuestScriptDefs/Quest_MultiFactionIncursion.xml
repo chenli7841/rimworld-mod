@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <QuestScriptDef>
+    <defName>LiAIChat_MultiFactionIncursion</defName>
+    <rootSelectionWeight>0.45</rootSelectionWeight>
+    <rootMinPoints>450</rootMinPoints>
+    <minRefireDays>30</minRefireDays>
+    <questNameRules><rulesStrings><li>questName->多方入侵：交火边境</li></rulesStrings></questNameRules>
+    <questDescriptionRules><rulesStrings><li>questDescription->两支敌对的人类武装与一支机械族部队同时锁定了殖民地。它们并非盟友：三方都将攻击彼此，也会攻击殖民者。接受任务会让三支队伍从不同方向同时入侵；击溃或使所有入侵者失去战斗能力，即可结束事件。</li></rulesStrings></questDescriptionRules>
+    <root Class="QuestNode_Sequence">
+      <nodes>
+        <li Class="QuestNode_QuestUnique"><tag>LiAIChat_MultiFactionIncursion_Active</tag></li>
+        <li Class="QuestNode_GetMap"><canBeSpace>false</canBeSpace></li>
+        <li Class="LiAIChat.Questing.QuestNode_PrepareMultiFactionIncursion" />
+      </nodes>
+    </root>
+  </QuestScriptDef>
+</Defs>

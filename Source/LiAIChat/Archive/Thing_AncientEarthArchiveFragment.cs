@@ -21,7 +21,10 @@ namespace LiAIChat.Archive
             if (action == RimWorld.TradeAction.PlayerSells)
                 soldByPlayer = true;
             else if (action == RimWorld.TradeAction.PlayerBuys)
+            {
                 soldByPlayer = false;
+                EnsureMetadata();
+            }
         }
 
         public ArchiveContentDef Content =>
@@ -151,6 +154,25 @@ namespace LiAIChat.Archive
 
             CivilizationKnowledgeEvaluator
                 .NotifyLibraryMayHaveChanged();
+        }
+
+        /// <summary>
+        /// Older trader inventories could contain a raw ThingDef instance rather
+        /// than an archive created by AncientArchiveFactory. Repair only missing
+        /// fields, so an already assigned document can never be changed.
+        /// </summary>
+        public void EnsureMetadata()
+        {
+            if (content == null)
+            {
+                ArchiveSourceType selectionSource = sourceType == ArchiveSourceType.Unknown
+                    ? ArchiveSourceType.Trader
+                    : sourceType;
+                content = ArchiveContentSelector.SelectForSource(selectionSource);
+            }
+
+            if (string.IsNullOrEmpty(earthTextDefName))
+                SetEarthText(EarthTextSelector.SelectRandom());
         }
 
         /// <summary>

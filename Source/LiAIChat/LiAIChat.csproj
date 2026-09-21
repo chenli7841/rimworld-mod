@@ -228,6 +228,7 @@
     <Compile Include="Questing\LiAIQuestDebug.cs" />
     <Compile Include="Questing\QuestNode_AddArchiveReward.cs" />
     <Compile Include="Questing\QuestNode_PrepareFarewellWeaponGift.cs" />
+    <Compile Include="Questing\QuestNode_PrepareMultiFactionIncursion.cs" />
     <Compile Include="Questing\QuestNode_CompleteArchiveScholarStay.cs" />
     <Compile Include="Questing\QuestNode_CreateArchiveRefugees.cs" />
     <Compile Include="Questing\QuestNode_CreateArchiveScholar.cs" />
@@ -245,6 +246,7 @@
     <Compile Include="Questing\QuestNode_StartArchiveScholarStay.cs" />
     <Compile Include="Questing\QuestPart_DeliverArchive.cs" />
     <Compile Include="Questing\QuestPart_FarewellWeaponGift.cs" />
+    <Compile Include="Questing\QuestPart_MultiFactionIncursion.cs" />
     <Compile Include="Questing\ScholarTranslationQuest.cs" />
     <Compile Include="Questing\QuestNode_WaitForArchiveRecovery.cs" />
     <Compile Include="Questing\QuestPart_WaitForArchiveRecovery.cs" />
