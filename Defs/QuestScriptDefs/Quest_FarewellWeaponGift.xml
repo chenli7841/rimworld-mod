@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <QuestScriptDef MayRequire="Ludeon.RimWorld.Odyssey">
+    <defName>LiAIChat_FarewellWeaponGift</defName>
+    <rootSelectionWeight>0.7</rootSelectionWeight>
+    <rootMinPoints>350</rootMinPoints>
+    <minRefireDays>45</minRefireDays>
+    <questNameRules>
+      <rulesStrings><li>questName->武器匠的告别礼物</li></rulesStrings>
+    </questNameRules>
+    <questDescriptionRules>
+      <rulesStrings><li>questDescription->一位技艺精湛的殖民者提出永久前往一个友方势力，在那里花费数日，将自己持有的大师级或传奇级远程武器改造成独一无二的特化武器。接受后，这位殖民者将离开殖民地且不会归来；数日后，改造完成的武器会作为告别礼物送回。</li></rulesStrings>
+    </questDescriptionRules>
+    <root Class="QuestNode_Sequence">
+      <nodes>
+        <li Class="QuestNode_QuestUnique"><tag>LiAIChat_FarewellWeaponGift_Active</tag></li>
+        <li Class="QuestNode_GetMap"><canBeSpace>false</canBeSpace></li>
+        <li Class="LiAIChat.Questing.QuestNode_PrepareFarewellWeaponGift" />
+      </nodes>
+    </root>
+  </QuestScriptDef>
+</Defs>
