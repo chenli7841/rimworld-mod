@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <QuestScriptDef>
+    <defName>LiAIChat_LostAnnotator</defName>
+    <rootSelectionWeight>1.0</rootSelectionWeight>
+    <rootMinPoints>250</rootMinPoints>
+    <minRefireDays>14</minRefireDays>
+    <autoAccept>true</autoAccept>
+    <questNameRules><rulesStrings><li>questName->失落的注疏者</li></rulesStrings></questNameRules>
+    <questDescriptionRules><rulesStrings><li>questDescription->一段断续的求救讯号指向附近遗迹。一名研究远古地球文献的学者被困其中，并携带着珍贵的私人注疏。抵达遗迹，救出学者并带他返回殖民地；他或许能协助解读馆藏，留下新的文献线索。</li></rulesStrings></questDescriptionRules>
+    <root Class="QuestNode_Sequence"><nodes>
+      <li Class="QuestNode_QuestUnique"><tag>LiAIChat_LostAnnotator_Active</tag></li>
+      <li Class="LiAIChat.Questing.QuestNode_AddLostAnnotatorStatus" />
+      <li Class="QuestNode_GetMap"><canBeSpace>false</canBeSpace></li>
+      <li Class="QuestNode_Set"><name>siteDistRange</name><value>4~12</value></li>
+      <li Class="QuestNode_GetSiteTile"><storeAs>siteTile</storeAs><preferCloserTiles>true</preferCloserTiles><canSelectSpace>false</canSelectSpace></li>
+      <li Class="QuestNode_GetSitePartDefsByTagsAndFaction"><storeAs>sitePartDefs</storeAs><storeFactionAs>siteFaction</storeFactionAs><sitePartsTags><li><tag>LiAIChat_LostAnnotatorSite</tag><chance>1</chance></li></sitePartsTags></li>
+      <li Class="QuestNode_GetDefaultSitePartsParams"><tile>$siteTile</tile><faction>$siteFaction</faction><sitePartDefs>$sitePartDefs</sitePartDefs><storeSitePartsParamsAs>sitePartsParams</storeSitePartsParamsAs></li>
+      <li Class="QuestNode_SubScript"><def>Util_GenerateSite</def><parms><hiddenSitePartsPossible>false</hiddenSitePartsPossible></parms></li>
+      <li Class="QuestNode_SpawnWorldObjects"><worldObjects>$site</worldObjects></li>
+      <li Class="QuestNode_WorldObjectTimeout"><worldObject>$site</worldObject><isQuestTimeout>true</isQuestTimeout><delayTicks>1200000</delayTicks><inSignalDisable>site.MapGenerated</inSignalDisable><node Class="QuestNode_End"><outcome>Fail</outcome></node></li>
+      <li Class="QuestNode_Delay"><inSignalEnable>site.MapGenerated</inSignalEnable><delayTicks>1800000</delayTicks><isQuestTimeout>true</isQuestTimeout><node Class="QuestNode_End"><outcome>Fail</outcome></node></li>
+    </nodes></root>
+  </QuestScriptDef>
+</Defs>

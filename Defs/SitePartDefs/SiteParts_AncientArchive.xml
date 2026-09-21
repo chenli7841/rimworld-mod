@@ -10,5 +10,12 @@
       <li>LiAIChat_AncientArchiveSite</li>
     </tags>
   </SitePartDef>
+  <SitePartDef>
+    <defName>LiAIChat_LostAnnotatorSite</defName>
+    <label>lost annotator's refuge</label>
+    <description>A damaged refuge contains a scholar and fragments of an Ancient Earth commentary.</description>
+    <workerClass>LiAIChat.Questing.SitePartWorker_LostAnnotator</workerClass>
+    <tags><li>LiAIChat_LostAnnotatorSite</li></tags>
+  </SitePartDef>
 
 </Defs>

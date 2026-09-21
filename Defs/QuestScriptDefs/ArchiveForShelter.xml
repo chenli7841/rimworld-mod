@@ -3,13 +3,13 @@
 <Defs>
   <QuestScriptDef>
     <defName>LiAIChat_ArchiveForShelter</defName>
-    <rootSelectionWeight>0.20</rootSelectionWeight>
+    <rootSelectionWeight>1.0</rootSelectionWeight>
     <expireDaysRange>8~12</expireDaysRange>
-    <minRefireDays>60</minRefireDays>
+    <minRefireDays>14</minRefireDays>
     <root Class="QuestNode_Sequence">
       <nodes>
         <li Class="LiAIChat.Questing.QuestNode_RequireColonyAge">
-          <minDays>60</minDays>
+          <minDays>12</minDays>
         </li>
         <li Class="LiAIChat.Questing.QuestNode_CreateArchiveRefugees">
           <storeAs>refugees</storeAs>

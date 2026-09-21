@@ -3,8 +3,8 @@
   <QuestScriptDef>
     <defName>LiAIChat_ScholarTranslation</defName>
     <!-- Initial balancing values; refire interval starts at quest appearance. -->
-    <rootSelectionWeight>0.2</rootSelectionWeight>
-    <minRefireDays>30</minRefireDays>
+    <rootSelectionWeight>1.1</rootSelectionWeight>
+    <minRefireDays>12</minRefireDays>
     <expireDaysRange>5~5</expireDaysRange>
     <questNameRules><rulesStrings><li>questName->Lost translation: a scholar's inquiry</li></rulesStrings></questNameRules>
     <questDescriptionRules><rulesStrings>

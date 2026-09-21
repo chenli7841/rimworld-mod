@@ -4,6 +4,7 @@ using LiAIChat.Heritage;
 using LiAIChat.Commentary;
 using LiAIChat.Models;
 using LiAIChat.Social;
+using LiAIChat.Questing;
 using System.Collections.Generic;
 using Verse;
 
@@ -90,12 +91,13 @@ namespace LiAIChat.Game
 
             MainThreadActionQueue.Process();
             CommentaryResponseService.CheckDueReplies();
+            LostAnnotatorRescueManager.Check();
             if (Find.TickManager == null)
                 return;
 
             int currentTick =
                 Find.TickManager.TicksGame;
-            if (currentTick - lastCommentaryWritingCheckTick >= 5000)
+            if (currentTick - lastCommentaryWritingCheckTick >= 1000)
             { lastCommentaryWritingCheckTick = currentTick; CommentaryIdleWritingManager.TryAssignIdleWriters(); }
 
             // 每游戏日检查一次，避免频繁扫描所有殖民者。

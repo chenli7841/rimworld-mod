@@ -5,10 +5,10 @@
     <defName>LiAIChat_AncientArchiveRecovery</defName>
 
     <!-- Relative storyteller selection weight, not an absolute probability. -->
-    <rootSelectionWeight>0.5</rootSelectionWeight>
-    <rootMinPoints>400</rootMinPoints>
+    <rootSelectionWeight>1.2</rootSelectionWeight>
+    <rootMinPoints>250</rootMinPoints>
     <!-- Measured from the previous quest's appearance, not its completion. -->
-    <minRefireDays>15</minRefireDays>
+    <minRefireDays>10</minRefireDays>
     <autoAccept>true</autoAccept>
     <questNameRules>
       <rulesStrings>

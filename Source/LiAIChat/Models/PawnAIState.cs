@@ -55,6 +55,8 @@ namespace LiAIChat.Models
         public string RefugeeGroupId;
 
         public bool IsRefugeeGroupLeader;
+        public bool IsLostAnnotator;
+        public bool LostAnnotatorRescued;
 
         public PawnAIState()
         {
@@ -89,6 +91,8 @@ namespace LiAIChat.Models
             Scribe_Deep.Look(ref ScholarStay, "scholarStay");
             Scribe_Values.Look(ref RefugeeGroupId, "refugeeGroupId");
             Scribe_Values.Look(ref IsRefugeeGroupLeader, "isRefugeeGroupLeader", false);
+            Scribe_Values.Look(ref IsLostAnnotator, "isLostAnnotator", false);
+            Scribe_Values.Look(ref LostAnnotatorRescued, "lostAnnotatorRescued", false);
 
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)

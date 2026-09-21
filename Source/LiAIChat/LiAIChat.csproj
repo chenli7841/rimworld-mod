@@ -214,6 +214,7 @@
     <Compile Include="Patches\PawnGizmoPatch.cs" />
     <Compile Include="Patches\PawnKillArchiveRefugeePatch.cs" />
     <Compile Include="Patches\PawnKillArchiveScholarPatch.cs" />
+    <Compile Include="Patches\PawnKillLostAnnotatorPatch.cs" />
     <Compile Include="Patches\Pawn_Kill_ArchiveScholar_Patch.cs" />
     <Compile Include="Patches\ThingDescriptionHeritagePatch.cs" />
     <Compile Include="Patches\ShelfCommentaryGizmoPatch.cs" />
@@ -247,6 +248,10 @@
     <Compile Include="Questing\QuestPart_WaitForArchiveRecovery.cs" />
     <Compile Include="Questing\QuestPart_WaitForPawnExit.cs" />
     <Compile Include="Questing\SitePartWorker_LostEarthArchive.cs" />
+    <Compile Include="Questing\SitePartWorker_LostAnnotator.cs" />
+    <Compile Include="Questing\LostAnnotatorRescueManager.cs" />
+    <Compile Include="Questing\QuestPart_LostAnnotatorStatus.cs" />
+    <Compile Include="Questing\QuestNode_AddLostAnnotatorStatus.cs" />
     <Compile Include="Refugees\ArchiveRefugeeArchiveDecisionUtility.cs" />
     <Compile Include="Refugees\ArchiveRefugeeArchiveTransferUtility.cs" />
     <Compile Include="Refugees\ArchiveRefugeeConstants.cs" />
