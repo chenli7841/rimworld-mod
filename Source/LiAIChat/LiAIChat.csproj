@@ -160,6 +160,15 @@
     <Compile Include="Civilization\UI\Window_CivilizationKnowledgeTree.cs" />
     <Compile Include="Civilization\Window_CivilizationKnowledge.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="Commentary\EarthCommentaryWork.cs" />
+    <Compile Include="Commentary\CommentaryService.cs" />
+    <Compile Include="Commentary\CommentaryResearch.cs" />
+    <Compile Include="Commentary\WritingSupplyUtility.cs" />
+    <Compile Include="Commentary\Thing_EarthCommentaryManuscript.cs" />
+    <Compile Include="Commentary\JobDriver_WriteEarthCommentary.cs" />
+    <Compile Include="Commentary\CommentaryIdleWritingManager.cs" />
+    <Compile Include="Commentary\OpenAIEarthCommentaryGenerator.cs" />
+    <Compile Include="Commentary\CommentaryResponseService.cs" />
     <Compile Include="Config\Config.cs" />
     <Compile Include="Defs\LiAIChatThingDefOf.cs" />
     <Compile Include="Dialogue\ProactiveDialogueManager.cs" />
@@ -206,6 +215,7 @@
     <Compile Include="Patches\PawnKillArchiveScholarPatch.cs" />
     <Compile Include="Patches\Pawn_Kill_ArchiveScholar_Patch.cs" />
     <Compile Include="Patches\ThingDescriptionHeritagePatch.cs" />
+    <Compile Include="Patches\ShelfCommentaryGizmoPatch.cs" />
     <Compile Include="PawnConversationEligibility.cs" />
     <Compile Include="Pawns\PawnContextBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -256,6 +266,8 @@
     <Compile Include="State\PawnAIStateManager.cs" />
     <Compile Include="Trading\StockGenerator_AncientArchive.cs" />
     <Compile Include="UI\Dialog_PawnChat.cs" />
+    <Compile Include="UI\Dialog_EarthCommentaryReader.cs" />
+    <Compile Include="UI\Dialog_EarthCommentaryLibrary.cs" />
     <Compile Include="UI\Dialog_PawnCivilizationProfile.cs" />
     <Compile Include="UI\LiAIChatTextures.cs" />
     <Compile Include="Worldview\WorldviewChangeRules.cs" />

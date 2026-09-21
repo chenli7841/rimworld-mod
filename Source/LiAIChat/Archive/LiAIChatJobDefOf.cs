@@ -9,6 +9,7 @@ public static class LiAIChatJobDefOf
     public static JobDef LiAIChat_IdentifyAncientArchive;
 
     public static JobDef LiAIChat_InvestigateArchiveTerminal;
+    public static JobDef LiAIChat_WriteEarthCommentary;
 
     static LiAIChatJobDefOf()
     {

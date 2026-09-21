@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ResearchProjectDef>
+    <defName>LiAIChat_PaperMaking</defName>
+    <label>纸张制造</label>
+    <description>将布料加工为适合长期书写与保存的纸张。纸张可在艺创台制作，是正式文献创作的基础材料。</description>
+    <baseCost>450</baseCost>
+    <techLevel>Medieval</techLevel>
+    <researchViewX>2</researchViewX>
+    <researchViewY>2</researchViewY>
+  </ResearchProjectDef>
+  <ResearchProjectDef>
+    <defName>LiAIChat_InkPenCrafting</defName>
+    <label>墨笔制作</label>
+    <description>制作可用于长期书写的墨笔。墨笔可在艺创台制作，是正式文献创作的基础材料。</description>
+    <baseCost>450</baseCost>
+    <techLevel>Medieval</techLevel>
+    <researchViewX>2</researchViewX>
+    <researchViewY>3</researchViewY>
+  </ResearchProjectDef>
+  <ResearchProjectDef>
+    <defName>LiAIChat_EarthTextCommentary</defName>
+    <label>文献评注学</label>
+    <description>研究如何以殖民地保存的远古地球文献为对象，写出自己的评注与后记。
+
+完成研究后，满足条件的殖民者会在真正空闲时偶尔开始写作；这不是可在工作页设定优先级的工作。作者需要足够深厚的智识与相关文明主题知识，也需要保持良好心情。
+
+准备一间安静的写作室：室内放置文稿桌、可用座椅和书架，并备好持续消耗的纸张与墨笔。被评注的原著必须保留在殖民地中；原著遗失、环境不再合适、耗材不足或作者状态下降时，手稿会暂停，直到条件恢复。
+
+完成的评注会成为书架馆藏。你可以打开它阅读，并留下来源不明的批注；作者将在长时间思考后作出回应或修正。</description>
+    <baseCost>900</baseCost>
+    <techLevel>Medieval</techLevel>
+    <prerequisites>
+      <li>LiAIChat_PaperMaking</li>
+      <li>LiAIChat_InkPenCrafting</li>
+    </prerequisites>
+    <researchViewX>4</researchViewX>
+    <researchViewY>2</researchViewY>
+  </ResearchProjectDef>
+  <ResearchProjectDef>
+    <defName>LiAIChat_MysteriousMarginalia</defName>
+    <label>神秘批注学</label>
+    <description>研究如何面对出现在私人著作中的未知批注。完成后，你可以在已完成的文献评注中留下神秘批注；作者会在长时间思考后，以惊奇、好奇、敬畏、感谢或怀疑等符合其性格的方式回应，并可能修正自己的观点。</description>
+    <baseCost>2400</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites><li>LiAIChat_EarthTextCommentary</li></prerequisites>
+    <researchViewX>6</researchViewX>
+    <researchViewY>2</researchViewY>
+  </ResearchProjectDef>
+</Defs>
