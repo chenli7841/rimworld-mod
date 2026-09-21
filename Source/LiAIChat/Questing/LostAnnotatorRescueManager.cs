@@ -9,12 +9,13 @@ namespace LiAIChat.Questing
     {
         public static void Check()
         {
+            if (!HasActiveLostAnnotatorQuest()) return;
             foreach (Map map in Find.Maps)
             {
                 if (map == null || !map.IsPlayerHome) continue;
                 foreach (Pawn pawn in map.mapPawns.AllPawnsSpawned)
                 {
-                    var state = PawnAIStateManager.GetState(pawn);
+                    var state = PawnAIStateManager.TryGetExistingState(pawn);
                     if (state == null || !state.IsLostAnnotator || state.LostAnnotatorRescued || pawn.Dead) continue;
                     state.LostAnnotatorRescued = true;
                     ArchiveScholarStayUtility.StartStay(pawn, 300000, "", "");
@@ -38,6 +39,16 @@ namespace LiAIChat.Questing
                     return;
                 }
             }
+        }
+
+        private static bool HasActiveLostAnnotatorQuest()
+        {
+            if (Find.QuestManager == null) return false;
+            foreach (Quest quest in Find.QuestManager.QuestsListForReading)
+                if (quest != null && quest.root != null &&
+                    quest.root.defName == "LiAIChat_LostAnnotator" && quest.State == QuestState.Ongoing)
+                    return true;
+            return false;
         }
     }
 }

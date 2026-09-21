@@ -7,6 +7,24 @@ namespace LiAIChat.State
 {
     public static class PawnAIStateManager
     {
+        // Polling and UI must not create a complete knowledge record merely
+        // because they encountered an unrelated pawn.
+        public static PawnAIState TryGetExistingState(Pawn pawn)
+        {
+            if (pawn == null || Current.Game == null)
+                return null;
+
+            LiAIChatGameComponent component = Current.Game.GetComponent<LiAIChatGameComponent>();
+            if (component == null || component.PawnStates == null)
+                return null;
+
+            int pawnId = pawn.thingIDNumber;
+            foreach (PawnAIState state in component.PawnStates)
+                if (state != null && state.PawnId == pawnId)
+                    return state;
+            return null;
+        }
+
         public static PawnAIState GetState(
             Pawn pawn)
         {
@@ -39,15 +57,9 @@ namespace LiAIChat.State
             int pawnId =
                 pawn.thingIDNumber;
 
-            // 先找已经存在的 state
-            foreach (PawnAIState state in component.PawnStates)
-            {
-                if (state.PawnId == pawnId)
-                {
-                    // 已存在：直接返回，千万不要在这里重新初始化 Knowledge
-                    return state;
-                }
-            }
+            PawnAIState existingState = TryGetExistingState(pawn);
+            if (existingState != null)
+                return existingState;
 
             // 只有第一次没有找到时才创建
             PawnAIState newState =

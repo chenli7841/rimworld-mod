@@ -94,6 +94,8 @@ namespace LiAIChat.Questing
         public override void QuestPartTick()
         {
             base.QuestPartTick();
+            if (Find.TickManager.TicksGame % 250 != 0)
+                return;
             if (quest.State != QuestState.Ongoing || !departed || delivered || returnTick < 0 ||
                 Find.TickManager.TicksGame < returnTick)
                 return;
