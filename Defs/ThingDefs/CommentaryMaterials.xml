@@ -3,7 +3,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>LiAIChat_WritingPaper</defName><label>书写纸</label>
     <description>适合保存文字的纸张，用于文献创作。</description>
-    <graphicData><texPath>Things/Item/Resource/Cloth/Cloth</texPath><graphicClass>Graphic_StackCount</graphicClass><drawSize>0.55</drawSize></graphicData>
+    <graphicData><texPath>Things/Item/Book/Novel/Novel</texPath><graphicClass>Graphic_Single</graphicClass><drawSize>0.45</drawSize></graphicData>
     <statBases><MarketValue>1.2</MarketValue><Mass>0.02</Mass><Flammability>1</Flammability><WorkToMake>80</WorkToMake></statBases>
     <costList><Cloth>5</Cloth></costList>
     <recipeMaker><workAmount>500</workAmount><workSkill>Artistic</workSkill><recipeUsers><li>TableSculpting</li></recipeUsers><researchPrerequisite>LiAIChat_PaperMaking</researchPrerequisite><productCount>20</productCount></recipeMaker>
@@ -11,7 +11,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>LiAIChat_SteelPen</defName><label>钢笔</label>
     <description>一支钢制的墨笔，可用于长篇书写。连续书写约十二小时后会耗尽。</description>
-    <graphicData><texPath>Things/Item/Resource/ComponentIndustrial</texPath><graphicClass>Graphic_Single</graphicClass><drawSize>0.35</drawSize></graphicData>
+    <graphicData><texPath>Things/Item/Book/Novel/Novel</texPath><graphicClass>Graphic_Single</graphicClass><drawSize>0.35</drawSize></graphicData>
     <statBases><MarketValue>8</MarketValue><Mass>0.05</Mass><Flammability>0.6</Flammability><WorkToMake>180</WorkToMake></statBases>
     <costList><WoodLog>4</WoodLog><Steel>1</Steel></costList>
     <recipeMaker><workAmount>900</workAmount><workSkill>Artistic</workSkill><recipeUsers><li>TableSculpting</li></recipeUsers><researchPrerequisite>LiAIChat_InkPenCrafting</researchPrerequisite></recipeMaker>
@@ -19,7 +19,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>LiAIChat_SilverPen</defName><label>银笔</label>
     <description>一支银制墨笔。书写时的仪式感有助于维持作者的心情，并稍微减慢娱乐和休息的消耗；连续书写约十二小时后会耗尽。</description>
-    <graphicData><texPath>Things/Item/Resource/ComponentIndustrial</texPath><graphicClass>Graphic_Single</graphicClass><drawSize>0.35</drawSize></graphicData>
+    <graphicData><texPath>Things/Item/Book/Novel/Novel</texPath><graphicClass>Graphic_Single</graphicClass><drawSize>0.35</drawSize></graphicData>
     <statBases><MarketValue>35</MarketValue><Mass>0.05</Mass><Flammability>0.4</Flammability><WorkToMake>240</WorkToMake></statBases>
     <costList><WoodLog>4</WoodLog><Silver>12</Silver></costList>
     <recipeMaker><workAmount>1200</workAmount><workSkill>Artistic</workSkill><recipeUsers><li>TableSculpting</li></recipeUsers><researchPrerequisite>LiAIChat_InkPenCrafting</researchPrerequisite></recipeMaker>
@@ -27,7 +27,7 @@
   <ThingDef ParentName="ResourceBase">
     <defName>LiAIChat_GoldPen</defName><label>金笔</label>
     <description>一支金制墨笔。其奢华与庄重能显著维持作者的心情，并减慢娱乐和休息的消耗；连续书写约十二小时后会耗尽。</description>
-    <graphicData><texPath>Things/Item/Resource/ComponentIndustrial</texPath><graphicClass>Graphic_Single</graphicClass><drawSize>0.35</drawSize></graphicData>
+    <graphicData><texPath>Things/Item/Book/Novel/Novel</texPath><graphicClass>Graphic_Single</graphicClass><drawSize>0.35</drawSize></graphicData>
     <statBases><MarketValue>90</MarketValue><Mass>0.05</Mass><Flammability>0.3</Flammability><WorkToMake>300</WorkToMake></statBases>
     <costList><WoodLog>4</WoodLog><Gold>6</Gold></costList>
     <recipeMaker><workAmount>1500</workAmount><workSkill>Artistic</workSkill><recipeUsers><li>TableSculpting</li></recipeUsers><researchPrerequisite>LiAIChat_InkPenCrafting</researchPrerequisite></recipeMaker>
