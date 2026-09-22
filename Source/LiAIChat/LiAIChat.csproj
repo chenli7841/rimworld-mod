@@ -181,6 +181,7 @@
     <Compile Include="Heritage\OpenAICivilizationHeritageGenerator.cs" />
     <Compile Include="Goals\LifeGoalUpdater.cs" />
     <Compile Include="Knowledge\KnowledgeInitializer.cs" />
+    <Compile Include="Knowledge\CivilizationDomainKnowledgeUtility.cs" />
     <Compile Include="Knowledge\KnowledgePromptBuilder.cs" />
     <Compile Include="Knowledge\KnowledgeTopicCatalog.cs" />
     <Compile Include="Knowledge\KnowledgeTopicDescriptionResolver.cs" />

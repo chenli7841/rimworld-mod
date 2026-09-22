@@ -107,6 +107,11 @@ namespace LiAIChat.Archive
             state.LearnEarthText(
                 studyId,
                 Props.learningStrength);
+
+            CivilizationDomainKnowledgeUtility.ReconcileTextContribution(
+                state,
+                studyId,
+                archive.KnowledgeTopicId);
         }
     }
 }

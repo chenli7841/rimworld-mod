@@ -47,6 +47,8 @@ namespace LiAIChat.UI
                 return;
             }
 
+            CivilizationDomainKnowledgeUtility.ReconcileAllKnownTexts(state);
+
             Text.Font = GameFont.Medium;
             Widgets.Label(
                 new Rect(inRect.x, inRect.y, inRect.width, 32f),

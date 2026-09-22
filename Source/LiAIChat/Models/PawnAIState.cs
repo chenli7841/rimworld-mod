@@ -44,6 +44,7 @@ namespace LiAIChat.Models
         public List<string> StudiedArchiveContentIds = new List<string>();
         public Dictionary<string, float> ArchiveReadingProgress = new Dictionary<string, float>();
         public Dictionary<string, float> EarthTextFamiliarity = new Dictionary<string, float>();
+        public Dictionary<string, float> EarthTextDomainContribution = new Dictionary<string, float>();
         public List<ArchiveReflection> ArchiveReflections = new List<ArchiveReflection>();
 
         public ArchiveScholarProfile ScholarProfile;
@@ -85,6 +86,7 @@ namespace LiAIChat.Models
             Scribe_Collections.Look(ref StudiedArchiveContentIds, "studiedArchiveContentIds", LookMode.Value);
             Scribe_Collections.Look(ref ArchiveReadingProgress, "archiveReadingProgress", LookMode.Value, LookMode.Value);
             Scribe_Collections.Look(ref EarthTextFamiliarity, "earthTextFamiliarity", LookMode.Value, LookMode.Value);
+            Scribe_Collections.Look(ref EarthTextDomainContribution, "earthTextDomainContribution", LookMode.Value, LookMode.Value);
             Scribe_Collections.Look(ref ArchiveReflections, "archiveReflections", LookMode.Deep);
             Scribe_Deep.Look(ref ScholarProfile, "scholarProfile");
             Scribe_Values.Look(ref AllowsPlayerConversation, "allowsPlayerConversation", false);
@@ -145,6 +147,11 @@ namespace LiAIChat.Models
                 if (EarthTextFamiliarity == null)
                 {
                     EarthTextFamiliarity =
+                        new Dictionary<string, float>();
+                }
+                if (EarthTextDomainContribution == null)
+                {
+                    EarthTextDomainContribution =
                         new Dictionary<string, float>();
                 }
                 if (ArchiveReflections == null)

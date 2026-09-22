@@ -328,6 +328,11 @@ namespace LiAIChat.Archive
                 contentId,
                 1f);
 
+            CivilizationDomainKnowledgeUtility.ReconcileTextContribution(
+                state,
+                contentId,
+                topicId);
+
             // ---------------------------------------------------------
             // Long-term memory
             // ---------------------------------------------------------
