@@ -21,7 +21,10 @@ namespace LiAIChat.Questing
             {
                 PawnAIState existingState = PawnAIStateManager.TryGetExistingState(existing);
                 if (existingState != null && existingState.IsLostAnnotator)
+                {
+                    ArchiveScholarInitializer.ConfigureLostAnnotator(existing);
                     return true;
+                }
             }
 
             IntVec3 cell = CellFinderLoose.RandomCellWith(c => c.Standable(map) && c.GetFirstPawn(map) == null, map);
@@ -29,7 +32,9 @@ namespace LiAIChat.Questing
             Pawn scholar = PawnGenerator.GeneratePawn(PawnKindDefOf.SpaceRefugee, null);
             if (scholar == null) return false;
             ArchiveScholarInitializer.Initialize(scholar);
-            PawnAIStateManager.GetState(scholar).IsLostAnnotator = true;
+            PawnAIState state = PawnAIStateManager.GetState(scholar);
+            state.IsLostAnnotator = true;
+            ArchiveScholarInitializer.ConfigureLostAnnotator(scholar);
             GenSpawn.Spawn(scholar, cell, map);
             Messages.Message("在遗迹中发现了一名携带远古注疏的学者。", scholar, MessageTypeDefOf.PositiveEvent);
             return true;

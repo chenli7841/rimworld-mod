@@ -58,6 +58,7 @@ namespace LiAIChat.Models
         public bool IsRefugeeGroupLeader;
         public bool IsLostAnnotator;
         public bool LostAnnotatorRescued;
+        public bool LostAnnotatorPersonaConfigured;
 
         public LiAIChat.Travel.TravelWish TravelWish;
 
@@ -97,6 +98,7 @@ namespace LiAIChat.Models
             Scribe_Values.Look(ref IsRefugeeGroupLeader, "isRefugeeGroupLeader", false);
             Scribe_Values.Look(ref IsLostAnnotator, "isLostAnnotator", false);
             Scribe_Values.Look(ref LostAnnotatorRescued, "lostAnnotatorRescued", false);
+            Scribe_Values.Look(ref LostAnnotatorPersonaConfigured, "lostAnnotatorPersonaConfigured", false);
             Scribe_Deep.Look(ref TravelWish, "travelWish");
 
 

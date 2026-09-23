@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <BackstoryDef>
+    <defName>LiAIChat_ArchiveScholarChildhood</defName>
+    <title>档案馆学徒</title>
+    <titleShort>档案学徒</titleShort>
+    <description>[PAWN_nameDef] 在一座保存残缺星际记忆的档案馆中长大。幼年时，[PAWN_pronoun] 便学习辨认损坏的文字、修补脆弱纸页，并在长者的讲述中记下那些失落世界的名字。</description>
+    <slot>Childhood</slot>
+    <skillGains>
+      <Intellectual>6</Intellectual>
+      <Artistic>1</Artistic>
+      <Social>1</Social>
+    </skillGains>
+  </BackstoryDef>
+
+  <BackstoryDef>
+    <defName>LiAIChat_ArchiveScholarAdulthood</defName>
+    <title>远古文献学者</title>
+    <titleShort>学者</titleShort>
+    <description>成年后，[PAWN_nameDef] 成为研究远古地球文献的学者。[PAWN_pronoun] 长年比对抄本、撰写注疏，并冒险穿越废墟，只为让那些久已沉默的思想重新被理解。</description>
+    <slot>Adulthood</slot>
+    <skillGains>
+      <Intellectual>10</Intellectual>
+      <Artistic>2</Artistic>
+      <Social>3</Social>
+      <Crafting>2</Crafting>
+    </skillGains>
+  </BackstoryDef>
+</Defs>

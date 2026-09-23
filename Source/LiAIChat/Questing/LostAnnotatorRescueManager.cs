@@ -11,6 +11,7 @@ namespace LiAIChat.Questing
     {
         public static void Check()
         {
+            EnsureLostAnnotatorPersonas();
             if (!HasActiveLostAnnotatorQuest()) return;
             EnsureScholarAtActiveSite();
             foreach (Map map in Find.Maps)
@@ -28,6 +29,22 @@ namespace LiAIChat.Questing
                     LiAIChat.Events.ColonyEventLog.Record("注疏者获救",
                         pawn.LabelShort + " 已安全抵达殖民地，愿意暂住协助解读文献。", 3, pawn,
                         "lost-annotator-rescued:" + pawn.thingIDNumber);
+                }
+            }
+        }
+
+        // Upgrades annotators from saves made before the dedicated persona was
+        // introduced, including scholars who have already reached the colony.
+        private static void EnsureLostAnnotatorPersonas()
+        {
+            foreach (Map map in Find.Maps)
+            {
+                if (map?.mapPawns == null) continue;
+                foreach (Pawn pawn in map.mapPawns.AllPawnsSpawned)
+                {
+                    var state = PawnAIStateManager.TryGetExistingState(pawn);
+                    if (state != null && state.IsLostAnnotator && !pawn.Dead)
+                        ArchiveScholarInitializer.ConfigureLostAnnotator(pawn);
                 }
             }
         }
