@@ -179,6 +179,7 @@
     <Compile Include="Events\ColonyEventLog.cs" />
     <Compile Include="Travel\TravelWish.cs" />
     <Compile Include="Travel\TravelWishManager.cs" />
+    <Compile Include="Travel\ThoughtWorker_TravelWishMood.cs" />
     <Compile Include="Game\LiAIChatGameComponent.cs" />
     <Compile Include="Heritage\CivilizationHeritageWork.cs" />
     <Compile Include="Heritage\CivilizationHeritageService.cs" />
