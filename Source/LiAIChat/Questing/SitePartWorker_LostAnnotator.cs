@@ -2,6 +2,7 @@ using LiAIChat.Archive;
 using LiAIChat.State;
 using LiAIChat.Models;
 using RimWorld;
+using System;
 using System.Linq;
 using Verse;
 
@@ -66,17 +67,23 @@ namespace LiAIChat.Questing
 
         private static void SpawnDefenders(Map map, IntVec3 center)
         {
+            int colonistCount = Find.Maps
+                .Where(existingMap => existingMap != null && existingMap.IsPlayerHome)
+                .Sum(existingMap => existingMap.mapPawns.FreeColonistsSpawned.Count);
+            int defenderCount = Math.Min(12, Math.Max(3, (colonistCount + 1) / 2));
             int pattern = Rand.RangeInclusive(0, 2);
             PawnKindDef kind = pattern == 0 ? PawnKindDefOf.Mech_Scyther : pattern == 1 ? PawnKindDefOf.Megascarab : PawnKindDefOf.SpaceRefugee;
             Faction faction = pattern == 0 ? Faction.OfMechanoids : pattern == 1 ? Faction.OfInsects :
                 Find.FactionManager.FirstFactionOfDef(FactionDefOf.Pirate);
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < defenderCount; i++)
             {
                 IntVec3 cell = CellFinder.RandomClosewalkCellNear(center, map, 8);
                 if (!cell.Standable(map) || cell.GetFirstPawn(map) != null) continue;
                 Pawn defender = PawnGenerator.GeneratePawn(kind, faction);
                 if (defender != null) GenSpawn.Spawn(defender, cell, map);
             }
+            Log.Message("[Li AI Chat] Lost Annotator defenders: " + defenderCount +
+                " for " + colonistCount + " colony colonists.");
         }
     }
 }
