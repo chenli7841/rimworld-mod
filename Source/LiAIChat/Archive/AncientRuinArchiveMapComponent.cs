@@ -5,6 +5,7 @@ namespace LiAIChat.Archive
     public class AncientRuinArchiveMapComponent : MapComponent
     {
         public bool SpawnProcessed = false;
+        public bool LostAnnotatorSpawnAttempted = false;
 
         public AncientRuinArchiveMapComponent(Map map)
             : base(map)
@@ -18,6 +19,10 @@ namespace LiAIChat.Archive
             Scribe_Values.Look(
                 ref SpawnProcessed,
                 "liAIChatAncientRuinArchiveSpawnProcessed",
+                false);
+            Scribe_Values.Look(
+                ref LostAnnotatorSpawnAttempted,
+                "liAIChatLostAnnotatorSpawnAttempted",
                 false);
         }
     }

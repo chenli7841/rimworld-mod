@@ -17,6 +17,18 @@ namespace LiAIChat.Questing
         public static bool TrySpawnScholar(Map map)
         {
             if (map == null || map.mapPawns == null) return false;
+
+            AncientRuinArchiveMapComponent component =
+                map.GetComponent<AncientRuinArchiveMapComponent>();
+            if (component != null)
+            {
+                // A shuttle removes a pawn from mapPawns while it is in flight.
+                // This flag records the map's single initial generation pass,
+                // so that temporary absence never becomes a second scholar.
+                if (component.LostAnnotatorSpawnAttempted) return false;
+                component.LostAnnotatorSpawnAttempted = true;
+            }
+
             foreach (Pawn existing in map.mapPawns.AllPawnsSpawned)
             {
                 PawnAIState existingState = PawnAIStateManager.TryGetExistingState(existing);

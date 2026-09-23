@@ -1,8 +1,6 @@
 using LiAIChat.Archive;
 using LiAIChat.State;
 using RimWorld;
-using RimWorld.Planet;
-using System.Linq;
 using Verse;
 
 namespace LiAIChat.Questing
@@ -13,7 +11,6 @@ namespace LiAIChat.Questing
         {
             EnsureLostAnnotatorPersonas();
             if (!HasActiveLostAnnotatorQuest()) return;
-            EnsureScholarAtActiveSite();
             foreach (Map map in Find.Maps)
             {
                 if (map == null || !map.IsPlayerHome) continue;
@@ -44,20 +41,28 @@ namespace LiAIChat.Questing
                 {
                     var state = PawnAIStateManager.TryGetExistingState(pawn);
                     if (state != null && state.IsLostAnnotator && !pawn.Dead)
+                    {
                         ArchiveScholarInitializer.ConfigureLostAnnotator(pawn);
+                        HandleTemporaryStay(pawn, state);
+                    }
                 }
             }
         }
 
-        private static void EnsureScholarAtActiveSite()
+        private static void HandleTemporaryStay(Pawn pawn, LiAIChat.Models.PawnAIState state)
         {
-            foreach (Map map in Find.Maps)
-            {
-                Site site = map?.Parent as Site;
-                if (site == null || site.parts == null) continue;
-                if (!site.parts.Any(part => part?.def?.defName == "LiAIChat_LostAnnotatorSite")) continue;
-                SitePartWorker_LostAnnotator.TrySpawnScholar(map);
-            }
+            if (!state.LostAnnotatorRescued || state.LostAnnotatorPermanentMember ||
+                state.LostAnnotatorDepartureHandled || state.ScholarStay == null ||
+                !state.ScholarStay.Active || Find.TickManager.TicksGame < state.ScholarStay.EndTick)
+                return;
+            if (LostAnnotatorRecruitmentUtility.MeetsRequirements(pawn)) return;
+
+            state.ScholarStay.Active = false;
+            state.ScholarStay.Completed = true;
+            state.LostAnnotatorDepartureHandled = true;
+            pawn.DeSpawn();
+            Find.WorldPawns.PassToWorld(pawn);
+            Messages.Message(pawn.LabelShort + " 感谢了这段暂住时光，随后继续了自己的学术旅程。", MessageTypeDefOf.NeutralEvent);
         }
 
         private static void EndLostAnnotatorQuest()

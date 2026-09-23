@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Verse;
+using Verse.AI;
 
 namespace LiAIChat.Patches
 {
@@ -46,6 +47,37 @@ namespace LiAIChat.Patches
                             new Dialog_PawnCivilizationProfile(__instance));
                     }
                 };
+
+                Pawn annotator = __instance.Map?.mapPawns.AllPawnsSpawned.FirstOrDefault(p =>
+                {
+                    LiAIChat.Models.PawnAIState state;
+                    return LiAIChat.Questing.LostAnnotatorRecruitmentUtility.IsCandidate(p, out state);
+                });
+                if (annotator != null)
+                {
+                    Thing_AncientEarthArchiveFragment book =
+                        LiAIChat.Questing.LostAnnotatorRecruitmentUtility.FindBook(__instance.Map);
+                    bool valid = book != null && !__instance.Drafted &&
+                        __instance.CanReserveAndReach(book, PathEndMode.Touch, Danger.Some) &&
+                        __instance.CanReserve(annotator);
+                    yield return new Command_Action
+                    {
+                        defaultLabel = "与注疏者共同解读",
+                        defaultDesc = valid ? "与暂住学者共同解读一本文献。这是邀请他永久留下的条件之一。" :
+                            "需要一本文献、可行动的殖民者与暂住学者。",
+                        icon = LiAIChatTextures.StudyArchive,
+                        action = () =>
+                        {
+                            if (!valid)
+                            {
+                                Messages.Message("暂时无法开始共同解读。", MessageTypeDefOf.RejectInput);
+                                return;
+                            }
+                            __instance.jobs.TryTakeOrderedJob(JobMaker.MakeJob(
+                                DefDatabase<JobDef>.GetNamed("LiAIChat_LostAnnotatorJointStudy"), book, annotator));
+                        }
+                    };
+                }
             }
 
             var lostAnnotatorState = LiAIChat.State.PawnAIStateManager.TryGetExistingState(__instance);
@@ -63,6 +95,30 @@ namespace LiAIChat.Patches
                         if (__instance.guest != null)
                             __instance.guest.SetGuestStatus(null, GuestStatus.Guest);
                         Messages.Message(__instance.LabelShort + " 接受了接应，并加入队伍准备返程。", __instance, MessageTypeDefOf.PositiveEvent);
+                    }
+                };
+            }
+
+            LiAIChat.Models.PawnAIState recruitmentState;
+            if (LiAIChat.Questing.LostAnnotatorRecruitmentUtility.IsCandidate(__instance, out recruitmentState) &&
+                __instance.Map != null && __instance.Map.IsPlayerHome)
+            {
+                bool readyToStay = LiAIChat.Questing.LostAnnotatorRecruitmentUtility.MeetsRequirements(__instance);
+                yield return new Command_Action
+                {
+                    defaultLabel = "邀请学者永久留下",
+                    defaultDesc = LiAIChat.Questing.LostAnnotatorRecruitmentUtility.RequirementSummary(__instance),
+                    icon = LiAIChatTextures.StudyArchive,
+                    action = () =>
+                    {
+                        if (!readyToStay)
+                        {
+                            Messages.Message("尚未满足学者留下的条件。", MessageTypeDefOf.RejectInput);
+                            return;
+                        }
+                        recruitmentState.LostAnnotatorPermanentMember = true;
+                        if (recruitmentState.ScholarStay != null) recruitmentState.ScholarStay.Active = false;
+                        Messages.Message(__instance.LabelShort + " 接受了邀请，决定以学者身份留在殖民地。", __instance, MessageTypeDefOf.PositiveEvent);
                     }
                 };
             }

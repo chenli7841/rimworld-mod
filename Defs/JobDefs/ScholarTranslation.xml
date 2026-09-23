@@ -10,4 +10,14 @@
     <driverClass>LiAIChat.Questing.JobDriver_AssistTranslation</driverClass>
     <reportString>helping a colonist compare an ancient translation.</reportString>
   </JobDef>
+  <JobDef>
+    <defName>LiAIChat_LostAnnotatorJointStudy</defName>
+    <driverClass>LiAIChat.Questing.JobDriver_LostAnnotatorJointStudy</driverClass>
+    <reportString>与失落注疏者共同解读文献。</reportString>
+  </JobDef>
+  <JobDef>
+    <defName>LiAIChat_AssistLostAnnotatorStudy</defName>
+    <driverClass>LiAIChat.Questing.JobDriver_AssistLostAnnotatorStudy</driverClass>
+    <reportString>协助殖民者解读文献。</reportString>
+  </JobDef>
 </Defs>
