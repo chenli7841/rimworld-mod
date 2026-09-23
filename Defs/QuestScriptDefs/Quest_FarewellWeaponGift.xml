@@ -3,6 +3,7 @@
   <QuestScriptDef MayRequire="Ludeon.RimWorld.Odyssey">
     <defName>LiAIChat_FarewellWeaponGift</defName>
     <rootSelectionWeight>0.7</rootSelectionWeight>
+    <expireDaysRange>4~6</expireDaysRange>
     <rootMinPoints>350</rootMinPoints>
     <minRefireDays>45</minRefireDays>
     <questNameRules>

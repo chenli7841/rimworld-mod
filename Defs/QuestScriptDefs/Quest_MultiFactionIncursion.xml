@@ -3,6 +3,7 @@
   <QuestScriptDef>
     <defName>LiAIChat_MultiFactionIncursion</defName>
     <rootSelectionWeight>0.45</rootSelectionWeight>
+    <expireDaysRange>1~2</expireDaysRange>
     <rootMinPoints>450</rootMinPoints>
     <minRefireDays>30</minRefireDays>
     <questNameRules><rulesStrings><li>questName->多方入侵：交火边境</li></rulesStrings></questNameRules>
