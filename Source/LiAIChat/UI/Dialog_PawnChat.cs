@@ -97,7 +97,9 @@ namespace LiAIChat.UI
 
             layer = WindowLayer.GameUI;
             doCloseX = true;
-            closeOnClickedOutside = true;
+            // The Talk command's own click can otherwise be treated as an
+            // outside click immediately after opening this GameUI window.
+            closeOnClickedOutside = false;
             absorbInputAroundWindow = false;
             preventCameraMotion = false;
 
