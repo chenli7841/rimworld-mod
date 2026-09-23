@@ -124,6 +124,9 @@ namespace LiAIChat.AI
             prompt.AppendLine(
                 "- Do not include quotation marks.");
 
+            prompt.AppendLine(
+                "- Match vocabulary, confidence, and emotional framing to the character's biological age; children must not sound like adults.");
+
             if (!string.IsNullOrEmpty(specialInstruction))
             {
                 prompt.AppendLine();
@@ -147,6 +150,9 @@ namespace LiAIChat.AI
 
             prompt.AppendLine(
                 $"Name: {context.Name}");
+
+            prompt.AppendLine(
+                $"Biological age: {context.Age}");
 
             if (context.Traits != null && context.Traits.Count > 0)
                 prompt.AppendLine("Traits: " + string.Join(", ", context.Traits));

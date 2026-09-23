@@ -211,12 +211,12 @@ namespace LiAIChat.UI
             float y = 0f;
             List<EarthTextDef> texts = GetKnownTexts(state);
 
-            Widgets.Label(new Rect(rect.x, y, rect.width, 24f), "远古地球文献研读记录");
+            Widgets.Label(new Rect(rect.x, y, rect.width, 24f), "远古地球文献阅读理解");
             y += 28f;
 
             if (texts.Count == 0)
             {
-                Widgets.Label(new Rect(rect.x + 10f, y, rect.width - 10f, 24f), "该殖民者尚未研读具体的远古地球文献。 ");
+                Widgets.Label(new Rect(rect.x + 10f, y, rect.width - 10f, 24f), "该殖民者尚未通过阅读了解具体的远古地球文献。 ");
                 return;
             }
 

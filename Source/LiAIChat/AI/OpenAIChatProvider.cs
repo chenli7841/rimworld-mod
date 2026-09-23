@@ -397,6 +397,7 @@ $@"CURRENT CHARACTER STATE
 ");
             AppendCurrentRelationships(prompt, pawn);
             AppendSkillsAndPassions(prompt, pawn);
+            AppendCurrentMood(prompt, pawn);
             prompt.AppendLine();
 
             prompt.AppendLine(
@@ -604,6 +605,37 @@ $@"- Life goal: ${lifeGoal.Title}
             prompt.AppendLine();
         }
 
+        private static void AppendCurrentMood(StringBuilder prompt, PawnContext pawnContext)
+        {
+            Pawn gamePawn = FindPawnForContext(pawnContext);
+            if (gamePawn?.needs?.mood == null)
+                return;
+
+            prompt.AppendLine("CURRENT MOOD");
+            prompt.AppendLine("- Overall mood: " + gamePawn.needs.mood.CurLevelPercentage.ToString("P0"));
+            if (!string.IsNullOrWhiteSpace(gamePawn.needs.mood.MoodString))
+                prompt.AppendLine("- Mood description: " + gamePawn.needs.mood.MoodString);
+
+            List<Thought_Memory> memories = gamePawn.needs.mood.thoughts?.memories?.Memories;
+            if (memories == null || memories.Count == 0)
+            {
+                prompt.AppendLine("- No current mood memories are recorded.");
+                prompt.AppendLine();
+                return;
+            }
+
+            List<Thought_Memory> positive = memories.Where(memory => memory != null && memory.VisibleInNeedsTab && memory.CurStage != null && memory.CurStage.baseMoodEffect > 0f)
+                .OrderByDescending(memory => memory.CurStage.baseMoodEffect).Take(8).ToList();
+            List<Thought_Memory> negative = memories.Where(memory => memory != null && memory.VisibleInNeedsTab && memory.CurStage != null && memory.CurStage.baseMoodEffect < 0f)
+                .OrderBy(memory => memory.CurStage.baseMoodEffect).Take(8).ToList();
+
+            if (positive.Count > 0)
+                prompt.AppendLine("- Positive mood factors: " + string.Join("; ", positive.Select(memory => memory.LabelCap)));
+            if (negative.Count > 0)
+                prompt.AppendLine("- Negative mood factors: " + string.Join("; ", negative.Select(memory => memory.LabelCap)));
+            prompt.AppendLine();
+        }
+
         private string BuildConversationInput(
             PawnContext pawn,
             PawnAIState state,
@@ -730,6 +762,7 @@ CORE RULES
 * Treat supplied game state as factual. Do not invent major events, relationships, memories, experiences, or knowledge unsupported by the character context.
 * Do not mechanically list character-state data.
 * Never expose internal state systems or numerical values.
+* The character's biological age is factual and must shape their voice. Children use age-appropriate vocabulary, emotional framing, attention span, and confidence; do not give them an adult's reflective or professional tone. Teenagers may be more articulate, but still sound meaningfully younger than adults.
 
 WORLDVIEW & MEANING
 

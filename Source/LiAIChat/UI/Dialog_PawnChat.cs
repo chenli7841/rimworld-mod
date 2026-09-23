@@ -31,14 +31,14 @@ namespace LiAIChat.UI
             Vector2.zero;
 
         private bool scrollToBottom =
-            false;
+            true;
 
         private readonly IChatProvider chatProvider;
 
         private bool isWaitingForAI = false;
 
         public override Vector2 InitialSize =>
-            new Vector2(700f, 500f);
+            new Vector2(420f, 500f);
 
         private readonly PawnContext pawnContext;
 
@@ -95,9 +95,11 @@ namespace LiAIChat.UI
 
             chatProvider = new OpenAIChatProvider(Config.Config.OpenAI_API_KEY);
 
+            layer = WindowLayer.GameUI;
             doCloseX = true;
-            closeOnClickedOutside = false;
-            absorbInputAroundWindow = true;
+            closeOnClickedOutside = true;
+            absorbInputAroundWindow = false;
+            preventCameraMotion = false;
 
             conversationSummarizer = new OpenAIConversationSummarizer(Config.Config.OpenAI_API_KEY);
             memoryExtractor = new OpenAIMemoryExtractor(Config.Config.OpenAI_API_KEY);
@@ -105,6 +107,19 @@ namespace LiAIChat.UI
             knowledgeDirector = new OpenAIKnowledgeDirector(Config.Config.OpenAI_API_KEY);
             lifeGoalDirector = new OpenAILifeGoalDirector(Config.Config.OpenAI_API_KEY);
             archiveScholarConversationDirector = new OpenAIArchiveScholarConversationDirector(Config.Config.OpenAI_API_KEY);
+        }
+
+        public override void PostOpen()
+        {
+            base.PostOpen();
+
+            float width = Mathf.Min(InitialSize.x, Screen.width - 12f);
+            float height = Mathf.Min(InitialSize.y, Screen.height - 72f);
+            windowRect = new Rect(
+                Mathf.Max(6f, Screen.width - width - 12f),
+                56f,
+                width,
+                height);
         }
 
         public override void DoWindowContents(Rect inRect)

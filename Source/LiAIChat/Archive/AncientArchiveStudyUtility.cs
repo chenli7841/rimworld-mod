@@ -324,9 +324,12 @@ namespace LiAIChat.Archive
                 .StudiedArchiveContentIds
                 .Add(contentId);
 
-            state.SetEarthTextFamiliarity(
+            // This legacy completion path is still used by the translation
+            // quest, but it must not turn one short job into total mastery.
+            // Ordinary Book reading supplies all later gains in small steps.
+            state.LearnEarthText(
                 contentId,
-                1f);
+                content.familiarityGain);
 
             CivilizationDomainKnowledgeUtility.ReconcileTextContribution(
                 state,

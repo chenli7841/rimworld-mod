@@ -68,23 +68,6 @@ namespace LiAIChat.Patches
                 }
             };
 
-            if (__instance.IsColonistPlayerControlled && __instance.RaceProps.Humanlike)
-            {
-                yield return new Command_Action
-                {
-                    defaultLabel = "Study Ancient Archive",
-                    defaultDesc = "Study an ancient Earth archive fragment.",
-                    icon = LiAIChatTextures.StudyArchive,
-
-                    action = () =>
-                    {
-                        AncientArchiveStudyUtility.TryStudyArchive(
-                            __instance);
-                    }
-                };
-            }
-            
-            
             yield return new Command_Action
             {
                 defaultLabel = "Identify Ancient Archive",
