@@ -91,6 +91,13 @@ namespace LiAIChat.Patches
                     icon = LiAIChatTextures.StudyArchive,
                     action = () =>
                     {
+                        bool defendersRemain = __instance.Map.mapPawns.AllPawnsSpawned.Any(p =>
+                            !p.Dead && p.Faction != null && p.Faction.HostileTo(Faction.OfPlayer));
+                        if (defendersRemain)
+                        {
+                            Messages.Message("敌对守卫仍在看守营地。学者拒绝在文献未获安全前离开。", __instance, MessageTypeDefOf.RejectInput);
+                            return;
+                        }
                         __instance.SetFaction(Faction.OfPlayer);
                         if (__instance.guest != null)
                             __instance.guest.SetGuestStatus(null, GuestStatus.Guest);

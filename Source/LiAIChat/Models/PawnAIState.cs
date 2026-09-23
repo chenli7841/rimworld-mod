@@ -62,6 +62,7 @@ namespace LiAIChat.Models
         public bool LostAnnotatorJointStudyCompleted;
         public bool LostAnnotatorPermanentMember;
         public bool LostAnnotatorDepartureHandled;
+        public int LostAnnotatorArchiveThingId = -1;
 
         public LiAIChat.Travel.TravelWish TravelWish;
 
@@ -105,6 +106,7 @@ namespace LiAIChat.Models
             Scribe_Values.Look(ref LostAnnotatorJointStudyCompleted, "lostAnnotatorJointStudyCompleted", false);
             Scribe_Values.Look(ref LostAnnotatorPermanentMember, "lostAnnotatorPermanentMember", false);
             Scribe_Values.Look(ref LostAnnotatorDepartureHandled, "lostAnnotatorDepartureHandled", false);
+            Scribe_Values.Look(ref LostAnnotatorArchiveThingId, "lostAnnotatorArchiveThingId", -1);
             Scribe_Deep.Look(ref TravelWish, "travelWish");
 
 

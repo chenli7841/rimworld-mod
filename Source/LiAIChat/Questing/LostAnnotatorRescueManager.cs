@@ -1,6 +1,7 @@
 using LiAIChat.Archive;
 using LiAIChat.State;
 using RimWorld;
+using System.Linq;
 using Verse;
 
 namespace LiAIChat.Questing
@@ -18,6 +19,11 @@ namespace LiAIChat.Questing
                 {
                     var state = PawnAIStateManager.TryGetExistingState(pawn);
                     if (state == null || !state.IsLostAnnotator || state.LostAnnotatorRescued || pawn.Dead) continue;
+                    if (!IsArchiveRecovered(state))
+                    {
+                        Messages.Message("学者拒绝离开：他的远古文献仍在敌人营地中。", pawn, MessageTypeDefOf.RejectInput);
+                        continue;
+                    }
                     state.LostAnnotatorRescued = true;
                     ArchiveScholarStayUtility.StartStay(pawn, 300000, "", "");
                     ArchiveScholarGiftUtility.TryGiveArchiveToColony(pawn);
@@ -28,6 +34,17 @@ namespace LiAIChat.Questing
                         "lost-annotator-rescued:" + pawn.thingIDNumber);
                 }
             }
+        }
+
+        public static bool IsArchiveRecovered(LiAIChat.Models.PawnAIState state)
+        {
+            if (state == null || state.LostAnnotatorArchiveThingId < 0) return false;
+            foreach (Map map in Find.Maps)
+            {
+                if (map == null || !map.IsPlayerHome) continue;
+                if (map.listerThings.AllThings.Any(t => t.thingIDNumber == state.LostAnnotatorArchiveThingId)) return true;
+            }
+            return false;
         }
 
         // Upgrades annotators from saves made before the dedicated persona was

@@ -2,6 +2,7 @@ using LiAIChat.Archive;
 using LiAIChat.State;
 using LiAIChat.Models;
 using RimWorld;
+using System.Linq;
 using Verse;
 
 namespace LiAIChat.Questing
@@ -39,17 +40,41 @@ namespace LiAIChat.Questing
                 }
             }
 
-            IntVec3 cell = CellFinderLoose.RandomCellWith(c => c.Standable(map) && c.GetFirstPawn(map) == null, map);
+            Thing terminal = map.listerThings.AllThings.FirstOrDefault(t => t.def == LiAIChatThingDefOf.LiAIChat_AncientArchiveSignalTerminal);
+            IntVec3 archiveCell = terminal != null ? terminal.Position : map.Center;
+            IntVec3 cell = CellFinderLoose.RandomCellWith(c => c.Standable(map) && c.GetFirstPawn(map) == null && c.DistanceToSquared(archiveCell) > 900f, map);
             if (!cell.IsValid) return false;
             Pawn scholar = PawnGenerator.GeneratePawn(PawnKindDefOf.SpaceRefugee, null);
             if (scholar == null) return false;
-            ArchiveScholarInitializer.Initialize(scholar);
+            Thing_AncientEarthArchiveFragment archive = ArchiveScholarInitializer.Initialize(scholar);
             PawnAIState state = PawnAIStateManager.GetState(scholar);
             state.IsLostAnnotator = true;
+            state.LostAnnotatorArchiveThingId = archive?.thingIDNumber ?? -1;
             ArchiveScholarInitializer.ConfigureLostAnnotator(scholar);
             GenSpawn.Spawn(scholar, cell, map);
-            Messages.Message("在遗迹中发现了一名携带远古注疏的学者。", scholar, MessageTypeDefOf.PositiveEvent);
+            if (archive != null)
+            {
+                scholar.inventory.innerContainer.Remove(archive);
+                GenPlace.TryPlaceThing(archive, archiveCell, map, ThingPlaceMode.Near);
+            }
+            SpawnDefenders(map, archiveCell);
+            Messages.Message("学者被困在遗迹另一侧；他的文献由敌对守卫看守。", scholar, MessageTypeDefOf.ThreatBig);
             return true;
+        }
+
+        private static void SpawnDefenders(Map map, IntVec3 center)
+        {
+            int pattern = Rand.RangeInclusive(0, 2);
+            PawnKindDef kind = pattern == 0 ? PawnKindDefOf.Mech_Scyther : pattern == 1 ? PawnKindDefOf.Megascarab : PawnKindDefOf.SpaceRefugee;
+            Faction faction = pattern == 0 ? Faction.OfMechanoids : pattern == 1 ? Faction.OfInsects :
+                Find.FactionManager.FirstFactionOfDef(FactionDefOf.Pirate);
+            for (int i = 0; i < 3; i++)
+            {
+                IntVec3 cell = CellFinder.RandomClosewalkCellNear(center, map, 8);
+                if (!cell.Standable(map) || cell.GetFirstPawn(map) != null) continue;
+                Pawn defender = PawnGenerator.GeneratePawn(kind, faction);
+                if (defender != null) GenSpawn.Spawn(defender, cell, map);
+            }
         }
     }
 }
