@@ -20,4 +20,9 @@
     <driverClass>LiAIChat.Questing.JobDriver_AssistLostAnnotatorStudy</driverClass>
     <reportString>协助殖民者解读文献。</reportString>
   </JobDef>
+  <JobDef>
+    <defName>LiAIChat_WaitForLostAnnotatorRescue</defName>
+    <driverClass>LiAIChat.Questing.JobDriver_WaitForLostAnnotatorRescue</driverClass>
+    <reportString>在遗迹中等待救援。</reportString>
+  </JobDef>
 </Defs>

@@ -3,6 +3,7 @@ using LiAIChat.State;
 using RimWorld;
 using System.Linq;
 using Verse;
+using Verse.AI;
 
 namespace LiAIChat.Questing
 {
@@ -60,6 +61,12 @@ namespace LiAIChat.Questing
                     if (state != null && state.IsLostAnnotator && !pawn.Dead)
                     {
                         ArchiveScholarInitializer.ConfigureLostAnnotator(pawn);
+                        if (!state.LostAnnotatorRescued && !map.IsPlayerHome &&
+                            pawn.CurJob?.def?.defName != "LiAIChat_WaitForLostAnnotatorRescue")
+                        {
+                            pawn.jobs.TryTakeOrderedJob(JobMaker.MakeJob(
+                                DefDatabase<JobDef>.GetNamed("LiAIChat_WaitForLostAnnotatorRescue"), pawn.Position));
+                        }
                         HandleTemporaryStay(pawn, state);
                     }
                 }

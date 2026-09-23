@@ -52,6 +52,8 @@ namespace LiAIChat.Questing
             state.LostAnnotatorArchiveThingId = archive?.thingIDNumber ?? -1;
             ArchiveScholarInitializer.ConfigureLostAnnotator(scholar);
             GenSpawn.Spawn(scholar, cell, map);
+            scholar.jobs.TryTakeOrderedJob(JobMaker.MakeJob(
+                DefDatabase<JobDef>.GetNamed("LiAIChat_WaitForLostAnnotatorRescue"), cell));
             if (archive != null)
             {
                 scholar.inventory.innerContainer.Remove(archive);

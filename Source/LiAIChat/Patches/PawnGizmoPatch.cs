@@ -99,6 +99,7 @@ namespace LiAIChat.Patches
                             return;
                         }
                         __instance.SetFaction(Faction.OfPlayer);
+                        __instance.jobs.EndCurrentJob(JobCondition.InterruptForced);
                         if (__instance.guest != null)
                             __instance.guest.SetGuestStatus(null, GuestStatus.Guest);
                         Messages.Message(__instance.LabelShort + " 接受了接应，并加入队伍准备返程。", __instance, MessageTypeDefOf.PositiveEvent);
