@@ -1,6 +1,8 @@
 using LiAIChat.Archive;
 using LiAIChat.State;
 using RimWorld;
+using RimWorld.Planet;
+using System.Linq;
 using Verse;
 
 namespace LiAIChat.Questing
@@ -10,6 +12,7 @@ namespace LiAIChat.Questing
         public static void Check()
         {
             if (!HasActiveLostAnnotatorQuest()) return;
+            EnsureScholarAtActiveSite();
             foreach (Map map in Find.Maps)
             {
                 if (map == null || !map.IsPlayerHome) continue;
@@ -26,6 +29,17 @@ namespace LiAIChat.Questing
                         pawn.LabelShort + " 已安全抵达殖民地，愿意暂住协助解读文献。", 3, pawn,
                         "lost-annotator-rescued:" + pawn.thingIDNumber);
                 }
+            }
+        }
+
+        private static void EnsureScholarAtActiveSite()
+        {
+            foreach (Map map in Find.Maps)
+            {
+                Site site = map?.Parent as Site;
+                if (site == null || site.parts == null) continue;
+                if (!site.parts.Any(part => part?.def?.defName == "LiAIChat_LostAnnotatorSite")) continue;
+                SitePartWorker_LostAnnotator.TrySpawnScholar(map);
             }
         }
 
