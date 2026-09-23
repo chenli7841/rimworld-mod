@@ -23,6 +23,12 @@ namespace LiAIChat.Events
             if (map == null)
                 return;
 
+            if (deadPawn.IsColonistPlayerControlled)
+            {
+                ColonyEventLog.Record("殖民者死亡", deadPawn.LabelShort + " 在殖民地中死亡。", 3,
+                    deadPawn, "colonist-death:" + deadPawn.thingIDNumber);
+            }
+
             List<Pawn> pawns =
                 map.mapPawns.FreeColonistsSpawned;
 

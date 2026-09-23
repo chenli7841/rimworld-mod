@@ -4,6 +4,8 @@ namespace LiAIChat.Models
 {
     public class PawnContext
     {
+        public int PawnId { get; set; } = -1;
+
         public string Name { get; set; }
 
         public string Gender { get; set; }

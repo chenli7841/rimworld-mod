@@ -88,6 +88,9 @@ namespace LiAIChat.Questing
 
             Messages.Message(craftsman.LabelShort + " 已前往 " + destinationFaction.Name +
                 "，带走其 " + sourceWeapon.LabelCap + " 作为最后的改造作品。", MessageTypeDefOf.NeutralEvent);
+            LiAIChat.Events.ColonyEventLog.Record("武器匠告别", craftsman.LabelShort + " 永久前往 " + destinationFaction.Name +
+                "，为殖民地制作最后的武器改造礼物。", 3, craftsman,
+                "farewell-craftsman:" + craftsman.thingIDNumber);
             return true;
         }
 
@@ -115,6 +118,9 @@ namespace LiAIChat.Questing
                 (upgradedWeapon.LabelCap ?? "改造后的武器") + "。" +
                 "武器获得特化属性：" + (appliedTrait?.LabelCap ?? "未知") + "。",
                 LetterDefOf.PositiveEvent, upgradedWeapon);
+            LiAIChat.Events.ColonyEventLog.Record("武器匠告别礼物", "武器匠寄回了一件带有“" +
+                (appliedTrait?.LabelCap ?? "未知") + "”特化属性的武器。", 2, null,
+                "farewell-weapon-delivered:" + quest.id);
             quest.End(QuestEndOutcome.Success, true);
         }
 

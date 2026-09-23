@@ -11,6 +11,8 @@ namespace LiAIChat.Pawns
             var context =
                 new PawnContext();
 
+            context.PawnId = pawn.thingIDNumber;
+
             // -----------------------------------------
             // Name
             // -----------------------------------------

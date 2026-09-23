@@ -1,5 +1,6 @@
 ﻿using LiAIChat.Archive;
 using LiAIChat.Civilization;
+using LiAIChat.Events;
 using LiAIChat.Knowledge;
 using LiAIChat.Models;
 using LiAIChat.Refugees;
@@ -247,14 +248,59 @@ namespace LiAIChat.AI
                 }
             }
 
+            AppendNearbyColonistRelationships(prompt, gamePawn);
+
             prompt.AppendLine();
+        }
+
+        private static void AppendNearbyColonistRelationships(StringBuilder prompt, Pawn gamePawn)
+        {
+            if (gamePawn?.Map == null || gamePawn.Map.mapPawns == null)
+                return;
+
+            List<Pawn> nearby = gamePawn.Map.mapPawns.FreeColonistsSpawned
+                .Where(other => other != null && other != gamePawn)
+                .OrderBy(other => other.Position.DistanceToSquared(gamePawn.Position))
+                .Take(6)
+                .ToList();
+            if (nearby.Count == 0)
+                return;
+
+            prompt.AppendLine("NEARBY COLONIST RELATIONSHIPS");
+            foreach (Pawn other in nearby)
+            {
+                int opinion = gamePawn.relations.OpinionOf(other);
+                List<string> roles = gamePawn.relations.DirectRelations
+                    .Where(relation => relation != null && relation.def != null && relation.otherPawn == other)
+                    .Select(relation => relation.def.label)
+                    .Distinct()
+                    .ToList();
+                string relationship = roles.Count == 0 ? "no recorded family or romantic relation" : string.Join(", ", roles);
+                prompt.AppendLine("- " + other.LabelShort + " | opinion " + opinion + " | relationship: " + relationship);
+            }
+
+            LiAIChat.Models.PawnAIState state = LiAIChat.State.PawnAIStateManager.TryGetExistingState(gamePawn);
+            if (state?.IntellectualExchanges == null || state.IntellectualExchanges.Count == 0)
+                return;
+
+            prompt.AppendLine("RECENT CONVERSATIONS WITH OTHER COLONISTS");
+            foreach (PawnIntellectualExchange exchange in state.IntellectualExchanges
+                .Where(item => item != null && !string.IsNullOrWhiteSpace(item.Summary))
+                .OrderByDescending(item => item.CreatedTick)
+                .Take(3))
+            {
+                Pawn other = gamePawn.Map.mapPawns.AllPawnsSpawned
+                    .FirstOrDefault(candidate => candidate != null && candidate.thingIDNumber == exchange.OtherPawnId);
+                string otherName = other == null ? "another colonist" : other.LabelShort;
+                prompt.AppendLine("- With " + otherName + ": " + exchange.Summary);
+            }
         }
 
         private static Pawn FindPawnForContext(
             PawnContext pawnContext)
         {
             if (pawnContext == null ||
-                pawnContext.Name.NullOrEmpty() ||
+                (pawnContext.PawnId < 0 && pawnContext.Name.NullOrEmpty()) ||
                 Find.Maps == null)
             {
                 return null;
@@ -278,6 +324,11 @@ namespace LiAIChat.AI
                         candidate.Name == null)
                     {
                         continue;
+                    }
+
+                    if (pawnContext.PawnId >= 0 && candidate.thingIDNumber == pawnContext.PawnId)
+                    {
+                        return candidate;
                     }
 
                     string labelShort = candidate.LabelShort;
@@ -392,6 +443,13 @@ SPECIFIC KNOWN TOPICS
                 }
             }
             prompt.AppendLine();
+            Pawn pawnInWorld = FindPawnForContext(pawn);
+            string colonyEventContext = ColonyEventLog.BuildConversationContext(pawnInWorld);
+            if (!string.IsNullOrWhiteSpace(colonyEventContext))
+            {
+                prompt.AppendLine(colonyEventContext);
+                prompt.AppendLine();
+            }
             prompt.AppendLine("CURRENT LIFE GOAL");
             if (lifeGoal == null || !lifeGoal.IsActive)
             {

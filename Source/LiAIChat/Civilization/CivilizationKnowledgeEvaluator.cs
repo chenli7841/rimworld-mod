@@ -102,6 +102,8 @@ namespace LiAIChat.Civilization
                 "Civilization knowledge reconstructed: "
                 + knowledgeDef.label,
                 MessageTypeDefOf.PositiveEvent);
+            LiAIChat.Events.ColonyEventLog.Record("文明知识", "殖民地重建了“" + knowledgeDef.label + "”文明知识。", 3, null,
+                "civilization-unlocked:" + knowledgeDef.defName);
 
             return true;
         }

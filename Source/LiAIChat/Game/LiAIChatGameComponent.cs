@@ -2,6 +2,7 @@
 using LiAIChat.Dialogue;
 using LiAIChat.Heritage;
 using LiAIChat.Commentary;
+using LiAIChat.Events;
 using LiAIChat.Models;
 using LiAIChat.Social;
 using LiAIChat.Questing;
@@ -17,6 +18,8 @@ namespace LiAIChat.Game
             new List<CivilizationHeritageWork>();
         public List<EarthCommentaryWork> EarthCommentaryWorks =
             new List<EarthCommentaryWork>();
+        public List<ColonyEventRecord> ColonyEvents =
+            new List<ColonyEventRecord>();
 
         private int lastProactiveCheckTick = 0;
         private int lastIntellectualExchangeCheckTick = 0;
@@ -50,6 +53,7 @@ namespace LiAIChat.Game
                 "civilizationHeritageWorks",
                 LookMode.Deep);
             Scribe_Collections.Look(ref EarthCommentaryWorks, "earthCommentaryWorks", LookMode.Deep);
+            Scribe_Collections.Look(ref ColonyEvents, "colonyEvents", LookMode.Deep);
 
             if (Scribe.mode ==
                 LoadSaveMode.PostLoadInit)
@@ -67,6 +71,8 @@ namespace LiAIChat.Game
                 }
                 if (EarthCommentaryWorks == null)
                     EarthCommentaryWorks = new List<EarthCommentaryWork>();
+                if (ColonyEvents == null)
+                    ColonyEvents = new List<ColonyEventRecord>();
 
                 Log.Message(
                     "[Li AI Chat] Loaded " +

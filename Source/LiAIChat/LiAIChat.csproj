@@ -175,6 +175,8 @@
     <Compile Include="Dialogue\ProactiveDialogueManager.cs" />
     <Compile Include="Dialogue\ProactiveDialogueRules.cs" />
     <Compile Include="Events\PawnDeathEventHandler.cs" />
+    <Compile Include="Events\ColonyEventRecord.cs" />
+    <Compile Include="Events\ColonyEventLog.cs" />
     <Compile Include="Game\LiAIChatGameComponent.cs" />
     <Compile Include="Heritage\CivilizationHeritageWork.cs" />
     <Compile Include="Heritage\CivilizationHeritageService.cs" />

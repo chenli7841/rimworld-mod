@@ -59,6 +59,9 @@ namespace LiAIChat.Commentary
                 Title = "《" + source.title + "》评注"
             };
             Works.Add(work);
+            LiAIChat.Events.ColonyEventLog.Record("开始著作",
+                author.LabelShort + " 开始撰写“" + work.Title + "”。", 2, author,
+                "commentary-draft:" + author.thingIDNumber + ":" + source.defName);
             return work;
         }
 

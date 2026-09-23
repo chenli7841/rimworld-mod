@@ -410,6 +410,9 @@ namespace LiAIChat.Archive
                 ".",
                 MessageTypeDefOf.PositiveEvent);
 
+            LiAIChat.Events.ColonyEventLog.Record("研读文献", pawn.LabelShort + " 完成研读“" + studyTitle + "”。",
+                2, pawn, "archive-study:" + pawn.thingIDNumber + ":" + contentId);
+
             Log.Message(
                 "[Li AI Chat] " +
                 pawn.LabelShort +

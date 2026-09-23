@@ -107,11 +107,10 @@ namespace LiAIChat.Dialogue
                     // 1. Check normal proactive-dialogue rules.
                     // =====================================================
 
-                    bool normalTrigger =
-                        ProactiveDialogueRules
-                            .ShouldTrigger(
-                                pawn,
-                                state);
+                    string normalTriggerSource;
+                    string normalTriggerInstruction;
+                    bool normalTrigger = ProactiveDialogueRules.TryGetTrigger(
+                        pawn, state, out normalTriggerSource, out normalTriggerInstruction);
 
 
                     // =====================================================
@@ -149,6 +148,8 @@ namespace LiAIChat.Dialogue
                         context,
                         state,
                         normalTrigger,
+                        normalTriggerSource,
+                        normalTriggerInstruction,
                         scholarTrigger);
 
 
@@ -176,6 +177,8 @@ namespace LiAIChat.Dialogue
             PawnContext context,
             PawnAIState state,
             bool normalTrigger,
+            string normalTriggerSource,
+            string normalTriggerInstruction,
             string scholarTrigger)
         {
             if (pawn == null ||
@@ -200,6 +203,10 @@ namespace LiAIChat.Dialogue
             if (isScholarDialogue)
             {
                 specialInstruction = ArchiveScholarProactiveDialogue.BuildPromptInstruction(scholarTrigger, state);
+            }
+            else if (normalTrigger)
+            {
+                specialInstruction = normalTriggerInstruction;
             }
 
 
@@ -268,7 +275,8 @@ namespace LiAIChat.Dialogue
                 normalTrigger)
             {
                 MarkNormalProactiveSourceUsed(
-                    state);
+                    state,
+                    normalTriggerSource);
             }
 
 
@@ -283,7 +291,8 @@ namespace LiAIChat.Dialogue
 
 
         private static void MarkNormalProactiveSourceUsed(
-            PawnAIState state)
+            PawnAIState state,
+            string source)
         {
             if (state == null)
             {
@@ -291,21 +300,16 @@ namespace LiAIChat.Dialogue
             }
 
 
-            // =========================================================
-            // Mark one unused LifeEvent.
-            // =========================================================
-
-            if (state.LifeEvents != null)
+            if (source == "life-event" && state.LifeEvents != null)
             {
-                foreach (PawnLifeEvent lifeEvent
-                         in state.LifeEvents)
+                for (int i = state.LifeEvents.Count - 1; i >= 0; i--)
                 {
+                    PawnLifeEvent lifeEvent = state.LifeEvents[i];
                     if (lifeEvent != null &&
                         !lifeEvent.ProactiveDialogueUsed)
                     {
                         lifeEvent.ProactiveDialogueUsed =
                             true;
-
                         return;
                     }
                 }
@@ -316,7 +320,7 @@ namespace LiAIChat.Dialogue
             // Otherwise mark LifeGoal if it has not been used.
             // =========================================================
 
-            if (state.LifeGoal != null &&
+            if (source == "life-goal" && state.LifeGoal != null &&
                 !state.LifeGoal
                     .ProactiveDialogueUsed)
             {

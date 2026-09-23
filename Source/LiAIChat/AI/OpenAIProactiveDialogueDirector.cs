@@ -148,6 +148,16 @@ namespace LiAIChat.AI
             prompt.AppendLine(
                 $"Name: {context.Name}");
 
+            if (context.Traits != null && context.Traits.Count > 0)
+                prompt.AppendLine("Traits: " + string.Join(", ", context.Traits));
+            if (context.Skills != null && context.Skills.Count > 0)
+            {
+                prompt.AppendLine("Skills and passions:");
+                foreach (PawnSkillContext skill in context.Skills)
+                    if (skill != null && !string.IsNullOrWhiteSpace(skill.Name))
+                        prompt.AppendLine("- " + skill.Name + " level " + skill.Level + ", passion " + skill.Passion);
+            }
+
             prompt.AppendLine();
 
             prompt.AppendLine("MEANING");
@@ -192,6 +202,33 @@ namespace LiAIChat.AI
                         "- " +
                         state.LifeEvents[i].Description);
                 }
+            }
+
+            prompt.AppendLine();
+            prompt.AppendLine("ANCIENT EARTH STUDY");
+            if (state.Knowledge?.KnownTopics == null || state.Knowledge.KnownTopics.Count == 0)
+            {
+                prompt.AppendLine("No named topics recorded.");
+            }
+            else
+            {
+                foreach (KnowledgeTopic topic in state.Knowledge.KnownTopics)
+                    if (topic != null && !string.IsNullOrWhiteSpace(topic.TopicId) && topic.Familiarity > 0f)
+                        prompt.AppendLine("- " + topic.TopicId + " familiarity " + topic.Familiarity.ToString("0.00"));
+            }
+
+            prompt.AppendLine();
+            prompt.AppendLine("RECENT INTELLECTUAL EXCHANGES");
+            if (state.IntellectualExchanges == null || state.IntellectualExchanges.Count == 0)
+            {
+                prompt.AppendLine("None.");
+            }
+            else
+            {
+                int exchangeStart = Math.Max(0, state.IntellectualExchanges.Count - 2);
+                for (int i = exchangeStart; i < state.IntellectualExchanges.Count; i++)
+                    if (state.IntellectualExchanges[i] != null)
+                        prompt.AppendLine("- " + state.IntellectualExchanges[i].Summary);
             }
 
             prompt.AppendLine();

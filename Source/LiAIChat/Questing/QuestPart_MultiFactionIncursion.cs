@@ -89,6 +89,9 @@ namespace LiAIChat.Questing
             Find.LetterStack.ReceiveLetter("多方入侵：交火开始",
                 humanFactionA.Name + "、" + humanFactionB.Name + " 与机械族同时闯入殖民地。三方彼此敌对，混战已经开始。",
                 LetterDefOf.ThreatBig, map.Parent);
+            LiAIChat.Events.ColonyEventLog.Record("多方入侵",
+                humanFactionA.Name + "、" + humanFactionB.Name + " 与机械族同时入侵，殖民地外围爆发混战。",
+                3, null, "multi-faction-incursion:" + quest.id);
             return true;
         }
 
@@ -161,6 +164,9 @@ namespace LiAIChat.Questing
                 Find.LetterStack.ReceiveLetter("多方入侵结束",
                     "外来武装已被击溃或失去战斗能力。殖民地暂时恢复了平静。",
                     LetterDefOf.PositiveEvent, map.Parent);
+                LiAIChat.Events.ColonyEventLog.Record("多方入侵结束",
+                    "多方入侵的外来武装已失去战斗能力，殖民地暂时恢复平静。",
+                    2, null, "multi-faction-incursion-ended:" + quest.id);
                 quest.End(QuestEndOutcome.Success, true);
             }
         }

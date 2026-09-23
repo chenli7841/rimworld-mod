@@ -22,6 +22,9 @@ namespace LiAIChat.Questing
                     ArchiveScholarGiftUtility.TryGiveArchiveToColony(pawn);
                     EndLostAnnotatorQuest();
                     Messages.Message(pawn.LabelShort + " 安全抵达殖民地，并愿意暂住协助解读文献。", pawn, MessageTypeDefOf.PositiveEvent);
+                    LiAIChat.Events.ColonyEventLog.Record("注疏者获救",
+                        pawn.LabelShort + " 已安全抵达殖民地，愿意暂住协助解读文献。", 3, pawn,
+                        "lost-annotator-rescued:" + pawn.thingIDNumber);
                 }
             }
         }
