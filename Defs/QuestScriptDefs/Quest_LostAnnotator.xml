@@ -7,7 +7,7 @@
     <minRefireDays>14</minRefireDays>
     <autoAccept>true</autoAccept>
     <questNameRules><rulesStrings><li>questName->失落的注疏者</li></rulesStrings></questNameRules>
-    <questDescriptionRules><rulesStrings><li>questDescription->一段断续的求救讯号指向附近遗迹。一名研究远古地球文献的学者被困其中，并携带着珍贵的私人注疏。抵达遗迹，救出学者并带他返回殖民地；他或许能协助解读馆藏，留下新的文献线索。</li></rulesStrings></questDescriptionRules>
+    <questDescriptionRules><rulesStrings><li>questDescription->一段断续的求救讯号指向附近遗迹。一名研究远古地球文献的学者被困在遗迹的另一侧；他的私人注疏与远古文献则落入中心营地。&#10;&#10;营地由机械族、虫族或海盗守卫。你可以使用多架穿梭机迅速接应学者，但在守卫仍存活、或他的文献尚未安全带回殖民地时，学者会拒绝结束这场营救。&#10;&#10;清理营地、回收文献，并带学者一同返程。他会暂住协助解读馆藏；若殖民地证明自己珍视知识，他或许愿意永久留下。</li></rulesStrings></questDescriptionRules>
     <root Class="QuestNode_Sequence"><nodes>
       <li Class="QuestNode_QuestUnique"><tag>LiAIChat_LostAnnotator_Active</tag></li>
       <li Class="LiAIChat.Questing.QuestNode_AddLostAnnotatorStatus" />
