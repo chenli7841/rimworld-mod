@@ -2,6 +2,7 @@ using LiAIChat.Archive;
 using LiAIChat.Knowledge;
 using LiAIChat.Models;
 using LiAIChat.State;
+using LiAIChat.Travel;
 using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,8 @@ namespace LiAIChat.UI
         {
             Overview,
             Topics,
-            Texts
+            Texts,
+            Travel
         }
 
         private readonly Pawn pawn;
@@ -65,6 +67,7 @@ namespace LiAIChat.UI
             DrawTab(new Rect(inRect.x, tabsY, 120f, 28f), ProfileTab.Overview, "总览");
             DrawTab(new Rect(inRect.x + 126f, tabsY, 120f, 28f), ProfileTab.Topics, "主题");
             DrawTab(new Rect(inRect.x + 252f, tabsY, 120f, 28f), ProfileTab.Texts, "文献");
+            DrawTab(new Rect(inRect.x + 378f, tabsY, 120f, 28f), ProfileTab.Travel, "旅居");
 
             Rect outerRect = new Rect(
                 inRect.x,
@@ -87,7 +90,10 @@ namespace LiAIChat.UI
             }
             else
             {
-                DrawTexts(viewRect, state);
+                if (selectedTab == ProfileTab.Texts)
+                    DrawTexts(viewRect, state);
+                else
+                    DrawTravel(viewRect, state);
             }
 
             Widgets.EndScrollView();
@@ -122,6 +128,11 @@ namespace LiAIChat.UI
             if (selectedTab == ProfileTab.Topics)
             {
                 return Mathf.Max(120f, 44f + GetKnownTopics(state).Count * 48f);
+            }
+
+            if (selectedTab == ProfileTab.Travel)
+            {
+                return 330f;
             }
 
             return Mathf.Max(120f, 44f + GetKnownTexts(state).Count * 64f);
@@ -235,6 +246,75 @@ namespace LiAIChat.UI
                 Widgets.FillableBar(new Rect(rect.x + 10f, y, rect.width - 10f, 12f), familiarity);
                 y += 22f;
             }
+        }
+
+        private void DrawTravel(Rect rect, PawnAIState state)
+        {
+            float y = 0f;
+            Widgets.Label(new Rect(rect.x, y, rect.width, 24f), "旅居愿望");
+            y += 30f;
+
+            TravelWish wish = state.TravelWish;
+            if (wish == null)
+            {
+                Widgets.Label(new Rect(rect.x + 10f, y, rect.width - 20f, 48f),
+                    "当前没有旅居愿望。部分成年殖民者，以及恋人或夫妻，会在日后产生希望离开原居地旅行的愿望。");
+                return;
+            }
+
+            BiomeDef biome = DefDatabase<BiomeDef>.GetNamedSilentFail(wish.BiomeDefName);
+            string biomeName = biome == null ? wish.BiomeDefName : biome.LabelCap.ToString();
+            Widgets.Label(new Rect(rect.x, y, rect.width, 24f), "目的地条件：" + GetSeasonLabel(wish.DesiredSeason) + "的“" + biomeName + "”");
+            y += 30f;
+
+            Pawn partner = FindPawn(wish.PartnerPawnId);
+            Widgets.Label(new Rect(rect.x, y, rect.width, 24f), partner == null ? "旅伴：独自旅行" : "旅伴：" + partner.LabelShort.ToString());
+            y += 30f;
+
+            Widgets.Label(new Rect(rect.x, y, rect.width, 48f), partner == null
+                ? "住宿条件：离开愿望产生地，在目的地拥有室内私人房间和自己的床位。"
+                : "住宿条件：两人一同抵达目的地，在同一间室内私人房间拥有至少两格床位。");
+            y += 54f;
+
+            if (wish.Active)
+            {
+                int remainingTicks = Mathf.Max(0, 480000 - (Find.TickManager == null ? 0 : Find.TickManager.TicksGame - wish.ActivatedTick));
+                Widgets.Label(new Rect(rect.x, y, rect.width, 24f), "状态：旅居愿望已满足，剩余约 " + (remainingTicks / 60000f).ToString("0.0") + " 天");
+            }
+            else
+            {
+                Widgets.Label(new Rect(rect.x, y, rect.width, 24f), "状态：尚未满足");
+            }
+            y += 34f;
+
+            Widgets.Label(new Rect(rect.x, y, rect.width, 24f), "旅居加成（满足后随机获得）：");
+            y += 26f;
+            foreach (string defName in wish.BenefitDefNames)
+            {
+                HediffDef benefit = DefDatabase<HediffDef>.GetNamedSilentFail(defName);
+                Widgets.Label(new Rect(rect.x + 10f, y, rect.width - 20f, 22f), "· " + (benefit == null ? defName : benefit.LabelCap.ToString()));
+                y += 24f;
+            }
+        }
+
+        private static Pawn FindPawn(int pawnId)
+        {
+            if (pawnId < 0) return null;
+            foreach (Map map in Find.Maps)
+            {
+                Pawn pawn = map.mapPawns.AllPawnsSpawned.FirstOrDefault(candidate => candidate != null && candidate.thingIDNumber == pawnId);
+                if (pawn != null) return pawn;
+            }
+            return null;
+        }
+
+        private static string GetSeasonLabel(string season)
+        {
+            if (season == "Spring") return "春季";
+            if (season == "Summer") return "夏季";
+            if (season == "Fall") return "秋季";
+            if (season == "Winter") return "冬季";
+            return season ?? "指定季节";
         }
 
         private static List<KnowledgeTopic> GetKnownTopics(PawnAIState state)

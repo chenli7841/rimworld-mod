@@ -59,6 +59,8 @@ namespace LiAIChat.Models
         public bool IsLostAnnotator;
         public bool LostAnnotatorRescued;
 
+        public LiAIChat.Travel.TravelWish TravelWish;
+
         public PawnAIState()
         {
         }
@@ -95,6 +97,7 @@ namespace LiAIChat.Models
             Scribe_Values.Look(ref IsRefugeeGroupLeader, "isRefugeeGroupLeader", false);
             Scribe_Values.Look(ref IsLostAnnotator, "isLostAnnotator", false);
             Scribe_Values.Look(ref LostAnnotatorRescued, "lostAnnotatorRescued", false);
+            Scribe_Deep.Look(ref TravelWish, "travelWish");
 
 
             if (Scribe.mode == LoadSaveMode.PostLoadInit)

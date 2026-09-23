@@ -26,6 +26,7 @@ namespace LiAIChat.Game
         private int lastCommentaryWritingCheckTick = 0;
         private int lastCommentaryReplyCheckTick = 0;
         private int lastLostAnnotatorCheckTick = 0;
+        private int lastTravelWishCheckTick = 0;
 
         // One in-game day. Proactive dialogue should be occasional and
         // should not repeatedly scan every colonist while nothing changed.
@@ -117,6 +118,11 @@ namespace LiAIChat.Game
             {
                 lastCommentaryWritingCheckTick = currentTick;
                 CommentaryIdleWritingManager.TryAssignIdleWriters();
+            }
+            if (currentTick - lastTravelWishCheckTick >= 2500)
+            {
+                lastTravelWishCheckTick = currentTick;
+                LiAIChat.Travel.TravelWishManager.Check();
             }
 
             // 每游戏日检查一次，避免频繁扫描所有殖民者。
