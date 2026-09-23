@@ -95,7 +95,7 @@ namespace LiAIChat.UI
 
             chatProvider = new OpenAIChatProvider(Config.Config.OpenAI_API_KEY);
 
-            layer = WindowLayer.GameUI;
+            layer = WindowLayer.Dialog;
             doCloseX = true;
             // The Talk command's own click can otherwise be treated as an
             // outside click immediately after opening this GameUI window.
@@ -115,10 +115,12 @@ namespace LiAIChat.UI
         {
             base.PostOpen();
 
-            float width = Mathf.Min(InitialSize.x, Screen.width - 12f);
-            float height = Mathf.Min(InitialSize.y, Screen.height - 72f);
+            // Window coordinates use RimWorld's UI scale, not Unity's raw
+            // physical pixel dimensions.
+            float width = Mathf.Min(InitialSize.x, Verse.UI.screenWidth - 12f);
+            float height = Mathf.Min(InitialSize.y, Verse.UI.screenHeight - 72f);
             windowRect = new Rect(
-                Mathf.Max(6f, Screen.width - width - 12f),
+                Mathf.Max(6f, Verse.UI.screenWidth - width - 12f),
                 56f,
                 width,
                 height);
