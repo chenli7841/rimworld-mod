@@ -48,6 +48,25 @@ namespace LiAIChat.Patches
                 };
             }
 
+            var lostAnnotatorState = LiAIChat.State.PawnAIStateManager.TryGetExistingState(__instance);
+            if (lostAnnotatorState != null && lostAnnotatorState.IsLostAnnotator &&
+                !lostAnnotatorState.LostAnnotatorRescued && __instance.Map != null && !__instance.Map.IsPlayerHome)
+            {
+                yield return new Command_Action
+                {
+                    defaultLabel = "接应失落注疏者",
+                    defaultDesc = "接应这名被困学者。他会加入你的队伍，可随商队一同返回殖民地。",
+                    icon = LiAIChatTextures.StudyArchive,
+                    action = () =>
+                    {
+                        __instance.SetFaction(Faction.OfPlayer);
+                        if (__instance.guest != null)
+                            __instance.guest.SetGuestStatus(null, GuestStatus.Guest);
+                        Messages.Message(__instance.LabelShort + " 接受了接应，并加入队伍准备返程。", __instance, MessageTypeDefOf.PositiveEvent);
+                    }
+                };
+            }
+
             if (!PawnConversationEligibility
     .CanTalkToPlayer(__instance))
             {

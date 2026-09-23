@@ -30,7 +30,6 @@ namespace LiAIChat.Questing
             if (scholar == null) return false;
             ArchiveScholarInitializer.Initialize(scholar);
             PawnAIStateManager.GetState(scholar).IsLostAnnotator = true;
-            scholar.guest.SetGuestStatus(Faction.OfPlayer, GuestStatus.Guest);
             GenSpawn.Spawn(scholar, cell, map);
             Messages.Message("在遗迹中发现了一名携带远古注疏的学者。", scholar, MessageTypeDefOf.PositiveEvent);
             return true;
