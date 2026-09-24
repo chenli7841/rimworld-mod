@@ -4,6 +4,111 @@
     <defName>LiAIChat_PracticalReason_01</defName>
     <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
     <order>1</order>
+    <title>序言第一部分 - 为什么批判实践理性：纯粹理性能否成为实践的</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+我把这部书称为《实践理性批判》，而不是《纯粹实践理性批判》，这名称指向问题的所在。对于认识，我曾经考察纯粹理性越过经验时会怎样误用自己的能力；对于行动，我却必须先问：纯粹理性本身是否能够成为实践的，是否能不依赖欲望所给出的目的而规定意志。
+
+倘若这一点可以确立，纯粹理性在实践方面就无须因为它的纯粹性而受到限制。需要检验的，反而是一般实践理性的主张，尤其是经验条件下的意志规定根据能否自称为一切行动的最高尺度。此书的工作，就是查明纯粹实践理性的可能性、原则和界限。
+
+因此，书名不只是文字选择。我不能预先把纯粹理性的实践效力当作一个假设，随后再找例子替它撑腰；必须通过批判，让这种效力在它自己的原则中显明出来。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_02</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>2</order>
+    <title>序言第二部分 - 自由作为拱心石：道德法则使自由为我所知</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+自由在这套理性体系中居于枢纽地位。上帝与灵魂不朽也会进入实践理性的考察，但它们所关联的是由道德法则规定的最高善这一必要对象；我履行义务，并不是先以它们的存在为条件。自由则不同：如果意志根本不能自由地受法则规定，道德法则的要求就失去了成立的根据。
+
+必须把两种根据区分开来。就存在的根据说，自由是道德法则的条件；就我认识它的根据说，却是道德法则使我意识到自由。若没有法则对我提出无条件的要求，我不能仅凭观察自身的行为，从经验中发现这种自由。
+
+我由此没有宣称自己看见了自由在物自身中的运作。法则作为实践理性的事实，向我显明自由的实践现实性；这种认识的路径和经验观察或理论证明都不同。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_03</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>3</order>
+    <title>序言第三部分 - 实践的现实性与理论认识的界限</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+理论理性的批判没有把自由当作一个经验对象来认识，只是表明自然因果性与自由的思考可以不相矛盾：同一个行动，就其显现于经验而言服从自然的条件；就行动者作为可被理性思考的主体而言，可以从另一立场考察。实践理性如今为自由提供现实性，先前留下的可能性便得到实践方面的根据。
+
+这个进展不能被误解成理论知识的扩张。即便理性在道德法则中有根据承认一种超感性的因果性，我也没有因而获得关于超感性世界的直观，不能描绘自由作为对象究竟怎样存在。实践上必须承认某个概念，与理论上能够认识其对象，是两件不同的事。
+
+同样，上帝与灵魂不朽在后文获得的地位，须依它们同实践要求的关系来判断，而不能当作思辨理性终于取得了原先缺少的证明。守住这条界线，理论与实践的论证才能互相衔接，而不互相冒充。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_04</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>4</order>
+    <title>序言第四部分 - 与《道德形而上学奠基》的关系及本书范围</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+《道德形而上学奠基》已经把读者带向道德的最高原则，却不能代替对整个实践能力的批判。这里我要进一步考察纯粹实践理性的能力、范围与界限，说明它的原则如何得到正当的位置，并处理随之而来的困难。
+
+本书因此也不打算逐条编排人应当履行的具体义务。系统的道德形而上学可以在原则已经澄清之后再展开；若在批判尚未完成时就急着罗列义务，便会掩盖最需要回答的问题：义务何以能无条件地约束意志。
+
+有人会说，道德原则并没有提供前所未闻的命令。即使如此，准确表达原则仍十分必要。知道人们通常赞许什么，与找出这种赞许具有普遍且必然效力的根据，不能混为一谈。批判所要厘清的是后者。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_05</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>5</order>
+    <title>序言第五部分 - 不用定义预先裁定争议：欲求、愉快与善</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+哲学一开始往往想先把所有词都定义好，再从定义推出结论。但若所给定义已暗中装入有争议的主张，后面的论证即使整齐，也只是把预设带回结论。例如，若先把欲求能力定义为总由预期的愉快推动，就已经在定义中排除了不以愉快为最高根据的意志规定。
+
+对于“善”，也不能未经审查就把某种令人愉快或有益的对象置于道德法则之前，再从它推导出法则。如果法则本身先规定什么才配称为无条件的善，那么先下对象定义就会颠倒论证次序。这正是后文必须细究的问题，而不应由开篇的术语替它作答。
+
+一个体系的各部分须互相照明：原则的含义在展开中愈加清楚，具体的解释也要回到整体接受检验。我会尽量明确使用术语，但不会让一个未经证明的词义替代批判。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_06</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>6</order>
+    <title>序言第六部分 - 实践设准的含义与道德判断的精确性</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+实践理性提出的设准，不能照数学中的设准来理解，也不是关于超感性对象的理论定理。它们与道德法则所要求的实践任务相关：在承认法则及其必要对象之后，理性有根据为行动而承认某些条件。这里的确信有其严格的实践来由，却不把这些条件变成可由思辨理性直观或证明的知识。
+
+道德判断的用词也需要谨慎。对一件行为说“许可”或“禁止”，与说它是“义务”或“违背义务”，所回答的问题并不全同；前者关乎行为是否落在法则允许的范围，后者关乎法则是否命令或排斥它。混用这些说法，会让实践原则看似清楚，实际却失去必要的区分。
+
+同样，我不能拿一个有限者能够达到的德性程度去替换完满的圣洁标准。理性在谈论实践要求时，应当同时保持原则的严格性，以及对于人的实际处境的清醒认识。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_07</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>7</order>
+    <title>序言第七部分 - 反对把必然性化为习惯：批判的任务</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+如果把一切理性原则都解释为反复经验所形成的习惯，普遍性和必然性的要求就无从交代。某种做法常见、许多人赞同，至多说明我们迄今如何判断，不能说明每一个有理性的意志为什么都应当如此判断。道德法则尤其不能以多数人的习惯取得它的权威。
+
+这并不是否认经验对于认识人、理解行动中的障碍有价值，而是要把经验所能报告的事实，与先天原则所提出的要求分别清楚。沿着怀疑论对未经证明的形而上学所作的追问，我必须更严格地说明：实践理性所主张的必要性究竟凭什么成立。
+
+因此，序言提出的是研究的尺度，而非以承诺取代论证。以下的分析要由原则出发，考察法则、自由以及它们同人的感性条件的关系；涉及理性界限之处，也必须承认界限。只有经过这种批判，道德上的确信才不会被误作经验的概括或理论知识的僭越。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_08</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>8</order>
     <title>导言一 - 理论的使用与实践的使用：批判为何有不同的任务</title>
     <goldCost>600</goldCost>
     <body><![CDATA[
@@ -16,9 +121,9 @@
   </LiAIChat.Archive.DocumentRecoverySectionDef>
 
   <LiAIChat.Archive.DocumentRecoverySectionDef>
-    <defName>LiAIChat_PracticalReason_02</defName>
+    <defName>LiAIChat_PracticalReason_09</defName>
     <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
-    <order>2</order>
+    <order>9</order>
     <title>导言二 - 首要问题：纯粹理性本身能否规定意志</title>
     <goldCost>600</goldCost>
     <body><![CDATA[
@@ -31,9 +136,9 @@
   </LiAIChat.Archive.DocumentRecoverySectionDef>
 
   <LiAIChat.Archive.DocumentRecoverySectionDef>
-    <defName>LiAIChat_PracticalReason_03</defName>
+    <defName>LiAIChat_PracticalReason_10</defName>
     <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
-    <order>3</order>
+    <order>10</order>
     <title>导言三 - 自由与批判方向的转换</title>
     <goldCost>600</goldCost>
     <body><![CDATA[
@@ -46,9 +151,9 @@
   </LiAIChat.Archive.DocumentRecoverySectionDef>
 
   <LiAIChat.Archive.DocumentRecoverySectionDef>
-    <defName>LiAIChat_PracticalReason_04</defName>
+    <defName>LiAIChat_PracticalReason_11</defName>
     <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
-    <order>4</order>
+    <order>11</order>
     <title>导言四 - 全书的两层结构：要素论与方法论</title>
     <goldCost>600</goldCost>
     <body><![CDATA[
@@ -61,9 +166,9 @@
   </LiAIChat.Archive.DocumentRecoverySectionDef>
 
   <LiAIChat.Archive.DocumentRecoverySectionDef>
-    <defName>LiAIChat_PracticalReason_05</defName>
+    <defName>LiAIChat_PracticalReason_12</defName>
     <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
-    <order>5</order>
+    <order>12</order>
     <title>导言五、为何必须从自由因果性的法则开始</title>
     <goldCost>600</goldCost>
     <body><![CDATA[
@@ -76,9 +181,9 @@
   </LiAIChat.Archive.DocumentRecoverySectionDef>
 
   <LiAIChat.Archive.DocumentRecoverySectionDef>
-    <defName>LiAIChat_PracticalReason_06</defName>
+    <defName>LiAIChat_PracticalReason_13</defName>
     <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
-    <order>6</order>
+    <order>13</order>
     <title>第一章第一部分 - 实践原则、准则与实践法则：问题从哪里开始</title>
     <goldCost>600</goldCost>
     <body><![CDATA[
@@ -95,9 +200,9 @@
   </LiAIChat.Archive.DocumentRecoverySectionDef>  
   
   <LiAIChat.Archive.DocumentRecoverySectionDef>
-    <defName>LiAIChat_PracticalReason_07</defName>
+    <defName>LiAIChat_PracticalReason_14</defName>
     <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
-    <order>7</order>
+    <order>14</order>
     <title>第一章第二部分 - 欲望、快乐与幸福为何不能成为道德法则</title>
     <goldCost>600</goldCost>
     <body><![CDATA[
@@ -112,9 +217,9 @@
   </LiAIChat.Archive.DocumentRecoverySectionDef>  
   
   <LiAIChat.Archive.DocumentRecoverySectionDef>
-    <defName>LiAIChat_PracticalReason_08</defName>
+    <defName>LiAIChat_PracticalReason_15</defName>
     <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
-    <order>8</order>
+    <order>15</order>
     <title>第一章第三部分 - 排除经验质料后，何以剩下普遍立法的形式</title>
     <goldCost>600</goldCost>
     <body><![CDATA[
@@ -129,9 +234,9 @@
   </LiAIChat.Archive.DocumentRecoverySectionDef>  
   
   <LiAIChat.Archive.DocumentRecoverySectionDef>
-    <defName>LiAIChat_PracticalReason_09</defName>
+    <defName>LiAIChat_PracticalReason_16</defName>
     <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
-    <order>9</order>
+    <order>16</order>
     <title>第一章第四部分 - 自由意志与道德法则：两道相互照明的问题</title>
     <goldCost>600</goldCost>
     <body><![CDATA[
@@ -146,9 +251,9 @@
   </LiAIChat.Archive.DocumentRecoverySectionDef>  
   
   <LiAIChat.Archive.DocumentRecoverySectionDef>
-    <defName>LiAIChat_PracticalReason_10</defName>
+    <defName>LiAIChat_PracticalReason_17</defName>
     <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
-    <order>10</order>
+    <order>17</order>
     <title>第一章第五部分 - 基本法则、“理性的事实”与两道绞刑架问题</title>
     <goldCost>600</goldCost>
     <body><![CDATA[
@@ -165,9 +270,9 @@
   </LiAIChat.Archive.DocumentRecoverySectionDef>
 
   <LiAIChat.Archive.DocumentRecoverySectionDef>
-    <defName>LiAIChat_PracticalReason_11</defName>
+    <defName>LiAIChat_PracticalReason_18</defName>
     <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
-    <order>11</order>
+    <order>18</order>
     <title>第一章第六部分 - 自律与他律：各种候选的道德根据</title>
     <goldCost>600</goldCost>
     <body><![CDATA[
@@ -186,9 +291,9 @@
   </LiAIChat.Archive.DocumentRecoverySectionDef>  
   
   <LiAIChat.Archive.DocumentRecoverySectionDef>
-    <defName>LiAIChat_PracticalReason_12</defName>
+    <defName>LiAIChat_PracticalReason_19</defName>
     <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
-    <order>12</order>
+    <order>19</order>
     <title>第一章第七部分 - 第一章的结论：理性的事实、自由与批判的界限</title>
     <goldCost>600</goldCost>
     <body><![CDATA[
@@ -207,9 +312,9 @@
   </LiAIChat.Archive.DocumentRecoverySectionDef>  
   
   <LiAIChat.Archive.DocumentRecoverySectionDef>
-    <defName>LiAIChat_PracticalReason_13</defName>
+    <defName>LiAIChat_PracticalReason_20</defName>
     <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
-    <order>13</order>
+    <order>20</order>
     <title>第二章第一部分 - 实践理性的“对象”：我能够做与我应当做</title>
     <goldCost>600</goldCost>
     <body><![CDATA[
@@ -224,9 +329,9 @@
   </LiAIChat.Archive.DocumentRecoverySectionDef>  
   
   <LiAIChat.Archive.DocumentRecoverySectionDef>
-    <defName>LiAIChat_PracticalReason_14</defName>
+    <defName>LiAIChat_PracticalReason_21</defName>
     <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
-    <order>14</order>
+    <order>21</order>
     <title>第二章第二部分 - 善恶与祸福：行动的性质与我的感受</title>
     <goldCost>600</goldCost>
     <body><![CDATA[
@@ -241,9 +346,9 @@
   </LiAIChat.Archive.DocumentRecoverySectionDef>  
   
   <LiAIChat.Archive.DocumentRecoverySectionDef>
-    <defName>LiAIChat_PracticalReason_15</defName>
+    <defName>LiAIChat_PracticalReason_22</defName>
     <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
-    <order>15</order>
+    <order>22</order>
     <title>第二章第三部分 - “方法上的悖论”：为何法则必须先于善的概念</title>
     <goldCost>600</goldCost>
     <body><![CDATA[
@@ -260,9 +365,9 @@
   </LiAIChat.Archive.DocumentRecoverySectionDef>  
   
   <LiAIChat.Archive.DocumentRecoverySectionDef>
-    <defName>LiAIChat_PracticalReason_16</defName>
+    <defName>LiAIChat_PracticalReason_23</defName>
     <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
-    <order>16</order>
+    <order>23</order>
     <title>第二章第四部分 - 自由的范畴表：给实践判断安排位置</title>
     <goldCost>600</goldCost>
     <body><![CDATA[
@@ -283,9 +388,9 @@
   </LiAIChat.Archive.DocumentRecoverySectionDef>  
   
   <LiAIChat.Archive.DocumentRecoverySectionDef>
-    <defName>LiAIChat_PracticalReason_17</defName>
+    <defName>LiAIChat_PracticalReason_24</defName>
     <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
-    <order>17</order>
+    <order>24</order>
     <title>第二章第五部分 - 实践判断力的难题：法则怎样落到经验行动上</title>
     <goldCost>600</goldCost>
     <body><![CDATA[
@@ -300,9 +405,9 @@
   </LiAIChat.Archive.DocumentRecoverySectionDef>  
   
   <LiAIChat.Archive.DocumentRecoverySectionDef>
-    <defName>LiAIChat_PracticalReason_18</defName>
+    <defName>LiAIChat_PracticalReason_25</defName>
     <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
-    <order>18</order>
+    <order>25</order>
     <title>第二章第六部分 - 自然法则的范型：把准则置于共同世界中检验</title>
     <goldCost>600</goldCost>
     <body><![CDATA[
@@ -317,9 +422,9 @@
   </LiAIChat.Archive.DocumentRecoverySectionDef>  
   
   <LiAIChat.Archive.DocumentRecoverySectionDef>
-    <defName>LiAIChat_PracticalReason_18</defName>
+    <defName>LiAIChat_PracticalReason_26</defName>
     <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
-    <order>18</order>
+    <order>26</order>
     <title>第二章第七部分 - 避免经验主义与神秘主义：第二章所取得的结果</title>
     <goldCost>600</goldCost>
     <body><![CDATA[
@@ -332,4 +437,601 @@
 于是第二章已经回答：纯粹实践理性的对象如何由法则而取得道德意义，以及判断力如何将这样的法则用于行动。它还未完整回答另一个问题：一个受感性影响的人，究竟怎样在主观上被道德法则所推动？道德法则对情感会产生何种作用？分析论第三章将转向这个动机问题。法则、对象与动机依次展开，才能同时避免把行为的外在结果、个人的快乐以及内心的道德根据混为一谈。
     ]]></body>
   </LiAIChat.Archive.DocumentRecoverySectionDef>  
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_27</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>27</order>
+    <title>第三章第一部分 - 合乎义务与出于义务：行动的道德价值在哪里</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+前面已经确立道德法则，并说明如何把它用于具体行动。现在必须问：什么使一个行动不仅合乎法则，而且在意志自身中具有道德价值？同一种外在行为可能出于不同的根据。我可以守信，只因失信会损害名誉；也可以守信，因为我认识到欺骗不可成为普遍法则。两种行动在可见结果上相同，在意志的最高规定根据上却不同。
+
+我称仅在外部行为上符合法则的情形为合法性；出于法则本身而行动，才具有严格意义上的道德性。如果我需要预先借助快乐、同情、利益或惩罚的恐惧，才愿意做法则所要求的事，那么真正规定意志的，仍然是这项感性条件。条件消失时，我的行动理由便会动摇。客观上合乎义务，并不能自动证明主观上是出于义务。
+
+因此，讨论道德动机，并不是为法则另找一股外来的心理力量，好让它终于能使人行动。对于一个其理性并不自然而然完全支配选择的有限存在者，所谓动机，是客观法则如何成为主观上充分的规定根据。若道德法则要求借某种预存情感才能动人，它就失去了独自立法的地位。我的任务是考察：法则本身对受感性影响的人会产生什么作用。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_28</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>28</order>
+    <title>第三章第二部分 - 法则怎样成为动机：能够说明的作用与不能解释的根源</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+我不声称能从心理学机制中解释，一个纯粹理性的法则究竟如何凭自身直接决定意志。这样的问题最终同“自由意志如何可能”相连；人的理论认识不能把自由因果性拆成可以观察的环节。然而，不能说明它的超感性机制，并不妨碍我考察：如果法则已经直接规定一个有限的意志，它必然对这个人的感性方面产生什么影响。
+
+有限理性者同时有欲求和倾向，常想把这些主观需要当成最高原则。当道德法则要求我的准则普遍有效时，它不但拒绝让倾向充当决定行动的最高根据，还会抑制那些与法则冲突的倾向。凡对感性冲动的阻碍，就在感受中显现为某种不快。这里我并未从观察若干行动者开始归纳情感，而是从“法则限制倾向”这一关系，说明一种消极的感受为何必然出现。
+
+须把次序牢记：法则先规定意志，然后才产生对感受的作用。假使我把这份感受提前放到法则之前，宣称“因为我已经有某种令人愉快的道德情感，所以法则有效”，我就把纯粹实践理性重新交给经验。由法则产生的感情，可以帮助我们理解有限者的道德生活，却不能倒过来作为道德法则的最高证明。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_29</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>29</order>
+    <title>第三章第三部分 - 自爱、自负与法则的抑制作用</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+人有理由关心自己的幸福；这种自然的自爱并不是仅因存在就该被消灭。我要求它受法则限制：谋求自身利益的准则，只有在能够与道德法则相一致时才可被采纳。如此受到限制的自爱，仍可以是合理的生活关切。可是我若以自己的欲求为本，未经法则审查便自认具有优先的价值，就形成自负；它对自己价值的僭越要求必须被法则击破。
+
+当我审视自己的行动时，这种差别可以很尖锐。我或许满意于自己作了一件对别人有益的事，便急于宣称自己已比别人高尚；但一旦追问准则是否真正出于义务，原来的自我赞许便不能保证我有道德价值。法则不准我先给自己颁发功劳，再根据这份自我评价选择是否服从。
+
+法则限制倾向、削弱自负，在感性的一面使我受到挫折，甚至感到谦卑。这种不快本身不是道德恶，也不是法则以痛苦为目的；它来自主观要求失去至高位置。与此同时，阻碍被移除，法则的权威就更清楚地显现。正是在这个由自负受挫到法则获得承认的关系里，我可以理解对道德法则的敬重。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_30</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>30</order>
+    <title>第三章第四部分 - 敬重：由道德法则产生的情感</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+我把这种特殊的感情称为敬重。它不是看到一个惹人喜爱的对象之后产生的好感，也不是对强者的畏惧。它的原因是理智的：法则直接对意志提出要求，限制自爱，击破自负。就感性的一面说，我感到自己的僭越受到压低；就理性的一面说，我承认法则高于这些主观要求。因而敬重是一种由法则产生的道德情感，不能倒过来充当法则的来源。
+
+一个人的机智、名望和权力可能使我喜爱、惊讶或畏惧，却不能仅凭这些品质要求我在内心敬重他。相反，若一个地位低微的人呈现出比我更加正直的品格，即使我在人前仍自持身份，他的榜样也会使我的内心低头。严格说来，我敬重的是他所体现、并借此使我认识到自己也能够遵守的法则，而非一个外在形象本身。
+
+敬重兼有抑制与激发的作用：它使我放弃自负，又使阻碍意志服从法则的倾向减弱。由此我可以说，法则是客观而直接的规定根据；敬重则是这一规定在有限主体身上的主观效果，并在此意义上表现为动机。我可以进一步说自己对服从法则怀有道德的兴趣，但这种兴趣在法则之后发生，不能与先于法则的逐利兴趣混为一谈。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_31</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>31</order>
+    <title>第三章第五部分 - 义务、爱与有限者的道德处境</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+对有限理性者而言，法则常须克服与它相反的倾向，所以表现为命令，服从它表现为义务。圣洁的意志不会形成违反法则的准则，因而不需通过义务的约束来使自己行动；人却不能因为某些善行令自己愉快，就宣布自己已经处在这种状态。行动出于义务，意味着尊重法则是准则的主观根据，而不仅是结果与法则巧合。
+
+我并不否定人可以出于喜爱和同情去帮助邻人。问题在于是否把这份易变的感情置于义务的根基。爱若仅指无法随命令产生的感性倾向，就不能被直接要求；要求一个人“立即喜欢某人”并不掌握在他的意志中。但爱可以有实践的意义：依义务善待他人，持续培养愿意履行这些义务的意向，而不是等感情自行降临。关于爱上帝、爱邻人的诫命，也须在这种实践意义上理解。
+
+我们可以向乐意实行法则的理想不断接近，却不可自称已经不再可能受私欲引诱。一旦把敬重与义务看作仅供道德初学者使用的拐杖，自以为凭天然的好感就超越了法则，反而容易让爱好偷偷取代义务。有限者应承认自己始终须受法则约束；这种承认并不贬低爱，而是把爱放在持续的道德努力之中。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_32</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>32</order>
+    <title>第三章第六部分 - 人格的尊严与人作为目的</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+义务虽不以取悦我为条件，却并非来自一个只会威胁人的外在权力。它的根源是人格：我作为感性世界的成员受到自然条件影响，作为理性者却能依自己给予的普遍法则规定意志。这种自由和自律使我不仅有可供别人利用的能力，也有不得仅被当作工具的尊严。每一个理性者因其人格而是自身的目的。
+
+因此，人性在我自己身上也须被敬重。我不能一面承认自己能自主立法，一面仅为取得方便就愿意把自己或他人交给违背这项自律的目的。一个人可能借一则貌似无伤大雅的谎言摆脱烦人的差事，甚至为值得关爱的朋友取得利益；若他拒绝这样做，理由可以是他不愿在自己眼中失去正直，而不是担心谎言会被揭穿。
+
+身处艰难境遇的人，因守住义务而得到的安定，也不等于快乐。他未必会希望经历这场困苦；只是即便失去其他有价值的东西，仍不必在自我审视中认为自己不配作为一个人而活。道德价值与生活舒适由此显出不同的尺度。敬重人格，并非膜拜自己的情绪，而是认识到法则在具有自由能力的主体身上所显示的地位。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_33</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>33</order>
+    <title>第三章第七部分 - 动机的结论：道德生活与幸福的关系</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+守道德法则或许也使生活较安宁，使人与人更愿意信任彼此。这样的结果可以受到欢迎；但若我只有在看见它们时才愿意履行义务，法则便不再是最高动机。我也可以提醒一个受到恶行诱惑的人，道德生活未必缺少喜乐；这种鼓励不应暗中改写为“道德之所以是义务，只因它更令人愉快”。
+
+我必须警惕另一种把道德说得过于轻易的热情。若英雄气概、感伤的自我陶醉或“我天生就爱行善”的想象使我忘记自己的有限性，便可能自称高于义务，以致在感情不合意的时候失去可靠的准则。道德上的热狂，正是把不属于人的圣洁状态当作自己已经达到的地位；冷静的道德训练则要求我不断用法则检验自己的动机。
+
+故而纯粹实践理性的动机归根到底仍是道德法则本身。它客观地规定意志，又在受感性影响的人身上以敬重的形式显出主观作用；法则不是从敬重取得权威，敬重却因法则而生。一个行动若合乎法则而由利益驱动，只得到外在的合法性；若意志出于对法则的敬重而行动，才显示道德性。
+
+分析论到此已经依次处理原则、对象和动机。然而，要了解这三步为什么必须以这样的次序排列，以及它们如何与理论理性的批判相互协调，还需进行下一篇独立的“纯粹实践理性分析论的批判性考察”。那是对分析论整体结构的回顾，不应混入这一章关于动机的结论。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_34</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>34</order>
+    <title>分析论批判性考察第一部分 - 为何依次讨论原则、对象与动机</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+前三章既已讨论完毕，现在我应检验：分析论何以必须这样安排，而不是任意换一个次序。理论理性认识已给予的对象，须从感性直观起步，经由概念而达到原则。实践理性所问的却是意志的因果能力，以及纯粹理性能否直接规定它；这里不能先给意志一个可欲对象，再从对象推导出法则。
+
+所以我先确立先天的实践原则，接着才能依它规定善恶的对象概念，最后才考察法则对有限主体的感性所产生的影响，即敬重与道德动机。次序是原则、对象、动机；若倒过来从愉快的感觉开始，我便在尚未检查纯粹理性的能力之前，已把经验条件安放在最高位置。
+
+也可借推理的结构看这三步：普遍的道德原则仿佛大前提，具体行动归属于善恶概念仿佛小前提，而意志在主体中的规定仿佛结论。这只是阐明分析论的结构，不能把活的道德决定化作形式推演。理论与实践同属于理性，却因面对对象与意志的方式不同，走过方向相反的道路。两者能否最终在一个原则下完全统一，仍是理性追求的问题，不能当成这里已经证明的结论。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_35</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>35</order>
+    <title>分析论批判性考察第二部分 - 日常道德判断怎样显出纯粹法则</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+在理论认识中，已有科学的先天知识可供我检验理性如何工作；纯粹实践理性的现实性，却须从人们最普通的道德判断中辨认。一个人未必读过哲学，仍能理解“这样做虽有利，却不应当做”中的分别。我要认真听取这种判断，而不是把多数人的行为统计成道德法则。
+
+在欲以谎言获利的人面前提出道德法则，他便不得不把“得利”与“是否应说谎”分开估量。我可以用类似化学分离的比喻说明这件事：法则使原先混在一起的利益考虑与对真实的敬重显出各自的性质。获利仍可能吸引他，但不再能够伪装成义务的根据。思想上的试验表明日常理性有能力辨认原则的纯粹性；它并不证明每个人事实上都会照此行动。
+
+当愉快或痛苦被用来激发欲求时，经验成分便很容易被认出。若法则对意志的要求不以这种成分为条件，它就不能与幸福建议混成一条原则。这样的辨别先让我们认出道德法则的实际地位，然后才能继续讨论其与自由、自然解释之间的困难；不必先有关于自由机制的理论知识，才准许自己作道德判断。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_36</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>36</order>
+    <title>分析论批判性考察第三部分 - 幸福为何不能成为义务的最高条件</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+把道德原则同幸福原则分开，不等于命令每个人放弃幸福。作为有限的存在者，我需要维持生活、培养能力，并顾及自身的处境。有时为自己的幸福作准备，还能提供履行义务的手段；极端贫困也可能加重违背义务的诱惑。在这样的条件下照顾生活，并不直接损害道德。
+
+但当义务与私利冲突时，我不能让幸福的希望替法则决定裁判结果。为使道德成立，必须把“我做这件事会获得什么”从最高原则的位置移开。如果我先以满足为条件，再在它有利时选择诚实，诚实便只是取得利益的策略。使行动具有道德价值的是法则作为规定根据，而不是利益与法则恰巧方向相同。
+
+我也不会把增进自己的幸福说成一种无条件而直接的义务。人本来就希望幸福，理性更适宜指点其手段；这样的指点会随能力、境遇和经验而改变。义务的根据却必须不依附这些变化。经验性的动机可以在生活中存在，甚至伴随道德生活，但不能混入确定道德法则的最高条件，否则法则所要求的必然性便被偶然的欲求侵蚀。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_37</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>37</order>
+    <title>分析论批判性考察第四部分 - 自由不是仅仅由内在欲望推动</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+道德法则使我有理由承认自由，却没有给我一幅说明自由如何运作的心理图解。若有人说，只要行为来自主体内部的观念与欲望，而不是被外物推着走，它便是自由的，我必须追问：这些观念和欲望自己是否仍由先前的经验状态决定？若答案为是，因果链只是转入主体内部，尚未获得超越自然必然性的自由。
+
+飞行中的物体没有在每一刻都被外力推动，钟表的指针也能依内部装置自行转动；仅凭这种相对意义上的“自己动”，不能得出自由。把人的内在表象列在机械链条中，称它们比外在撞击更高贵，仍未改变按时间顺序由既定条件产生后来行动的结构。即使整条链的直接原因都在我之内，过去既不再受我掌握，若它已完全决定现在的选择，严格意义的自律仍未得到说明。
+
+所以我反对用经验心理学的自由替代超越感性决定的自由。前者或可解释人的行为怎样发生，后者才关乎行为能否在道德上归属于一个自行立法的主体。这并不是要求停止研究人的动机；只是把心理因果的说明同自由作为道德责任的条件区别开来。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_38</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>38</order>
+    <title>分析论批判性考察第五部分 - 现象中的必然与行动者的自由</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+凡在时间中发生的行动，作为现象都属于自然因果的联结。如果我把人在时间中的存在直接当成其物自身的全部存在，那么他眼前的每一步都已由过去的状态决定；既然过去不能由他现在改写，自由便无从立足。要同时保留自然解释和道德责任，我须严格区分同一行动的两种考察：作为经验中的事件，它可以有先前的自然条件；作为理性主体的行动，它须能依法则归属于主体。
+
+假设有人盗窃。从经验角度，我或许可以逐项研究他的环境、习惯、性格和诱因；这些解释越完整，越不意味着我可直接从中读出道德法则。道德判断仍问他本应否采用盗窃的准则。即使设想我们能像预测日食那样准确预测他的举动，预测的准确性所涉及的也是他的现象表现，并不自动取消他作为理性者所承担的归责。
+
+我并不声称能用理论直观目睹物自身怎样引起这一行动，也不在同一个意义、同一种关系之下宣布行动既必然又不必然。自然必然性涉及时间中的现象；自由涉及不把主体的规定根据仅限于这种时间顺序的实践立场。区别两种立场，才能避免一面用自由否认自然规律，一面用自然规律抹掉义务。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_39</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>39</order>
+    <title>分析论批判性考察第六部分 - 良心、悔恨与对自身行动的归责</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+人可以费尽心思，把旧日的一次过错说成不慎、习惯使然或环境所逼；若他知道自己当时意识清醒，内心的控诉未必因此沉默。坏习惯确实能使某类行为越来越容易发生，但他也会追问：这些习惯何以逐渐养成，我是否早已放任了自己的准则？把行为放在经验的连续链条里加以解释，并没有使关于自己是否应当如此的判断失效。
+
+悔恨尤其显出这种差别。多年以前的行为已不能撤回；若只按结果计算，悔恨似乎毫无用途。但道德判断追问的不是现在能否改变过去，而是该行动是否作为我的行动违背了法则。于是记忆可以重新唤起归责；时间距离不能把本来不正当的准则洗成正当。这也解释为何我们会对人的长期品格提出判断，而不把每个错误都说成与本人无关的偶然事件。
+
+当然，良心的感受不能独自成为自由的理论证明，更不能让我们对别人的心理状态作全知断言。我所要指出的是：我们的道德实践确实把行动归于能够听到法则要求的主体。若只留下心理与环境的链条，同时又想维持责备、悔恨和义务的原有意义，便还没有说明这些判断何以可能。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_40</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>40</order>
+    <title>分析论批判性考察第七部分 - 创造者与受造者的自由难题</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+还须正视一个更艰难的疑问：若上帝是受造者存在的原因，那么人的行动是否最终也归于创造者？假如我把人在时间中的全部行动，当作物自身的时间状态，又说创造者使这个存在及其全部状态产生，那么将恶行归责于人而不归责于创造者，似乎不能自圆其说。仅凭“人是由上帝创造的，但他的动作来自自身”这样的词句，不足以解开因果上的困难。
+
+我曾区分现象与物自身，并认为时间是感性直观的形式，而非一切存在作为物自身都须服从的形式。凭这一分别，创造者与受造者的关系不能被简单当作时间中先有外在原因、随后推出人的一系列行动的机械关系。作为现象，行动仍可接受自然解释；作为理性者，人仍须就其依自由法则所采取的准则受判断。若取消这种分别，只承认在时间中被决定的一切为存在的全部，自由与归责的困难便无法靠神学名称化解。
+
+这里所做的是维护相关概念可以相容的立场，并把障碍公开摆出，不是假称我们已洞见上帝怎样创造自由主体的内部方式。困难之所以值得保留，是因为用一句轻便的断言掩盖它，只会使自由与自然必然性的矛盾在别处重现。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_41</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>41</order>
+    <title>分析论批判性考察第八部分 - 自由为何获得实践的实在性</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+理论理性能够为自由保留一种不自相矛盾的可能性，却不能在观察到的事件中发现一例不受感性条件约束的因果作用。若我只沿经验原因的链条寻找无条件者，所得仍是有待解释的现象。突破口并不在一项奇异的可见事件，而在一个不借感性条件授予权威的实践原则：道德法则直接要求我的意志依可普遍立法的准则行动。
+
+自由正因此从理论上尚可设想的“可能”，转为对承认道德法则约束自己的主体而言具有实践实在性的能力。理性并未藉此获得关于超感性对象的直观；我也不能由自由的实践意义，推出对灵魂、上帝或物自身结构的完整理论知识。得到规定的，是理性能够以法则充当意志的因果根据，以及我们在实践中为何必须从这个立场理解自身。
+
+至此我可以回看分析论的成果：纯粹原则直接规定意志；依原则才能判断对象的善恶；法则对有限主体又表现为敬重及义务。对这套次序的批判性考察说明，道德归责与现象的自然解释各有其位置，而经验幸福和心理冲动不得冒充自由的最高根据。下一步将进入辩证论：当实践理性不只规定个别行动，还思考它所要求的完整对象时，会遇到关于最高善的新问题。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_42</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>42</order>
+    <title>辩证论第一章第一部分 - 理性为何会产生辩证论</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+纯粹理性无论在认识中还是在行动中使用，都不能只满足于一个个孤立的有条件之物。一旦我遇到某种结果，就会追问它的条件；既然条件仍受制于别的条件，理性便要求把这一系列追溯到一个完整而无条件的总体。这样的要求来自理性自身，不是个别人的好奇心偶然过盛。
+
+困难在于：我认识对象所凭借的直观是感性的；在经验中遇到的现象，总还处于条件与条件的联系中。若不加批判，便把这种现象直接当作物自身，以为可以在现象的序列里发现绝对的无条件者。实际上，我已把适用于另一层问题的理性要求，误用在仅能呈现有条件者的领域。幻相由此发生，并非只要警告自己小心一点就会消失。
+
+这种误用最终使理性同自身发生冲突：按照理性要求，我必须寻找完整的根据；按照我对现象的考察，却始终只能走到更多有条件的环节。冲突不是研究可以随手绕开的意外，它逼迫我追究幻相来自何处，以及现象与物自身为何不能混同。就此而言，辩证论并非纯粹实践理性的一段无用歧路；暴露矛盾，正是展开批判的契机。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_43</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>43</order>
+    <title>辩证论第一章第二部分 - 实践理性为何追求最高善</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+实践中的理性同样会寻找无条件者。人的欲望、需要和具体目的都是有条件的：我想取得某物，是因为它满足这项需要；我采用一种手段，是为了另一项结果。分析论已表明，纯粹实践理性不能从这些目的中借得规定意志的最高法则。道德法则已作为意志的规定根据确立，因此这里不能重新把一项可欲之物置于它的前面。
+
+可是，法则确立之后，理性仍会问：一个受它规定的意志所指向的对象，在完整的意义上是什么？它追求的不只是某一个有条件的局部目标，而是纯粹实践理性的对象的无条件总体。我把这个总体称为最高善。由此进入辩证论的问题，绝不意味着分析论所得的法则尚待一个更高的目的来证明。
+
+必须分开两项提问：“什么使我有义务如此行动？”以及“受义务规定的实践理性，把什么作为完整的对象？”第一问的答案是道德法则；第二问将引出最高善。若我见到“最高”二字，便立即让它取代法则来规定意志，就会把对象问题误作原则问题，使此前关于自律的论证失去立足点。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_44</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>44</order>
+    <title>辩证论第一章第三部分 - 哲学与追求智慧</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+如果要把最高善的概念规定得足以指导理性的准则，便不能只列举人们偶然喜欢的事物。这一事业属于实践的智慧。古人所说的哲学，本有爱智慧之意：它关心最高善应当被放在何处，也关心人应当凭怎样的行动向它前进。理论知识可以帮助这一事业，但不该让知识的积累遮蔽行动的最高目的。
+
+我愿意保留“爱智慧”而不是“拥有智慧”的说法。智慧作为理性的理想，客观上有一个要求我们努力接近的标准；对一个具体的人而言，它却只是不断奋斗的目标。一个人即便熟悉许多学说，也不能单凭学识宣布自己已是掌握智慧的导师。如果他的生活、克制能力与对普遍善的关切全不相称，宣称拥有智慧便是自负。
+
+因此，在辩证论开端谈“哲学家”并不是偏离最高善的闲话。它提醒我：最高善并非可以摆在面前欣赏的概念装饰；哲学要在理性地理解它的同时，要求行动者检验自己是否确实依理性行事。追求智慧也需要谦逊，不能把尚未完成的实践任务提前称作已取得的成就。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_45</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>45</order>
+    <title>辩证论第一章第四部分 - 最高善是对象，道德法则仍是根据</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+在继续讨论最高善之前，必须守住一个细微却决定性的顺序。道德法则是纯粹意志唯一的最高规定根据。它规定准则必须能够成为普遍法则，因此作为规定根据，不能从某个事先欲求的对象取得内容。最高善固然可以是纯粹实践理性的完整对象，却不能仅因它是完整对象，就反过来成为先于道德法则的行动理由。
+
+若我先把一个对象称为“最高的善”，再说因为想得到它才应当服从道德法则，那么真正使我行动的便是取得对象的欲望。如此，道德只成了通向收益的手段，意志也重新依赖外部目的而陷入他律。分析论已经表明，善的严格概念必须受先行的法则规定；辩证论不能在谈到最高善时暗中撤销这一成果。
+
+另一方面，法则先于对象，也不妨碍最高善成为受法则规定的意志所应促进的对象。若最高善的概念本身以道德法则为最高条件，那么意志在促进它时所服从的，仍是这一法则，而不是一个取代法则的外来诱因。这里已经指出两者可以保持一致，尚未展开最高善究竟包含哪些要素、它们如何结合以及由此会生出什么矛盾；这些问题必须留给辩证论第二章。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_46</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>46</order>
+    <title>辩证论第二章第一部分 - 最高善的最高条件与完整总体</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+在谈最高善时，我必须先澄清“最高”的两种意义。一种是最高的条件：它自身不以别的善为条件，其他善却要依它才配获得肯定。另一种是完整的总体：若再添入同类的东西也不能使它更完满，它便是全部的善。把最高条件与完整总体混为一谈，立刻会使实践理性的任务变得含糊。
+
+德性，即一个人的意志符合法则、因而配得幸福，是我们所能意愿的一切善的最高条件。幸福可以使有限理性者的生活满足，但即使一个恶人十分幸福，我也不会因其满足而认定整个状态无条件地善。因此，德性必须处在幸福之前；幸福本身不能审判德性。
+
+然而，德性虽是最高的善的条件，还不是最高善的完整总体。设一个理性者既有需要，又确实值得幸福，却始终得不到幸福；如果考虑的是一切有理性者可能组成的完整世界，我不能把这一缺失当成毫无关系。因此，完整的最高善包含德性，以及与德性相称的幸福。两者的地位并不平等：德性作为条件居先，幸福作为受条件限制的第二要素加入。这不意味着追求幸福能够成为道德法则的来源。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_47</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>47</order>
+    <title>辩证论第二章第二部分 - 德性与幸福为何不能合成一个概念</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+既然德性与幸福同属于最高善，我须问它们如何联结。若两者按概念分析便是同一件事，联结就是分析的；若它们确实不同，却又必须在一个完整的善中相合，联结就只能是综合的。古代学派倾向于用第一条道路消除困难，却在选择哪个概念为根本时走向相反的方向。
+
+伊壁鸠鲁派把追求幸福的明智准则说成德性；斯多亚派则把德性的意识当作幸福。前者使道德服从于趋乐的筹划，后者把德性自身提升到仿佛已足以满足人的一切需要的地位。他们并非没有看见两种要素都值得思考，而是试图通过重新命名，把仍待解释的结合写成一个概念内部的同一性。
+
+分析论已经表明，个人幸福的准则和德性的准则在最高规定根据上异质。一个人可以因义务而行动，同时感到苦难；也可以得到快乐，却未因此具有德性。于是不能从“有德性”的概念直接抽出“已经幸福”，也不能从“谋求幸福”直接抽出“已经有德性”。最高善要求的联结必须被认真解释，而不能靠定义取消问题。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_48</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>48</order>
+    <title>辩证论第二章第三部分 - 实践理性的二律背反如何发生</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+两种异质的要素若要构成应由行动促进的最高善，就须有一种实在的、因果的联结。方向似乎只有两个：追求幸福的欲望产生德性的准则，或者德性的准则产生与它相称的幸福。第一种说法无条件地错误：若我之所以守法只为幸福，意志的最高规定根据就是自爱，行为即使外表合乎法则，也不能由此获得德性。
+
+第二种说法同样遭遇严峻的障碍。在我们经验到的自然世界里，结果取决于自然规律、能力、时机和其他人的行为；正直之人未必比不正直之人过得幸福。单靠最严格地履行道德法则，不能在自然因果的范围内保证幸福按德性精确分配。
+
+于是理性仿佛被逼入冲突：道德法则要求我尽力促进最高善；若最高善绝不可能，道德法则似乎在命令追求一个空洞的对象，连自己的权威也会受威胁。这才是实践理性的二律背反，而不是“做善事总有好报吗”的简单经验问题。我必须分辨两种因果主张是否在同一意义上都已被证明绝不可能，才可判断冲突是否真实。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_49</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>49</order>
+    <title>辩证论第二章第四部分 - 二律背反的批判性解决</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+追求幸福不能成为德性的原因，这一点没有补救余地：它从一开始便把经验性的欲求放在最高原则上。但“德性不能产生相称的幸福”这一判断，只在附加某项条件时成立，即把感性自然视作理性者存在的全部，并要求在其中直接观察德性与幸福之间的必然联系。我们确实不能在现象的因果网络中找出这种保证；却不能因此断言更广的、非直接可感的联结绝无可能。
+
+我已经有理由把自己作为感性世界中的现象，同时也作为受道德法则规定的理性主体来思考。因此，并不矛盾地可以设想：德性与幸福之间并非按可见自然规律直接相连，而可能在超出仅凭感官所知的秩序中，通过自然的一个理智根源而间接相联。这不是声称我已从经验里发现一个正直者必获幸福的机制。
+
+冲突由此被限定：第一命题彻底被排除；第二命题并非绝对不可能，只是在纯粹感性自然的范围内不成立。理性因此能够把最高善视为实践上可能的对象，仍不把幸福当作德性的动机。德性始终是先决条件，幸福只能作为与它相称的第二要素。若混淆“可以实践地设想其可能”与“理论上已知其如何发生”，便会失去此处批判性解决的限度。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_50</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>50</order>
+    <title>辩证论第二章第五部分 - 德性的自我满足为何不是幸福</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+有人或许仍想绕过问题：一个人自知依义务行动，就已经感到满足；何必再要求德性与幸福的相称？我承认，意识到自己能依理性法则限制倾向，的确会带来某种稳定的自我满足。它主要是消极的：我不再全由不断变动的欲望牵制，也不必在自己面前感到人格受损。
+
+然而，这种自我满足不等于幸福。幸福关乎有限者在世界中的需要及其生活状态与愿望的协调；正直的人仍会有饥饿、病痛和失去亲友的痛苦。即使在苦难中坚持义务，也不能靠修改“幸福”一词，便宣称需要已经获得满足。德性所伴随的自我满足来自理性意志对倾向的独立，而感性的幸福还涉及自然条件的配合。
+
+若把守法之后的满足当作预先推动守法的快乐，次序便再次倒转：原先由法则产生的效果被偷换成法则的原因。所以，承认德性有其尊严与内在安宁，不能抹去最高善中另一个与德性有别的要素。实践理性仍须问，一个值得幸福的意志如何能够与相称的幸福结合。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_51</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>51</order>
+    <title>辩证论第二章第六部分 - 实践理性为何具有优先地位</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+理论理性希望认识对象，并严格防止自己越过经验界限；实践理性则以法则规定意志，并面对实现完整目的的要求。当二者涉及同一些超感性理念时，我必须问：能否仅因理论理性不能认识它们，便禁止实践理性为了自己的必要目的而承认它们？若实践理性没有独立的先天原则，理论理性的限制当然足以约束这种任意设想。
+
+但道德法则已显示纯粹理性确实能够是实践的。若某些不与理论理性相矛盾的承认，必然关涉这一实践法则所要求的对象，那么同一个理性不能在理论使用中因为无从直观它们，就简单把实践使用的必要要求宣布为空话。在理性的两种使用相结合时，实践的兴趣因而有优先地位。
+
+这种优先地位不让想象放纵。理论理性仍要排除矛盾，仍不能把实践上有理由承认的对象描写成已经被观察或证明的事物。实践理性也只有在其要求源于纯粹法则、而非个人愿望时，才可提出这种主张。优先意味着对同一理性的必要实践关切给予位置，不意味着任何有益或令人安心的信念都能冒充知识。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_52</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>52</order>
+    <title>辩证论第二章第七部分 - 灵魂不朽作为实践公设</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+最高善以德性为最高条件，而意志与道德法则完全相符，可以称为圣洁。作为受感性影响的有限理性者，我不能坦称自己在任何一个生存时刻已达到这种完满。道德法则的严格性又不容我把圣洁降格为迁就弱点的标准。因此，我能够依自身的有限处境意愿的，是向法则不断接近、没有可任意划定终点的道德进展。
+
+若这种无限进展是最高善的首要条件在我们身上成为可能的方式，它要求同一个理性者的人格能够有无尽的持续。我因而提出灵魂不朽的实践公设。所谓公设，并非我凭理论心理学已证明灵魂是一种不灭的实体，而是一个不能作为理论命题加以证明、却与先天实践法则要求的对象不可分的假定。
+
+这种假定的目的不是让人拖延今天的义务，等待将来轻易补足；也不是承诺有限者在某一可指明的时刻便可自称绝对圣洁。它要求我始终保持向更好处前进的严肃意向。在完全满足法则的标准与有限者的实际状况之间，我既不削低标准，也不伪称自己已经抵达它。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_53</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>53</order>
+    <title>辩证论第二章第八部分 - 上帝存在为何成为实践公设</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+最高善还有第二项要素：幸福与德性相称。作为自由的行动者，我可以按法则规定自己的意志，却不能独力支配全部自然，使每个人按其道德价值获得幸福。自然界中使人富足、贫困、健康或患病的因果联结，不以人的德性为直接尺度。如果最高善作为实践理性所命令我们促进的对象是可能的，我便需要设想德性与自然中幸福的分配能够最终相协调。
+
+为此，我提出一个具有理智与意志、足以成为自然之根源的最高原因，即上帝的存在，作为最高善可能性的实践条件。这项推论没有从世界的某个可观察设计直接推出一个已被理论证实的神，也没有因为我希望受奖赏便发明一个道德裁判者；它从法则要求促进最高善，追问其完整对象如何可能。
+
+必须守住更早确立的顺序：道德义务不以相信上帝为基础；义务由理性的自律独立成立。需要承认上帝的实践理由，关乎最高善中德性与相称幸福的结合，而非“上帝下令，所以我才应当行善”。促进最高善是义务；在此基础上承认其可能条件，才是与义务相联系的理性需要。这样的公设并未把关于神的超感性本质变为可观察的知识。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_54</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>54</order>
+    <title>辩证论第二章第九部分 - 公设、宗教与先有道德法则的顺序</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+现在我可以理解，道德法则如何经过最高善这个完整目的而通向宗教。在这里，把义务看作神圣的命令，不是说义务原本不过是一位外来统治者的任意决定，直到威胁和许诺出现才有力量；相反，义务本是每一个自由意志都应承认的理性法则。由于最高善的完全实现还涉及一位道德上完善、能够使自然与德性相协调的最高原因，这些义务才也能被理解为与这样一位存在者的意志相一致。
+
+恐惧惩罚或期望奖赏若先于法则，成为行为的真正动机，即使行动外表端正，也损坏了道德价值。我不能把上帝作为“得到幸福的保证”放在义务之前。道德法则先使我负有促进最高善的责任，之后才有关于这一完整目标可能条件的实践提问。宗教理解应随这一先后而来，不能倒过来替代自律。
+
+因此，在此论证中谈“神圣命令”并未撤销分析论对他律的批判，也不授权我自称已经从理论上认识上帝的属性。实践理性需要把道德目的与世界的完整秩序联系起来；它仍以依法则行动为先。若这一区分失守，最高善便从道德努力的对象，退化成利用善行交换幸福的工具。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_55</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>55</order>
+    <title>辩证论第二章第十部分 - 三个实践公设各自承担什么任务</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+道德法则本身不是公设：它直接规定意志，是此前分析论确立的最高原则。自由、灵魂不朽与上帝存在则在纯粹实践理性的论证中有不同的地位。自由作为不受感性条件最终决定、能依理性法则规定意志的因果能力，直接关联道德法则；我借法则意识到它的实践现实性。
+
+灵魂不朽关联最高善的第一项条件在有限者身上如何可能：完全合于法则的要求，令我们须把不断进展与人格的无尽持续相联系。上帝存在关联第二项要素：幸福如何可能与配得幸福的德性相称，因为有限意志无力使整个自然依道德价值安排。两个后来的公设不能与自由在论证中的位置混作同一种证明。
+
+它们皆非从经验事实总结出的自然定律，也不是理论理性已证明的教条。公设为实践上不可避免的承认，使原本仅在思辨上可设想的理念取得与纯粹实践理性的目的相联系的客观意义。这份意义受到目的约束，不能随意扩充成对灵魂、上帝或超感性世界内部结构的学问。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_56</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>56</order>
+    <title>辩证论第二章第十一部分 - 实践上的扩展与理论知识的界限</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+一种理念因实践理性的要求获得客观实在性，究竟意味着什么？我可以为道德法则要求促进的最高善，正当地承认一些使它成为可能的条件。原本理论理性只能把它们作为可思考而未定的理念，现在它们在实践使用中有了必要的用途。若把“实在性”立刻解读成“我已经认识到对象是什么样子”，就误解了这份扩展。
+
+对于超感性对象，我仍没有相应的感性直观，不能用经验判断那样的方式增加关于其性质的知识；我也不能说明自由的内部机制、灵魂的存在方式，或上帝如何安排自然中的每件事。因此实践上的承认，不会产生一套新的理论命题供我观察验证。它使理念不再是实践上空泛的想法，却不使它们成为可供思辨认识的对象。
+
+理性还须约束由此产生的两类越界：若把上帝等同于从人类经验直接放大的形象，便落入拟人化；若自称可直接感见或直观超感性的秩序，又把实践理念误用为神秘经验。理性的批判只允许这些理念按法则及其必要目的发挥作用；实践使用越有确定的根据，理论使用就越须承认其界限。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_57</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>57</order>
+    <title>辩证论第二章第十二部分 - 理性需要与道德的信仰</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+我不能因为自己盼望一个对象存在，就断定它存在；单纯的愿望不是理由。这里说的理性需要，来自先于个人好恶而有约束力的道德法则：我应尽力促进最高善，因而必须能够把它作为可能的实践对象来意愿。公设所关乎的正是这一对象的可能条件，不是替一项任意欲望制造理论保证。
+
+这种承认可以称为纯粹实践理性的信仰。它并非关于超感性事物的知识，也非可由道德法则直接命令产生的心情。义务命令我促进最高善；在理解其可能性时，理性可基于实践目的自由而有根据地采纳相应的判断。正因为信仰处在知识与行动的不同位置，诚实的人不能一面承认道德理由，一面假装已经掌握理论证明。
+
+我也不应以怀疑一切思辨断言为由，把实践理性的要求说成毫无分量。无条件的法则并不靠这种信仰才对我有效；但一个已经接受法则的意志，会进一步关心法则所指向的完整善能否实现。信仰在这里是从道德目的中发生的判断立场，不是让人以趋利、畏惧或宗教情绪替代出于义务的行动。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_58</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>58</order>
+    <title>辩证论第二章第十三部分 - 认识能力的限度与人的实践使命</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+有人或许抱怨：既然上帝与永恒如此关乎最高善，人为何不能像认识自然对象一样清楚地认识它们？试设我们的眼前始终明白呈现神与来世，其确定性如同面前的事物一般，而人的欲望却依旧首先发言。我们很可能因可见的威严和后果而遵守命令，出于恐惧的行为会增多，出于希望的行为也会增多；但究竟还有多少行动真正因敬重法则而做？
+
+我的理论认识受限，并不使道德法则减弱。正因为不能用可见奖惩取代自我约束，我仍须以理性自行判断，逐步锻炼在倾向冲突时服从义务的品格。若一切超感性后果全被感官确定地摆出来，行动或许可整齐地合乎法则，准则却可能停留在利益的计算上；外表的合法性不能替代道德性。
+
+由此我可以理解人的认识能力与实践使命之间的适合：理性不准我凭空制造关于超感性世界的知识，却在道德法则中给出足以行动的根据，并为最高善的可能性提供有界限的实践承认。这并非理论上证明自然专为道德安排了我们的无知；它是从人的道德处境所作的审慎反思。辩证论至此收束；其后方法论将讨论，法则怎样在人的判断、教育与生活中取得实际影响。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_59</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>59</order>
+    <title>方法论第一部分 - 怎样使客观法则进入人的准则</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+在这里，我所谓的方法论，不是把实践理性的原理排列成一门科学时所用的证明次序。分析论与辩证论已经讨论法则、对象及其界限；现在须问另一件事：如何使客观上有效的理性法则进入人的心灵，真正影响一个有限主体的准则？换言之，怎样使已经是客观实践的理性，也在人的选择中成为主观实践的理性？
+
+若我只是凭利益的奖赏或处罚的威胁，使人完成法则要求的外部行为，可以得到合法性，却不一定得到品格的道德性。人在利益改变时会改变选择；即使行为暂时整齐，他仍可能在心中把法则看作妨碍自身欲望的外来力量。因此，法则必须以义务自身的权威进入准则，方能在行动者身上形成不随一时得失摇摆的道德品格。
+
+这似乎不可信：纯粹的义务观念，怎会比幸福的许诺或不幸的威胁更有力？然而如果有限者毫无感受纯粹道德兴趣的能力，一切绕道利用利益的教育也只能训练伪装，永远不能创造真正的道德性。对尚未成熟的人，暂借利益或畏惧引导也许有用；但这些引导只能是暂时的扶手。随后必须让主体正面认识义务，发现自己可以不被感性欲望统治。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_60</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>60</order>
+    <title>方法论第二部分 - 日常讨论与道德判断力的训练</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+我不必先把人带进学院，才发现他们愿意判断道德行为。在普通谈话中，叙事和玩笑以外，人们常热切讨论某项行动究竟是好是坏：当事人是否真诚，是否掺入了私利，某一种表面上值得赞许的行为是否经得起更严的审视。平日不喜抽象思辨的人，在这里也能敏锐地追索准则与动机。
+
+有人竭力为善行保全其真诚，因为若否定一切正直的实例，人便容易不再愿意努力；有人严厉检查实例中的私心，因为法则不能因一个人受人喜爱就降低标准。两种倾向都表明，人不是仅被结果吸引，他也关心行动的道德价值。真正的标准仍须是法则，而非某个人的声望或旁观者的好恶。
+
+教育者可以利用这种判断能力，先澄清义务，再取历史人物或生活中的事例，让年轻人比较处境相似、动机却不同的行动。练习应使他们学会问：行动是否符合法则？它是否真的出于法则？经常辨认这些分别，会给对正直的敬重与对偏离的警觉留下印象。但判断他人的乐趣尚不等于自己已具有德性；教育还须把这份判断转回主体的准则。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_61</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>61</order>
+    <title>方法论第三部分 - 正直者拒绝诬告的渐进案例</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+我可以给一个少年讲述这样一件事：有人被要求同别人一起诬告一个无辜而无力自卫的人。他先被许以财物、荣誉和地位，仍拒绝合作。此时听者或许赞许他的正直，却可能以为他只是没有被给出足够高的价码。
+
+于是我逐层增加压力：朋友弃绝他，亲人威胁断绝资助，有权者使他处处遭到迫害；最后连自由与生命也受威胁。再设他所爱的人将因他的拒绝陷入贫困，他自己有同情与恐惧，并非天生冷硬，仍不肯为了摆脱痛苦而陷害无辜者。听者从赞许走向惊叹，恰因每一项可期待的收益都已被移除，守法的准则依然没有改变。
+
+这一例子的力量不能简单归功于行为的壮烈，也不能借题宣称人人有义务寻求苦难。它要显明的是纯粹动机：当幸福与安全都不能解释选择时，义务本身才清楚地成为行动的根据。教育若靠“他会得到丰厚的报答”收束故事，恰恰抹去了榜样最值得学习的地方。使人心受到持久影响的，是人能在极端不利时仍因法则而守正。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_62</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>62</order>
+    <title>方法论第四部分 - 为何不要用英雄热情取代日常义务</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+我不愿让青年只读那些把善行写成超乎义务的英雄故事。想象自己有非凡的高尚感情很容易，承认自己每天都须守信、公正并履行普通责任却难得多。如果一个孩子为自己将来可能作出的伟大牺牲而陶醉，同时轻视眼前的义务，教育便使他爱上自己的形象，而没有使法则进入准则。
+
+感伤的激动有起伏；若只在情绪最强烈时才令人行动，热情退去后便不留可靠的原则。即使某一壮举值得赞美，也须分辨其中是否确有必须履行的义务，还是听者仅因惊人的外部场面而兴奋。勇敢地救人、为国捐躯等实例可能令人敬佩，但若不审查具体义务，便不能直接把它们用作一切情况下的规范范本。
+
+因此我更愿意先教人重视清楚的义务，然后借实例辨认服从义务的动机。把出色的行动只归给某个人的特殊天赋，会让普通人以为自己无须学习；把道德仅当一时情感，又会使准则随情绪漂移。法则所要求的正直与克制，不能用自称“超越义务”的想象来代替。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_63</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>63</order>
+    <title>方法论第五部分 - 从评价行动走向意识到自由</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+道德练习可以分成相继的两步。首先要使按法则评价自己和他人的行动成为一种熟悉的活动：这项行动客观上符不符合法则？它涉及哪一种义务？不同的要求在同一情境中怎样区分？接着要更严格地追问：行动者主观上是不是为了法则而行动？若只是喜爱结果或盼人赞许，外部行为虽然正确，准则的道德价值仍待检验。
+
+反复作这类判断，会使人乐意运用自己的实践判断力，却不能只停留在欣赏道德故事的美感上。我还须把纯粹决断放到自己的处境中。例如我知道自己伤害了某人的权益，虚荣、自爱与对他的反感都阻拦我承认错误并作补偿；若我仍能将它们放到一边，便亲身意识到自己可以不让倾向作最后的决定。
+
+这种意识不承诺我以后永不失足，却使我认识到一种以往未曾充分看见的内在自由。起初克制欲望可能带来不快；但当人发现自己能够依法则采取行动，敬重法则也会同对人格尊严的认识结合。道德培养的目的，不是使每个人永远处于兴奋状态，而是让主体在具体选择中更稳定地以义务规定自己的意志。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_64</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>64</order>
+    <title>方法论第六部分 - 道德培养的方法与边界</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+由前述讨论可得一种方法：使人经常依道德法则判断行动；让他比较外在合乎义务与主观出于义务；再用可理解的具体实例，帮助他发现自己能够拒绝倾向在意志中的统治。法则需要作为法则被敬重，而不是用幸福的诱饵、恐惧的压力或夸耀“我有特殊功德”的故事乔装起来。
+
+这仍然只是道德培养的一般轮廓。不同义务需要进一步的具体规定，不同处境也不可能由一个故事全数替代判断。练习可以培养人接受法则的能力，却不能机械地产生圣洁的意志；教师尤其不能把学生偶然的赞叹或一时合乎规则的行为，误认成已经形成稳定的道德品格。
+
+理论的正确与心灵的受教都需要长期工作。如果以方法论之名出售一套立刻制造善人的技巧，便又把实践理性托付给外部机制。我的目标比较审慎：让客观法则经由清楚的判断与亲身的自我检验，在人之准则中获得位置，并使敬重义务逐渐比一时的利害更有力量。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_65</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>65</order>
+    <title>结语第一部分 - 头上的星空与心中的道德法则</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+有两件事，我愈持久地思索，愈感到惊叹与敬畏：我头上的星空，以及我心中的道德法则。我无需假装它们是遥不可及、只凭猜测才能发现的隐秘事物；我从自己所在的经验世界开始认识前者，从自身作为理性者的意识开始认识后者。
+
+抬头看无数世界和绵延的时间，我看见作为动物的人在自然中何等微小：短暂的生命依赖物质的安排，终究又把构成身体的材料归还给一个巨大宇宙中的小小星球。自然的尺度不断扩大，我作为其中一个生物的份量似乎趋于消失。
+
+反观道德法则，我意识到人格与一种不凭感官尺度衡量的秩序相连。意志能够依法则自我规定，使我不仅是受自然作用的一段生命，也是在实践中须为自身准则负责的理性存在者。两种惊叹不能相互代替：星空向我展开自然的广大，道德法则使我认识到人格的价值。说后者提升人的地位，并非允许我用这种敬畏直接推导一套关于超感性世界的理论知识。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
+
+  <LiAIChat.Archive.DocumentRecoverySectionDef>
+    <defName>LiAIChat_PracticalReason_66</defName>
+    <textDefName>LiAIChat_Text_Kant_CritiqueOfPracticalReason</textDefName>
+    <order>66</order>
+    <title>结语第二部分 - 惊叹之后为何还需要严格的批判方法</title>
+    <goldCost>600</goldCost>
+    <body><![CDATA[
+惊叹可以激起研究，却不能代替研究。人曾从壮丽的天象出发，却让缺乏方法的臆测滑向占星术；也曾从人身上可贵的道德能力出发，却因没有审查概念和界限，落入狂热与迷信。题目崇高，并不保证由它激发的每个判断都可靠。越是触及不能在普通经验中直接展示的事物，越要检查理性的每一步。
+
+自然研究在把具体运动分解为可考察的要素之后，才逐渐获得可靠而可推进的认识。实践哲学虽不能照搬自然科学的数学方法，却可以从日常道德判断出发，认真辨别其中纯粹的理性根据与经验性的欲望。我要问：法则是否因自身而有效？幸福是否被偷放进最高原则？对自由与实践公设的承认，是否已被误写为对超感性对象的理论观察？
+
+因此，通向实践智慧的路不是省略批判、直接宣告崇高结论。经由清楚的区分、反复的检验和严谨的方法，我既可以防止未经训练的判断走偏，也可以抵挡号称洞见一切的天才夸言。哲学的工作是守护这条道路，使关于义务与自由的思考能照亮行动，而不因迷信或空洞的热情失去其真正的根据。
+    ]]></body>
+  </LiAIChat.Archive.DocumentRecoverySectionDef>
 </Defs>
