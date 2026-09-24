@@ -3,12 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using Verse;
+using System.Collections;
+using LiAIChat.UI;
 
 namespace LiAIChat.Archive
 {
     public class Thing_AncientEarthArchiveFragment
         : Book
     {
+        public override IEnumerable<Gizmo> GetGizmos()
+        {
+            foreach (Gizmo gizmo in base.GetGizmos()) yield return gizmo;
+            if (!DocumentRecovery.CanRecover(this)) yield break;
+            DocumentRecovery.DocumentLine line = DocumentRecovery.GetLine(EarthTextDefName);
+            RecoveredDocumentState state = DocumentRecovery.GetState(EarthTextDefName);
+            yield return new Command_Action { defaultLabel = "阅读已复原正文", defaultDesc = "查看已恢复的现代中文节选解说。", action = () => Find.WindowStack.Add(new Dialog_RecoveredTextReader(EarthTextDefName)) };
+            if (state.UnlockedSectionIds.Count < line.Titles.Length && state.DeliveryTick < 0)
+                yield return new Command_Action { defaultLabel = "委托复原下一节", defaultDesc = "支付 " + DocumentRecovery.GetCost(state.UnlockedSectionIds.Count) + " 单位黄金，约一天后送达。", action = () => DocumentRecovery.RequestNext(this) };
+        }
         private ArchiveContentDef content;
         private bool soldByPlayer;
 

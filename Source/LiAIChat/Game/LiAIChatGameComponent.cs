@@ -6,6 +6,7 @@ using LiAIChat.Events;
 using LiAIChat.Models;
 using LiAIChat.Social;
 using LiAIChat.Questing;
+using LiAIChat.Archive;
 using System.Collections.Generic;
 using Verse;
 
@@ -20,6 +21,7 @@ namespace LiAIChat.Game
             new List<EarthCommentaryWork>();
         public List<ColonyEventRecord> ColonyEvents =
             new List<ColonyEventRecord>();
+        public List<RecoveredDocumentState> RecoveredDocuments = new List<RecoveredDocumentState>();
 
         private int lastProactiveCheckTick = 0;
         private int lastIntellectualExchangeCheckTick = 0;
@@ -55,6 +57,7 @@ namespace LiAIChat.Game
                 LookMode.Deep);
             Scribe_Collections.Look(ref EarthCommentaryWorks, "earthCommentaryWorks", LookMode.Deep);
             Scribe_Collections.Look(ref ColonyEvents, "colonyEvents", LookMode.Deep);
+            Scribe_Collections.Look(ref RecoveredDocuments, "recoveredDocuments", LookMode.Deep);
 
             if (Scribe.mode ==
                 LoadSaveMode.PostLoadInit)
@@ -74,6 +77,8 @@ namespace LiAIChat.Game
                     EarthCommentaryWorks = new List<EarthCommentaryWork>();
                 if (ColonyEvents == null)
                     ColonyEvents = new List<ColonyEventRecord>();
+                if (RecoveredDocuments == null)
+                    RecoveredDocuments = new List<RecoveredDocumentState>();
 
                 Log.Message(
                     "[Li AI Chat] Loaded " +
@@ -104,6 +109,8 @@ namespace LiAIChat.Game
 
             int currentTick =
                 Find.TickManager.TicksGame;
+            if (currentTick % 1000 == 0)
+                DocumentRecovery.Tick();
             if (currentTick - lastCommentaryReplyCheckTick >= 1000)
             {
                 lastCommentaryReplyCheckTick = currentTick;

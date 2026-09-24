@@ -124,6 +124,8 @@
     <Compile Include="Archive\ColonyLibraryEntry.cs" />
     <Compile Include="Archive\ColonyLibraryIndex.cs" />
     <Compile Include="Archive\EarthTextDef.cs" />
+    <Compile Include="Archive\DocumentRecovery.cs" />
+    <Compile Include="Archive\DocumentRecoverySectionDef.cs" />
     <Compile Include="Archive\EarthTextSelector.cs" />
     <Compile Include="Archive\GenStep_AncientArchiveSite.cs" />
     <Compile Include="Archive\IArchiveReflectionGenerator.cs" />
@@ -286,6 +288,7 @@
     <Compile Include="UI\Dialog_PawnChat.cs" />
     <Compile Include="UI\Dialog_EarthCommentaryReader.cs" />
     <Compile Include="UI\Dialog_EarthCommentaryLibrary.cs" />
+    <Compile Include="UI\Dialog_RecoveredTextReader.cs" />
     <Compile Include="UI\Dialog_PawnCivilizationProfile.cs" />
     <Compile Include="UI\LiAIChatTextures.cs" />
     <Compile Include="Worldview\WorldviewChangeRules.cs" />
