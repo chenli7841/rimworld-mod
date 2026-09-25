@@ -174,6 +174,11 @@ namespace LiAIChat.TelevisionRecipes
                 TelevisionRecipeData data = recipes.FirstOrDefault(r => r.slot == slot && r.learned); RecipeDef recipe = RecipeDef(slot); ThingDef product = ProductDef(slot); if (recipe == null || product == null) continue;
                 int daysLeft = data == null || Find.TickManager == null ? 0 : Mathf.CeilToInt((data.durationTicks - Find.TickManager.TicksGame) / (float)GenDate.TicksPerDay);
                 recipe.label = data == null ? "电视菜谱（未解锁）" : data.name + " ×2"; recipe.description = data == null ? "观看电视节目后可能学会。" : (string.IsNullOrWhiteSpace(data.description) ? "限时电视菜谱。" : data.description + "\n\n") + "厨艺 12 级可制作。剩余有效期：" + daysLeft + " 天。食用后 " + BuffText(data.buffs) + "。"; product.label = recipe.label;
+                // Def.LabelCap is memoized after the bill menu first opens.
+                // Clear it whenever a runtime recipe receives its generated name.
+                AccessTools.Field(typeof(Def), "cachedLabelCap").SetValue(recipe, default(TaggedString));
+                AccessTools.Field(typeof(Def), "cachedLabelCap").SetValue(product, default(TaggedString));
+                AccessTools.Field(typeof(ThingDef), "descriptionDetailedCached").SetValue(product, null);
                 recipe.ingredients = data == null ? new List<IngredientCount>() : data.ingredients.Select((defName, i) => Ingredient(defName, i == 0 ? 10 : 5)).Where(x => x != null).ToList();
                 recipe.workSkill = SkillDefOf.Cooking; recipe.skillRequirements = new List<SkillRequirement> { new SkillRequirement { skill = SkillDefOf.Cooking, minLevel = 12 } };
             }
