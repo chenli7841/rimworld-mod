@@ -3,25 +3,121 @@
   <ResearchProjectDef>
     <defName>LiAIChat_Topic_PracticalReason</defName>
     <label>专题：实践理性批判</label>
-    <description>围绕义务、自由与人格尊严开展专题研讨。需要殖民地收藏《实践理性批判》。完成后会形成一项短期的共同体与专注加成。</description>
+    <description>围绕义务、自由与人格尊严开展专题研讨。需要殖民地收藏已识别的《实践理性批判》。完成后随机获得一项持续 7 天的殖民者加成。</description>
+    <modExtensions>
+      <li Class="LiAIChat.Civilization.CivilizationTopicExtension">
+        <requiredText>LiAIChat_Text_Kant_CritiqueOfPracticalReason</requiredText>
+        <conclusion>在艰难处境中说明行动的理由，尊重彼此的人格，比把同伴当作工具更能维持共同生活。</conclusion>
+        <bonuses>
+          <li><id>duty</id><label>自觉履责：全局工作速度 +10%</label><stat>WorkSpeedGlobal</stat><factor>1.10</factor></li>
+          <li><id>dignity</id><label>人格尊重：社交斗殴概率 −30%</label><effect>SocialFight</effect><factor>0.70</factor></li>
+          <li><id>resolve</id><label>坚定意志：心情下降速度 −25%</label><effect>MoodDecline</effect><factor>0.75</factor></li>
+          <li><id>autonomy</id><label>理性自律：精神崩溃阈值 −5 个百分点（更稳定）</label><stat>MentalBreakThreshold</stat><offset>-0.05</offset></li>
+        </bonuses>
+      </li>
+    </modExtensions>
     <baseCost>3000</baseCost><techLevel>Industrial</techLevel><tab>LiAIChat_CivilizationTopics</tab><researchViewX>1</researchViewX><researchViewY>1</researchViewY>
   </ResearchProjectDef>
   <ResearchProjectDef>
     <defName>LiAIChat_Topic_Meditations</defName>
     <label>专题：沉思录</label>
-    <description>围绕自制、责任与命运开展专题研讨。需要殖民地收藏《沉思录》。完成后会形成一项短期的坚忍加成。</description>
+    <description>围绕自制、责任与命运开展专题研讨。需要殖民地收藏已识别的《沉思录》。完成后随机获得一项持续 7 天的殖民者加成。</description>
+    <modExtensions>
+      <li Class="LiAIChat.Civilization.CivilizationTopicExtension">
+        <requiredText>LiAIChat_Text_MarcusAurelius_Meditations</requiredText>
+        <conclusion>分清能控制的判断与不能命令的遭遇，把精力放回眼前的职责，伤痛与挫败便不必支配全部生活。</conclusion>
+        <bonuses>
+          <li><id>endurance</id><label>节制精力：休息需求消耗 −15%</label><stat>RestFallRateFactor</stat><factor>0.85</factor></li>
+          <li><id>pain</id><label>接纳痛苦：疼痛心情惩罚 −25%</label><effect>PainMood</effect><factor>0.75</factor></li>
+          <li><id>action</id><label>当下行动：移动速度 +8%</label><stat>MoveSpeed</stat><factor>1.08</factor></li>
+          <li><id>recovery</id><label>重新振作：非永久伤势存在时，心情回升速度 +50%</label><effect>InjuredMoodRecovery</effect><factor>1.50</factor></li>
+        </bonuses>
+      </li>
+    </modExtensions>
     <baseCost>3000</baseCost><techLevel>Industrial</techLevel><tab>LiAIChat_CivilizationTopics</tab><researchViewX>3</researchViewX><researchViewY>1</researchViewY>
   </ResearchProjectDef>
   <ResearchProjectDef>
     <defName>LiAIChat_Topic_CityOfGod</defName>
     <label>专题：上帝之城</label>
-    <description>围绕共同体、历史与世俗权力开展专题研讨。需要殖民地收藏《上帝之城》。完成后会形成一项短期的团结加成。</description>
+    <description>围绕共同体、历史与世俗权力开展专题研讨。需要殖民地收藏已识别的《上帝之城》。完成后随机获得一项持续 7 天的殖民者加成。</description>
+    <modExtensions>
+      <li Class="LiAIChat.Civilization.CivilizationTopicExtension">
+        <requiredText>LiAIChat_Text_Augustine_CityOfGod</requiredText>
+        <conclusion>共同体的价值不只来自胜利与权力；在有限而不完美的秩序中相互照料，仍然值得坚持。</conclusion>
+        <bonuses>
+          <li><id>forbearance</id><label>共同体宽容：负面社交记忆的好感惩罚 −25%</label><effect>NegativeSocialMemory</effect><factor>0.75</factor></li>
+          <li><id>hope</id><label>共同体的希望：殖民者心情 +4</label><effect>ColonyMood</effect><offset>4</offset></li>
+          <li><id>gathering</id><label>共享意义：聚会、婚礼、音乐会及仪式的正面心情记忆效果 +25%</label><effect>GatheringMood</effect><factor>1.25</factor></li>
+        </bonuses>
+      </li>
+    </modExtensions>
     <baseCost>3000</baseCost><techLevel>Industrial</techLevel><tab>LiAIChat_CivilizationTopics</tab><researchViewX>5</researchViewX><researchViewY>1</researchViewY>
   </ResearchProjectDef>
   <ResearchProjectDef>
     <defName>LiAIChat_Topic_PureReason</defName>
     <label>专题：纯粹理性批判</label>
-    <description>围绕经验、判断与理性边界开展专题研讨。需要殖民地收藏《纯粹理性批判》。完成后会形成一项短期的研究加成。</description>
+    <description>围绕经验、判断与理性边界开展专题研讨。需要殖民地收藏已识别的《纯粹理性批判》。完成后随机获得一项持续 7 天的殖民者加成。</description>
+    <modExtensions>
+      <li Class="LiAIChat.Civilization.CivilizationTopicExtension">
+        <requiredText>LiAIChat_Text_Kant_CritiqueOfPureReason</requiredText>
+        <conclusion>先厘清经验材料与判断的边界，再提出解释；承认知识的限度，可以使探索更审慎，也更有效。</conclusion>
+        <bonuses>
+          <li><id>judgment</id><label>审慎判断：研究速度 +15%</label><stat>ResearchSpeed</stat><factor>1.15</factor></li>
+          <li><id>understanding</id><label>经验与理解：古代文献阅读理解增长 +25%</label><effect>ReadingGain</effect><factor>1.25</factor></li>
+        </bonuses>
+      </li>
+    </modExtensions>
     <baseCost>3600</baseCost><techLevel>Industrial</techLevel><tab>LiAIChat_CivilizationTopics</tab><researchViewX>7</researchViewX><researchViewY>1</researchViewY>
   </ResearchProjectDef>
+  <ResearchProjectDef>
+    <defName>LiAIChat_Topic_Confessions</defName><label>专题：忏悔录</label>
+    <description>围绕记忆、自省、悔改与意志开展专题研讨。需要殖民地收藏已识别的《忏悔录》。</description>
+    <modExtensions><li Class="LiAIChat.Civilization.CivilizationTopicExtension"><requiredText>LiAIChat_Text_Augustine_Confessions</requiredText><conclusion>检视记忆与欲望并非沉溺过去，而是在承认有限之后重新选择如何行动。</conclusion><bonuses>
+      <li><id>reflection</id><label>自省：心情下降速度 −20%</label><effect>MoodDecline</effect><factor>0.80</factor></li><li><id>reconciliation</id><label>和解：社交斗殴概率 −25%</label><effect>SocialFight</effect><factor>0.75</factor></li><li><id>renewal</id><label>重新立志：非永久伤势存在时，心情回升速度 +40%</label><effect>InjuredMoodRecovery</effect><factor>1.40</factor></li>
+    </bonuses></li></modExtensions><baseCost>3000</baseCost><techLevel>Industrial</techLevel><tab>LiAIChat_CivilizationTopics</tab><researchViewX>1</researchViewX><researchViewY>3</researchViewY>
+  </ResearchProjectDef>
+  <ResearchProjectDef>
+    <defName>LiAIChat_Topic_Republic</defName><label>专题：理想国</label>
+    <description>围绕正义、教育、分工与城邦开展专题研讨。需要殖民地收藏已识别的《理想国》。</description>
+    <modExtensions><li Class="LiAIChat.Civilization.CivilizationTopicExtension"><requiredText>LiAIChat_Text_Plato_Republic</requiredText><conclusion>教育与分工的目的不是把人变成工具，而是让共同体中的能力得到适当位置，并能对正义负责。</conclusion><bonuses>
+      <li><id>allocation</id><label>合理分工：全局工作速度 +8%</label><stat>WorkSpeedGlobal</stat><factor>1.08</factor></li><li><id>building</id><label>城邦技艺：建造速度 +15%</label><stat>ConstructionSpeed</stat><factor>1.15</factor></li><li><id>education</id><label>教育：学习速度 +15%</label><stat>GlobalLearningFactor</stat><factor>1.15</factor></li>
+    </bonuses></li></modExtensions><baseCost>3200</baseCost><techLevel>Industrial</techLevel><tab>LiAIChat_CivilizationTopics</tab><researchViewX>3</researchViewX><researchViewY>3</researchViewY>
+  </ResearchProjectDef>
+  <ResearchProjectDef>
+    <defName>LiAIChat_Topic_NicomacheanEthics</defName><label>专题：尼各马可伦理学</label>
+    <description>围绕德性、习惯、节制与友谊开展专题研讨。需要殖民地收藏已识别的《尼各马可伦理学》。</description>
+    <modExtensions><li Class="LiAIChat.Civilization.CivilizationTopicExtension"><requiredText>LiAIChat_Text_Aristotle_NicomacheanEthics</requiredText><conclusion>德性不是一次选择的奖赏，而是经由反复行动、节制和友谊逐渐形成的稳定品格。</conclusion><bonuses>
+      <li><id>temperance</id><label>节制：娱乐需求消耗 −15%</label><stat>JoyFallRateFactor</stat><factor>0.85</factor></li><li><id>friendship</id><label>友谊：社交影响力 +12%</label><stat>SocialImpact</stat><factor>1.12</factor></li><li><id>prudence</id><label>审慎：食物中毒概率 −20%</label><stat>FoodPoisonChance</stat><factor>0.80</factor></li>
+    </bonuses></li></modExtensions><baseCost>3000</baseCost><techLevel>Industrial</techLevel><tab>LiAIChat_CivilizationTopics</tab><researchViewX>5</researchViewX><researchViewY>3</researchViewY>
+  </ResearchProjectDef>
+  <ResearchProjectDef>
+    <defName>LiAIChat_Topic_OriginOfSpecies</defName><label>专题：物种起源</label>
+    <description>围绕适应、选择与生态竞争开展专题研讨。需要殖民地收藏已识别的《物种起源》。</description>
+    <modExtensions><li Class="LiAIChat.Civilization.CivilizationTopicExtension"><requiredText>LiAIChat_Text_Darwin_OriginOfSpecies</requiredText><conclusion>生命的变化来自漫长时间里的差异、选择与适应；细致观察环境，才可能看清改变的条件。</conclusion><bonuses>
+      <li><id>adaptation</id><label>适应：种植工作速度 +15%</label><stat>PlantWorkSpeed</stat><factor>1.15</factor></li><li><id>husbandry</id><label>驯化：驯服动物成功率 +15%</label><stat>TameAnimalChance</stat><factor>1.15</factor></li><li><id>training</id><label>选择性训练：动物训练成功率 +15%</label><stat>TrainAnimalChance</stat><factor>1.15</factor></li><li><id>resilience</id><label>生命韧性：免疫增长速度 +15%</label><stat>ImmunityGainSpeed</stat><factor>1.15</factor></li>
+    </bonuses></li></modExtensions><baseCost>3200</baseCost><techLevel>Industrial</techLevel><tab>LiAIChat_CivilizationTopics</tab><researchViewX>7</researchViewX><researchViewY>3</researchViewY>
+  </ResearchProjectDef>
+  <ResearchProjectDef>
+    <defName>LiAIChat_Topic_NovumOrganum</defName><label>专题：新工具</label>
+    <description>围绕方法、实验与自然规律开展专题研讨。需要殖民地收藏已识别的《新工具》。</description>
+    <modExtensions><li Class="LiAIChat.Civilization.CivilizationTopicExtension"><requiredText>LiAIChat_Text_Bacon_NovumOrganum</requiredText><conclusion>抵抗偏见需要可复核的观察与实验；方法的价值在于让错误能够被发现和修正。</conclusion><bonuses>
+      <li><id>experiment</id><label>实验方法：研究速度 +12%</label><stat>ResearchSpeed</stat><factor>1.12</factor></li><li><id>medicine</id><label>细致观察：医疗处理速度 +15%</label><stat>MedicalTendSpeed</stat><factor>1.15</factor></li><li><id>cultivation</id><label>田野实验：种植工作速度 +12%</label><stat>PlantWorkSpeed</stat><factor>1.12</factor></li><li><id>craft</id><label>工具改良：全局工作速度 +8%</label><stat>WorkSpeedGlobal</stat><factor>1.08</factor></li>
+    </bonuses></li></modExtensions><baseCost>3400</baseCost><techLevel>Industrial</techLevel><tab>LiAIChat_CivilizationTopics</tab><researchViewX>9</researchViewX><researchViewY>3</researchViewY>
+  </ResearchProjectDef>
+  <ResearchProjectDef>
+    <defName>LiAIChat_Topic_Reformation</defName><label>专题：宗教改革与早期教会文献</label>
+    <description>围绕信仰、共同体、争论与良心开展专题研讨。需要殖民地收藏已识别的《九十五条论纲》。</description>
+    <modExtensions><li Class="LiAIChat.Civilization.CivilizationTopicExtension"><requiredText>LiAIChat_Text_Luther_NinetyFiveTheses</requiredText><conclusion>良心与共同体中的争论不应只以压服结束；把分歧说清，才可能在不同信念之间继续共处。</conclusion><bonuses>
+      <li><id>conscience</id><label>良心的安定：精神崩溃阈值 −4 个百分点（更稳定）</label><stat>MentalBreakThreshold</stat><offset>-0.04</offset></li><li><id>charity</id><label>彼此宽容：社交斗殴概率 −25%</label><effect>SocialFight</effect><factor>0.75</factor></li><li><id>worship</id><label>共同礼仪：活动正面心情记忆效果 +20%</label><effect>GatheringMood</effect><factor>1.20</factor></li>
+    </bonuses></li></modExtensions><baseCost>3200</baseCost><techLevel>Industrial</techLevel><tab>LiAIChat_CivilizationTopics</tab><researchViewX>11</researchViewX><researchViewY>3</researchViewY>
+  </ResearchProjectDef>
+  <ResearchProjectDef><defName>LiAIChat_Topic_Prince</defName><label>专题：君主论</label><description>围绕风险、权力、威慑与决断开展专题研讨。需要殖民地收藏已识别的《君主论》。</description><modExtensions><li Class="LiAIChat.Civilization.CivilizationTopicExtension"><requiredText>LiAIChat_Text_Machiavelli_Prince</requiredText><conclusion>在险境中作出决断并不等于崇拜权力；能看清风险和后果，才有可能为共同体承担责任。</conclusion><bonuses><li><id>decisiveness</id><label>果断：射击命中率 +8%</label><stat>ShootingAccuracyPawn</stat><factor>1.08</factor></li><li><id>calculation</id><label>审时度势：谈判能力 +12%</label><stat>NegotiationAbility</stat><factor>1.12</factor></li><li><id>deterrence</id><label>威慑：精神崩溃阈值 −4 个百分点（更稳定）</label><stat>MentalBreakThreshold</stat><offset>-0.04</offset></li></bonuses></li></modExtensions><baseCost>3200</baseCost><techLevel>Industrial</techLevel><tab>LiAIChat_CivilizationTopics</tab><researchViewX>1</researchViewX><researchViewY>5</researchViewY></ResearchProjectDef>
+  <ResearchProjectDef><defName>LiAIChat_Topic_SocialContract</defName><label>专题：社会契约论</label><description>围绕公共意志、平等与共同规则开展专题研讨。需要殖民地收藏已识别的《社会契约论》。</description><modExtensions><li Class="LiAIChat.Civilization.CivilizationTopicExtension"><requiredText>LiAIChat_Text_Rousseau_SocialContract</requiredText><conclusion>共同规则只有在每个人都能以公共理由理解和检验时，才不只是强者的命令。</conclusion><bonuses><li><id>cooperation</id><label>协作：全局工作速度 +8%</label><stat>WorkSpeedGlobal</stat><factor>1.08</factor></li><li><id>civility</id><label>公共礼让：社交斗殴概率 −25%</label><effect>SocialFight</effect><factor>0.75</factor></li><li><id>assembly</id><label>公共仪式：活动正面心情记忆效果 +20%</label><effect>GatheringMood</effect><factor>1.20</factor></li></bonuses></li></modExtensions><baseCost>3200</baseCost><techLevel>Industrial</techLevel><tab>LiAIChat_CivilizationTopics</tab><researchViewX>3</researchViewX><researchViewY>5</researchViewY></ResearchProjectDef>
+  <ResearchProjectDef><defName>LiAIChat_Topic_WealthOfNations</defName><label>专题：国富论</label><description>围绕分工、交换、储备与市场开展专题研讨。需要殖民地收藏已识别的《国富论》。</description><modExtensions><li Class="LiAIChat.Civilization.CivilizationTopicExtension"><requiredText>LiAIChat_Text_Smith_WealthOfNations</requiredText><conclusion>分工与交换可以扩展共同体的能力，但储备和分配仍须服务于实际生活，而不只是数字的增长。</conclusion><bonuses><li><id>specialization</id><label>专业分工：制作劳动速度 +15%</label><stat>GeneralLaborSpeed</stat><factor>1.15</factor></li><li><id>exchange</id><label>公平交换：贸易价格改善 +10%</label><stat>TradePriceImprovement</stat><factor>1.10</factor></li><li><id>reserve</id><label>储备：负重能力 +15%</label><stat>CarryingCapacity</stat><factor>1.15</factor></li><li><id>productivity</id><label>生产率：采矿产量 +12%</label><stat>MiningYield</stat><factor>1.12</factor></li></bonuses></li></modExtensions><baseCost>3400</baseCost><techLevel>Industrial</techLevel><tab>LiAIChat_CivilizationTopics</tab><researchViewX>5</researchViewX><researchViewY>5</researchViewY></ResearchProjectDef>
+  <ResearchProjectDef><defName>LiAIChat_Topic_BriefHistoryOfTime</defName><label>专题：时间简史</label><description>围绕宇宙、时间、尺度与未知开展专题研讨。需要殖民地收藏已识别的《时间简史》。</description><modExtensions><li Class="LiAIChat.Civilization.CivilizationTopicExtension"><requiredText>LiAIChat_Text_Hawking_BriefHistoryOfTime</requiredText><conclusion>尺度的扩展并不使日常问题失去意义；它要求我们承认未知，并以更耐心的方式继续探索。</conclusion><bonuses><li><id>cosmology</id><label>宇宙探索：研究速度 +12%</label><stat>ResearchSpeed</stat><factor>1.12</factor></li><li><id>survey</id><label>尺度感：深钻速度 +15%</label><stat>DeepDrillingSpeed</stat><factor>1.15</factor></li><li><id>curiosity</id><label>求知：古代文献阅读理解增长 +20%</label><effect>ReadingGain</effect><factor>1.20</factor></li></bonuses></li></modExtensions><baseCost>3600</baseCost><techLevel>Industrial</techLevel><tab>LiAIChat_CivilizationTopics</tab><researchViewX>7</researchViewX><researchViewY>5</researchViewY></ResearchProjectDef>
+  <ResearchProjectDef><defName>LiAIChat_Topic_CommunistManifesto</defName><label>专题：共产党宣言</label><description>围绕阶级、劳动、共同占有与革命开展专题研讨。需要殖民地收藏已识别的《共产党宣言》。</description><modExtensions><li Class="LiAIChat.Civilization.CivilizationTopicExtension"><requiredText>LiAIChat_Text_MarxEngels_CommunistManifesto</requiredText><conclusion>劳动塑造共同生活；讨论共同占有的意义，必须同时面对分配、责任与每个成员的处境。</conclusion><bonuses><li><id>labor</id><label>共同劳动：采矿速度 +15%</label><stat>MiningSpeed</stat><factor>1.15</factor></li><li><id>solidarity</id><label>团结：社交斗殴概率 −20%</label><effect>SocialFight</effect><factor>0.80</factor></li><li><id>collective</id><label>集体生活：活动正面心情记忆效果 +20%</label><effect>GatheringMood</effect><factor>1.20</factor></li></bonuses></li></modExtensions><baseCost>3400</baseCost><techLevel>Industrial</techLevel><tab>LiAIChat_CivilizationTopics</tab><researchViewX>9</researchViewX><researchViewY>5</researchViewY></ResearchProjectDef>
+  <ResearchProjectDef><defName>LiAIChat_Topic_ArtOfWar</defName><label>专题：孙子兵法</label><description>围绕侦察、地形、欺骗与先机开展专题研讨。需要殖民地收藏已识别的《孙子兵法》。</description><modExtensions><li Class="LiAIChat.Civilization.CivilizationTopicExtension"><requiredText>LiAIChat_Text_SunTzu_ArtOfWar</requiredText><conclusion>先机来自观察、准备与避免无谓消耗；最可靠的胜利未必来自正面碰撞。</conclusion><bonuses><li><id>aim</id><label>知彼知己：射击命中率 +10%</label><stat>ShootingAccuracyPawn</stat><factor>1.10</factor></li><li><id>terrain</id><label>因地制宜：移动速度 +8%</label><stat>MoveSpeed</stat><factor>1.08</factor></li><li><id>concealment</id><label>隐蔽：狩猎隐蔽性 +20%</label><stat>HuntingStealth</stat><factor>1.20</factor></li><li><id>timing</id><label>先机：瞄准延迟 −15%</label><stat>AimingDelayFactor</stat><factor>0.85</factor></li></bonuses></li></modExtensions><baseCost>3200</baseCost><techLevel>Industrial</techLevel><tab>LiAIChat_CivilizationTopics</tab><researchViewX>11</researchViewX><researchViewY>5</researchViewY></ResearchProjectDef>
+  <ResearchProjectDef><defName>LiAIChat_Topic_OnWar</defName><label>专题：论战争</label><description>围绕摩擦、士气、后勤与战略开展专题研讨。需要殖民地收藏已识别的《论战争》。</description><modExtensions><li Class="LiAIChat.Civilization.CivilizationTopicExtension"><requiredText>LiAIChat_Text_Clausewitz_OnWar</requiredText><conclusion>战争中的计划总会遭遇摩擦；稳定士气、照顾伤者和准备后勤，才使策略经得起现实。</conclusion><bonuses><li><id>morale</id><label>士气：精神崩溃阈值 −5 个百分点（更稳定）</label><stat>MentalBreakThreshold</stat><offset>-0.05</offset></li><li><id>care</id><label>战地救治：医疗处理速度 +15%</label><stat>MedicalTendSpeed</stat><factor>1.15</factor></li><li><id>fortification</id><label>防御工事：建造速度 +12%</label><stat>ConstructionSpeed</stat><factor>1.12</factor></li></bonuses></li></modExtensions><baseCost>3400</baseCost><techLevel>Industrial</techLevel><tab>LiAIChat_CivilizationTopics</tab><researchViewX>1</researchViewX><researchViewY>7</researchViewY></ResearchProjectDef>
+  <ResearchProjectDef><defName>LiAIChat_Topic_SpiritOfLaws</defName><label>专题：法的精神</label><description>围绕制度、权力制衡、环境与法律开展专题研讨。需要殖民地收藏已识别的《法的精神》。</description><modExtensions><li Class="LiAIChat.Civilization.CivilizationTopicExtension"><requiredText>LiAIChat_Text_Montesquieu_SpiritOfLaws</requiredText><conclusion>制度的作用在于约束任意权力并适应具体处境；好的规则让合作不必依靠偶然的善意。</conclusion><bonuses><li><id>balance</id><label>权力制衡：社交斗殴概率 −20%</label><effect>SocialFight</effect><factor>0.80</factor></li><li><id>diplomacy</id><label>礼法：谈判能力 +12%</label><stat>NegotiationAbility</stat><factor>1.12</factor></li><li><id>stewardship</id><label>制度化管理：逮捕成功率 +10%</label><stat>ArrestSuccessChance</stat><factor>1.10</factor></li></bonuses></li></modExtensions><baseCost>3400</baseCost><techLevel>Industrial</techLevel><tab>LiAIChat_CivilizationTopics</tab><researchViewX>3</researchViewX><researchViewY>7</researchViewY></ResearchProjectDef>
+  <ResearchProjectDef><defName>LiAIChat_Topic_ComputingIntelligence</defName><label>专题：计算机器与智能</label><description>围绕算法、自动化、信息处理与机器智能开展专题研讨。需要殖民地收藏已识别的《计算机器与智能》。</description><modExtensions><li Class="LiAIChat.Civilization.CivilizationTopicExtension"><requiredText>LiAIChat_Text_Turing_ComputingIntelligence</requiredText><conclusion>把问题分解为可检验的步骤能扩大行动能力，但自动化仍应服务于人的判断和共同体的目的。</conclusion><bonuses><li><id>algorithm</id><label>算法思维：研究速度 +15%</label><stat>ResearchSpeed</stat><factor>1.15</factor></li><li><id>automation</id><label>自动化：制作劳动速度 +12%</label><stat>GeneralLaborSpeed</stat><factor>1.12</factor></li><li><id>information</id><label>信息处理：古代文献阅读理解增长 +25%</label><effect>ReadingGain</effect><factor>1.25</factor></li></bonuses></li></modExtensions><baseCost>3800</baseCost><techLevel>Industrial</techLevel><tab>LiAIChat_CivilizationTopics</tab><researchViewX>5</researchViewX><researchViewY>7</researchViewY></ResearchProjectDef>
 </Defs>

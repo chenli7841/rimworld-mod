@@ -568,6 +568,13 @@ $@"- Life goal: ${lifeGoal.Title}
             string civilizationContext =
                 CivilizationKnowledgeEffectUtility.BuildConversationContext();
 
+            string topicConclusions = CivilizationTopicConclusions.Context();
+            if (!string.IsNullOrEmpty(topicConclusions))
+            {
+                prompt.AppendLine("COLONY TOPIC RESEARCH CONCLUSIONS (shared discussion material, not proof of personal mastery):");
+                prompt.AppendLine(topicConclusions);
+            }
+
             if (!string.IsNullOrWhiteSpace(civilizationContext))
             {
                 prompt.AppendLine();

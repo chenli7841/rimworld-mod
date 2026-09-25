@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThoughtDef>
+    <defName>LiAIChat_CivilizationTopicSolidarity</defName>
+    <workerClass>LiAIChat.Civilization.ThoughtWorker_CivilizationTopic</workerClass>
+    <thoughtClass>LiAIChat.Civilization.Thought_CivilizationTopic</thoughtClass>
+    <stages>
+      <li>
+        <label>共同体的希望</label>
+        <description>对《上帝之城》的专题研讨让我重新看见共同生活的意义。困难不会抹去彼此照料的价值。</description>
+        <baseMoodEffect>4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+</Defs>

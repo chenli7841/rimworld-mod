@@ -147,6 +147,10 @@
     <Compile Include="Background\PawnAISnapshot.cs" />
     <Compile Include="Background\PawnAISnapshotBuilder.cs" />
     <Compile Include="Bootstrap.cs" />
+    <Compile Include="Civilization\CivilizationTopicResearch.cs" />
+    <Compile Include="Civilization\CivilizationTopicPolicy.cs" />
+    <Compile Include="Civilization\CivilizationTopicEffects.cs" />
+    <Compile Include="Civilization\CivilizationTopicConclusions.cs" />
     <Compile Include="Civilization\CivilizationKnowledgeCategory.cs" />
     <Compile Include="Civilization\CivilizationKnowledgeDef.cs" />
     <Compile Include="Civilization\CivilizationKnowledgeEvaluator.cs" />

@@ -66,7 +66,8 @@ namespace LiAIChat.Archive
 
             float progress = state.GetArchiveReadingProgress(studyId);
 
-            progress += factor;
+            progress += factor * LiAIChat.Civilization.CivilizationTopicEffects.Factor(
+                reader, LiAIChat.Civilization.CivilizationTopicEffect.ReadingGain);
 
             while (progress >= Props.learningInterval)
             {

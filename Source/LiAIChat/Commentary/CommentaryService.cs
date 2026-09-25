@@ -58,6 +58,12 @@ namespace LiAIChat.Commentary
                 AuthorName = author.LabelShort, EarthTextDefName = source.defName,
                 Title = "《" + source.title + "》评注"
             };
+            string topicMaterial = LiAIChat.Civilization.CivilizationTopicConclusions.Context(source.defName, false);
+            if (!string.IsNullOrEmpty(topicMaterial))
+                work.Entries.Add(new EarthCommentaryEntry {
+                    Kind = "researchConclusion", Text = topicMaterial,
+                    CreatedTick = Find.TickManager.TicksGame
+                });
             Works.Add(work);
             LiAIChat.Events.ColonyEventLog.Record("开始著作",
                 author.LabelShort + " 开始撰写“" + work.Title + "”。", 2, author,

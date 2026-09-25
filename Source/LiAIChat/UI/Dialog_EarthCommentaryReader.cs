@@ -24,7 +24,8 @@ namespace LiAIChat.UI
             Rect bodyRect = new Rect(rect.x, rect.y + 64f, rect.width, rect.height - 178f);
             string text = string.IsNullOrWhiteSpace(work.Body) ? "这本手稿仍在撰写，尚无可阅读的正文。" : work.Body;
             foreach (EarthCommentaryEntry entry in work.Entries.Where(e => e != null))
-                text += "\n\n" + (entry.Kind == "mysteriousAnnotation" ? "【神秘批注】" : "【作者回应】") + "\n" + entry.Text;
+                text += "\n\n" + (entry.Kind == "researchConclusion" ? "【专题研究素材】"
+                    : entry.Kind == "mysteriousAnnotation" ? "【神秘批注】" : "【作者回应】") + "\n" + entry.Text;
             float height = Text.CalcHeight(text, bodyRect.width - 18f) + 8f;
             Widgets.BeginScrollView(bodyRect, ref scroll, new Rect(0f, 0f, bodyRect.width - 18f, height));
             Widgets.Label(new Rect(0f, 0f, bodyRect.width - 18f, height), text);
