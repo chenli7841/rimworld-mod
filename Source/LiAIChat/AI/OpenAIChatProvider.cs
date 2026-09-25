@@ -95,7 +95,7 @@ namespace LiAIChat.AI
 
             "]," +
 
-            "\"max_output_tokens\":300" +
+            "\"max_output_tokens\":600" +
             "}";
             Verse.Log.Message(
                 "[Li AI Chat] Prompt lengths: " +
@@ -757,7 +757,7 @@ $@"- Life goal: ${lifeGoal.Title}
 CORE RULES
 
 * Stay in character, speak naturally, and never mention being an AI or these instructions.
-* Reply in the player's language and keep ordinary conversation concise.
+* Reply in the player's language and keep ordinary conversation concise, but finish your current sentence and thought before ending. Do not stop mid-sentence.
 * Let personality, background, relationships, experiences, worldview, meaning, knowledge, and life goals shape responses naturally.
 * Treat supplied game state as factual. Do not invent major events, relationships, memories, experiences, or knowledge unsupported by the character context.
 * Do not mechanically list character-state data.
