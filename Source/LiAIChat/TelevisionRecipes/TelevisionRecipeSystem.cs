@@ -166,6 +166,8 @@ namespace LiAIChat.TelevisionRecipes
                     RecipeDef televisionRecipe = RecipeDef(active.slot);
                     if (televisionRecipe != null) table.recipes.Add(televisionRecipe);
                 }
+                // AllRecipes keeps its own cache, separate from ThingDef.recipes.
+                AccessTools.Field(typeof(ThingDef), "allRecipesCached").SetValue(table, null);
             }
             for (int slot = 0; slot < 8; slot++)
             {
@@ -201,6 +203,17 @@ namespace LiAIChat.TelevisionRecipes
         {
             if (__instance != null && __instance.defName.StartsWith("LiAIChat_TelevisionRecipe"))
                 __result = __result && TelevisionRecipeGameComponent.Instance != null && TelevisionRecipeGameComponent.Instance.RecipeForProduct(__instance.products.First().thingDef) != null;
+        }
+    }
+    [HarmonyPatch(typeof(ThingDef), "get_AllRecipes")]
+    public static class TelevisionRecipeAllRecipesPatch
+    {
+        public static void Postfix(ref List<RecipeDef> __result)
+        {
+            if (__result == null) return;
+            TelevisionRecipeGameComponent component = TelevisionRecipeGameComponent.Instance;
+            __result = __result.Where(recipe => recipe == null || !recipe.defName.StartsWith("LiAIChat_TelevisionRecipe") ||
+                (component != null && recipe.products != null && recipe.products.Count > 0 && component.RecipeForProduct(recipe.products[0].thingDef) != null)).ToList();
         }
     }
 }
