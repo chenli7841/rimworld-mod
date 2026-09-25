@@ -187,6 +187,7 @@
     <Compile Include="Travel\TravelWishManager.cs" />
     <Compile Include="Travel\ThoughtWorker_TravelWishMood.cs" />
     <Compile Include="Game\LiAIChatGameComponent.cs" />
+    <Compile Include="TelevisionRecipes\TelevisionRecipeSystem.cs" />
     <Compile Include="Heritage\CivilizationHeritageWork.cs" />
     <Compile Include="Heritage\CivilizationHeritageService.cs" />
     <Compile Include="Heritage\OpenAICivilizationHeritageGenerator.cs" />

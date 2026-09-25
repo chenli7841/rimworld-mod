@@ -9,7 +9,8 @@ namespace LiAIChat.Civilization
     public enum CivilizationTopicEffect
     {
         Stat, SocialFight, MoodDecline, InjuredMoodRecovery, PainMood,
-        NegativeSocialMemory, ColonyMood, GatheringMood, ReadingGain
+        NegativeSocialMemory, ColonyMood, GatheringMood, ReadingGain,
+        WeaponRange, ClearMentalBreak
     }
 
     public static class CivilizationTopicEffects
@@ -24,8 +25,8 @@ namespace LiAIChat.Civilization
             var component = CivilizationTopicGameComponent.Instance;
             if (!Eligible(pawn) || component == null) return 1f;
             float factor = 1f;
-            foreach (var state in component.Active)
-                if (state.effect == effect) factor *= state.factor;
+            foreach (var bonus in component.ActiveBonuses)
+                if (bonus.effect == effect) factor *= bonus.factor;
             return factor;
         }
 
@@ -33,7 +34,31 @@ namespace LiAIChat.Civilization
         {
             var component = CivilizationTopicGameComponent.Instance;
             if (!Eligible(pawn) || component == null) return 0f;
-            return component.Active.Where(s => s.effect == CivilizationTopicEffect.ColonyMood).Sum(s => s.offset);
+            return component.ActiveBonuses.Where(b => b.effect == CivilizationTopicEffect.ColonyMood).Sum(b => b.offset);
+        }
+
+        public static int ApplyImmediateEffects(
+            System.Collections.Generic.IEnumerable<CivilizationTopicBonus> bonuses)
+        {
+            if (bonuses == null || !bonuses.Any(b => b.effect == CivilizationTopicEffect.ClearMentalBreak))
+            {
+                return 0;
+            }
+
+            int recovered = 0;
+            foreach (Pawn pawn in
+                PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_FreeColonists)
+            {
+                if (!pawn.InMentalState || pawn.MentalState == null)
+                {
+                    continue;
+                }
+
+                pawn.MentalState.RecoverFromState();
+                recovered++;
+            }
+
+            return recovered;
         }
     }
 
@@ -98,6 +123,20 @@ namespace LiAIChat.Civilization
             if (__instance is Thought_AttendedRitual || name == "AttendedParty"
                 || name == "AttendedWedding" || name == "AttendedConcert")
                 __result *= CivilizationTopicEffects.Factor(__instance.pawn, CivilizationTopicEffect.GatheringMood);
+        }
+    }
+
+    [HarmonyPatch(typeof(VerbProperties), "AdjustedRange")]
+    public static class CivilizationTopicWeaponRangePatch
+    {
+        public static void Postfix(VerbProperties __instance, Thing attacker, ref float __result)
+        {
+            if (__instance.Ranged)
+            {
+                __result *= CivilizationTopicEffects.Factor(
+                    attacker as Pawn,
+                    CivilizationTopicEffect.WeaponRange);
+            }
         }
     }
 

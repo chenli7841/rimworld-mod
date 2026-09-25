@@ -24,6 +24,26 @@ namespace LiAIChat.Civilization
         public float factor = 1f;
     }
 
+    public class CivilizationTopicActiveBonus : IExposable
+    {
+        public string id;
+        public string label;
+        public CivilizationTopicEffect effect;
+        public StatDef stat;
+        public float offset;
+        public float factor = 1f;
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref id, "id");
+            Scribe_Values.Look(ref label, "label");
+            Scribe_Values.Look(ref effect, "effect");
+            Scribe_Defs.Look(ref stat, "stat");
+            Scribe_Values.Look(ref offset, "offset");
+            Scribe_Values.Look(ref factor, "factor", 1f);
+        }
+    }
+
     public class CivilizationTopicState : IExposable
     {
         public ResearchProjectDef project;
@@ -39,6 +59,8 @@ namespace LiAIChat.Civilization
         public int completedAt = -1;
         public List<string> participants = new List<string>();
         public List<string> drawnBonuses = new List<string>();
+        public List<CivilizationTopicActiveBonus> bonuses =
+            new List<CivilizationTopicActiveBonus>();
 
         public void ExposeData()
         {
@@ -55,8 +77,10 @@ namespace LiAIChat.Civilization
             Scribe_Values.Look(ref completedAt, "completedAt", -1);
             Scribe_Collections.Look(ref participants, "participants", LookMode.Value);
             Scribe_Collections.Look(ref drawnBonuses, "drawnBonuses", LookMode.Value);
+            Scribe_Collections.Look(ref bonuses, "bonuses", LookMode.Deep);
             if (participants == null) participants = new List<string>();
             if (drawnBonuses == null) drawnBonuses = new List<string>();
+            if (bonuses == null) bonuses = new List<CivilizationTopicActiveBonus>();
         }
     }
 
@@ -80,6 +104,11 @@ namespace LiAIChat.Civilization
         public IEnumerable<CivilizationTopicState> Active
         {
             get { return states.Where(s => s != null && s.project != null && s.expiresAt > Find.TickManager.TicksGame); }
+        }
+
+        public IEnumerable<CivilizationTopicActiveBonus> ActiveBonuses
+        {
+            get { return Active.SelectMany(state => state.bonuses); }
         }
 
         public override void ExposeData()
@@ -136,6 +165,10 @@ namespace LiAIChat.Civilization
         public override void FinalizeInit()
         {
             states.RemoveAll(s => s == null || s.project == null);
+            foreach (CivilizationTopicState state in states)
+            {
+                MigrateLegacyBonus(state);
+            }
             Expire();
             // Old saves may contain completed topics from before bonuses existed.
             // Reopen these without awarding a free, newly rolled bonus on load.
@@ -173,6 +206,23 @@ namespace LiAIChat.Civilization
             }
         }
 
+        private static void MigrateLegacyBonus(CivilizationTopicState state)
+        {
+            if (state.bonuses.Count > 0 || string.IsNullOrEmpty(state.label))
+            {
+                return;
+            }
+
+            state.bonuses.Add(new CivilizationTopicActiveBonus
+            {
+                label = state.label,
+                effect = state.effect,
+                stat = state.stat,
+                offset = state.offset,
+                factor = state.factor
+            });
+        }
+
         public void Complete(ResearchProjectDef project, Pawn researcher)
         {
             CivilizationTopicExtension topic = project.GetModExtension<CivilizationTopicExtension>();
@@ -187,28 +237,50 @@ namespace LiAIChat.Civilization
                 Reset(project);
                 return;
             }
-            CivilizationTopicBonus bonus = choices.RandomElementByWeight(b =>
-                CivilizationTopicPolicy.RewardWeight(state.drawnBonuses.Count(id => id == b.id)));
+            List<CivilizationTopicBonus> selected =
+                new List<CivilizationTopicBonus>();
+
+            while (selected.Count < 3 && choices.Count > 0)
+            {
+                CivilizationTopicBonus bonus = choices.RandomElementByWeight(b =>
+                    CivilizationTopicPolicy.RewardWeight(
+                        state.drawnBonuses.Count(id => id == b.id)));
+                selected.Add(bonus);
+                choices.Remove(bonus);
+            }
+
             RecordParticipant(project, researcher);
-            state.stat = bonus.stat;
-            state.label = bonus.label;
-            state.effect = bonus.effect;
-            state.offset = bonus.offset;
-            state.factor = bonus.factor;
+            state.bonuses.Clear();
+            foreach (CivilizationTopicBonus bonus in selected)
+            {
+                state.bonuses.Add(new CivilizationTopicActiveBonus
+                {
+                    id = bonus.id,
+                    label = bonus.label,
+                    effect = bonus.effect,
+                    stat = bonus.stat,
+                    offset = bonus.offset,
+                    factor = bonus.factor
+                });
+                state.drawnBonuses.Add(bonus.id);
+            }
             state.completedAt = Find.TickManager.TicksGame;
             state.expiresAt = state.completedAt + CivilizationTopicPolicy.BonusDays * GenDate.TicksPerDay;
             state.availableAt = state.expiresAt + Rand.RangeInclusive(CivilizationTopicPolicy.MinimumCooldownDays,
                 CivilizationTopicPolicy.MaximumCooldownDays) * GenDate.TicksPerDay;
             state.progressReset = false;
-            state.drawnBonuses.Add(bonus.id);
-            state.conclusion = CivilizationTopicConclusions.Build(topic, state.participants, bonus.label);
+            string rewards = string.Join("；", selected.Select(b => b.label).ToArray());
+            state.conclusion = CivilizationTopicConclusions.Build(topic, state.participants, rewards);
             state.participants.Clear();
             consecutiveCompletions = lastCompleted == project ? consecutiveCompletions + 1 : 1;
             lastCompleted = project;
             LiAIChat.Events.ColonyEventLog.Record("专题研究结论", state.conclusion, 3, researcher,
                 "topic:" + project.defName + ":" + state.completedAt);
+            int recovered = CivilizationTopicEffects.ApplyImmediateEffects(selected);
             Find.LetterStack.ReceiveLetter(project.LabelCap + "：研究结论", state.conclusion
-                + "\n\n获得：" + bonus.label + "。持续 7 天；随后冷却 "
+                + "\n\n获得三项奖励：\n• " + string.Join("\n• ", selected.Select(b => b.label).ToArray())
+                + (recovered > 0 ? "\n已解除 " + recovered + " 名殖民者的精神崩溃状态。" : string.Empty)
+                + "\n持续 7 天；随后冷却 "
                 + ((state.availableAt - state.expiresAt) / GenDate.TicksPerDay) + " 天。", LetterDefOf.PositiveEvent);
         }
 
@@ -231,7 +303,33 @@ namespace LiAIChat.Civilization
             CivilizationTopicGameComponent component = CivilizationTopicGameComponent.Instance;
             CivilizationTopicState state = component == null ? null : component.StateFor(project);
             return component != null && (state == null || state.availableAt <= Find.TickManager.TicksGame)
-                && component.HasRequiredText(topic.requiredText);
+                && HasRequiredText(project);
+        }
+
+        public static bool HasRequiredText(ResearchProjectDef project)
+        {
+            CivilizationTopicExtension topic = project == null
+                ? null
+                : project.GetModExtension<CivilizationTopicExtension>();
+
+            if (topic == null)
+            {
+                return true;
+            }
+
+            CivilizationTopicGameComponent component =
+                CivilizationTopicGameComponent.Instance;
+
+            return component != null &&
+                component.HasRequiredText(topic.requiredText);
+        }
+
+        public static bool HasAnyVisibleTopic()
+        {
+            return DefDatabase<ResearchProjectDef>.AllDefsListForReading.Any(
+                project => project.tab != null &&
+                    project.tab.defName == "LiAIChat_CivilizationTopics" &&
+                    HasRequiredText(project));
         }
     }
 
@@ -253,24 +351,23 @@ namespace LiAIChat.Civilization
 
     public class StatPart_CivilizationTopic : StatPart
     {
-        private IEnumerable<CivilizationTopicState> Bonuses(StatRequest req)
+        private IEnumerable<CivilizationTopicActiveBonus> Bonuses(StatRequest req)
         {
             Pawn pawn = req.Thing as Pawn;
             CivilizationTopicGameComponent component = CivilizationTopicGameComponent.Instance;
             if (pawn == null || !pawn.IsColonistPlayerControlled || component == null)
-                return Enumerable.Empty<CivilizationTopicState>();
-            return component.Active.Where(s => s.stat == parentStat);
+                return Enumerable.Empty<CivilizationTopicActiveBonus>();
+            return component.ActiveBonuses.Where(b => b.stat == parentStat);
         }
 
         public override void TransformValue(StatRequest req, ref float val)
         {
-            foreach (CivilizationTopicState state in Bonuses(req)) val = (val + state.offset) * state.factor;
+            foreach (CivilizationTopicActiveBonus bonus in Bonuses(req)) val = (val + bonus.offset) * bonus.factor;
         }
 
         public override string ExplanationPart(StatRequest req)
         {
-            return string.Join("\n", Bonuses(req).Select(s => "文明专题 · " + s.label + "（剩余 "
-                + ((s.expiresAt - Find.TickManager.TicksGame) / (float)GenDate.TicksPerDay).ToString("0.0") + " 天）").ToArray());
+            return string.Join("\n", Bonuses(req).Select(b => "文明专题 · " + b.label).ToArray());
         }
     }
 
@@ -280,6 +377,37 @@ namespace LiAIChat.Civilization
         public static void Postfix(ResearchProjectDef __instance, ref bool __result)
         {
             if (__result) __result = CivilizationTopicResearch.Allowed(__instance);
+        }
+    }
+
+    [HarmonyPatch(typeof(MainTabWindow_Research), "get_VisibleResearchProjects")]
+    public static class CivilizationTopicVisibleProjectsPatch
+    {
+        public static void Postfix(ref List<ResearchProjectDef> __result)
+        {
+            if (__result == null)
+            {
+                return;
+            }
+
+            __result = __result.Where(
+                CivilizationTopicResearch.HasRequiredText).ToList();
+        }
+    }
+
+    [HarmonyPatch(typeof(ResearchManager), "TabInfoVisible")]
+    public static class CivilizationTopicTabVisibilityPatch
+    {
+        public static void Postfix(
+            ResearchTabDef tab,
+            ref bool __result)
+        {
+            if (tab != null &&
+                tab.defName == "LiAIChat_CivilizationTopics")
+            {
+                __result = __result &&
+                    CivilizationTopicResearch.HasAnyVisibleTopic();
+            }
         }
     }
 
@@ -353,10 +481,10 @@ namespace LiAIChat.Civilization
             __result += "\n\n馆藏条件：" + (component != null && component.HasRequiredText(topic.requiredText) ? "已满足" : "缺少已识别的对应文献")
                 + "。需将文献保留在玩家基地地图上，研究期间失去馆藏会暂停进度。";
             CivilizationTopicState state = component == null ? null : component.StateFor(__instance);
-            __result += "\n完成后随机获得下列一项，持续 7 天：\n" + string.Join("\n", topic.bonuses.Select(b => "• " + b.label).ToArray())
+            __result += "\n完成后不重复地随机获得下列三项，持续 7 天：\n" + string.Join("\n", topic.bonuses.Select(b => "• " + b.label).ToArray())
                 + "\n结束后冷却 2–4 天。同书连研效率每轮乘以 80%（最低 40%），完成另一专题后重置。重复奖励的抽取权重降低。";
             if (state != null && state.expiresAt > Find.TickManager.TicksGame)
-                __result += "\n当前加成：" + state.label + "；剩余 "
+                __result += "\n当前加成：\n• " + string.Join("\n• ", state.bonuses.Select(b => b.label).ToArray()) + "\n剩余 "
                     + ((state.expiresAt - Find.TickManager.TicksGame) / (float)GenDate.TicksPerDay).ToString("0.0") + " 天。";
             else if (state != null && state.availableAt > Find.TickManager.TicksGame)
                 __result += "\n冷却中：还需 " + ((state.availableAt - Find.TickManager.TicksGame) / (float)GenDate.TicksPerDay).ToString("0.0") + " 天。";

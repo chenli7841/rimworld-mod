@@ -38,7 +38,7 @@ Get-ChildItem (Join-Path $gameData 'Core/Defs/Stats') -Filter '*.xml' | ForEach-
     [xml]$doc = Get-Content $_.FullName -Raw
     foreach ($node in $doc.SelectNodes('/Defs/StatDef/defName')) { $statNames[$node.InnerText] = $true }
 }
-$effects = @('Stat','SocialFight','MoodDecline','InjuredMoodRecovery','PainMood','NegativeSocialMemory','ColonyMood','GatheringMood','ReadingGain')
+$effects = @('Stat','SocialFight','MoodDecline','InjuredMoodRecovery','PainMood','NegativeSocialMemory','ColonyMood','GatheringMood','ReadingGain','WeaponRange','ClearMentalBreak')
 $bonusCount = 0
 foreach ($project in $projects) {
     Assert-True ($project.tab -eq 'LiAIChat_CivilizationTopics') "Incorrect tab: $($project.defName)"
@@ -47,7 +47,7 @@ foreach ($project in $projects) {
     Assert-True ($textNames.ContainsKey([string]$extension.requiredText)) "Missing required text: $($extension.requiredText)"
     Assert-True (-not [string]::IsNullOrWhiteSpace($extension.conclusion)) 'Missing conclusion template'
     $bonuses = @($extension.bonuses.li)
-    Assert-True ($bonuses.Count -ge 2) 'Random reward pool needs at least two choices'
+    Assert-True ($bonuses.Count -ge 3) 'Three-reward completion needs at least three choices'
     Assert-True (@($bonuses.id | Select-Object -Unique).Count -eq $bonuses.Count) 'Reward ids must be stable and unique within each topic'
     foreach ($bonus in $bonuses) {
         $effect = if ($bonus.effect) { [string]$bonus.effect } else { 'Stat' }
@@ -58,7 +58,7 @@ foreach ($project in $projects) {
         $bonusCount++
     }
 }
-Assert-True ($bonusCount -eq 62) 'Unexpected enabled reward count'
+Assert-True ($bonusCount -eq 70) 'Unexpected enabled reward count'
 
 # Check Harmony's runtime-only targets against the installed game, not guessed API names.
 [Reflection.Assembly]::LoadFrom((Join-Path $GameManagedPath 'UnityEngine.CoreModule.dll')) | Out-Null
@@ -66,12 +66,15 @@ $gameAssembly = [Reflection.Assembly]::LoadFrom((Join-Path $GameManagedPath 'Ass
 $flags = [Reflection.BindingFlags]'Public,NonPublic,Instance,Static'
 $targets = @{
     'Verse.ResearchProjectDef' = @('get_CanStartNow','CanBeResearchedAt','get_Description')
+    'RimWorld.MainTabWindow_Research' = @('get_VisibleResearchProjects')
     'RimWorld.ResearchManager' = @('SetCurrentProject','AddProgress','ResearchPerformed','FinishProject')
     'RimWorld.Pawn_InteractionsTracker' = @('SocialFightChance')
     'RimWorld.Need_Mood' = @('NeedInterval')
     'RimWorld.Thought' = @('MoodOffset')
     'RimWorld.Thought_Memory' = @('MoodOffset')
     'RimWorld.Thought_MemorySocial' = @('OpinionOffset')
+    'Verse.VerbProperties' = @('AdjustedRange')
+    'Verse.AI.MentalState' = @('RecoverFromState')
 }
 foreach ($typeName in $targets.Keys) {
     $type = $gameAssembly.GetType($typeName, $true)
