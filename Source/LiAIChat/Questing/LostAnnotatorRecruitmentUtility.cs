@@ -1,17 +1,32 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using LiAIChat.Game;
 using LiAIChat.Archive;
 using LiAIChat.Models;
 using LiAIChat.State;
 using RimWorld;
 using Verse;
 using Verse.AI;
+using UnityEngine;
 
 namespace LiAIChat.Questing
 {
     public static class LostAnnotatorRecruitmentUtility
     {
         public const int RequiredConversations = 3;
+        private const int OpportunityRefreshFrames = 30;
+
+        private static readonly Dictionary<Map, JointStudyOpportunity>
+            jointStudyOpportunities =
+                new Dictionary<Map, JointStudyOpportunity>();
+
+        public class JointStudyOpportunity
+        {
+            public Pawn Annotator;
+            public Thing_AncientEarthArchiveFragment Book;
+            public int LastCheckedFrame;
+        }
 
         public static bool IsCandidate(Pawn pawn, out PawnAIState state)
         {
@@ -55,6 +70,114 @@ namespace LiAIChat.Questing
         {
             return map?.listerThings.AllThings.OfType<Thing_AncientEarthArchiveFragment>()
                 .FirstOrDefault(book => book.Identified && !book.Destroyed && !book.SoldByPlayer);
+        }
+
+        // Gizmos are rebuilt for every selected pawn on every UI repaint.
+        // Keep the map-wide search out of that hot path. A brief frame cache
+        // makes a multi-selection cost one scan instead of one scan per pawn.
+        public static JointStudyOpportunity GetJointStudyOpportunity(Map map)
+        {
+            if (map == null)
+            {
+                return null;
+            }
+
+            JointStudyOpportunity cached;
+            if (jointStudyOpportunities.TryGetValue(map, out cached) &&
+                Time.frameCount - cached.LastCheckedFrame <
+                    OpportunityRefreshFrames)
+            {
+                return cached.Annotator == null
+                    ? null
+                    : cached;
+            }
+
+            JointStudyOpportunity refreshed =
+                new JointStudyOpportunity
+                {
+                    Annotator = FindCandidateOnMap(map),
+                    LastCheckedFrame = Time.frameCount
+                };
+
+            if (refreshed.Annotator != null)
+            {
+                refreshed.Book = FindBook(map);
+            }
+
+            jointStudyOpportunities[map] = refreshed;
+
+            return refreshed.Annotator == null
+                ? null
+                : refreshed;
+        }
+
+        public static bool TryStartJointStudy(
+            Pawn researcher,
+            JointStudyOpportunity opportunity)
+        {
+            if (researcher == null || researcher.Drafted ||
+                opportunity == null || opportunity.Annotator == null ||
+                opportunity.Book == null ||
+                researcher.Map != opportunity.Annotator.Map ||
+                researcher.Map != opportunity.Book.Map ||
+                !CanStillStudyWith(opportunity.Annotator) ||
+                !opportunity.Book.Identified ||
+                opportunity.Book.Destroyed ||
+                opportunity.Book.SoldByPlayer ||
+                !researcher.CanReserveAndReach(
+                    opportunity.Book,
+                    PathEndMode.Touch,
+                    Danger.Some) ||
+                !researcher.CanReserve(opportunity.Annotator))
+            {
+                return false;
+            }
+
+            researcher.jobs.TryTakeOrderedJob(JobMaker.MakeJob(
+                DefDatabase<JobDef>.GetNamed(
+                    "LiAIChat_LostAnnotatorJointStudy"),
+                opportunity.Book,
+                opportunity.Annotator));
+
+            return true;
+        }
+
+        private static Pawn FindCandidateOnMap(Map map)
+        {
+            LiAIChatGameComponent component =
+                Current.Game?.GetComponent<LiAIChatGameComponent>();
+
+            if (component == null || component.PawnStates == null)
+            {
+                return null;
+            }
+
+            foreach (PawnAIState state in component.PawnStates)
+            {
+                if (state == null || !state.IsLostAnnotator ||
+                    !state.LostAnnotatorRescued ||
+                    state.LostAnnotatorPermanentMember)
+                {
+                    continue;
+                }
+
+                Pawn pawn = map.mapPawns.AllPawnsSpawned.FirstOrDefault(
+                    candidate => candidate.thingIDNumber == state.PawnId);
+
+                if (pawn != null && !pawn.Dead)
+                {
+                    return pawn;
+                }
+            }
+
+            return null;
+        }
+
+        private static bool CanStillStudyWith(Pawn scholar)
+        {
+            PawnAIState state;
+            return IsCandidate(scholar, out state) &&
+                !state.LostAnnotatorJointStudyCompleted;
         }
 
         public static void CompleteJointStudy(Pawn researcher, Pawn scholar,

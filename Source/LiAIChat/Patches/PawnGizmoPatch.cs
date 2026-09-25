@@ -48,41 +48,50 @@ namespace LiAIChat.Patches
                     }
                 };
 
-                Pawn annotator = __instance.Map?.mapPawns.AllPawnsSpawned.FirstOrDefault(p =>
+                LiAIChat.Questing.LostAnnotatorRecruitmentUtility
+                    .JointStudyOpportunity opportunity =
+                    LiAIChat.Questing.LostAnnotatorRecruitmentUtility
+                        .GetJointStudyOpportunity(__instance.Map);
+
+                if (opportunity != null)
                 {
-                    LiAIChat.Models.PawnAIState state;
-                    return LiAIChat.Questing.LostAnnotatorRecruitmentUtility.IsCandidate(p, out state);
-                });
-                if (annotator != null)
-                {
-                    Thing_AncientEarthArchiveFragment book =
-                        LiAIChat.Questing.LostAnnotatorRecruitmentUtility.FindBook(__instance.Map);
-                    bool valid = book != null && !__instance.Drafted &&
-                        __instance.CanReserveAndReach(book, PathEndMode.Touch, Danger.Some) &&
-                        __instance.CanReserve(annotator);
+                    bool canAttempt = !__instance.Drafted;
+
                     yield return new Command_Action
                     {
                         defaultLabel = "与注疏者共同解读",
-                        defaultDesc = valid ? "与暂住学者共同解读一本文献。这是邀请他永久留下的条件之一。" :
+                        defaultDesc = canAttempt ? "与暂住学者共同解读一本文献。这是邀请他永久留下的条件之一。" :
                             "需要一本文献、可行动的殖民者与暂住学者。",
                         icon = LiAIChatTextures.StudyArchive,
                         action = () =>
                         {
-                            if (!valid)
+                            if (!LiAIChat.Questing.LostAnnotatorRecruitmentUtility
+                                .TryStartJointStudy(
+                                    __instance,
+                                    opportunity))
                             {
                                 Messages.Message("暂时无法开始共同解读。", MessageTypeDefOf.RejectInput);
                                 return;
                             }
-                            __instance.jobs.TryTakeOrderedJob(JobMaker.MakeJob(
-                                DefDatabase<JobDef>.GetNamed("LiAIChat_LostAnnotatorJointStudy"), book, annotator));
                         }
                     };
                 }
             }
 
-            var lostAnnotatorState = LiAIChat.State.PawnAIStateManager.TryGetExistingState(__instance);
-            if (lostAnnotatorState != null && lostAnnotatorState.IsLostAnnotator &&
-                !lostAnnotatorState.LostAnnotatorRescued && __instance.Map != null && !__instance.Map.IsPlayerHome)
+            // Player-controlled colonists cannot be the unrecruited annotator.
+            // Avoid a linear PawnAIState lookup for every member of a large
+            // colony selection; this branch only concerns non-colonist pawns.
+            LiAIChat.Models.PawnAIState lostAnnotatorState =
+                __instance.IsColonistPlayerControlled
+                    ? null
+                    : LiAIChat.State.PawnAIStateManager.TryGetExistingState(
+                        __instance);
+
+            if (lostAnnotatorState != null &&
+                lostAnnotatorState.IsLostAnnotator &&
+                !lostAnnotatorState.LostAnnotatorRescued &&
+                __instance.Map != null &&
+                !__instance.Map.IsPlayerHome)
             {
                 yield return new Command_Action
                 {
