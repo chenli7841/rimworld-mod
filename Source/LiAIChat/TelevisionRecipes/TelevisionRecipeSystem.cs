@@ -63,13 +63,14 @@ namespace LiAIChat.TelevisionRecipes
             base.FinalizeInit();
             // Cached entries made before recipe prose existed are safe to replace.
             recipes.RemoveAll(r => !r.learned && string.IsNullOrWhiteSpace(r.description));
+            SanitizeIngredients();
             generationPending = false;
             RefreshDefs();
         }
         public override void GameComponentTick()
         {
             int now = Find.TickManager.TicksGame; if (now - lastCheck < CheckInterval) return; lastCheck = now;
-            Expire(now); TryTeachFromTelevision(); EnsureCache();
+            Expire(now); if (SanitizeIngredients()) RefreshDefs(); TryTeachFromTelevision(); EnsureCache();
         }
         private void Expire(int now)
         {
@@ -97,10 +98,7 @@ namespace LiAIChat.TelevisionRecipes
         {
             if (generationPending || recipes.Count(r => !r.learned) >= CacheTarget) return;
             generationPending = true;
-            List<string> foods = Find.Maps.SelectMany(m => m.listerThings.AllThings).Where(t => t.def.IsNutritionGivingIngestible && t.def.ingestible != null).Select(t => t.def.defName)
-                .Concat(Find.Maps.SelectMany(m => m.mapPawns.AllPawnsSpawned).Where(p => p.RaceProps != null && p.RaceProps.meatDef != null).Select(p => p.RaceProps.meatDef.defName))
-                .Concat(Find.Maps.SelectMany(m => m.listerThings.AllThings).Where(t => t.def.plant != null && t.def.plant.harvestedThingDef != null).Select(t => t.def.plant.harvestedThingDef.defName))
-                .Distinct().Take(24).ToList();
+            List<string> foods = RawFoodDefNames();
             int needed = CacheTarget - recipes.Count(r => !r.learned); string gameId = RuntimeHelpers.GameId(this);
             _ = GenerateAsync(gameId, needed, foods);
         }
@@ -141,6 +139,36 @@ namespace LiAIChat.TelevisionRecipes
         }
         private static bool TryBuff(string value, out TelevisionRecipeBuff buff) { switch (value.ToLowerInvariant()) { case "hunger": buff = TelevisionRecipeBuff.Hunger; return true; case "rest": buff = TelevisionRecipeBuff.Rest; return true; case "mental": buff = TelevisionRecipeBuff.MentalShield; return true; case "move": buff = TelevisionRecipeBuff.MoveSpeed; return true; case "work": buff = TelevisionRecipeBuff.WorkSpeed; return true; case "healing": buff = TelevisionRecipeBuff.Healing; return true; case "range": buff = TelevisionRecipeBuff.WeaponRange; return true; default: buff = TelevisionRecipeBuff.MoveSpeed; return false; } }
         private static string Json(string s) { return "\"" + s.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\n", "\\n") + "\""; }
+        private static bool IsRawFood(ThingDef def)
+        {
+            return def != null && def.IsNutritionGivingIngestible && def.ingestible != null &&
+                def.ingestible.preferability <= FoodPreferability.RawTasty;
+        }
+        private static List<string> RawFoodDefNames()
+        {
+            return Find.Maps.SelectMany(m => m.listerThings.AllThings).Select(t => t.def).Where(IsRawFood).Select(d => d.defName)
+                .Concat(Find.Maps.SelectMany(m => m.mapPawns.AllPawnsSpawned).Where(p => p.RaceProps != null && IsRawFood(p.RaceProps.meatDef)).Select(p => p.RaceProps.meatDef.defName))
+                .Concat(Find.Maps.SelectMany(m => m.listerThings.AllThings).Where(t => t.def.plant != null && IsRawFood(t.def.plant.harvestedThingDef)).Select(t => t.def.plant.harvestedThingDef.defName))
+                .Distinct().Take(24).ToList();
+        }
+        private bool SanitizeIngredients()
+        {
+            List<string> allowed = RawFoodDefNames();
+            if (allowed.Count == 0) return false;
+            bool changed = false;
+            foreach (TelevisionRecipeData recipe in recipes)
+            {
+                List<string> before = recipe.ingredients;
+                recipe.ingredients = recipe.ingredients.Where(defName => allowed.Contains(defName) && IsRawFood(DefDatabase<ThingDef>.GetNamedSilentFail(defName))).Distinct().ToList();
+                foreach (string replacement in allowed.Where(defName => !recipe.ingredients.Contains(defName)))
+                {
+                    if (recipe.ingredients.Count >= 2) break;
+                    recipe.ingredients.Add(replacement);
+                }
+                if (!before.SequenceEqual(recipe.ingredients)) changed = true;
+            }
+            return changed;
+        }
         public TelevisionRecipeData RecipeForProduct(ThingDef def) { return recipes.FirstOrDefault(r => r.learned && TelevisionRecipeUtility.ProductDef(r.slot) == def); }
         public bool HasBuff(Pawn pawn, TelevisionRecipeBuff buff) { return pawn != null && pawnBuffs.Any(b => b.pawnId == pawn.thingIDNumber && b.expiresAt > Find.TickManager.TicksGame && b.buffs.Contains(buff)); }
         public void ApplyMeal(Pawn pawn, ThingDef product) { TelevisionRecipeData r = RecipeForProduct(product); if (pawn == null || r == null) return; pawnBuffs.RemoveAll(b => b.pawnId == pawn.thingIDNumber); pawnBuffs.Add(new TelevisionRecipePawnBuff { pawnId = pawn.thingIDNumber, buffs = new List<TelevisionRecipeBuff>(r.buffs), expiresAt = Find.TickManager.TicksGame + r.buffTicks }); }

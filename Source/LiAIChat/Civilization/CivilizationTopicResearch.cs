@@ -395,6 +395,22 @@ namespace LiAIChat.Civilization
         }
     }
 
+    // The research tab's layout path may draw its tab record directly instead
+    // of the filtered VisibleResearchProjects list. IsHidden is the final
+    // project-level gate used by both paths.
+    [HarmonyPatch(typeof(ResearchProjectDef), "get_IsHidden")]
+    public static class CivilizationTopicProjectHiddenPatch
+    {
+        public static void Postfix(ResearchProjectDef __instance, ref bool __result)
+        {
+            if (!__result && __instance != null &&
+                __instance.GetModExtension<CivilizationTopicExtension>() != null)
+            {
+                __result = !CivilizationTopicResearch.HasRequiredText(__instance);
+            }
+        }
+    }
+
     [HarmonyPatch(typeof(ResearchManager), "TabInfoVisible")]
     public static class CivilizationTopicTabVisibilityPatch
     {
