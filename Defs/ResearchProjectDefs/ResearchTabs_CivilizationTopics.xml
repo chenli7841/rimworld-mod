@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ResearchTabDef>
+    <defName>LiAIChat_CivilizationTopics</defName>
+    <label>文明专题</label>
+    <generalTitle>文明主题专题研究</generalTitle>
+    <generalDescription>反复研读殖民地收藏的远古地球文献。每次完成都会形成一项短期殖民地加成；效果结束后，可再次开题。</generalDescription>
+  </ResearchTabDef>
+</Defs>

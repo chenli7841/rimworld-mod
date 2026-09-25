@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ResearchProjectDef>
+    <defName>LiAIChat_Topic_PracticalReason</defName>
+    <label>专题：实践理性批判</label>
+    <description>围绕义务、自由与人格尊严开展专题研讨。需要殖民地收藏《实践理性批判》。完成后会形成一项短期的共同体与专注加成。</description>
+    <baseCost>3000</baseCost><techLevel>Industrial</techLevel><tab>LiAIChat_CivilizationTopics</tab><researchViewX>1</researchViewX><researchViewY>1</researchViewY>
+  </ResearchProjectDef>
+  <ResearchProjectDef>
+    <defName>LiAIChat_Topic_Meditations</defName>
+    <label>专题：沉思录</label>
+    <description>围绕自制、责任与命运开展专题研讨。需要殖民地收藏《沉思录》。完成后会形成一项短期的坚忍加成。</description>
+    <baseCost>3000</baseCost><techLevel>Industrial</techLevel><tab>LiAIChat_CivilizationTopics</tab><researchViewX>3</researchViewX><researchViewY>1</researchViewY>
+  </ResearchProjectDef>
+  <ResearchProjectDef>
+    <defName>LiAIChat_Topic_CityOfGod</defName>
+    <label>专题：上帝之城</label>
+    <description>围绕共同体、历史与世俗权力开展专题研讨。需要殖民地收藏《上帝之城》。完成后会形成一项短期的团结加成。</description>
+    <baseCost>3000</baseCost><techLevel>Industrial</techLevel><tab>LiAIChat_CivilizationTopics</tab><researchViewX>5</researchViewX><researchViewY>1</researchViewY>
+  </ResearchProjectDef>
+  <ResearchProjectDef>
+    <defName>LiAIChat_Topic_PureReason</defName>
+    <label>专题：纯粹理性批判</label>
+    <description>围绕经验、判断与理性边界开展专题研讨。需要殖民地收藏《纯粹理性批判》。完成后会形成一项短期的研究加成。</description>
+    <baseCost>3600</baseCost><techLevel>Industrial</techLevel><tab>LiAIChat_CivilizationTopics</tab><researchViewX>7</researchViewX><researchViewY>1</researchViewY>
+  </ResearchProjectDef>
+</Defs>
