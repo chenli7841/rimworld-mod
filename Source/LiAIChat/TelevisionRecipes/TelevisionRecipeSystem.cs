@@ -225,7 +225,7 @@ namespace LiAIChat.TelevisionRecipes
     public static class TelevisionRecipeMentalPatch { public static bool Prefix(Pawn ___pawn) { return TelevisionRecipeGameComponent.Instance?.HasBuff(___pawn, TelevisionRecipeBuff.MentalShield) != true; } }
     [HarmonyPatch(typeof(VerbProperties), "AdjustedRange")]
     public static class TelevisionRecipeRangePatch { public static void Postfix(Thing attacker, ref float __result) { if (TelevisionRecipeGameComponent.Instance?.HasBuff(attacker as Pawn, TelevisionRecipeBuff.WeaponRange) == true) __result *= 1.15f; } }
-    [HarmonyPatch(typeof(Pawn_PathFollower), "CostToMoveIntoCell")]
+    [HarmonyPatch(typeof(Pawn_PathFollower), "CostToMoveIntoCell", new Type[] { typeof(IntVec3) })]
     public static class TelevisionRecipeMovePatch { public static void Postfix(Pawn ___pawn, ref float __result) { if (TelevisionRecipeGameComponent.Instance?.HasBuff(___pawn, TelevisionRecipeBuff.MoveSpeed) == true) __result /= 1.15f; } }
     [HarmonyPatch(typeof(StatWorker), "GetValueUnfinalized")]
     public static class TelevisionRecipeWorkPatch { public static void Postfix(StatDef ___stat, StatRequest req, ref float __result) { Pawn pawn = req.Thing as Pawn; if (___stat != null && ___stat.defName == "WorkSpeedGlobal" && TelevisionRecipeGameComponent.Instance?.HasBuff(pawn, TelevisionRecipeBuff.WorkSpeed) == true) __result *= 1.15f; } }
