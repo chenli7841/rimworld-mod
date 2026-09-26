@@ -178,7 +178,7 @@ namespace LiAIChat.TelevisionRecipes
     public static class RuntimeHelpers { public static string GameId(TelevisionRecipeGameComponent c) { return Current.Game.GetHashCode().ToString(); } public static bool IsCurrent(string id) { return Current.Game != null && Current.Game.GetHashCode().ToString() == id; } }
     public static class TelevisionRecipeUtility
     {
-        public static ThingDef ProductDef(int slot) { return DefDatabase<ThingDef>.GetNamedSilentFail("LiAIChat_TelevisionMeal" + (slot + 1)); }
+        public static ThingDef ProductDef(int slot) { return DefDatabase<ThingDef>.GetNamedSilentFail("LiAIChat_TelevisionMeal" + (char)('A' + slot)); }
         public static RecipeDef RecipeDef(int slot) { return DefDatabase<RecipeDef>.GetNamedSilentFail("LiAIChat_TelevisionRecipe" + (slot + 1)); }
         public static void Refresh(List<TelevisionRecipeData> recipes)
         {
