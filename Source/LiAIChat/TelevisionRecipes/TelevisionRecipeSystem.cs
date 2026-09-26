@@ -141,14 +141,38 @@ namespace LiAIChat.TelevisionRecipes
         private static string Json(string s) { return "\"" + s.Replace("\\", "\\\\").Replace("\"", "\\\"").Replace("\n", "\\n") + "\""; }
         private static bool IsRawFood(ThingDef def)
         {
-            return def != null && def.IsNutritionGivingIngestible && def.ingestible != null &&
-                def.ingestible.preferability <= FoodPreferability.RawTasty;
+            if (def == null || def.thingCategories == null)
+            {
+                return false;
+            }
+
+            ThingCategoryDef rawFood =
+                DefDatabase<ThingCategoryDef>.GetNamedSilentFail("FoodRaw");
+
+            return rawFood != null && def.thingCategories.Any(category =>
+                IsCategoryOrChildOf(category, rawFood));
+        }
+
+        private static bool IsCategoryOrChildOf(
+            ThingCategoryDef category,
+            ThingCategoryDef ancestor)
+        {
+            for (ThingCategoryDef current = category;
+                current != null;
+                current = current.parent)
+            {
+                if (current == ancestor)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
         private static List<string> RawFoodDefNames()
         {
             return Find.Maps.SelectMany(m => m.listerThings.AllThings).Select(t => t.def).Where(IsRawFood).Select(d => d.defName)
                 .Concat(Find.Maps.SelectMany(m => m.mapPawns.AllPawnsSpawned).Where(p => p.RaceProps != null && IsRawFood(p.RaceProps.meatDef)).Select(p => p.RaceProps.meatDef.defName))
-                .Concat(Find.Maps.SelectMany(m => m.listerThings.AllThings).Where(t => t.def.plant != null && IsRawFood(t.def.plant.harvestedThingDef)).Select(t => t.def.plant.harvestedThingDef.defName))
                 .Distinct().Take(24).ToList();
         }
         private bool SanitizeIngredients()
