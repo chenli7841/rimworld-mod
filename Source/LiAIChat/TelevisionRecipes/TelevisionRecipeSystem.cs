@@ -171,9 +171,13 @@ namespace LiAIChat.TelevisionRecipes
         }
         private static List<string> RawFoodDefNames()
         {
-            return Find.Maps.SelectMany(m => m.listerThings.AllThings).Select(t => t.def).Where(IsRawFood).Select(d => d.defName)
-                .Concat(Find.Maps.SelectMany(m => m.mapPawns.AllPawnsSpawned).Where(p => p.RaceProps != null && IsRawFood(p.RaceProps.meatDef)).Select(p => p.RaceProps.meatDef.defName))
-                .Distinct().Take(24).ToList();
+            // Use the same complete FoodRaw category tree as storage settings.
+            // Recipes may require an ingredient the colony has not acquired yet.
+            return DefDatabase<ThingDef>.AllDefsListForReading
+                .Where(IsRawFood)
+                .Select(def => def.defName)
+                .Distinct()
+                .ToList();
         }
         private bool SanitizeIngredients()
         {
