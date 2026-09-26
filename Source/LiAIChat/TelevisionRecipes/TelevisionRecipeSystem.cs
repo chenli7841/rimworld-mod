@@ -183,7 +183,9 @@ namespace LiAIChat.TelevisionRecipes
         public static void Refresh(List<TelevisionRecipeData> recipes)
         {
             List<RecipeDef> televisionRecipes = Enumerable.Range(0, 8).Select(RecipeDef).Where(r => r != null).ToList();
-            foreach (ThingDef table in DefDatabase<ThingDef>.AllDefsListForReading.Where(t => t.recipeMaker != null && t.recipeMaker.workSkill == SkillDefOf.Cooking))
+            foreach (ThingDef table in DefDatabase<ThingDef>.AllDefsListForReading.Where(t =>
+                t.recipeMaker != null && t.recipes != null &&
+                t.recipes.Any(recipe => recipe != null && recipe.workSkill == SkillDefOf.Cooking)))
             {
                 if (table.recipes == null) table.recipes = new List<RecipeDef>();
                 // RecipeDef.AvailableNow is not consulted by every bill-menu path.
