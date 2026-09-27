@@ -249,8 +249,111 @@ namespace LiAIChat.AI
             }
 
             AppendNearbyColonistRelationships(prompt, gamePawn);
+            AppendColonyFamilyAndSocialNetwork(prompt, gamePawn);
 
             prompt.AppendLine();
+        }
+
+        private static void AppendColonyFamilyAndSocialNetwork(
+            StringBuilder prompt,
+            Pawn gamePawn)
+        {
+            List<Pawn> colonists = PawnsFinder.AllMaps_FreeColonists
+                .Where(other => other != null && other != gamePawn)
+                .Distinct()
+                .ToList();
+            if (colonists.Count == 0)
+            {
+                return;
+            }
+
+            List<string> family = gamePawn.relations.DirectRelations
+                .Where(relation => relation != null && relation.def != null &&
+                    relation.otherPawn != null && colonists.Contains(relation.otherPawn))
+                .Select(relation => "- " + relation.otherPawn.LabelShort +
+                    " | family / direct relation: " + relation.def.label)
+                .Distinct()
+                .ToList();
+
+            prompt.AppendLine("COLONY FAMILY AND DIRECT RELATIONSHIPS");
+            if (family.Count == 0)
+            {
+                prompt.AppendLine("- No direct family or romantic relation is currently present in the colony.");
+            }
+            else
+            {
+                foreach (string relation in family)
+                {
+                    prompt.AppendLine(relation);
+                }
+            }
+
+            List<Pawn> closest = colonists
+                .OrderByDescending(other => gamePawn.relations.OpinionOf(other))
+                .Take(4)
+                .ToList();
+            List<Pawn> mostDistant = colonists
+                .OrderBy(other => gamePawn.relations.OpinionOf(other))
+                .Where(other => !closest.Contains(other))
+                .Take(4)
+                .ToList();
+
+            prompt.AppendLine("COLONY SOCIAL CLOSENESS");
+            foreach (Pawn other in closest.Concat(mostDistant))
+            {
+                int opinion = gamePawn.relations.OpinionOf(other);
+                prompt.AppendLine("- " + other.LabelShort + " | " +
+                    SocialClosenessLabel(opinion) + " (opinion " + opinion + ")");
+            }
+
+            AppendDetailedSocialMemories(prompt, gamePawn, colonists);
+        }
+
+        private static void AppendDetailedSocialMemories(
+            StringBuilder prompt,
+            Pawn gamePawn,
+            List<Pawn> colonists)
+        {
+            List<Thought_Memory> memories = gamePawn.needs?.mood?.thoughts?
+                .memories?.Memories?
+                .Where(memory => memory != null && memory.otherPawn != null &&
+                    colonists.Contains(memory.otherPawn) && memory.def != null &&
+                    memory.def.defName != "Acquaintance")
+                .ToList();
+            if (memories == null || memories.Count == 0)
+            {
+                return;
+            }
+
+            prompt.AppendLine("DETAILED COLONY SOCIAL MEMORIES");
+            prompt.AppendLine("These are factual reasons for your opinion. Mention them naturally when relevant; do not invent extra social history.");
+            foreach (IGrouping<Pawn, Thought_Memory> group in memories
+                .GroupBy(memory => memory.otherPawn)
+                .OrderBy(group => group.Key.LabelShort))
+            {
+                Pawn other = group.Key;
+                int opinion = gamePawn.relations.OpinionOf(other);
+                List<string> details = group
+                    .Select(memory =>
+                    {
+                        float effect = memory.MoodOffset();
+                        string sign = effect >= 0f ? "+" : "";
+                        return memory.LabelCapSocial + " " + sign + effect.ToString("0.#");
+                    })
+                    .Distinct()
+                    .ToList();
+                prompt.AppendLine("- " + other.LabelShort + " | opinion " +
+                    opinion + " | " + string.Join("; ", details));
+            }
+        }
+
+        private static string SocialClosenessLabel(int opinion)
+        {
+            if (opinion >= 60) return "very close";
+            if (opinion >= 25) return "close";
+            if (opinion <= -40) return "very hostile or deeply estranged";
+            if (opinion <= -10) return "distant or strained";
+            return "neutral / familiar";
         }
 
         private static void AppendNearbyColonistRelationships(StringBuilder prompt, Pawn gamePawn)
@@ -789,6 +892,7 @@ KNOWLEDGE
 RELATIONSHIPS & LIFE EVENTS
 
 * Supplied relationships and life events are factual context and should matter naturally when relevant.
+* ""No current romantic partner"" never means ""no family"". Check the colony family section before claiming to have no children, parents, siblings, spouse, or other relatives.
 * Preserve both personal relationships and faction roles when they conflict; a hostile person may still be a relative, lover, spouse, or former companion.
 * Do not treat a hostile stranger's death as the loss of a colony member, though violence or death may still affect the character emotionally.
 * Do not invent conversations, promises, conflicts, feelings, or relationship events unsupported by the supplied context.
