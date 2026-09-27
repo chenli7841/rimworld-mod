@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using HarmonyLib;
 using LiAIChat.Game;
 using RimWorld;
 using Verse;
@@ -13,7 +14,8 @@ namespace LiAIChat.Archive
         public int DeliveryTick = -1;
         public List<string> UnlockedSectionIds = new List<string>();
         public string PendingSectionId;
-        public void ExposeData() { Scribe_Values.Look(ref TextDefName, "textDefName"); Scribe_Values.Look(ref UnlockedCount, "unlockedCount", 0); Scribe_Values.Look(ref DeliveryTick, "deliveryTick", -1); Scribe_Collections.Look(ref UnlockedSectionIds, "unlockedSectionIds", LookMode.Value); Scribe_Values.Look(ref PendingSectionId, "pendingSectionId"); if (Scribe.mode == LoadSaveMode.PostLoadInit && UnlockedSectionIds == null) UnlockedSectionIds = new List<string>(); }
+        public string ResearchingSectionId;
+        public void ExposeData() { Scribe_Values.Look(ref TextDefName, "textDefName"); Scribe_Values.Look(ref UnlockedCount, "unlockedCount", 0); Scribe_Values.Look(ref DeliveryTick, "deliveryTick", -1); Scribe_Collections.Look(ref UnlockedSectionIds, "unlockedSectionIds", LookMode.Value); Scribe_Values.Look(ref PendingSectionId, "pendingSectionId"); Scribe_Values.Look(ref ResearchingSectionId, "researchingSectionId"); if (Scribe.mode == LoadSaveMode.PostLoadInit && UnlockedSectionIds == null) UnlockedSectionIds = new List<string>(); }
     }
 
     public static class DocumentRecovery
@@ -51,6 +53,7 @@ namespace LiAIChat.Archive
             return new DocumentLine(book?.titleChinese.NullOrEmpty() == false ? "《" + book.titleChinese + "》" : book?.title ?? text, sections.Select(x => x.title).ToArray(), sections.Select(x => x.body).ToArray());
         }
         public static int GetCost(int sectionIndex) { return 200 + sectionIndex * 100; }
+        public static int GetResearchCost(int sectionIndex) { return 800 + sectionIndex * 40; }
         private static DocumentLine BuildPracticalReason()
         {
             return new DocumentLine("《实践理性批判》", new[] {
@@ -93,19 +96,75 @@ namespace LiAIChat.Archive
         public static void RequestNext(Thing_AncientEarthArchiveFragment archive)
         {
             string text = archive.EarthTextDefName; DocumentLine line = GetLine(text); RecoveredDocumentState state = GetState(text);
-            if (state.DeliveryTick > 0 || state.UnlockedSectionIds.Count >= line.Titles.Length) return;
-            int cost = GetCost(state.UnlockedSectionIds.Count); int remaining = cost;
-            int total = Find.Maps.Where(m => m.IsPlayerHome).Sum(m => m.listerThings.ThingsOfDef(ThingDefOf.Gold).Sum(g => g.stackCount));
-            if (total < cost) { Messages.Message("需要 " + cost + " 单位黄金以委托复原下一节。", MessageTypeDefOf.RejectInput); return; }
-            foreach (Map map in Find.Maps.Where(m => m.IsPlayerHome)) foreach (Thing gold in map.listerThings.ThingsOfDef(ThingDefOf.Gold).ToList()) { int take = System.Math.Min(remaining, gold.stackCount); gold.stackCount -= take; remaining -= take; if (gold.stackCount == 0) gold.Destroy(); if (remaining == 0) break; }
-            state.DeliveryTick = Find.TickManager.TicksGame + 60000;
-            state.PendingSectionId = GetSectionId(text, state.UnlockedSectionIds.Count);
-            Messages.Message("黄金已交给译稿密钥商。复原结果将在约一天后送达。", MessageTypeDefOf.PositiveEvent);
+            if (state.ResearchingSectionId != null || state.UnlockedSectionIds.Count >= line.Titles.Length) return;
+            ResearchProjectDef project = ChapterResearchProject;
+            if (project == null) { Messages.Message("文献章节研究项目未能加载。", MessageTypeDefOf.RejectInput); return; }
+            state.ResearchingSectionId = GetSectionId(text, state.UnlockedSectionIds.Count);
+            ConfigureChapterProject(state, line);
+            ResetProjectProgress(project);
+            Find.ResearchManager.SetCurrentProject(project);
+            Messages.Message("已将“" + line.Titles[state.UnlockedSectionIds.Count] + "”设为当前文献章节研究。将对应文献保留在殖民地，并在研究台投入 " + GetResearchCost(state.UnlockedSectionIds.Count) + " 点研究。", MessageTypeDefOf.PositiveEvent);
         }
         public static void Tick()
         {
             LiAIChatGameComponent game = Current.Game?.GetComponent<LiAIChatGameComponent>(); if (game == null) return;
             foreach (RecoveredDocumentState state in game.RecoveredDocuments.Where(x => x.DeliveryTick > 0 && x.DeliveryTick <= Find.TickManager.TicksGame).ToList()) { DocumentLine line = GetLine(state.TextDefName); int index = state.UnlockedSectionIds.Count; state.DeliveryTick = -1; state.UnlockedSectionIds.Add(state.PendingSectionId ?? GetSectionId(state.TextDefName, index)); state.PendingSectionId = null; state.UnlockedCount = state.UnlockedSectionIds.Count; Messages.Message("加密译稿已恢复：" + line.Titles[index], MessageTypeDefOf.PositiveEvent); }
         }
+
+        private static ResearchProjectDef ChapterResearchProject { get { return DefDatabase<ResearchProjectDef>.GetNamedSilentFail("LiAIChat_DocumentChapterResearch"); } }
+        public static bool IsChapterProject(ResearchProjectDef project) { return project == ChapterResearchProject; }
+        public static RecoveredDocumentState ActiveResearchState { get { LiAIChatGameComponent game = Current.Game == null ? null : Current.Game.GetComponent<LiAIChatGameComponent>(); return game == null ? null : game.RecoveredDocuments.FirstOrDefault(s => !string.IsNullOrEmpty(s.ResearchingSectionId)); } }
+        private static void ConfigureChapterProject(RecoveredDocumentState state, DocumentLine line)
+        {
+            ResearchProjectDef project = ChapterResearchProject;
+            if (project == null || state == null) return;
+            int index = state.UnlockedSectionIds.Count;
+            project.label = "文献解读：" + line.Name + " · " + line.Titles[index];
+            project.description = "将对应文献保留在殖民地地图上，由研究台投入研究点数以解锁本章正文。\n\n当前章节：" + line.Titles[index] + "\n需要研究：" + GetResearchCost(index) + " 点。";
+            project.baseCost = GetResearchCost(index);
+            AccessTools.Field(typeof(Def), "cachedLabelCap").SetValue(project, default(TaggedString));
+        }
+        private static void ResetProjectProgress(ResearchProjectDef project)
+        {
+            Dictionary<ResearchProjectDef, float> progress = AccessTools.Field(typeof(ResearchManager), "progress").GetValue(Find.ResearchManager) as Dictionary<ResearchProjectDef, float>;
+            if (progress != null) progress.Remove(project);
+        }
+        public static bool CompleteChapterResearch(Pawn researcher)
+        {
+            RecoveredDocumentState state = ActiveResearchState;
+            DocumentLine line = state == null ? null : GetLine(state.TextDefName);
+            if (state == null || line == null || !ColonyLibrary.HasText(state.TextDefName))
+            {
+                Messages.Message("对应文献不在殖民地中，无法完成章节研究。", MessageTypeDefOf.RejectInput);
+                return false;
+            }
+            int index = state.UnlockedSectionIds.Count;
+            if (index >= line.Titles.Length) return false;
+            state.UnlockedSectionIds.Add(state.ResearchingSectionId ?? GetSectionId(state.TextDefName, index));
+            state.UnlockedCount = state.UnlockedSectionIds.Count;
+            state.ResearchingSectionId = null;
+            ResetProjectProgress(ChapterResearchProject);
+            if (Find.ResearchManager.IsCurrentProject(ChapterResearchProject)) Find.ResearchManager.StopProject(ChapterResearchProject);
+            Messages.Message("研究完成，已解锁正文：" + line.Titles[index], MessageTypeDefOf.PositiveEvent);
+            return true;
+        }
     }
+
+    [HarmonyPatch(typeof(ResearchProjectDef), "get_IsHidden")]
+    public static class DocumentChapterResearchHiddenPatch { public static void Postfix(ResearchProjectDef __instance, ref bool __result) { if (DocumentRecovery.IsChapterProject(__instance)) __result = DocumentRecovery.ActiveResearchState == null; } }
+    [HarmonyPatch(typeof(ResearchProjectDef), "get_CanStartNow")]
+    public static class DocumentChapterResearchStartPatch { public static void Postfix(ResearchProjectDef __instance, ref bool __result) { if (DocumentRecovery.IsChapterProject(__instance)) __result = DocumentRecovery.ActiveResearchState != null && ColonyLibrary.HasText(DocumentRecovery.ActiveResearchState.TextDefName); } }
+    [HarmonyPatch(typeof(ResearchManager), "ResearchPerformed")]
+    public static class DocumentChapterResearchProgressPatch
+    {
+        public static bool Prefix()
+        {
+            if (Find.ResearchManager == null || !Find.ResearchManager.IsCurrentProject(
+                DefDatabase<ResearchProjectDef>.GetNamedSilentFail("LiAIChat_DocumentChapterResearch"))) return true;
+            RecoveredDocumentState state = DocumentRecovery.ActiveResearchState;
+            return state != null && ColonyLibrary.HasText(state.TextDefName);
+        }
+    }
+    [HarmonyPatch(typeof(ResearchManager), "FinishProject")]
+    public static class DocumentChapterResearchFinishPatch { public static bool Prefix(ResearchProjectDef proj, Pawn researcher) { if (!DocumentRecovery.IsChapterProject(proj)) return true; DocumentRecovery.CompleteChapterResearch(researcher); return false; } }
 }

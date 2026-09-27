@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ResearchProjectDef>
+    <defName>LiAIChat_DocumentChapterResearch</defName>
+    <label>文献章节解读</label>
+    <description>从一本文献中选择下一章后，可在研究台投入研究点数解锁正文。</description>
+    <baseCost>800</baseCost>
+    <techLevel>Industrial</techLevel>
+    <tab>Main</tab>
+    <researchViewX>100</researchViewX>
+    <researchViewY>100</researchViewY>
+  </ResearchProjectDef>
+</Defs>
