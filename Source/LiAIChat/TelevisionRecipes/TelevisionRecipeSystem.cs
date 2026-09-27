@@ -198,8 +198,42 @@ namespace LiAIChat.TelevisionRecipes
             return changed;
         }
         public TelevisionRecipeData RecipeForProduct(ThingDef def) { return recipes.FirstOrDefault(r => r.learned && TelevisionRecipeUtility.ProductDef(r.slot) == def); }
+        public string ProductDescription(ThingDef product)
+        {
+            TelevisionRecipeData recipe = RecipeForProduct(product);
+            if (recipe == null) return null;
+            int daysLeft = Mathf.CeilToInt((recipe.durationTicks - Find.TickManager.TicksGame) / (float)GenDate.TicksPerDay);
+            return (string.IsNullOrWhiteSpace(recipe.description) ? "限时电视菜谱。" : recipe.description + "\n\n") +
+                "厨艺 12 级可制作。剩余有效期：" + daysLeft + " 天。食用后 " +
+                TelevisionRecipeUtility.BuffText(recipe.buffs) + "。";
+        }
         public bool HasBuff(Pawn pawn, TelevisionRecipeBuff buff) { return pawn != null && pawnBuffs.Any(b => b.pawnId == pawn.thingIDNumber && b.expiresAt > Find.TickManager.TicksGame && b.buffs.Contains(buff)); }
-        public void ApplyMeal(Pawn pawn, ThingDef product) { TelevisionRecipeData r = RecipeForProduct(product); if (pawn == null || r == null) return; pawnBuffs.RemoveAll(b => b.pawnId == pawn.thingIDNumber); pawnBuffs.Add(new TelevisionRecipePawnBuff { pawnId = pawn.thingIDNumber, buffs = new List<TelevisionRecipeBuff>(r.buffs), expiresAt = Find.TickManager.TicksGame + r.buffTicks }); }
+        public void ApplyMeal(Pawn pawn, ThingDef product)
+        {
+            TelevisionRecipeData recipe = RecipeForProduct(product);
+            if (pawn == null || recipe == null) return;
+
+            pawnBuffs.RemoveAll(buff => buff.pawnId == pawn.thingIDNumber);
+            pawnBuffs.Add(new TelevisionRecipePawnBuff
+            {
+                pawnId = pawn.thingIDNumber,
+                buffs = new List<TelevisionRecipeBuff>(recipe.buffs),
+                expiresAt = Find.TickManager.TicksGame + recipe.buffTicks
+            });
+
+            HediffDef effectDef = DefDatabase<HediffDef>.GetNamedSilentFail(
+                "LiAIChat_TelevisionRecipeAftertaste");
+            if (effectDef != null)
+            {
+                Hediff previous = pawn.health.hediffSet.GetFirstHediffOfDef(effectDef);
+                if (previous != null) pawn.health.RemoveHediff(previous);
+                pawn.health.AddHediff(HediffMaker.MakeHediff(effectDef, pawn));
+            }
+
+            Messages.Message(pawn.LabelShort + " 获得了“" + recipe.name + "”的余韵：" +
+                TelevisionRecipeUtility.BuffText(recipe.buffs) + "。",
+                pawn, MessageTypeDefOf.PositiveEvent, false);
+        }
         public void RefreshDefs() { TelevisionRecipeUtility.Refresh(recipes); }
     }
 
@@ -241,12 +275,41 @@ namespace LiAIChat.TelevisionRecipes
                 recipe.workSkill = SkillDefOf.Cooking; recipe.skillRequirements = new List<SkillRequirement> { new SkillRequirement { skill = SkillDefOf.Cooking, minLevel = 12 } };
             }
         }
-        private static string BuffText(List<TelevisionRecipeBuff> buffs) { return string.Join("、", buffs.Select(b => new Dictionary<TelevisionRecipeBuff, string> { { TelevisionRecipeBuff.Hunger, "饥饿下降减缓" }, { TelevisionRecipeBuff.Rest, "休息下降减缓" }, { TelevisionRecipeBuff.MentalShield, "不会精神崩溃" }, { TelevisionRecipeBuff.MoveSpeed, "移动更快" }, { TelevisionRecipeBuff.WorkSpeed, "工作更快" }, { TelevisionRecipeBuff.Healing, "旧伤缓慢恢复" }, { TelevisionRecipeBuff.WeaponRange, "射程提高" } }[b])); }
+        public static string BuffText(List<TelevisionRecipeBuff> buffs) { return string.Join("、", buffs.Select(b => new Dictionary<TelevisionRecipeBuff, string> { { TelevisionRecipeBuff.Hunger, "饥饿下降减缓" }, { TelevisionRecipeBuff.Rest, "休息下降减缓" }, { TelevisionRecipeBuff.MentalShield, "不会精神崩溃" }, { TelevisionRecipeBuff.MoveSpeed, "移动更快" }, { TelevisionRecipeBuff.WorkSpeed, "工作更快" }, { TelevisionRecipeBuff.Healing, "旧伤缓慢恢复" }, { TelevisionRecipeBuff.WeaponRange, "射程提高" } }[b])); }
         private static IngredientCount Ingredient(string defName, int count) { ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(defName); if (def == null) return null; IngredientCount result = new IngredientCount(); result.filter = new ThingFilter(); result.filter.SetAllow(def, true); result.SetBaseCount(count); return result; }
     }
 
     [HarmonyPatch(typeof(Thing), "Ingested")]
     public static class TelevisionRecipeIngestPatch { public static void Postfix(Thing __instance, Pawn ingester) { TelevisionRecipeGameComponent.Instance?.ApplyMeal(ingester, __instance.def); } }
+    [HarmonyPatch(typeof(Thing), "get_Label")]
+    public static class TelevisionRecipeThingLabelPatch
+    {
+        public static void Postfix(Thing __instance, ref string __result)
+        {
+            TelevisionRecipeData recipe = TelevisionRecipeGameComponent.Instance?.RecipeForProduct(__instance?.def);
+            if (recipe != null) __result = recipe.name +
+                (__instance.stackCount > 1 ? " x" + __instance.stackCount : string.Empty);
+        }
+    }
+    [HarmonyPatch(typeof(Thing), "get_LabelCap")]
+    public static class TelevisionRecipeThingLabelCapPatch
+    {
+        public static void Postfix(Thing __instance, ref string __result)
+        {
+            TelevisionRecipeData recipe = TelevisionRecipeGameComponent.Instance?.RecipeForProduct(__instance?.def);
+            if (recipe != null) __result = recipe.name +
+                (__instance.stackCount > 1 ? " x" + __instance.stackCount : string.Empty);
+        }
+    }
+    [HarmonyPatch(typeof(Thing), "get_DescriptionDetailed")]
+    public static class TelevisionRecipeThingDescriptionPatch
+    {
+        public static void Postfix(Thing __instance, ref string __result)
+        {
+            string description = TelevisionRecipeGameComponent.Instance?.ProductDescription(__instance?.def);
+            if (!string.IsNullOrEmpty(description)) __result = description;
+        }
+    }
     [HarmonyPatch(typeof(Need_Food), "NeedInterval")]
     public static class TelevisionRecipeHungerPatch { public static void Prefix(Need_Food __instance, out float __state) { __state = __instance.CurLevel; } public static void Postfix(Need_Food __instance, Pawn ___pawn, float __state) { if (TelevisionRecipeGameComponent.Instance?.HasBuff(___pawn, TelevisionRecipeBuff.Hunger) == true && __instance.CurLevel < __state) __instance.CurLevel = __state + (__instance.CurLevel - __state) * 0.6f; } }
     [HarmonyPatch(typeof(Need_Rest), "NeedInterval")]
