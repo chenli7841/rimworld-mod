@@ -15,7 +15,8 @@ namespace LiAIChat.Archive
         public List<string> UnlockedSectionIds = new List<string>();
         public string PendingSectionId;
         public string ResearchingSectionId;
-        public void ExposeData() { Scribe_Values.Look(ref TextDefName, "textDefName"); Scribe_Values.Look(ref UnlockedCount, "unlockedCount", 0); Scribe_Values.Look(ref DeliveryTick, "deliveryTick", -1); Scribe_Collections.Look(ref UnlockedSectionIds, "unlockedSectionIds", LookMode.Value); Scribe_Values.Look(ref PendingSectionId, "pendingSectionId"); Scribe_Values.Look(ref ResearchingSectionId, "researchingSectionId"); if (Scribe.mode == LoadSaveMode.PostLoadInit && UnlockedSectionIds == null) UnlockedSectionIds = new List<string>(); }
+        public bool GoldPaidForResearch;
+        public void ExposeData() { Scribe_Values.Look(ref TextDefName, "textDefName"); Scribe_Values.Look(ref UnlockedCount, "unlockedCount", 0); Scribe_Values.Look(ref DeliveryTick, "deliveryTick", -1); Scribe_Collections.Look(ref UnlockedSectionIds, "unlockedSectionIds", LookMode.Value); Scribe_Values.Look(ref PendingSectionId, "pendingSectionId"); Scribe_Values.Look(ref ResearchingSectionId, "researchingSectionId"); Scribe_Values.Look(ref GoldPaidForResearch, "goldPaidForResearch", false); if (Scribe.mode == LoadSaveMode.PostLoadInit && UnlockedSectionIds == null) UnlockedSectionIds = new List<string>(); }
     }
 
     public static class DocumentRecovery
@@ -53,7 +54,9 @@ namespace LiAIChat.Archive
             return new DocumentLine(book?.titleChinese.NullOrEmpty() == false ? "《" + book.titleChinese + "》" : book?.title ?? text, sections.Select(x => x.title).ToArray(), sections.Select(x => x.body).ToArray());
         }
         public static int GetCost(int sectionIndex) { return 200 + sectionIndex * 100; }
-        public static int GetResearchCost(int sectionIndex) { return 800 + sectionIndex * 40; }
+        public static int GetResearchCost(int sectionIndex) { return 800 + sectionIndex * 20; }
+        // Chapter costs scale independently of the legacy <goldCost> XML fields.
+        public static int GetGoldCost(int sectionIndex) { return 600 + sectionIndex * 20; }
         private static DocumentLine BuildPracticalReason()
         {
             return new DocumentLine("《实践理性批判》", new[] {
@@ -96,14 +99,36 @@ namespace LiAIChat.Archive
         public static void RequestNext(Thing_AncientEarthArchiveFragment archive)
         {
             string text = archive.EarthTextDefName; DocumentLine line = GetLine(text); RecoveredDocumentState state = GetState(text);
-            if (state.ResearchingSectionId != null || state.UnlockedSectionIds.Count >= line.Titles.Length) return;
+            if (state.UnlockedSectionIds.Count >= line.Titles.Length)
+            {
+                Messages.Message("这本文献的全部正文均已解锁。", MessageTypeDefOf.NeutralEvent);
+                return;
+            }
+            if (!ColonyLibrary.HasText(text))
+            {
+                Messages.Message("需将已识别的对应文献保留在殖民地地图或书架中，才能研究下一章。", MessageTypeDefOf.RejectInput);
+                return;
+            }
             ResearchProjectDef project = ChapterResearchProject;
             if (project == null) { Messages.Message("文献章节研究项目未能加载。", MessageTypeDefOf.RejectInput); return; }
-            state.ResearchingSectionId = GetSectionId(text, state.UnlockedSectionIds.Count);
+            bool resuming = !string.IsNullOrEmpty(state.ResearchingSectionId);
+            int sectionIndex = state.UnlockedSectionIds.Count;
+            if (!state.GoldPaidForResearch)
+            {
+                int goldCost = GetGoldCost(sectionIndex);
+                if (!TryConsumeGold(goldCost, archive.Map))
+                {
+                    Messages.Message("解锁这一章需要 " + goldCost + " 黄金。殖民地中的黄金不足。", MessageTypeDefOf.RejectInput);
+                    return;
+                }
+                state.GoldPaidForResearch = true;
+            }
+            if (!resuming) state.ResearchingSectionId = GetSectionId(text, state.UnlockedSectionIds.Count);
             ConfigureChapterProject(state, line);
-            ResetProjectProgress(project);
+            if (!resuming) ResetProjectProgress(project);
             Find.ResearchManager.SetCurrentProject(project);
-            Messages.Message("已将“" + line.Titles[state.UnlockedSectionIds.Count] + "”设为当前文献章节研究。将对应文献保留在殖民地，并在研究台投入 " + GetResearchCost(state.UnlockedSectionIds.Count) + " 点研究。", MessageTypeDefOf.PositiveEvent);
+            Find.MainTabsRoot.SetCurrentTab(MainButtonDefOf.Research, true);
+            Messages.Message((resuming ? "已恢复" : "已将") + "“" + line.Titles[sectionIndex] + "”设为当前文献章节研究。已支付 " + GetGoldCost(sectionIndex) + " 黄金；将对应文献保留在殖民地，并在研究台投入 " + GetResearchCost(sectionIndex) + " 点研究。", MessageTypeDefOf.PositiveEvent);
         }
         public static void Tick()
         {
@@ -120,7 +145,7 @@ namespace LiAIChat.Archive
             if (project == null || state == null) return;
             int index = state.UnlockedSectionIds.Count;
             project.label = "文献解读：" + line.Name + " · " + line.Titles[index];
-            project.description = "将对应文献保留在殖民地地图上，由研究台投入研究点数以解锁本章正文。\n\n当前章节：" + line.Titles[index] + "\n需要研究：" + GetResearchCost(index) + " 点。";
+            project.description = "将对应文献保留在殖民地地图上，由研究台投入研究点数以解锁本章正文。\n\n当前章节：" + line.Titles[index] + "\n需要研究：" + GetResearchCost(index) + " 点。\n需要黄金：" + GetGoldCost(index) + "（设为研究目标时支付）。";
             project.baseCost = GetResearchCost(index);
             AccessTools.Field(typeof(Def), "cachedLabelCap").SetValue(project, default(TaggedString));
         }
@@ -140,13 +165,44 @@ namespace LiAIChat.Archive
             }
             int index = state.UnlockedSectionIds.Count;
             if (index >= line.Titles.Length) return false;
+            if (!state.GoldPaidForResearch)
+            {
+                Messages.Message("该章节尚未支付黄金，无法完成研究。", MessageTypeDefOf.RejectInput);
+                return false;
+            }
             state.UnlockedSectionIds.Add(state.ResearchingSectionId ?? GetSectionId(state.TextDefName, index));
             state.UnlockedCount = state.UnlockedSectionIds.Count;
             state.ResearchingSectionId = null;
+            state.GoldPaidForResearch = false;
             ResetProjectProgress(ChapterResearchProject);
             if (Find.ResearchManager.IsCurrentProject(ChapterResearchProject)) Find.ResearchManager.StopProject(ChapterResearchProject);
             Messages.Message("研究完成，已解锁正文：" + line.Titles[index], MessageTypeDefOf.PositiveEvent);
             return true;
+        }
+
+        private static bool TryConsumeGold(int amount, Map preferredMap)
+        {
+            if (amount <= 0) return true;
+            List<Map> maps = new List<Map>();
+            if (preferredMap != null && preferredMap.IsPlayerHome) maps.Add(preferredMap);
+            maps.AddRange(Find.Maps.Where(map => map != null && map.IsPlayerHome && map != preferredMap));
+
+            List<Thing> gold = maps.SelectMany(map =>
+                    map.listerThings.ThingsOfDef(ThingDefOf.Gold) ?? new List<Thing>())
+                .Where(thing => thing != null && !thing.Destroyed)
+                .ToList();
+            if (gold.Sum(thing => thing.stackCount) < amount) return false;
+
+            int remaining = amount;
+            foreach (Thing stack in gold)
+            {
+                int take = System.Math.Min(remaining, stack.stackCount);
+                if (take == stack.stackCount) stack.Destroy(DestroyMode.Vanish);
+                else stack.SplitOff(take).Destroy(DestroyMode.Vanish);
+                remaining -= take;
+                if (remaining == 0) return true;
+            }
+            return false;
         }
     }
 

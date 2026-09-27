@@ -208,6 +208,12 @@ namespace LiAIChat.TelevisionRecipes
                 TelevisionRecipeUtility.BuffText(recipe.buffs) + "。";
         }
         public bool HasBuff(Pawn pawn, TelevisionRecipeBuff buff) { return pawn != null && pawnBuffs.Any(b => b.pawnId == pawn.thingIDNumber && b.expiresAt > Find.TickManager.TicksGame && b.buffs.Contains(buff)); }
+        public bool HasAftertaste(Pawn pawn)
+        {
+            return pawn != null && pawnBuffs.Any(buff =>
+                buff.pawnId == pawn.thingIDNumber &&
+                buff.expiresAt > Find.TickManager.TicksGame);
+        }
         public void ApplyMeal(Pawn pawn, ThingDef product)
         {
             TelevisionRecipeData recipe = RecipeForProduct(product);
@@ -242,6 +248,10 @@ namespace LiAIChat.TelevisionRecipes
     {
         public static ThingDef ProductDef(int slot) { return DefDatabase<ThingDef>.GetNamedSilentFail("LiAIChat_TelevisionMeal" + (char)('A' + slot)); }
         public static RecipeDef RecipeDef(int slot) { return DefDatabase<RecipeDef>.GetNamedSilentFail("LiAIChat_TelevisionRecipe" + (slot + 1)); }
+        public static bool IsLearnedTelevisionMeal(Thing thing)
+        {
+            return thing != null && TelevisionRecipeGameComponent.Instance?.RecipeForProduct(thing.def) != null;
+        }
         public static void Refresh(List<TelevisionRecipeData> recipes)
         {
             List<RecipeDef> televisionRecipes = Enumerable.Range(0, 8).Select(RecipeDef).Where(r => r != null).ToList();
@@ -340,6 +350,57 @@ namespace LiAIChat.TelevisionRecipes
             TelevisionRecipeGameComponent component = TelevisionRecipeGameComponent.Instance;
             __result = __result.Where(recipe => recipe == null || !recipe.defName.StartsWith("LiAIChat_TelevisionRecipe") ||
                 (component != null && recipe.products != null && recipe.products.Count > 0 && component.RecipeForProduct(recipe.products[0].thingDef) != null)).ToList();
+        }
+    }
+
+    // Television dishes share the lavish-meal nutrition and mood value.  When a
+    // colonist does not already have an aftertaste, choose one over an ordinary
+    // lavish meal if one is available, while leaving all other food priorities
+    // and emergency food rules to the vanilla search unchanged.
+    [HarmonyPatch(typeof(FoodUtility), "BestFoodSourceOnMap")]
+    public static class TelevisionRecipeFoodPreferencePatch
+    {
+        public static void Postfix(Pawn getter, Pawn eater, ref ThingDef foodDef, ref Thing __result)
+        {
+            TelevisionRecipeGameComponent component = TelevisionRecipeGameComponent.Instance;
+            if (__result == null || getter == null || eater == null || getter.Map == null ||
+                component == null || component.HasAftertaste(eater) ||
+                __result.def.ingestible == null ||
+                __result.def.ingestible.preferability != FoodPreferability.MealLavish)
+            {
+                return;
+            }
+
+            Thing preferred = null;
+            float bestDistance = float.MaxValue;
+            foreach (int slot in Enumerable.Range(0, 8))
+            {
+                ThingDef product = TelevisionRecipeUtility.ProductDef(slot);
+                if (product == null || component.RecipeForProduct(product) == null) continue;
+                foreach (Thing candidate in getter.Map.listerThings.ThingsOfDef(product))
+                {
+                    if (candidate == null || candidate.IsForbidden(getter) ||
+                        !getter.CanReserve(candidate) ||
+                        !getter.CanReach(candidate, PathEndMode.Touch, Danger.Some) ||
+                        !FoodUtility.WillEat(eater, candidate, getter))
+                    {
+                        continue;
+                    }
+
+                    float distance = getter.Position.DistanceToSquared(candidate.Position);
+                    if (distance < bestDistance)
+                    {
+                        preferred = candidate;
+                        bestDistance = distance;
+                    }
+                }
+            }
+
+            if (preferred != null)
+            {
+                __result = preferred;
+                foodDef = preferred.def;
+            }
         }
     }
 }

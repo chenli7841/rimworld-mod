@@ -124,6 +124,7 @@
     <Compile Include="Archive\ColonyLibraryEntry.cs" />
     <Compile Include="Archive\ColonyLibraryIndex.cs" />
     <Compile Include="Archive\EarthTextDef.cs" />
+    <Compile Include="Archive\EarthArchiveReadingPreference.cs" />
     <Compile Include="Archive\DocumentRecovery.cs" />
     <Compile Include="Archive\DocumentRecoverySectionDef.cs" />
     <Compile Include="Archive\EarthTextSelector.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="Defs\LiAIChatThingDefOf.cs" />
     <Compile Include="Dialogue\ProactiveDialogueManager.cs" />
     <Compile Include="Dialogue\ProactiveDialogueRules.cs" />
+    <Compile Include="Dialogue\ConversationMoodBoost.cs" />
     <Compile Include="Events\PawnDeathEventHandler.cs" />
     <Compile Include="Events\ColonyEventRecord.cs" />
     <Compile Include="Events\ColonyEventLog.cs" />

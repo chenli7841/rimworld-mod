@@ -19,7 +19,7 @@ namespace LiAIChat.Archive
             RecoveredDocumentState state = DocumentRecovery.GetState(EarthTextDefName);
             yield return new Command_Action { defaultLabel = "阅读已复原正文", defaultDesc = "查看已恢复的现代中文节选解说。", action = () => Find.WindowStack.Add(new Dialog_RecoveredTextReader(EarthTextDefName)) };
             if (state.UnlockedSectionIds.Count < line.Titles.Length && string.IsNullOrEmpty(state.ResearchingSectionId))
-                yield return new Command_Action { defaultLabel = "研究下一章正文", defaultDesc = "将本书设为文献章节研究目标。研究台投入 " + DocumentRecovery.GetResearchCost(state.UnlockedSectionIds.Count) + " 点研究后解锁下一章。", action = () => DocumentRecovery.RequestNext(this) };
+                yield return new Command_Action { defaultLabel = "研究下一章正文", defaultDesc = "将本书设为文献章节研究目标。需支付 " + DocumentRecovery.GetGoldCost(state.UnlockedSectionIds.Count) + " 黄金，并在研究台投入 " + DocumentRecovery.GetResearchCost(state.UnlockedSectionIds.Count) + " 点研究后解锁下一章。", action = () => DocumentRecovery.RequestNext(this) };
         }
         private ArchiveContentDef content;
         private bool soldByPlayer;

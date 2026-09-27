@@ -1,5 +1,6 @@
 ﻿using LiAIChat.AI;
 using LiAIChat.Archive;
+using LiAIChat.Dialogue;
 using LiAIChat.Goals;
 using LiAIChat.Knowledge;
 using LiAIChat.Memory;
@@ -346,6 +347,8 @@ namespace LiAIChat.UI
                     new ChatMessage(
                         false,
                         aiResponse));
+
+                ConversationMoodBoost.Grant(pawn);
 
                 await UpdateKnowledge();
 
