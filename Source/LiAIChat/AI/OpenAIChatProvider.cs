@@ -224,15 +224,15 @@ namespace LiAIChat.AI
 
                 if (relation.def == PawnRelationDefOf.Lover)
                 {
-                    relationships.Add("- Lover: " + otherName);
+                    relationships.Add("- Lover: " + otherName + " (" + GenderLabel(otherPawn) + ")");
                 }
                 else if (relation.def == PawnRelationDefOf.Fiance)
                 {
-                    relationships.Add("- Fiancé(e): " + otherName);
+                    relationships.Add("- Fiancé(e): " + otherName + " (" + GenderLabel(otherPawn) + ")");
                 }
                 else if (relation.def == PawnRelationDefOf.Spouse)
                 {
-                    relationships.Add("- Spouse: " + otherName);
+                    relationships.Add("- Spouse: " + otherName + " (" + GenderLabel(otherPawn) + ")");
                 }
             }
 
@@ -271,7 +271,8 @@ namespace LiAIChat.AI
                 .Where(relation => relation != null && relation.def != null &&
                     relation.otherPawn != null && colonists.Contains(relation.otherPawn))
                 .Select(relation => "- " + relation.otherPawn.LabelShort +
-                    " | family / direct relation: " + relation.def.label)
+                    " (" + GenderLabel(relation.otherPawn) +
+                    ") | family / direct relation: " + relation.def.label)
                 .Distinct()
                 .ToList();
 
@@ -354,6 +355,14 @@ namespace LiAIChat.AI
             if (opinion <= -40) return "very hostile or deeply estranged";
             if (opinion <= -10) return "distant or strained";
             return "neutral / familiar";
+        }
+
+        private static string GenderLabel(Pawn pawn)
+        {
+            if (pawn == null) return "unknown gender";
+            if (pawn.gender == Gender.Female) return "female";
+            if (pawn.gender == Gender.Male) return "male";
+            return "none";
         }
 
         private static void AppendNearbyColonistRelationships(StringBuilder prompt, Pawn gamePawn)
@@ -893,6 +902,7 @@ RELATIONSHIPS & LIFE EVENTS
 
 * Supplied relationships and life events are factual context and should matter naturally when relevant.
 * ""No current romantic partner"" never means ""no family"". Check the colony family section before claiming to have no children, parents, siblings, spouse, or other relatives.
+* The gender shown beside each relative, partner, or spouse is factual. Use gender-appropriate relationship terms in the player's language; never guess or reverse a spouse's gender.
 * Preserve both personal relationships and faction roles when they conflict; a hostile person may still be a relative, lover, spouse, or former companion.
 * Do not treat a hostile stranger's death as the loss of a colony member, though violence or death may still affect the character emotionally.
 * Do not invent conversations, promises, conflicts, feelings, or relationship events unsupported by the supplied context.
