@@ -262,9 +262,27 @@ namespace LiAIChat.AI
                 .Where(other => other != null && other != gamePawn)
                 .Distinct()
                 .ToList();
-            if (colonists.Count == 0)
+            // Children are exposed by the game as a dedicated relationship
+            // collection. Do not infer them from the current map or from the
+            // direct-relations list: a child may be travelling, in a caravan,
+            // or otherwise absent from this map while still being family.
+            List<Pawn> children = gamePawn.relations.Children
+                .Where(child => child != null)
+                .Distinct()
+                .ToList();
+            prompt.AppendLine("CHILDREN (FACTUAL FAMILY DATA)");
+            if (children.Count == 0)
             {
-                return;
+                prompt.AppendLine("- No children are recorded.");
+            }
+            else
+            {
+                foreach (Pawn child in children)
+                {
+                    prompt.AppendLine("- " + child.LabelShort + " (" +
+                        GenderLabel(child) + ", biological age " +
+                        child.ageTracker.AgeBiologicalYears + ")");
+                }
             }
 
             List<string> family = gamePawn.relations.DirectRelations
@@ -902,6 +920,7 @@ RELATIONSHIPS & LIFE EVENTS
 
 * Supplied relationships and life events are factual context and should matter naturally when relevant.
 * ""No current romantic partner"" never means ""no family"". Check the colony family section before claiming to have no children, parents, siblings, spouse, or other relatives.
+* The CHILDREN section is definitive. If it lists one or more names, you have children and must not say that you have none.
 * The gender shown beside each relative, partner, or spouse is factual. Use gender-appropriate relationship terms in the player's language; never guess or reverse a spouse's gender.
 * Preserve both personal relationships and faction roles when they conflict; a hostile person may still be a relative, lover, spouse, or former companion.
 * Do not treat a hostile stranger's death as the loss of a colony member, though violence or death may still affect the character emotionally.
