@@ -142,6 +142,7 @@
     <Compile Include="Archive\SitePartWorker_AncientArchive.cs" />
     <Compile Include="Archive\ThingDefOfArchive.cs" />
     <Compile Include="Archive\Thing_AncientEarthArchiveFragment.cs" />
+    <Compile Include="FallenLetters\FallenInvaderLetters.cs" />
     <Compile Include="Background\IntellectualExchangeSnapshot.cs" />
     <Compile Include="Background\KnowledgeTopicSnapshot.cs" />
     <Compile Include="Background\MainThreadActionQueue.cs" />

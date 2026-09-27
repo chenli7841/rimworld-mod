@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef>
+    <defName>LiAIChat_FallenInvaderLetter</defName><label>阵亡者家书</label><thingClass>LiAIChat.FallenLetters.Thing_FallenInvaderLetter</thingClass>
+    <category>Item</category><stackLimit>1</stackLimit><alwaysHaulable>true</alwaysHaulable><tradeNeverStack>true</tradeNeverStack><neverMultiSelect>true</neverMultiSelect>
+    <graphicData><texPath>Things/Item/Book/Novel/Novel</texPath><graphicClass>Graphic_Single</graphicClass><drawSize>0.55</drawSize></graphicData>
+    <statBases><Mass>0.1</Mass><MarketValue>35</MarketValue><MaxHitPoints>30</MaxHitPoints><Flammability>1</Flammability></statBases>
+    <comps><li Class="CompProperties_Forbiddable"/></comps>
+  </ThingDef>
+</Defs>

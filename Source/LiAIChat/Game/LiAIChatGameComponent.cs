@@ -22,6 +22,7 @@ namespace LiAIChat.Game
         public List<ColonyEventRecord> ColonyEvents =
             new List<ColonyEventRecord>();
         public List<RecoveredDocumentState> RecoveredDocuments = new List<RecoveredDocumentState>();
+        public List<LiAIChat.FallenLetters.FallenLetterPerson> FallenLetterPeople = new List<LiAIChat.FallenLetters.FallenLetterPerson>();
 
         private int lastProactiveCheckTick = 0;
         private int lastIntellectualExchangeCheckTick = 0;
@@ -58,6 +59,7 @@ namespace LiAIChat.Game
             Scribe_Collections.Look(ref EarthCommentaryWorks, "earthCommentaryWorks", LookMode.Deep);
             Scribe_Collections.Look(ref ColonyEvents, "colonyEvents", LookMode.Deep);
             Scribe_Collections.Look(ref RecoveredDocuments, "recoveredDocuments", LookMode.Deep);
+            Scribe_Collections.Look(ref FallenLetterPeople, "fallenLetterPeople", LookMode.Deep);
 
             if (Scribe.mode ==
                 LoadSaveMode.PostLoadInit)
@@ -79,6 +81,8 @@ namespace LiAIChat.Game
                     ColonyEvents = new List<ColonyEventRecord>();
                 if (RecoveredDocuments == null)
                     RecoveredDocuments = new List<RecoveredDocumentState>();
+                if (FallenLetterPeople == null)
+                    FallenLetterPeople = new List<LiAIChat.FallenLetters.FallenLetterPerson>();
 
                 Log.Message(
                     "[Li AI Chat] Loaded " +
@@ -130,6 +134,7 @@ namespace LiAIChat.Game
             {
                 lastTravelWishCheckTick = currentTick;
                 LiAIChat.Travel.TravelWishManager.Check();
+                LiAIChat.FallenLetters.FallenLetterManager.TryDiscoverSignal();
             }
 
             // 每游戏日检查一次，避免频繁扫描所有殖民者。
