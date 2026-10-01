@@ -88,12 +88,13 @@ namespace LiAIChat.Books
             this.book = book; title = book.BookTitle ?? ""; body = book.Body ?? "";
             doCloseX = true; doCloseButton = true; absorbInputAroundWindow = true;
             forcePause = false; draggable = true; resizeable = true;
+            closeOnAccept = false;
         }
         public override void DoWindowContents(Rect rect)
         {
             Text.Font = GameFont.Medium; Widgets.Label(new Rect(rect.x, rect.y, rect.width, 30f), "图书编辑器"); Text.Font = GameFont.Small;
             Widgets.Label(new Rect(rect.x, rect.y + 38f, 55f, 24f), "书名："); title = Widgets.TextField(new Rect(rect.x + 58f, rect.y + 34f, rect.width - 58f, 30f), title);
-            Widgets.Label(new Rect(rect.x, rect.y + 70f, rect.width, 24f), "正文（不限字数，自动保存于此书）：");
+            Widgets.Label(new Rect(rect.x, rect.y + 70f, rect.width, 24f), "正文（不限字数；按回车换行，自动保存于此书）：");
             Rect view = new Rect(rect.x, rect.y + 96f, rect.width, rect.height - 148f); float height = Mathf.Max(view.height - 18f, Text.CalcHeight(body + " ", view.width - 28f) + 24f);
             Widgets.BeginScrollView(view, ref scroll, new Rect(0f, 0f, view.width - 18f, height)); body = Widgets.TextArea(new Rect(0f, 0f, view.width - 18f, height), body); Widgets.EndScrollView();
             Widgets.Label(new Rect(rect.x, rect.yMax - 42f, 300f, 26f), "当前字数：" + body.Length);
