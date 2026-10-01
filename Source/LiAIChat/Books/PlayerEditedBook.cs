@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -16,7 +17,7 @@ namespace LiAIChat.Books
         public override IEnumerable<Gizmo> GetGizmos()
         {
             foreach (Gizmo gizmo in base.GetGizmos()) yield return gizmo;
-            yield return new Command_Action { defaultLabel = "编辑图书正文", defaultDesc = "打开图书编辑器，修改标题与不限字数的正文。", action = () => Find.WindowStack.Add(new Dialog_PlayerBookEditor(this)) };
+            yield return new Command_Action { defaultLabel = "编辑图书正文", defaultDesc = "打开图书编辑器，修改标题与不限字数的正文。", icon = UI.LiAIChatTextures.EditBook, action = () => Find.WindowStack.Add(new Dialog_PlayerBookEditor(this)) };
         }
     }
 
@@ -81,6 +82,10 @@ namespace LiAIChat.Books
 
     public class Dialog_PlayerBookEditor : Window
     {
+        private static readonly FieldInfo ResizerField = typeof(Window).GetField(
+            "resizer",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
         readonly Thing_PlayerEditedBook book; Vector2 scroll; string title; string body;
         public override Vector2 InitialSize => new Vector2(800f, 760f);
         public Dialog_PlayerBookEditor(Thing_PlayerEditedBook book)
@@ -89,6 +94,11 @@ namespace LiAIChat.Books
             doCloseX = true; doCloseButton = true; absorbInputAroundWindow = true;
             forcePause = false; draggable = true; resizeable = true;
             closeOnAccept = false;
+            WindowResizer resizer = new WindowResizer
+            {
+                minWindowSize = new Vector2(560f, 460f)
+            };
+            ResizerField?.SetValue(this, resizer);
         }
         public override void DoWindowContents(Rect rect)
         {

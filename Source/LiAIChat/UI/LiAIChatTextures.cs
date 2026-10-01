@@ -17,5 +17,9 @@ namespace LiAIChat.UI
         public static readonly Texture2D CreateBook =
             ContentFinder<Texture2D>.Get(
                 "UI/Commands/CreateBook");
+
+        public static readonly Texture2D EditBook =
+            ContentFinder<Texture2D>.Get(
+                "UI/Commands/EditBook");
     }
 }
