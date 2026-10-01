@@ -24,6 +24,7 @@ namespace LiAIChat.Patches
             {
                 defaultLabel = "创建新书",
                 defaultDesc = "消耗 100 张书写纸与 20 支笔，创建一本可自由编辑正文的新书。",
+                icon = LiAIChatTextures.CreateBook,
                 action = () => PlayerBookEditorService.TryCreate(__instance)
             };
         }

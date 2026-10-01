@@ -33,12 +33,39 @@ namespace LiAIChat.Books
                 Messages.Message("创建新书需要 100 张书写纸和 20 支笔。", MessageTypeDefOf.RejectInput);
                 return false;
             }
-            Consume(paper, 100); Consume(pens, 20);
             ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail("LiAIChat_PlayerEditedBook");
-            Thing_PlayerEditedBook book = def == null ? null : ThingMaker.MakeThing(def) as Thing_PlayerEditedBook;
-            if (book == null || !GenPlace.TryPlaceThing(book, shelf.Position, shelf.Map, ThingPlaceMode.Near)) return false;
+            if (def == null)
+            {
+                Messages.Message("无法创建新书：书籍定义未能载入。", MessageTypeDefOf.RejectInput);
+                return false;
+            }
+
+            Thing_PlayerEditedBook book = ThingMaker.MakeThing(def) as Thing_PlayerEditedBook;
+            if (book == null)
+            {
+                Messages.Message("无法创建新书：书籍实例未能生成。", MessageTypeDefOf.RejectInput);
+                return false;
+            }
+
+            IntVec3 placementCell;
+            bool foundPlacement = CellFinder.TryFindRandomCellNear(
+                shelf.Position,
+                shelf.Map,
+                4,
+                cell => cell.Standable(shelf.Map) && !cell.Fogged(shelf.Map),
+                out placementCell);
+            if (!foundPlacement)
+            {
+                book.Destroy();
+                Messages.Message("无法创建新书：书架周围没有可放置的位置。", MessageTypeDefOf.RejectInput);
+                return false;
+            }
+
+            GenSpawn.Spawn(book, placementCell, shelf.Map);
+            Consume(paper, 100);
+            Consume(pens, 20);
             Find.WindowStack.Add(new Dialog_PlayerBookEditor(book));
-            Messages.Message("已创建空白新书，并消耗 100 张书写纸和 20 支笔。", MessageTypeDefOf.PositiveEvent);
+            Messages.Message("已在书架附近创建空白新书，并消耗 100 张书写纸和 20 支笔。", MessageTypeDefOf.PositiveEvent);
             return true;
         }
         static void Consume(List<Thing> stacks, int amount)
