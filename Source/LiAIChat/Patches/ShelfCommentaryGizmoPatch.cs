@@ -1,5 +1,6 @@
 using HarmonyLib;
 using LiAIChat.Commentary;
+using LiAIChat.Books;
 using LiAIChat.UI;
 using System.Collections.Generic;
 using Verse;
@@ -18,6 +19,12 @@ namespace LiAIChat.Patches
                 defaultLabel = "浏览文献馆藏",
                 defaultDesc = "查看这座书架中殖民者撰写的地球文献评注。",
                 action = () => Find.WindowStack.Add(new Dialog_EarthCommentaryLibrary(__instance))
+            };
+            yield return new Command_Action
+            {
+                defaultLabel = "创建新书",
+                defaultDesc = "消耗 100 张书写纸与 20 支笔，创建一本可自由编辑正文的新书。",
+                action = () => PlayerBookEditorService.TryCreate(__instance)
             };
         }
     }

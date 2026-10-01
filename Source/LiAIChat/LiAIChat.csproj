@@ -149,6 +149,7 @@
     <Compile Include="Background\PawnAISnapshot.cs" />
     <Compile Include="Background\PawnAISnapshotBuilder.cs" />
     <Compile Include="Bootstrap.cs" />
+    <Compile Include="Books\PlayerEditedBook.cs" />
     <Compile Include="Civilization\CivilizationTopicResearch.cs" />
     <Compile Include="Civilization\CivilizationTopicPolicy.cs" />
     <Compile Include="Civilization\CivilizationTopicEffects.cs" />

@@ -25,7 +25,8 @@ namespace LiAIChat.Commentary
         public static bool IsShelf(Thing thing)
         {
             return thing != null && thing.def != null &&
-                thing.def.defName.IndexOf("Shelf", System.StringComparison.OrdinalIgnoreCase) >= 0;
+                (thing.def.defName.IndexOf("Shelf", System.StringComparison.OrdinalIgnoreCase) >= 0 ||
+                 thing.def.defName.IndexOf("Bookcase", System.StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
         public static List<Thing_EarthCommentaryManuscript> GetManuscriptsOnShelf(Thing shelf)
