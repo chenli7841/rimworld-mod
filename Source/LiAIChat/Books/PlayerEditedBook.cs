@@ -87,7 +87,7 @@ namespace LiAIChat.Books
             BindingFlags.Instance | BindingFlags.NonPublic);
 
         readonly Thing_PlayerEditedBook book; Vector2 scroll; string title; string body;
-        public override Vector2 InitialSize => new Vector2(800f, 760f);
+        public override Vector2 InitialSize => new Vector2(620f, 760f);
         public Dialog_PlayerBookEditor(Thing_PlayerEditedBook book)
         {
             this.book = book; title = book.BookTitle ?? ""; body = book.Body ?? "";
@@ -100,6 +100,15 @@ namespace LiAIChat.Books
             };
             ResizerField?.SetValue(this, resizer);
         }
+
+        public override void PostOpen()
+        {
+            base.PostOpen();
+            float width = Mathf.Min(InitialSize.x, Verse.UI.screenWidth - 12f);
+            float height = Mathf.Min(InitialSize.y, Verse.UI.screenHeight - 72f);
+            windowRect = new Rect(6f, 56f, width, height);
+        }
+
         public override void DoWindowContents(Rect rect)
         {
             Text.Font = GameFont.Medium; Widgets.Label(new Rect(rect.x, rect.y, rect.width, 30f), "图书编辑器"); Text.Font = GameFont.Small;
