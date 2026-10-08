@@ -124,6 +124,7 @@
     <Compile Include="Archive\ColonyLibraryEntry.cs" />
     <Compile Include="Archive\ColonyLibraryIndex.cs" />
     <Compile Include="Archive\EarthTextDef.cs" />
+    <Compile Include="Archive\EarthTextEndorsementUtility.cs" />
     <Compile Include="Archive\EarthArchiveReadingPreference.cs" />
     <Compile Include="Archive\DocumentRecovery.cs" />
     <Compile Include="Archive\DocumentRecoverySectionDef.cs" />

@@ -47,6 +47,11 @@ namespace LiAIChat.UI
 
         private const int SummaryBatchSize = 10;
 
+        // The visible transcript and all non-summary AI analyses use the same
+        // bounded recent window.  Older messages stay serialized in the save
+        // for now, but are neither drawn nor supplied as raw dialogue.
+        private const int RecentMessageLimit = 60;
+
         private readonly IMemoryExtractor memoryExtractor;
 
         private readonly IWorldviewDirector worldviewDirector;
@@ -420,7 +425,7 @@ namespace LiAIChat.UI
             StringBuilder text =
                 new StringBuilder();
 
-            foreach (ChatMessage message in conversation.Messages)
+            foreach (ChatMessage message in GetRecentMessages())
             {
                 if (message.IsPlayer)
                 {
@@ -443,6 +448,17 @@ namespace LiAIChat.UI
             return text.ToString();
         }
 
+        private List<ChatMessage> GetRecentMessages()
+        {
+            int startIndex = Math.Max(
+                0,
+                conversation.Messages.Count - RecentMessageLimit);
+
+            return conversation.Messages.GetRange(
+                startIndex,
+                conversation.Messages.Count - startIndex);
+        }
+
         private async Task UpdateWorldview()
         {
             try
@@ -451,7 +467,7 @@ namespace LiAIChat.UI
                     await worldviewDirector.AnalyzeAsync(
                         pawnContext,
                         pawnState.Worldview,
-                        conversation.Messages);
+                        GetRecentMessages());
 
                 AppliedWorldviewChange applied = WorldviewUpdater.Apply(
                     pawnState.Worldview,
@@ -503,12 +519,18 @@ namespace LiAIChat.UI
                 return;
             }
 
+            // If a failed request ever leaves a large unsummarized backlog,
+            // never send its older raw transcript to the summarizer later.
+            int summaryStartIndex = Math.Max(
+                conversation.SummarizedMessageCount,
+                conversation.Messages.Count - RecentMessageLimit);
+
             int countToSummarize =
-                unsummarizedCount;
+                conversation.Messages.Count - summaryStartIndex;
 
             List<ChatMessage> messagesToSummarize =
                 conversation.Messages.GetRange(
-                    conversation.SummarizedMessageCount,
+                    summaryStartIndex,
                     countToSummarize);
 
             try
@@ -554,7 +576,7 @@ namespace LiAIChat.UI
                     await knowledgeDirector.AnalyzeAsync(
                         pawnContext,
                         pawnState.Knowledge,
-                        conversation.Messages);
+                        GetRecentMessages());
 
                 foreach (KnowledgeAcquisition acquisition
                          in acquisitions)

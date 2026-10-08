@@ -1,7 +1,10 @@
+using LiAIChat.Archive;
 using LiAIChat.Models;
 using LiAIChat.Events;
 using System.Collections.Generic;
 using System.Linq;
+using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace LiAIChat.Dialogue
@@ -29,7 +32,7 @@ namespace LiAIChat.Dialogue
             List<TriggerOption> options = new List<TriggerOption>();
             AddLifeEventOption(state, options);
             AddLifeGoalOption(state, options);
-            AddKnowledgeOption(state, options);
+            AddKnowledgeOption(pawn, state, options);
             AddExchangeOption(state, options);
             AddColonyEventOption(pawn, options);
             AddMoodOption(pawn, state, options);
@@ -76,8 +79,26 @@ namespace LiAIChat.Dialogue
             });
         }
 
-        private static void AddKnowledgeOption(PawnAIState state, List<TriggerOption> options)
+        private static void AddKnowledgeOption(Pawn pawn, PawnAIState state, List<TriggerOption> options)
         {
+            int intellectual = pawn?.skills?.GetSkill(SkillDefOf.Intellectual)?.Level ?? 0;
+            EarthTextDef literaryText = SelectLiteraryText(pawn, state);
+
+            // A capable reader who has recently opened an Earth text should
+            // usually approach the player as a reader: this weight deliberately
+            // outweighs the generic mood, event, and colony-news prompts.
+            if (intellectual > 10 && literaryText != null)
+            {
+                float familiarity = state.GetEarthTextFamiliarity(literaryText.defName);
+                options.Add(new TriggerOption
+                {
+                    Source = "earth-text-reading",
+                    Weight = 12.0f,
+                    Instruction = BuildLiteraryReadingInstruction(literaryText, familiarity)
+                });
+                return;
+            }
+
             bool hasTexts = state.EarthTextFamiliarity != null && state.EarthTextFamiliarity.Any(pair => pair.Value >= 0.2f);
             bool hasTopics = state.Knowledge?.KnownTopics != null && state.Knowledge.KnownTopics.Any(topic => topic != null && topic.Familiarity >= 0.2f);
             if (!hasTexts && !hasTopics) return;
@@ -86,6 +107,66 @@ namespace LiAIChat.Dialogue
                 Source = "knowledge", Weight = 1.0f,
                 Instruction = "Open with a curious, grounded thought or question about an Ancient Earth text or topic the character has studied. It may be philosophical, historical, religious, political, or scientific; avoid presenting it as a tragedy unless the state supports that."
             });
+        }
+
+        private static EarthTextDef SelectLiteraryText(Pawn pawn, PawnAIState state)
+        {
+            if (state == null)
+                return null;
+
+            int now = Find.TickManager == null ? 0 : Find.TickManager.TicksGame;
+            // A reading session remains relevant through the next daily
+            // proactive scan, but not indefinitely.
+            if (!string.IsNullOrEmpty(state.RecentEarthTextReadingId) &&
+                now - state.RecentEarthTextReadingTick <= 2 * GenDate.TicksPerDay)
+            {
+                EarthTextDef current = DefDatabase<EarthTextDef>.GetNamedSilentFail(
+                    state.RecentEarthTextReadingId);
+                if (current != null)
+                    return current;
+            }
+
+            if (state.EarthTextFamiliarity == null)
+                return null;
+
+            return state.EarthTextFamiliarity
+                .Where(pair => pair.Value > 0f)
+                .OrderByDescending(pair => pair.Value)
+                .Select(pair => DefDatabase<EarthTextDef>.GetNamedSilentFail(pair.Key))
+                .FirstOrDefault(text => text != null);
+        }
+
+        private static string BuildLiteraryReadingInstruction(
+            EarthTextDef text,
+            float familiarity)
+        {
+            string title = EarthTextEndorsementUtility.Title(text);
+            DocumentRecovery.DocumentLine line = DocumentRecovery.GetLine(text.defName);
+            string chapter = "No recovered chapter title is available.";
+            if (line != null && line.Titles != null && line.Titles.Length > 0)
+            {
+                RecoveredDocumentState recovered = DocumentRecovery.GetState(text.defName);
+                int index = recovered?.UnlockedSectionIds == null || recovered.UnlockedSectionIds.Count == 0
+                    ? 0
+                    : Mathf.Min(recovered.UnlockedSectionIds.Count - 1, line.Titles.Length - 1);
+                chapter = line.Titles[index];
+            }
+
+            string depth;
+            if (familiarity < 0.15f)
+                depth = "They are a new reader. Ask one concrete, accessible question about what a phrase, claim, or chapter theme means. Do not pretend to understand the book already.";
+            else if (familiarity < 0.40f)
+                depth = "They have grasped the outline. Ask why the author frames the issue this way, what the chapter is trying to establish, or how its historical setting matters.";
+            else if (familiarity < 0.70f)
+                depth = "They can trace an argument. Ask about a tension, implication, or possible objection, or share a tentative assessment tied to colony life.";
+            else
+                depth = "They know the work well. Share a considered whole-book impression or pose a precise, debatable interpretation; do not ask a beginner-level question.";
+
+            return "The character has recently been reading the Ancient Earth text 《" + title + "》 by " + text.author + ". " +
+                "Its recorded central concerns are: " + text.shortDescription + ". " +
+                "A relevant recovered chapter is: " + chapter + ". " +
+                "Their familiarity with this work is " + familiarity.ToString("0.00") + ". " +
+                depth + " The opener must chiefly be a natural question to the player about this reading, or a brief personal sharing of its ideas. Do not switch to bereavement, work fatigue, or generic existential loneliness unless the text itself makes that connection necessary.";
         }
 
         private static void AddExchangeOption(PawnAIState state, List<TriggerOption> options)

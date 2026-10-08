@@ -7,7 +7,9 @@ using LiAIChat.Models;
 using LiAIChat.Social;
 using LiAIChat.Questing;
 using LiAIChat.Archive;
+using LiAIChat.State;
 using System.Collections.Generic;
+using RimWorld;
 using Verse;
 
 namespace LiAIChat.Game
@@ -146,6 +148,13 @@ namespace LiAIChat.Game
 
             lastProactiveCheckTick =
                 currentTick;
+
+            foreach (Pawn pawn in PawnsFinder.AllMaps_FreeColonists)
+            {
+                PawnAIState state = PawnAIStateManager.TryGetExistingState(pawn);
+                if (state != null)
+                    EarthTextEndorsementUtility.Update(pawn, state);
+            }
 
             ProactiveDialogueManager.CheckForProactiveDialogue();
 

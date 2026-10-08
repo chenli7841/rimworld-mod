@@ -710,6 +710,7 @@ $@"- Life goal: ${lifeGoal.Title}
                 prompt.AppendLine();
                 prompt.AppendLine(civilizationContext);
             }
+            EarthTextEndorsementUtility.AppendConversationContext(prompt, state);
             return prompt.ToString();
         }
 
@@ -818,7 +819,9 @@ $@"- Life goal: ${lifeGoal.Title}
             builder.AppendLine();
             builder.AppendLine("RECENT CONVERSATION");
             builder.AppendLine();
-            int startIndex = Math.Max(0, history.Count - 12);
+            // Keep a substantial, but bounded, verbatim exchange window.  The
+            // current player message is appended below as a separate section.
+            int startIndex = Math.Max(0, history.Count - 60);
             for (int i = startIndex; i < history.Count; i++)
             {
                 ChatMessage message = history[i];

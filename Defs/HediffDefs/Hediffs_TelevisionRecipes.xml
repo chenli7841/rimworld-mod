@@ -4,15 +4,9 @@
     <defName>LiAIChat_TelevisionRecipeAftertaste</defName>
     <label>电视美食余韵</label>
     <description>特色菜带来的短暂状态。实际效果取决于刚刚食用的电视菜谱。</description>
-    <hediffClass>HediffWithComps</hediffClass>
+    <hediffClass>LiAIChat.TelevisionRecipes.Hediff_TelevisionRecipeAftertaste</hediffClass>
     <isBad>false</isBad>
     <initialSeverity>1</initialSeverity>
     <maxSeverity>1</maxSeverity>
-    <comps>
-      <li Class="HediffCompProperties_Disappears">
-        <disappearsAfterTicks>60000~120000</disappearsAfterTicks>
-        <showRemainingTime>true</showRemainingTime>
-      </li>
-    </comps>
   </HediffDef>
 </Defs>

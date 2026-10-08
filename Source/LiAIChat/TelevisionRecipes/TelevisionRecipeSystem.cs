@@ -17,6 +17,46 @@ namespace LiAIChat.TelevisionRecipes
 {
     public enum TelevisionRecipeBuff { Hunger, Rest, MentalShield, MoveSpeed, WorkSpeed, Healing, WeaponRange }
 
+    public class Hediff_TelevisionRecipeAftertaste : HediffWithComps
+    {
+        public List<TelevisionRecipeBuff> buffs = new List<TelevisionRecipeBuff>();
+        public int expiresAt;
+
+        public override string LabelBase
+        {
+            get
+            {
+                string effects = TelevisionRecipeUtility.BuffText(buffs);
+                return string.IsNullOrEmpty(effects) ? base.LabelBase : base.LabelBase + "（" + effects + "）";
+            }
+        }
+
+        public override string TipStringExtra
+        {
+            get
+            {
+                int remainingTicks = Mathf.Max(0, expiresAt - (Find.TickManager?.TicksGame ?? expiresAt));
+                return "效果：" + TelevisionRecipeUtility.BuffText(buffs) +
+                    "\n剩余时间：" + Mathf.CeilToInt(remainingTicks / 2500f) + " 小时";
+            }
+        }
+
+        public override void Tick()
+        {
+            base.Tick();
+            if (expiresAt > 0 && Find.TickManager != null && Find.TickManager.TicksGame >= expiresAt)
+                pawn.health.RemoveHediff(this);
+        }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_Collections.Look(ref buffs, "televisionRecipeBuffs", LookMode.Value);
+            Scribe_Values.Look(ref expiresAt, "televisionRecipeExpiresAt", 0);
+            if (buffs == null) buffs = new List<TelevisionRecipeBuff>();
+        }
+    }
+
     public class TelevisionRecipeData : IExposable
     {
         public int slot;
@@ -45,7 +85,7 @@ namespace LiAIChat.TelevisionRecipes
 
     public class TelevisionRecipeGameComponent : GameComponent
     {
-        private const int MaxActive = 5, CacheTarget = 3, SlotCount = 8, CheckInterval = 2500;
+        private const int MaxActive = 5, SlotCount = 5, CheckInterval = 2500;
         private static readonly HttpClient Client = new HttpClient();
         private List<TelevisionRecipeData> recipes = new List<TelevisionRecipeData>();
         private List<TelevisionRecipePawnBuff> pawnBuffs = new List<TelevisionRecipePawnBuff>();
@@ -55,14 +95,15 @@ namespace LiAIChat.TelevisionRecipes
         public override void ExposeData()
         {
             Scribe_Collections.Look(ref recipes, "televisionRecipes", LookMode.Deep); Scribe_Collections.Look(ref pawnBuffs, "televisionRecipePawnBuffs", LookMode.Deep);
-            Scribe_Values.Look(ref generationPending, "televisionRecipeGenerationPending", false);
             if (recipes == null) recipes = new List<TelevisionRecipeData>(); if (pawnBuffs == null) pawnBuffs = new List<TelevisionRecipePawnBuff>();
         }
         public override void FinalizeInit()
         {
             base.FinalizeInit();
-            // Cached entries made before recipe prose existed are safe to replace.
-            recipes.RemoveAll(r => !r.learned && string.IsNullOrWhiteSpace(r.description));
+            // Earlier versions saved three unlearned recipes as a generation cache.
+            // Recipes are now generated only when television teaches them.
+            recipes.RemoveAll(r => r == null || !r.learned);
+            NormalizeActiveSlots();
             SanitizeIngredients();
             generationPending = false;
             RefreshDefs();
@@ -70,7 +111,7 @@ namespace LiAIChat.TelevisionRecipes
         public override void GameComponentTick()
         {
             int now = Find.TickManager.TicksGame; if (now - lastCheck < CheckInterval) return; lastCheck = now;
-            Expire(now); if (SanitizeIngredients()) RefreshDefs(); TryTeachFromTelevision(); EnsureCache();
+            Expire(now); if (SanitizeIngredients()) RefreshDefs(); TryTeachFromTelevision();
         }
         private void Expire(int now)
         {
@@ -86,40 +127,44 @@ namespace LiAIChat.TelevisionRecipes
         }
         private void TryTeachFromTelevision()
         {
-            if (recipes.Count(r => r.learned) >= MaxActive) return;
-            TelevisionRecipeData recipe = recipes.FirstOrDefault(r => !r.learned); if (recipe == null) return;
+            if (recipes.Count >= MaxActive || generationPending) return;
             Pawn viewer = PawnsFinder.AllMaps_FreeColonists.FirstOrDefault(p => p.CurJob != null && p.CurJob.def != null && p.CurJob.def.defName == "WatchTelevision");
             if (viewer == null || !Rand.Chance(0.30f)) return;
-            recipe.learned = true; recipe.durationTicks = Find.TickManager.TicksGame + Rand.RangeInclusive(12, 18) * GenDate.TicksPerDay;
-            RefreshDefs();
-            Find.LetterStack.ReceiveLetter("看电视学会了新菜谱", viewer.LabelShort + " 在电视节目中学会了“" + recipe.name + "”。全殖民地现在都能烹饪它；有效期为 " + (recipe.durationTicks - Find.TickManager.TicksGame) / GenDate.TicksPerDay + " 天。", LetterDefOf.PositiveEvent, viewer);
-        }
-        private void EnsureCache()
-        {
-            if (generationPending || recipes.Count(r => !r.learned) >= CacheTarget) return;
             generationPending = true;
             List<string> foods = RawFoodDefNames();
-            int needed = CacheTarget - recipes.Count(r => !r.learned); string gameId = RuntimeHelpers.GameId(this);
-            _ = GenerateAsync(gameId, needed, foods);
+            _ = GenerateAsync(RuntimeHelpers.GameId(this), 1, foods, viewer.LabelShort);
         }
-        private async Task GenerateAsync(string gameId, int count, List<string> foods)
+        private async Task GenerateAsync(string gameId, int count, List<string> foods, string viewerName)
         {
             try
             {
                 string prompt = "为RimWorld殖民地电视烹饪节目生成" + count + "道限时菜谱。每道只输出一行，严格格式：中文菜名|英文defName食材,英文defName食材|buff,buff|中文描述。菜名必须4到8个汉字。描述约200个汉字，生动、具体、令人食欲大开，须自然提到该菜绑定的具体buff效果和它们的短暂性；不可包含换行或竖线。食材从以下现有物资选择，2到3种且合理：" + string.Join(",", foods) + "。buff仅可用 hunger,rest,mental,move,work,healing,range；每道1到2个。";
                 string body = "{\"model\":\"gpt-5.6-luna\",\"input\":" + Json(prompt) + ",\"max_output_tokens\":500}";
                 using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "https://api.openai.com/v1/responses"))
-                { request.Headers.Add("Authorization", "Bearer " + Config.Config.OpenAI_API_KEY); request.Content = new StringContent(body, Encoding.UTF8, "application/json"); using (HttpResponseMessage response = await Client.SendAsync(request).ConfigureAwait(false)) { string output = OpenAIResponseParser.ExtractOutputText(await response.Content.ReadAsStringAsync().ConfigureAwait(false)); MainThreadActionQueue.Enqueue(() => ApplyGenerated(gameId, Parse(output, foods, count))); } }
+                { request.Headers.Add("Authorization", "Bearer " + Config.Config.OpenAI_API_KEY); request.Content = new StringContent(body, Encoding.UTF8, "application/json"); using (HttpResponseMessage response = await Client.SendAsync(request).ConfigureAwait(false)) { string output = OpenAIResponseParser.ExtractOutputText(await response.Content.ReadAsStringAsync().ConfigureAwait(false)); MainThreadActionQueue.Enqueue(() => ApplyGenerated(gameId, Parse(output, foods, count), viewerName)); } }
             }
             catch (Exception ex) { Log.Warning("[Li AI Chat] TV recipe generation failed: " + ex.Message); MainThreadActionQueue.Enqueue(() => { if (RuntimeHelpers.IsCurrent(gameId)) generationPending = false; }); }
         }
-        private void ApplyGenerated(string gameId, List<TelevisionRecipeData> added)
+        private void ApplyGenerated(string gameId, List<TelevisionRecipeData> added, string viewerName)
         {
             if (!RuntimeHelpers.IsCurrent(gameId)) return; generationPending = false;
-            foreach (TelevisionRecipeData recipe in added) if (recipes.Count(r => !r.learned) < CacheTarget) { recipe.slot = FreeSlot(); recipe.buffTicks = Rand.RangeInclusive(24, 48) * 2500; if (recipe.slot >= 0) recipes.Add(recipe); }
+            TelevisionRecipeData recipe = added.FirstOrDefault();
+            if (recipe == null || recipes.Count >= MaxActive) return;
+            recipe.slot = FreeSlot();
+            if (recipe.slot < 0) return;
+            recipe.learned = true;
+            recipe.durationTicks = Find.TickManager.TicksGame + Rand.RangeInclusive(12, 18) * GenDate.TicksPerDay;
+            recipe.buffTicks = Rand.RangeInclusive(24, 48) * 2500;
+            recipes.Add(recipe);
             RefreshDefs();
+            Messages.Message((viewerName ?? "一位殖民者") + " 在电视节目中学会了“" + recipe.name + "”。全殖民地现在都能烹饪它；有效期为 " + (recipe.durationTicks - Find.TickManager.TicksGame) / GenDate.TicksPerDay + " 天。", MessageTypeDefOf.PositiveEvent, false);
         }
         private int FreeSlot() { for (int i = 0; i < SlotCount; i++) if (!recipes.Any(r => r.slot == i)) return i; return -1; }
+        private void NormalizeActiveSlots()
+        {
+            recipes = recipes.Where(r => r != null && r.learned).OrderBy(r => r.slot).Take(MaxActive).ToList();
+            for (int i = 0; i < recipes.Count; i++) recipes[i].slot = i;
+        }
         private static List<TelevisionRecipeData> Parse(string text, List<string> foods, int count)
         {
             List<TelevisionRecipeData> result = new List<TelevisionRecipeData>();
@@ -220,11 +265,12 @@ namespace LiAIChat.TelevisionRecipes
             if (pawn == null || recipe == null) return;
 
             pawnBuffs.RemoveAll(buff => buff.pawnId == pawn.thingIDNumber);
+            int expiresAt = Find.TickManager.TicksGame + recipe.buffTicks;
             pawnBuffs.Add(new TelevisionRecipePawnBuff
             {
                 pawnId = pawn.thingIDNumber,
                 buffs = new List<TelevisionRecipeBuff>(recipe.buffs),
-                expiresAt = Find.TickManager.TicksGame + recipe.buffTicks
+                expiresAt = expiresAt
             });
 
             HediffDef effectDef = DefDatabase<HediffDef>.GetNamedSilentFail(
@@ -233,7 +279,14 @@ namespace LiAIChat.TelevisionRecipes
             {
                 Hediff previous = pawn.health.hediffSet.GetFirstHediffOfDef(effectDef);
                 if (previous != null) pawn.health.RemoveHediff(previous);
-                pawn.health.AddHediff(HediffMaker.MakeHediff(effectDef, pawn));
+                Hediff_TelevisionRecipeAftertaste aftertaste =
+                    HediffMaker.MakeHediff(effectDef, pawn) as Hediff_TelevisionRecipeAftertaste;
+                if (aftertaste != null)
+                {
+                    aftertaste.buffs = new List<TelevisionRecipeBuff>(recipe.buffs);
+                    aftertaste.expiresAt = expiresAt;
+                    pawn.health.AddHediff(aftertaste);
+                }
             }
 
             Messages.Message(pawn.LabelShort + " 获得了“" + recipe.name + "”的余韵：" +
@@ -254,7 +307,7 @@ namespace LiAIChat.TelevisionRecipes
         }
         public static void Refresh(List<TelevisionRecipeData> recipes)
         {
-            List<RecipeDef> televisionRecipes = Enumerable.Range(0, 8).Select(RecipeDef).Where(r => r != null).ToList();
+            List<RecipeDef> televisionRecipes = Enumerable.Range(0, 5).Select(RecipeDef).Where(r => r != null).ToList();
             foreach (ThingDef table in DefDatabase<ThingDef>.AllDefsListForReading.Where(t =>
                 t.recipeMaker != null && t.recipes != null &&
                 t.recipes.Any(recipe => recipe != null && recipe.workSkill == SkillDefOf.Cooking)))
@@ -271,7 +324,7 @@ namespace LiAIChat.TelevisionRecipes
                 // AllRecipes keeps its own cache, separate from ThingDef.recipes.
                 AccessTools.Field(typeof(ThingDef), "allRecipesCached").SetValue(table, null);
             }
-            for (int slot = 0; slot < 8; slot++)
+            for (int slot = 0; slot < 5; slot++)
             {
                 TelevisionRecipeData data = recipes.FirstOrDefault(r => r.slot == slot && r.learned); RecipeDef recipe = RecipeDef(slot); ThingDef product = ProductDef(slot); if (recipe == null || product == null) continue;
                 int daysLeft = data == null || Find.TickManager == null ? 0 : Mathf.CeilToInt((data.durationTicks - Find.TickManager.TicksGame) / (float)GenDate.TicksPerDay);
@@ -327,7 +380,7 @@ namespace LiAIChat.TelevisionRecipes
     [HarmonyPatch(typeof(Verse.AI.MentalStateHandler), "TryStartMentalState")]
     public static class TelevisionRecipeMentalPatch { public static bool Prefix(Pawn ___pawn) { return TelevisionRecipeGameComponent.Instance?.HasBuff(___pawn, TelevisionRecipeBuff.MentalShield) != true; } }
     [HarmonyPatch(typeof(VerbProperties), "AdjustedRange")]
-    public static class TelevisionRecipeRangePatch { public static void Postfix(Thing attacker, ref float __result) { if (TelevisionRecipeGameComponent.Instance?.HasBuff(attacker as Pawn, TelevisionRecipeBuff.WeaponRange) == true) __result *= 1.15f; } }
+    public static class TelevisionRecipeRangePatch { public static void Postfix(VerbProperties __instance, Verb verb, Thing attacker, ref float __result) { if (__instance.Ranged && TelevisionRecipeGameComponent.Instance?.HasBuff(attacker as Pawn, TelevisionRecipeBuff.WeaponRange) == true) __result *= 1.15f; } }
     [HarmonyPatch(typeof(Pawn_PathFollower), "CostToMoveIntoCell", new Type[] { typeof(IntVec3) })]
     public static class TelevisionRecipeMovePatch { public static void Postfix(Pawn ___pawn, ref float __result) { if (TelevisionRecipeGameComponent.Instance?.HasBuff(___pawn, TelevisionRecipeBuff.MoveSpeed) == true) __result /= 1.15f; } }
     [HarmonyPatch(typeof(StatWorker), "GetValueUnfinalized")]
@@ -373,7 +426,7 @@ namespace LiAIChat.TelevisionRecipes
 
             Thing preferred = null;
             float bestDistance = float.MaxValue;
-            foreach (int slot in Enumerable.Range(0, 8))
+            foreach (int slot in Enumerable.Range(0, 5))
             {
                 ThingDef product = TelevisionRecipeUtility.ProductDef(slot);
                 if (product == null || component.RecipeForProduct(product) == null) continue;

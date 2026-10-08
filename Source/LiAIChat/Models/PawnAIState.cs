@@ -44,7 +44,15 @@ namespace LiAIChat.Models
         public List<string> StudiedArchiveContentIds = new List<string>();
         public Dictionary<string, float> ArchiveReadingProgress = new Dictionary<string, float>();
         public Dictionary<string, float> EarthTextFamiliarity = new Dictionary<string, float>();
+        // Kept as a short-lived reading cue for proactive literary dialogue.
+        // It identifies the text currently being read, not a new permanent
+        // memory or ideological commitment.
+        public string RecentEarthTextReadingId;
+        public int RecentEarthTextReadingTick;
         public Dictionary<string, float> EarthTextDomainContribution = new Dictionary<string, float>();
+        public string EndorsedEarthTextId;
+        public int EndorsementSwitchTick;
+        public List<EarthTextStanceChange> EarthTextStanceHistory = new List<EarthTextStanceChange>();
         public List<ArchiveReflection> ArchiveReflections = new List<ArchiveReflection>();
 
         public ArchiveScholarProfile ScholarProfile;
@@ -93,7 +101,12 @@ namespace LiAIChat.Models
             Scribe_Collections.Look(ref StudiedArchiveContentIds, "studiedArchiveContentIds", LookMode.Value);
             Scribe_Collections.Look(ref ArchiveReadingProgress, "archiveReadingProgress", LookMode.Value, LookMode.Value);
             Scribe_Collections.Look(ref EarthTextFamiliarity, "earthTextFamiliarity", LookMode.Value, LookMode.Value);
+            Scribe_Values.Look(ref RecentEarthTextReadingId, "recentEarthTextReadingId");
+            Scribe_Values.Look(ref RecentEarthTextReadingTick, "recentEarthTextReadingTick", 0);
             Scribe_Collections.Look(ref EarthTextDomainContribution, "earthTextDomainContribution", LookMode.Value, LookMode.Value);
+            Scribe_Values.Look(ref EndorsedEarthTextId, "endorsedEarthTextId");
+            Scribe_Values.Look(ref EndorsementSwitchTick, "endorsementSwitchTick", 0);
+            Scribe_Collections.Look(ref EarthTextStanceHistory, "earthTextStanceHistory", LookMode.Deep);
             Scribe_Collections.Look(ref ArchiveReflections, "archiveReflections", LookMode.Deep);
             Scribe_Deep.Look(ref ScholarProfile, "scholarProfile");
             Scribe_Values.Look(ref AllowsPlayerConversation, "allowsPlayerConversation", false);
@@ -171,6 +184,11 @@ namespace LiAIChat.Models
                 {
                     ArchiveReflections =
                         new List<ArchiveReflection>();
+                }
+                if (EarthTextStanceHistory == null)
+                {
+                    EarthTextStanceHistory =
+                        new List<EarthTextStanceChange>();
                 }
 
                 // 这里不用 PostLoadInit 强制创建LifeGoal。因为：Pawn 没有人生目标是合法状态。
@@ -279,6 +297,24 @@ namespace LiAIChat.Models
             }
 
             return value > 1f ? 1f : value;
+        }
+    }
+
+    public class EarthTextStanceChange : IExposable
+    {
+        public string PreviousTextDefName;
+        public string CurrentTextDefName;
+        public int ChangedAtTick;
+        public float PreviousFamiliarity;
+        public float CurrentFamiliarity;
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref PreviousTextDefName, "previousTextDefName");
+            Scribe_Values.Look(ref CurrentTextDefName, "currentTextDefName");
+            Scribe_Values.Look(ref ChangedAtTick, "changedAtTick", 0);
+            Scribe_Values.Look(ref PreviousFamiliarity, "previousFamiliarity", 0f);
+            Scribe_Values.Look(ref CurrentFamiliarity, "currentFamiliarity", 0f);
         }
     }
 }

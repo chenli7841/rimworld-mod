@@ -2,6 +2,7 @@
 using LiAIChat.Models;
 using LiAIChat.State;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace LiAIChat.Archive
@@ -60,6 +61,14 @@ namespace LiAIChat.Archive
             if (state == null)
                 return;
 
+            // The proactive-dialogue system can use this transient cue to
+            // make a well-read pawn bring up the document they are actually
+            // reading, rather than an unrelated colony problem.
+            state.RecentEarthTextReadingId = archive.StudyIdentityId;
+            state.RecentEarthTextReadingTick = Find.TickManager == null
+                ? 0
+                : Find.TickManager.TicksGame;
+
             string studyId =
                 archive.StudyIdentityId;
 
@@ -67,7 +76,8 @@ namespace LiAIChat.Archive
             float progress = state.GetArchiveReadingProgress(studyId);
 
             progress += factor * LiAIChat.Civilization.CivilizationTopicEffects.Factor(
-                reader, LiAIChat.Civilization.CivilizationTopicEffect.ReadingGain);
+                reader, LiAIChat.Civilization.CivilizationTopicEffect.ReadingGain) *
+                IntellectualComprehensionFactor(reader);
 
             while (progress >= Props.learningInterval)
             {
@@ -75,7 +85,8 @@ namespace LiAIChat.Archive
 
                 ApplyKnowledge(
                     state,
-                    archive);
+                    archive,
+                    reader);
             }
 
             state.SetArchiveReadingProgress(studyId, progress);
@@ -83,7 +94,8 @@ namespace LiAIChat.Archive
 
         private void ApplyKnowledge(
             PawnAIState state,
-            Thing_AncientEarthArchiveFragment archive)
+            Thing_AncientEarthArchiveFragment archive,
+            Pawn reader)
         {
             string studyId =
                 archive.StudyIdentityId;
@@ -113,6 +125,17 @@ namespace LiAIChat.Archive
                 state,
                 studyId,
                 archive.KnowledgeTopicId);
+
+            EarthTextEndorsementUtility.Update(reader, state);
+        }
+
+        private static float IntellectualComprehensionFactor(Pawn reader)
+        {
+            int intellectual = reader?.skills?.GetSkill(SkillDefOf.Intellectual)?.Level ?? 0;
+            if (intellectual < 10)
+                return 1f + intellectual * 0.03f;
+
+            return Mathf.Min(2.25f, 1.75f + (intellectual - 10) * 0.05f);
         }
     }
 }

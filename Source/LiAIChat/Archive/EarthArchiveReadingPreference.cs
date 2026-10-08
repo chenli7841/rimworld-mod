@@ -9,12 +9,16 @@ namespace LiAIChat.Archive
 {
     public static class EarthArchiveReadingPreference
     {
-        // Intellectual 0/5/10/15/20 corresponds to a 10/33/55/78/100%
-        // chance to replace a normal leisure-reading choice with an archive.
+        // Skilled intellectuals deliberately seek sustained, demanding reading.
+        // At level 10 the archive replaces an ordinary leisure book 85% of the
+        // time, rising gently toward a near-certain preference thereafter.
         public static float PreferenceFor(Pawn pawn)
         {
             int intellectual = pawn?.skills?.GetSkill(SkillDefOf.Intellectual)?.Level ?? 0;
-            return Mathf.Clamp01(0.10f + intellectual * 0.045f);
+            if (intellectual < 10)
+                return Mathf.Clamp01(0.10f + intellectual * 0.045f);
+
+            return Mathf.Clamp01(0.85f + (intellectual - 10) * 0.03f);
         }
 
         public static Book FindReadableArchive(Pawn pawn)
