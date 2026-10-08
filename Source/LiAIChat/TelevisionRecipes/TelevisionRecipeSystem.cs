@@ -380,7 +380,10 @@ namespace LiAIChat.TelevisionRecipes
     [HarmonyPatch(typeof(Verse.AI.MentalStateHandler), "TryStartMentalState")]
     public static class TelevisionRecipeMentalPatch { public static bool Prefix(Pawn ___pawn) { return TelevisionRecipeGameComponent.Instance?.HasBuff(___pawn, TelevisionRecipeBuff.MentalShield) != true; } }
     [HarmonyPatch(typeof(VerbProperties), "AdjustedRange")]
-    public static class TelevisionRecipeRangePatch { public static void Postfix(VerbProperties __instance, Verb verb, Thing attacker, ref float __result) { if (__instance.Ranged && TelevisionRecipeGameComponent.Instance?.HasBuff(attacker as Pawn, TelevisionRecipeBuff.WeaponRange) == true) __result *= 1.15f; } }
+    // RimWorld 1.6 exposes AdjustedRange(Verb ownerVerb, Thing attacker).
+    // Only the attacker is needed for this buff; binding the old "verb"
+    // parameter name makes Harmony reject the whole mod at startup.
+    public static class TelevisionRecipeRangePatch { public static void Postfix(VerbProperties __instance, Thing attacker, ref float __result) { if (__instance.Ranged && TelevisionRecipeGameComponent.Instance?.HasBuff(attacker as Pawn, TelevisionRecipeBuff.WeaponRange) == true) __result *= 1.15f; } }
     [HarmonyPatch(typeof(Pawn_PathFollower), "CostToMoveIntoCell", new Type[] { typeof(IntVec3) })]
     public static class TelevisionRecipeMovePatch { public static void Postfix(Pawn ___pawn, ref float __result) { if (TelevisionRecipeGameComponent.Instance?.HasBuff(___pawn, TelevisionRecipeBuff.MoveSpeed) == true) __result /= 1.15f; } }
     [HarmonyPatch(typeof(StatWorker), "GetValueUnfinalized")]
