@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_AlliedSettlementThreat.questNameRules.rulesStrings>
+    <li>questName-&gt;Defend an allied settlement</li>
+  </LiAIChat_AlliedSettlementThreat.questNameRules.rulesStrings>
+  <LiAIChat_AlliedSettlementThreat.questDescriptionRules.rulesStrings>
+    <li>questDescription-&gt;Hostile forces are threatening a nearby allied settlement. Travel to the marked enemy outpost and defeat its defenders before the crisis deadline. The threat is resolved only when all defenders are killed or downed; withdrawing from the site does not count as victory.</li>
+  </LiAIChat_AlliedSettlementThreat.questDescriptionRules.rulesStrings>
+</LanguageData>

@@ -70,6 +70,7 @@
     <Compile Include="AlliedSettlementSurvival\SettlementStrengthPatches.cs" />
     <Compile Include="AlliedSettlementSurvival\PermanentMigration.cs" />
     <Compile Include="Questing\AlliedSettlementAidQuest.cs" />
+    <Compile Include="Questing\AlliedSettlementThreatQuest.cs" />
     <Compile Include="AI\IChatProvider.cs" />
     <Compile Include="AI\IConversationSummarizer.cs" />
     <Compile Include="AI\IIntellectualExchangeDirector.cs" />

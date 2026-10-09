@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_AlliedSettlementThreat.questNameRules.rulesStrings>
+    <li>questName-&gt;援助盟友：清除敌方据点</li>
+  </LiAIChat_AlliedSettlementThreat.questNameRules.rulesStrings>
+  <LiAIChat_AlliedSettlementThreat.questDescriptionRules.rulesStrings>
+    <li>questDescription-&gt;敌对势力正在威胁附近的盟友据点。前往地图标记处的敌方据点，在危机期限前击败守军。只有全部守军阵亡或倒地才算解决威胁；从据点撤退不算胜利。</li>
+  </LiAIChat_AlliedSettlementThreat.questDescriptionRules.rulesStrings>
+</LanguageData>

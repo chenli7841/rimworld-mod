@@ -1,4 +1,4 @@
-# Allied Settlement Survival — stages 1–4
+# Allied Settlement Survival — stages 1–5
 
 ## Stage 1: strength
 
@@ -6,7 +6,7 @@ An independent WorldComponent registers allied settlements within 30 approximate
 
 Strength starts at 60, recovers 0.5/day up to 80, and can reach 100 through assistance. A lost alliance or out-of-range settlement freezes without losing its record. The clock advances while frozen, so returning does not grant catch-up recovery. Zero strength never naturally recovers. Records reference the settlement object, not its tile; removing and replacing a settlement does not inherit its state.
 
-Select a registered settlement to see strength and status. Developer mode provides +/-10 controls. Zero is reserved for the later destruction stage; this release does not remove settlements. Aid quests, threat sites, overview and configuration are later stages.
+Select a registered settlement to see strength and status. Developer mode provides +/-10 controls. Zero is reserved for the later destruction stage; this release does not remove settlements. Overview and configuration remain later stages.
 
 ## Stage 2: permanent migration
 
@@ -30,7 +30,13 @@ This stage supplies the scheduler and `CompleteCrisis` hook. Food and medical cr
 
 When a famine or disease crisis begins, an automatically accepted quest is generated and linked to the crisis letter. Food deliveries require 150 nutrition from human-edible food; medicine deliveries require 10 units of any medicine definition. The quest tracks partial deliveries across multiple item types and saves its progress. The Caravan's **Deliver food / Deliver medicine** command appears when it is on the target settlement tile. A confirmation names the amount and warns that the goods will be consumed from caravan inventory. Whole items are transferred, so a final food stack may deliver slightly more nutrition than requested.
 
-Completing the requested amount resolves the crisis and starts its recovery interval. If the deadline passes, the scheduler applies the strength loss once and ends the linked quest. The quest points to the allied settlement and shows delivery progress in its description. Threat crises still use the scheduler and timeout penalty, pending the stage 5 combat-site integration.
+Completing the requested amount resolves the crisis and starts its recovery interval. If the deadline passes, the scheduler applies the strength loss once and ends the linked quest. The quest points to the allied settlement and shows delivery progress in its description.
+
+## Stage 5: hostile-threat combat missions
+
+A hostile-threat crisis creates a defended Bandit Camp site 2–7 tiles from the allied settlement and links it to an automatically accepted quest. The enemy faction is selected from hostile mechanoids, insects or humanlike factions that can generate a combat group. The site uses 500 threat points and the standard outpost map-generation rules.
+
+Defeating every observed defender (killed or downed) resolves the crisis and schedules its normal recovery interval. Leaving the site while defenders remain does not count as victory. If the 10-day crisis deadline passes, the usual 20 strength penalty is applied once and the quest ends; the hostile outpost remains available to visit. The active quest, site, faction and observed defender references are saved.
 
 ## Validation
 
@@ -50,6 +56,9 @@ In-game acceptance checks:
 - Famine and disease crises generate their linked aid quest; deliver partial food and medicine amounts, save/reload and finish the remaining requirement.
 - From a caravan on the target tile, deliver food by nutrition and medicine by item count. Verify the confirmation, consumed inventory, quest progress, settlement target and resolution.
 - Leave an aid quest incomplete through its 10-day deadline; verify only one penalty, failure of the linked quest and the next recovery interval.
+- Trigger a hostile-threat crisis. Confirm the marked Bandit Camp is within 2–7 tiles of the allied settlement, uses a hostile mechanoid, insect or humanlike faction, and is linked to its quest.
+- Visit the site and defeat every defender: the quest should resolve the crisis and schedule the normal recovery interval. Save/reload with the site map generated and verify defender progress persists.
+- Retreat while defenders remain: the quest must stay active. Let it expire to confirm one 20-point penalty; the outpost should remain on the world map.
 - Check multiple home maps and non-surface maps; only eligible surface proximity counts.
 - Recheck Archive quests, civilization research and Pawn AI using the existing save.
 - Bring two adult free colonists, inventory, apparel and equipped weapons to an ally. Transfer one: +10 strength, same pawn identity and relationships, new faction, inventory retained by caravan, equipment retained by migrant.
