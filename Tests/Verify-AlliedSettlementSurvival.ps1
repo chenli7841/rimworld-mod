@@ -86,6 +86,25 @@ if ($null -eq $gameAssembly.GetType('RimWorld.LordJob_TradeWithColony', $true) -
         $gameAssembly.GetType('RimWorld.Planet.PlanetTile', $true)))) {
     throw 'Trader guard generation or trade-lord APIs changed in the installed RimWorld assemblies'
 }
+$raidWorker = $gameAssembly.GetType('RimWorld.IncidentWorker_Raid', $true)
+$raidFriendlyWorker = $gameAssembly.GetType('RimWorld.IncidentWorker_RaidFriendly', $true)
+$raidInfo = $raidWorker.GetMethod('TryGenerateRaidInfo', [Reflection.BindingFlags]'Instance,Public,NonPublic')
+$raidInfoParameters = if ($raidInfo) { $raidInfo.GetParameters() } else { @() }
+$incidentParms = $gameAssembly.GetType('RimWorld.IncidentParms', $true)
+$quickAidFlag = $incidentParms.GetField('raidArrivalModeForQuickMilitaryAid', [Reflection.BindingFlags]'Instance,Public,NonPublic')
+$arrivalWorker = $gameAssembly.GetType('RimWorld.PawnsArrivalModeWorker', $true)
+$arrival = $arrivalWorker.GetMethods([Reflection.BindingFlags]'Instance,Public,NonPublic') |
+    Where-Object { $_.Name -eq 'Arrive' -and $_.GetParameters().Count -eq 2 }
+$arrivalParameters = if ($arrival) { $arrival.GetParameters() } else { @() }
+if ($raidFriendlyWorker.BaseType -ne $raidWorker -or $null -eq $raidInfo -or
+    $raidInfo.ReturnType -ne [bool] -or $raidInfoParameters.Count -ne 3 -or
+    $raidInfoParameters[1].ParameterType.GetElementType().Name -ne 'List`1' -or
+    $null -eq $quickAidFlag -or $quickAidFlag.FieldType -ne [bool] -or $null -eq $arrival -or
+    $arrivalParameters[0].ParameterType.GetGenericTypeDefinition().FullName -ne 'System.Collections.Generic.List`1' -or
+    $arrivalParameters[0].ParameterType.GetGenericArguments()[0].FullName -ne 'Verse.Pawn' -or
+    $arrivalParameters[1].ParameterType -ne $incidentParms) {
+    throw 'Vanilla requested-military-aid reinforcement APIs changed in the installed RimWorld assemblies'
+}
 if (-not [Enum]::GetNames($gameAssembly.GetType('RimWorld.Planet.PawnDiscardDecideMode')).Contains('KeepForever')) {
     throw 'Permanent world-pawn retention API unavailable'
 }
@@ -100,6 +119,6 @@ if ($null -eq $settlementType.GetProperty('HasMap')) { throw 'Settlement map-lif
 $worldObjects = $gameAssembly.GetType('RimWorld.Planet.WorldObjectsHolder', $true)
 $ruinLookup = $worldObjects.GetMethod('DestroyedSettlementAt', [Type[]]@($gameAssembly.GetType('RimWorld.Planet.PlanetTile', $true)))
 if ($null -eq $ruinLookup) { throw 'Destroyed-settlement marker lookup unavailable' }
-'Allied settlement policy, localization and installed Harmony target checks passed.'
+'Allied settlement policy, localization, caravan and military-aid Harmony target checks passed.'
 'Safe collapse APIs for map checks and destroyed-settlement markers are available.'
-'Actual caravan transfer and save/load still require the documented in-game checks.'
+'Actual caravan, military-aid arrival and save/load behavior still require in-game checks.'

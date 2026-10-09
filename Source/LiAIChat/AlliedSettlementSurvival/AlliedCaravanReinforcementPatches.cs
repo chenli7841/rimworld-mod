@@ -133,4 +133,114 @@ namespace LiAIChat.AlliedSettlementSurvival
         }
     }
 
+    // Quick military aid requested over the comms console uses the vanilla
+    // friendly-raid worker, with a dedicated IncidentParms flag. Add the
+    // reinforcements after vanilla has generated the group, then send them
+    // through the same arrival mode before the incident creates its Lord.
+    [HarmonyPatch(typeof(IncidentWorker_Raid), "TryGenerateRaidInfo")]
+    public static class AlliedMilitaryAidReinforcementPatch
+    {
+        public static void Postfix(IncidentWorker_Raid __instance, IncidentParms parms,
+            ref List<Pawn> pawns, bool debugTest, ref bool __result)
+        {
+            Map map = parms?.target as Map;
+            if (!__result || !(__instance is IncidentWorker_RaidFriendly) || debugTest ||
+                pawns == null || parms == null || !parms.raidArrivalModeForQuickMilitaryAid ||
+                parms.faction == null || parms.faction == Faction.OfPlayer ||
+                parms.faction.def == null || parms.faction.defeated ||
+                parms.faction.RelationKindWith(Faction.OfPlayer) != FactionRelationKind.Ally ||
+                map == null || !map.IsPlayerHome ||
+                parms.raidArrivalMode == null || Find.World == null || Find.WorldGrid == null ||
+                !AlliedSettlementSurvivalMod.Current.systemEnabled)
+                return;
+
+            try
+            {
+                Reinforce(parms, map, ref pawns);
+            }
+            catch (Exception error)
+            {
+                Log.Error("[LiAIChat] Could not reinforce requested allied military aid safely: " + error);
+            }
+        }
+
+        private static void Reinforce(IncidentParms parms, Map map, ref List<Pawn> pawns)
+        {
+            AlliedSettlementWorldComponent component = AlliedSettlementWorldComponent.Current;
+            if (component == null) return;
+            component.Refresh();
+
+            PlanetTile targetTile = map.Tile;
+            if (!targetTile.Valid || !targetTile.Layer.IsRootSurface) return;
+
+            AlliedSettlementState sourceState = component.States
+                .Where(state => state != null && state.settlement != null && state.active &&
+                    !state.pendingCollapse && state.strength > 0f &&
+                    state.settlement.Faction == parms.faction && component.Eligible(state.settlement) &&
+                    state.settlement.Tile.Valid && state.settlement.Tile.Layer == targetTile.Layer)
+                .OrderBy(state => Find.WorldGrid.ApproxDistanceInTiles(targetTile, state.settlement.Tile))
+                .FirstOrDefault();
+            if (sourceState == null) return;
+
+            PawnGroupKindDef groupKind = parms.pawnGroupKind ?? PawnGroupKindDefOf.Combat;
+            List<PawnGenOption> options = parms.faction.def.pawnGroupMakers
+                .Where(maker => maker != null && maker.kindDef == groupKind && maker.options != null)
+                .SelectMany(maker => maker.options)
+                .Where(option => option != null && option.kind != null && option.kind.RaceProps.Humanlike)
+                .ToList();
+            if (options.Count == 0) return;
+
+            HashSet<PawnKindDef> guardKinds = new HashSet<PawnKindDef>(options.Select(option => option.kind));
+            int currentCount = pawns.Count(pawn => pawn != null && !pawn.Dead && pawn.kindDef != null &&
+                pawn.RaceProps.Humanlike && guardKinds.Contains(pawn.kindDef));
+            bool tribal = (int)parms.faction.def.techLevel <= (int)TechLevel.Neolithic;
+            int tribalTarget = tribal && sourceState.strength >= 90f
+                ? Rand.RangeInclusive(17, 22)
+                : 0;
+            int extraCount = AlliedCaravanReinforcementPolicy.AdditionalGuardCount(
+                sourceState.strength, tribal, currentCount, tribalTarget);
+            if (extraCount <= 0) return;
+
+            List<Pawn> reinforcements = new List<Pawn>();
+            for (int i = 0; i < extraCount; i++)
+            {
+                PawnKindDef kind = ChooseCombatKind(options, sourceState.strength, tribal);
+                if (kind == null) break;
+                Pawn pawn = PawnGenerator.GeneratePawn(kind, parms.faction, targetTile);
+                if (pawn != null) reinforcements.Add(pawn);
+            }
+            if (reinforcements.Count == 0) return;
+
+            parms.raidArrivalMode.Worker.Arrive(reinforcements, parms);
+            pawns.AddRange(reinforcements);
+            Log.Message("[LiAIChat] Reinforced requested military aid from " +
+                sourceState.settlement.Label + " (strength " + sourceState.strength.ToString("0") +
+                ") with " + reinforcements.Count + " additional fighters.");
+        }
+
+        private static PawnKindDef ChooseCombatKind(List<PawnGenOption> options, float strength, bool tribal)
+        {
+            if (tribal || strength < 50f)
+            {
+                float totalWeight = options.Sum(option => option.selectionWeight);
+                if (totalWeight <= 0f) return options.RandomElement().kind;
+                float roll = Rand.Value * totalWeight;
+                foreach (PawnGenOption option in options)
+                {
+                    roll -= option.selectionWeight;
+                    if (roll <= 0f) return option.kind;
+                }
+                return options[options.Count - 1].kind;
+            }
+
+            List<PawnKindDef> ordered = options.Select(option => option.kind).Distinct()
+                .OrderBy(kind => kind.combatPower).ToList();
+            if (ordered.Count == 0) return null;
+            float percentile = strength < 75f ? 0.5f : strength < 90f ? 0.75f : 1f;
+            int index = System.Math.Min(ordered.Count - 1,
+                (int)System.Math.Floor((ordered.Count - 1) * percentile));
+            return ordered[index];
+        }
+    }
+
 }
