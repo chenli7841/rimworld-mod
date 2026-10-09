@@ -4,6 +4,16 @@
   <LiASS_Active>附近盟友</LiASS_Active>
   <LiASS_Frozen>冻结（超出范围或已解除盟约）</LiASS_Frozen>
   <LiASS_Pending>已崩溃（尚未启用移除）</LiASS_Pending>
+  <LiASS_CrisisStatus>危机进行中：{0}；剩余{1}天。</LiASS_CrisisStatus>
+  <LiASS_CrisisKind_FoodShortage>饥荒</LiASS_CrisisKind_FoodShortage>
+  <LiASS_CrisisKind_DiseaseOutbreak>瘟疫</LiASS_CrisisKind_DiseaseOutbreak>
+  <LiASS_CrisisKind_HostileThreat>敌对势力威胁</LiASS_CrisisKind_HostileThreat>
+  <LiASS_CrisisLetterLabel>{0}正面临危机</LiASS_CrisisLetterLabel>
+  <LiASS_CrisisLetterText>{0}正面临{1}。请在{2}天内解决，否则据点实力将下降20点。</LiASS_CrisisLetterText>
+  <LiASS_CrisisFailedLabel>{0}的危机未能解决</LiASS_CrisisFailedLabel>
+  <LiASS_CrisisFailedText>{0}的{1}未能及时解决。据点实力从{2}下降至{3}。</LiASS_CrisisFailedText>
+  <LiASS_CrisisResolvedLabel>{0}的危机已解决</LiASS_CrisisResolvedLabel>
+  <LiASS_CrisisResolvedText>{0}的危机已经解决。据点将在恢复期后才会面临下一场危机。</LiASS_CrisisResolvedText>
   <LiASS_Migrate>永久移民</LiASS_Migrate>
   <LiASS_MigrateDescription>将成年自由殖民者或本殖民地的奴隶永久交付给{0}。自由殖民者增加10点实力，奴隶增加5点。</LiASS_MigrateDescription>
   <LiASS_MigrantOption>{0} — 实力 +{1}</LiASS_MigrantOption>

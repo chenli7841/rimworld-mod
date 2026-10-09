@@ -15,6 +15,13 @@ namespace LiAIChat.AlliedSettlementSurvival
             if (state == null) return;
             string status = state.strength <= 0f ? "LiASS_Pending" : component.Eligible(__instance) ? "LiASS_Active" : "LiASS_Frozen";
             __result += "\n" + "LiASS_Strength".Translate(state.strength.ToString("0.0")) + " — " + status.Translate();
+            if (state.crisisActive)
+            {
+                float daysLeft = System.Math.Max(0f, state.crisisDeadlineTick - Find.TickManager.TicksGame) /
+                    (float)SettlementStrengthPolicy.TicksPerDay;
+                __result += "\n" + "LiASS_CrisisStatus".Translate(
+                    ("LiASS_CrisisKind_" + state.crisisKind).Translate(), daysLeft.ToString("0.0"));
+            }
         }
     }
 

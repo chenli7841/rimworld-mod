@@ -6,6 +6,14 @@ using Verse;
 
 namespace LiAIChat.AlliedSettlementSurvival
 {
+    public enum AlliedSettlementCrisisKind
+    {
+        None,
+        FoodShortage,
+        DiseaseOutbreak,
+        HostileThreat
+    }
+
     public sealed class AlliedSettlementState : IExposable
     {
         public Settlement settlement;
@@ -14,6 +22,18 @@ namespace LiAIChat.AlliedSettlementSurvival
         public int lastTick;
         public bool active;
         public bool crisisActive;
+        public int nextCrisisTick;
+        public int crisisDeadlineTick;
+        public int lastCrisisTick;
+        public int crisisCount;
+        public AlliedSettlementCrisisKind crisisKind;
+
+        public const int ProtectionTicks = 15 * SettlementStrengthPolicy.TicksPerDay;
+        public const int MinimumCrisisIntervalTicks = 20 * SettlementStrengthPolicy.TicksPerDay;
+        public const int MaximumCrisisIntervalTicks = 35 * SettlementStrengthPolicy.TicksPerDay;
+        public const int CrisisDeadlineTicks = 10 * SettlementStrengthPolicy.TicksPerDay;
+        public const int MaximumConcurrentCrises = 2;
+        public const float FailedCrisisStrengthLoss = 20f;
 
         public void ExposeData()
         {
@@ -23,6 +43,11 @@ namespace LiAIChat.AlliedSettlementSurvival
             Scribe_Values.Look(ref lastTick, "lastTick");
             Scribe_Values.Look(ref active, "active");
             Scribe_Values.Look(ref crisisActive, "crisisActive");
+            Scribe_Values.Look(ref nextCrisisTick, "nextCrisisTick");
+            Scribe_Values.Look(ref crisisDeadlineTick, "crisisDeadlineTick");
+            Scribe_Values.Look(ref lastCrisisTick, "lastCrisisTick");
+            Scribe_Values.Look(ref crisisCount, "crisisCount");
+            Scribe_Values.Look(ref crisisKind, "crisisKind", AlliedSettlementCrisisKind.None);
             if (Scribe.mode == LoadSaveMode.PostLoadInit) strength = SettlementStrengthPolicy.Clamp(strength);
         }
     }
@@ -49,12 +74,26 @@ namespace LiAIChat.AlliedSettlementSurvival
                 if (settlements == null) settlements = new List<AlliedSettlementState>();
                 if (migratedPawnIds == null) migratedPawnIds = new List<string>();
                 settlements.RemoveAll(s => s == null || s.settlement == null);
+                int now = Find.TickManager.TicksGame;
+                foreach (AlliedSettlementState state in settlements)
+                {
+                    // Older saves gain a fresh grace period on their first load with this scheduler.
+                    if (state.nextCrisisTick <= 0) state.nextCrisisTick = now + AlliedSettlementState.ProtectionTicks;
+                    if (state.crisisActive && state.crisisDeadlineTick <= 0)
+                        state.crisisDeadlineTick = now + AlliedSettlementState.CrisisDeadlineTicks;
+                    if (!state.crisisActive) state.crisisKind = AlliedSettlementCrisisKind.None;
+                    if (state.lastCrisisTick <= 0) state.lastCrisisTick = now;
+                }
             }
         }
 
         public override void WorldComponentTick()
         {
-            if (Find.TickManager.TicksGame % 2500 == 0) Refresh();
+            if (Find.TickManager.TicksGame % 2500 == 0)
+            {
+                Refresh();
+                TickCrises();
+            }
         }
 
         public AlliedSettlementState Get(Settlement settlement) => settlements.FirstOrDefault(s => s.settlement == settlement);
@@ -80,15 +119,109 @@ namespace LiAIChat.AlliedSettlementSurvival
                 if (state == null)
                 {
                     if (!eligible) continue;
-                    state = new AlliedSettlementState { settlement = settlement, registeredTick = now, lastTick = now, active = true };
+                    state = new AlliedSettlementState
+                    {
+                        settlement = settlement,
+                        registeredTick = now,
+                        lastTick = now,
+                        active = true,
+                        nextCrisisTick = now + AlliedSettlementState.ProtectionTicks,
+                        lastCrisisTick = now
+                    };
                     settlements.Add(state);
                 }
                 state.strength = SettlementStrengthPolicy.Recover(state.strength, now - state.lastTick,
                     eligible && state.active, state.crisisActive);
                 // Advance even while frozen, preventing catch-up recovery after re-alliance.
                 state.lastTick = now;
+                if (!state.active)
+                {
+                    // Pause both scheduled starts and active deadlines while outside the system.
+                    int pausedTicks = System.Math.Max(0, now - state.lastCrisisTick);
+                    state.nextCrisisTick += pausedTicks;
+                    if (state.crisisActive) state.crisisDeadlineTick += pausedTicks;
+                }
+                state.lastCrisisTick = now;
                 state.active = eligible;
             }
         }
+
+        private void TickCrises()
+        {
+            int now = Find.TickManager.TicksGame;
+            int activeCount = settlements.Count(s => s.crisisActive);
+            foreach (AlliedSettlementState state in settlements.OrderBy(s => s.nextCrisisTick).ToList())
+            {
+                if (!state.active || state.settlement == null || state.strength <= 0f) continue;
+
+                if (state.crisisActive)
+                {
+                    if (now < state.crisisDeadlineTick) continue;
+                    FailCrisis(state, now);
+                    activeCount--;
+                    continue;
+                }
+
+                if (now < state.nextCrisisTick || activeCount >= AlliedSettlementState.MaximumConcurrentCrises) continue;
+                StartCrisis(state, now);
+                activeCount++;
+            }
+        }
+
+        private static void StartCrisis(AlliedSettlementState state, int now)
+        {
+            state.crisisKind = (AlliedSettlementCrisisKind)Rand.RangeInclusive(1, 3);
+            state.crisisActive = true;
+            state.crisisDeadlineTick = now + AlliedSettlementState.CrisisDeadlineTicks;
+            state.crisisCount++;
+            string kindLabel = CrisisKindLabel(state.crisisKind);
+            Find.LetterStack.ReceiveLetter(
+                "LiASS_CrisisLetterLabel".Translate(state.settlement.LabelCap),
+                "LiASS_CrisisLetterText".Translate(state.settlement.LabelCap, kindLabel,
+                    (AlliedSettlementState.CrisisDeadlineTicks / (float)SettlementStrengthPolicy.TicksPerDay).ToString("0")),
+                LetterDefOf.NegativeEvent,
+                state.settlement);
+        }
+
+        private static void FailCrisis(AlliedSettlementState state, int now)
+        {
+            AlliedSettlementCrisisKind failedKind = state.crisisKind;
+            float oldStrength = state.strength;
+            state.strength = SettlementStrengthPolicy.Clamp(state.strength - AlliedSettlementState.FailedCrisisStrengthLoss);
+            state.crisisActive = false;
+            state.crisisKind = AlliedSettlementCrisisKind.None;
+            state.crisisDeadlineTick = 0;
+            state.nextCrisisTick = now + Rand.RangeInclusive(
+                AlliedSettlementState.MinimumCrisisIntervalTicks,
+                AlliedSettlementState.MaximumCrisisIntervalTicks);
+            Find.LetterStack.ReceiveLetter(
+                "LiASS_CrisisFailedLabel".Translate(state.settlement.LabelCap),
+                "LiASS_CrisisFailedText".Translate(state.settlement.LabelCap,
+                    CrisisKindLabel(failedKind), oldStrength.ToString("0.#"), state.strength.ToString("0.#")),
+                LetterDefOf.NegativeEvent,
+                state.settlement);
+        }
+
+        public bool CompleteCrisis(Settlement settlement, AlliedSettlementCrisisKind expectedKind)
+        {
+            AlliedSettlementState state = Get(settlement);
+            if (state == null || !state.crisisActive || state.crisisKind != expectedKind) return false;
+            state.crisisActive = false;
+            state.crisisKind = AlliedSettlementCrisisKind.None;
+            state.crisisDeadlineTick = 0;
+            state.nextCrisisTick = Find.TickManager.TicksGame + Rand.RangeInclusive(
+                AlliedSettlementState.MinimumCrisisIntervalTicks,
+                AlliedSettlementState.MaximumCrisisIntervalTicks);
+            Find.LetterStack.ReceiveLetter(
+                "LiASS_CrisisResolvedLabel".Translate(settlement.LabelCap),
+                "LiASS_CrisisResolvedText".Translate(settlement.LabelCap),
+                LetterDefOf.PositiveEvent,
+                settlement);
+            return true;
+        }
+
+        private static string CrisisKindLabel(AlliedSettlementCrisisKind kind) =>
+            ("LiASS_CrisisKind_" + kind).Translate();
+
     }
 }

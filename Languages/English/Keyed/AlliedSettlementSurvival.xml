@@ -4,6 +4,16 @@
   <LiASS_Active>Nearby ally</LiASS_Active>
   <LiASS_Frozen>Frozen (outside range or no longer allied)</LiASS_Frozen>
   <LiASS_Pending>Collapsed (removal not enabled yet)</LiASS_Pending>
+  <LiASS_CrisisStatus>Active crisis: {0}; {1} days remaining.</LiASS_CrisisStatus>
+  <LiASS_CrisisKind_FoodShortage>famine</LiASS_CrisisKind_FoodShortage>
+  <LiASS_CrisisKind_DiseaseOutbreak>disease outbreak</LiASS_CrisisKind_DiseaseOutbreak>
+  <LiASS_CrisisKind_HostileThreat>hostile threat</LiASS_CrisisKind_HostileThreat>
+  <LiASS_CrisisLetterLabel>Crisis at {0}</LiASS_CrisisLetterLabel>
+  <LiASS_CrisisLetterText>{0} is facing a {1}. Resolve the crisis within {2} days to prevent a 20 point loss of settlement strength.</LiASS_CrisisLetterText>
+  <LiASS_CrisisFailedLabel>{0} crisis unresolved</LiASS_CrisisFailedLabel>
+  <LiASS_CrisisFailedText>The {1} at {0} was not resolved in time. Strength fell from {2} to {3}.</LiASS_CrisisFailedText>
+  <LiASS_CrisisResolvedLabel>Crisis at {0} resolved</LiASS_CrisisResolvedLabel>
+  <LiASS_CrisisResolvedText>The crisis at {0} was resolved. The settlement has entered a recovery period before another crisis.</LiASS_CrisisResolvedText>
   <LiASS_Migrate>Permanent migration</LiASS_Migrate>
   <LiASS_MigrateDescription>Permanently settle an adult free colonist or colony slave in {0}. Free colonists add up to 10 strength; slaves add 5.</LiASS_MigrateDescription>
   <LiASS_MigrantOption>{0} — strength +{1}</LiASS_MigrantOption>
