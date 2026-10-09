@@ -40,6 +40,10 @@ namespace LiAIChat.AlliedSettlementSurvival
 
         private static void Reinforce(IncidentParms parms, List<Pawn> result)
         {
+            Pawn spawnedMember = result.FirstOrDefault(pawn => pawn != null && pawn.Spawned && pawn.Map != null);
+            if (spawnedMember == null) return;
+            Map map = spawnedMember.Map;
+
             AlliedSettlementWorldComponent component = AlliedSettlementWorldComponent.Current;
             if (component == null) return;
             component.Refresh();
@@ -76,6 +80,13 @@ namespace LiAIChat.AlliedSettlementSurvival
                 if (kind == null) break;
                 Pawn guard = PawnGenerator.GeneratePawn(kind, parms.faction, targetTile);
                 if (guard == null) continue;
+                IntVec3 spawnCell = CellFinder.RandomClosewalkCellNear(parms.spawnCenter, map, 5);
+                GenSpawn.Spawn(guard, spawnCell, map);
+                if (!guard.Spawned)
+                {
+                    guard.Destroy(DestroyMode.Vanish);
+                    continue;
+                }
                 result.Add(guard);
                 guards.Add(guard);
             }
