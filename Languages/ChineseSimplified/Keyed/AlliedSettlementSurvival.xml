@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiASS_Strength>据点实力：{0} / 100</LiASS_Strength>
+  <LiASS_Active>附近盟友</LiASS_Active>
+  <LiASS_Frozen>冻结（超出范围或已解除盟约）</LiASS_Frozen>
+  <LiASS_Pending>已崩溃（尚未启用移除）</LiASS_Pending>
+</LanguageData>
