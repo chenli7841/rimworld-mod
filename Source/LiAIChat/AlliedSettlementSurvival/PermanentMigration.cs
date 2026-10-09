@@ -141,6 +141,7 @@ namespace LiAIChat.AlliedSettlementSurvival
                 {
                     defaultLabel = "LiASS_Migrate".Translate(),
                     defaultDesc = "LiASS_MigrateDescription".Translate(target.LabelCap),
+                    icon = LiAIChat.UI.LiAIChatTextures.PermanentMigration,
                     action = () => PermanentMigration.OpenMenu(__instance, target)
                 };
             }

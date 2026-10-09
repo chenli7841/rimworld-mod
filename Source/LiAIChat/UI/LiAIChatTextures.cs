@@ -21,5 +21,9 @@ namespace LiAIChat.UI
         public static readonly Texture2D EditBook =
             ContentFinder<Texture2D>.Get(
                 "UI/Commands/EditBook");
+
+        public static readonly Texture2D PermanentMigration =
+            ContentFinder<Texture2D>.Get(
+                "UI/Commands/PermanentMigration");
     }
 }
