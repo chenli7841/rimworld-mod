@@ -10,9 +10,9 @@ Select a registered settlement to see strength and status. Developer mode provid
 
 ## Stage 2: permanent migration
 
-Move a player caravan onto an eligible allied settlement tile, select the caravan and click **Permanent migration / 永久移民**. Select one adult free colonist and confirm permanent departure. Disabled candidates show why they cannot migrate. Registration refreshes when opening this menu.
+Move a player caravan onto an eligible allied settlement tile, select the caravan and click **Permanent migration / 永久移民**. Select one adult free colonist or colony slave and confirm permanent departure. Disabled candidates show why they cannot migrate. Registration refreshes when opening this menu.
 
-Each accepted migrant adds 10 strength (capped at 100; the confirmation shows the actual gain). A full or collapsed settlement cannot accept migration. Prisoners, slaves, children, downed pawns, mental breaks, quest lodgers/helpers, borrowed and quest-reserved pawns are excluded. At least one other capable adult free colonist must remain as caravan owner. Active settlement maps are excluded.
+Each accepted free colonist adds 10 strength and each colony slave adds 5 (capped at 100; the confirmation shows the actual gain). A full or collapsed settlement cannot accept migration. Prisoners, children, downed pawns, mental breaks, quest lodgers/helpers, borrowed and quest-reserved pawns are excluded. At least one other capable adult free colonist must remain as caravan owner. Active settlement maps are excluded.
 
 Inventory transfers to remaining caravan members first. If any item cannot be moved, the pawn stays and no reward is granted; already moved items remain elsewhere in the same caravan. Apparel and equipped weapons stay on the migrant. The original Pawn changes faction and is retained in WorldPawns with KeepForever, preserving identity and relations. Existing world pawns are marked for retention without registering them twice. This does not physically populate an allied settlement map or guarantee future visits.
 
@@ -32,8 +32,9 @@ In-game acceptance checks:
 - Check multiple home maps and non-surface maps; only eligible surface proximity counts.
 - Recheck Archive quests, civilization research and Pawn AI using the existing save.
 - Bring two adult free colonists, inventory, apparel and equipped weapons to an ally. Transfer one: +10 strength, same pawn identity and relationships, new faction, inventory retained by caravan, equipment retained by migrant.
+- Bring a colony slave with a capable free colonist: slave migration must be available and award +5 strength. A non-player slave or prisoner must remain ineligible.
 - With only one capable adult left, confirm migration is disabled. Test with only children, prisoners, downed or temporary pawns as the other members.
-- Test a recruited former prisoner (allowed), unrecruited prisoner/slave/quest helper (blocked).
+- Test a recruited former prisoner (allowed), unrecruited prisoner, non-player slave or quest helper (blocked).
 - At strength 95, the confirmation and award must be +5; at 100 or zero migration must be blocked.
 - Save/reload after migration. Use developer tools to recruit the same pawn again: contribution remains blocked, including at another settlement.
 - Break the alliance, move the caravan or alter eligibility while the confirmation is open: confirmation must revalidate and reject without reward.

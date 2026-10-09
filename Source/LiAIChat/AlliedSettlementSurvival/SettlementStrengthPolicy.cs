@@ -8,6 +8,7 @@ namespace LiAIChat.AlliedSettlementSurvival
         public const float NaturalRecoveryCap = 80f;
         public const float RecoveryPerDay = 0.5f;
         public const float MigrantStrength = 10f;
+        public const float SlaveMigrantStrength = 5f;
         public const int Radius = 30;
         public const int TicksPerDay = 60000;
 

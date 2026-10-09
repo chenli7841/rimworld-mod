@@ -26,9 +26,11 @@ namespace LiAIChat.AlliedSettlementSurvival
                 return "LiASS_Unavailable";
             AlliedSettlementState state = component.Get(settlement);
             if (state == null || state.strength <= 0f || state.strength >= 100f) return "LiASS_NoCapacity";
-            if (pawn == null || !caravan.ContainsPawn(pawn) || !pawn.IsFreeNonSlaveColonist ||
+            bool freeColonist = pawn != null && pawn.IsFreeNonSlaveColonist;
+            bool playerSlave = pawn != null && pawn.IsSlaveOfColony;
+            if (pawn == null || !caravan.ContainsPawn(pawn) || (!freeColonist && !playerSlave) ||
                 pawn.Faction != Faction.OfPlayer || !pawn.RaceProps.Humanlike || !pawn.ageTracker.Adult ||
-                pawn.DeadOrDowned || pawn.InMentalState || pawn.IsPrisoner || pawn.IsSlave)
+                pawn.DeadOrDowned || pawn.InMentalState || pawn.IsPrisoner)
                 return "LiASS_Ineligible";
             if (Temporary(pawn)) return "LiASS_Temporary";
             if (component.HasMigrated(pawn)) return "LiASS_AlreadyMigrated";
@@ -51,7 +53,7 @@ namespace LiAIChat.AlliedSettlementSurvival
                     continue;
                 }
                 AlliedSettlementState state = AlliedSettlementWorldComponent.Current.Get(settlement);
-                float gain = SettlementStrengthPolicy.Clamp(state.strength + SettlementStrengthPolicy.MigrantStrength) - state.strength;
+                float gain = SettlementStrengthPolicy.Clamp(state.strength + ContributionFor(candidate)) - state.strength;
                 options.Add(new FloatMenuOption("LiASS_MigrantOption".Translate(candidate.LabelShortCap, gain.ToString("0.#")), () =>
                     Find.WindowStack.Add(Dialog_MessageBox.CreateConfirmation(
                         "LiASS_Confirm".Translate(candidate.LabelShortCap, settlement.LabelCap, gain.ToString("0.#")),
@@ -113,11 +115,14 @@ namespace LiAIChat.AlliedSettlementSurvival
 
             AlliedSettlementState state = component.Get(settlement);
             component.RecordMigration(pawn);
-            state.strength = SettlementStrengthPolicy.Clamp(state.strength + SettlementStrengthPolicy.MigrantStrength);
+            state.strength = SettlementStrengthPolicy.Clamp(state.strength + ContributionFor(pawn));
             caravan.RecacheInventory();
             Messages.Message("LiASS_Success".Translate(pawn.LabelShortCap, settlement.LabelCap, state.strength.ToString("0.#")),
                 settlement, MessageTypeDefOf.PositiveEvent);
         }
+
+        public static float ContributionFor(Pawn pawn) =>
+            pawn.IsSlaveOfColony ? SettlementStrengthPolicy.SlaveMigrantStrength : SettlementStrengthPolicy.MigrantStrength;
     }
 
     [HarmonyPatch(typeof(Caravan), nameof(Caravan.GetGizmos))]
