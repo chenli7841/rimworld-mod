@@ -73,8 +73,8 @@ namespace LiAIChat.Questing
 
     public static class AlliedSettlementAidQuestUtility
     {
-        public const float RequiredFoodNutrition = 150f;
-        public const int RequiredMedicineUnits = 10;
+        public static float RequiredFoodNutrition => AlliedSettlementSurvivalMod.Current.foodNutrition;
+        public static int RequiredMedicineUnits => AlliedSettlementSurvivalMod.Current.medicineUnits;
 
         public static bool TryCreate(AlliedSettlementWorldComponent component, AlliedSettlementState state,
             AlliedSettlementCrisisKind kind, out Quest quest)

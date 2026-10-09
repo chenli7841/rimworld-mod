@@ -2,14 +2,24 @@ using System;
 
 namespace LiAIChat.AlliedSettlementSurvival
 {
+    public static class AlliedSettlementRuntimeSettings
+    {
+        public static float InitialStrength = 60f;
+        public static float RecoveryCap = 80f;
+        public static float RecoveryPerDay = 0.5f;
+        public static float MigrantStrength = 10f;
+        public static float SlaveMigrantStrength = 5f;
+        public static int Radius = 30;
+    }
+
     public static class SettlementStrengthPolicy
     {
-        public const float InitialStrength = 60f;
-        public const float NaturalRecoveryCap = 80f;
-        public const float RecoveryPerDay = 0.5f;
-        public const float MigrantStrength = 10f;
-        public const float SlaveMigrantStrength = 5f;
-        public const int Radius = 30;
+        public static float InitialStrength => AlliedSettlementRuntimeSettings.InitialStrength;
+        public static float NaturalRecoveryCap => AlliedSettlementRuntimeSettings.RecoveryCap;
+        public static float RecoveryPerDay => AlliedSettlementRuntimeSettings.RecoveryPerDay;
+        public static float MigrantStrength => AlliedSettlementRuntimeSettings.MigrantStrength;
+        public static float SlaveMigrantStrength => AlliedSettlementRuntimeSettings.SlaveMigrantStrength;
+        public static int Radius => AlliedSettlementRuntimeSettings.Radius;
         public const int TicksPerDay = 60000;
 
         public static float Clamp(float value) => Math.Max(0f, Math.Min(100f, value));

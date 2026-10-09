@@ -11,6 +11,7 @@ namespace LiAIChat.AlliedSettlementSurvival
         public static void Postfix(Settlement __instance, ref string __result)
         {
             AlliedSettlementWorldComponent component = AlliedSettlementWorldComponent.Current;
+            if (!AlliedSettlementSurvivalMod.Current.systemEnabled) return;
             AlliedSettlementState state = component?.Get(__instance);
             if (state == null) return;
             string status = state.strength <= 0f ? "LiASS_Pending" : component.Eligible(__instance) ? "LiASS_Active" : "LiASS_Frozen";
@@ -31,6 +32,7 @@ namespace LiAIChat.AlliedSettlementSurvival
         public static IEnumerable<Gizmo> Postfix(IEnumerable<Gizmo> __result, Settlement __instance)
         {
             foreach (Gizmo gizmo in __result) yield return gizmo;
+            if (!AlliedSettlementSurvivalMod.Current.systemEnabled) yield break;
             AlliedSettlementState state = AlliedSettlementWorldComponent.Current?.Get(__instance);
             if (!Prefs.DevMode || state == null) yield break;
             yield return new Command_Action { defaultLabel = "DEV: Strength -10", action = () => state.strength = SettlementStrengthPolicy.Clamp(state.strength - 10f) };

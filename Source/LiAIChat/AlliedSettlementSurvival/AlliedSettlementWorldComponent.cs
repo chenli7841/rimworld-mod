@@ -23,6 +23,8 @@ namespace LiAIChat.AlliedSettlementSurvival
         public int lastTick;
         public bool active;
         public bool crisisActive;
+        public bool pendingCollapse;
+        public bool collapseNotified;
         public int nextCrisisTick;
         public int crisisDeadlineTick;
         public int lastCrisisTick;
@@ -31,12 +33,13 @@ namespace LiAIChat.AlliedSettlementSurvival
         public Quest aidQuest;
         public Quest threatQuest;
 
-        public const int ProtectionTicks = 15 * SettlementStrengthPolicy.TicksPerDay;
-        public const int MinimumCrisisIntervalTicks = 20 * SettlementStrengthPolicy.TicksPerDay;
-        public const int MaximumCrisisIntervalTicks = 35 * SettlementStrengthPolicy.TicksPerDay;
-        public const int CrisisDeadlineTicks = 10 * SettlementStrengthPolicy.TicksPerDay;
-        public const int MaximumConcurrentCrises = 2;
-        public const float FailedCrisisStrengthLoss = 20f;
+        private static AlliedSettlementSettings Settings => AlliedSettlementSurvivalMod.Current;
+        public static int ProtectionTicks => Settings.protectionDays * SettlementStrengthPolicy.TicksPerDay;
+        public static int MinimumCrisisIntervalTicks => Settings.minimumCrisisIntervalDays * SettlementStrengthPolicy.TicksPerDay;
+        public static int MaximumCrisisIntervalTicks => Settings.maximumCrisisIntervalDays * SettlementStrengthPolicy.TicksPerDay;
+        public static int CrisisDeadlineTicks => Settings.crisisDeadlineDays * SettlementStrengthPolicy.TicksPerDay;
+        public static int MaximumConcurrentCrises => Settings.maximumConcurrentCrises;
+        public static float FailedCrisisStrengthLoss => Settings.failedCrisisStrengthLoss;
 
         public void ExposeData()
         {
@@ -46,6 +49,8 @@ namespace LiAIChat.AlliedSettlementSurvival
             Scribe_Values.Look(ref lastTick, "lastTick");
             Scribe_Values.Look(ref active, "active");
             Scribe_Values.Look(ref crisisActive, "crisisActive");
+            Scribe_Values.Look(ref pendingCollapse, "pendingCollapse");
+            Scribe_Values.Look(ref collapseNotified, "collapseNotified");
             Scribe_Values.Look(ref nextCrisisTick, "nextCrisisTick");
             Scribe_Values.Look(ref crisisDeadlineTick, "crisisDeadlineTick");
             Scribe_Values.Look(ref lastCrisisTick, "lastCrisisTick");
@@ -96,8 +101,26 @@ namespace LiAIChat.AlliedSettlementSurvival
         {
             if (Find.TickManager.TicksGame % 2500 == 0)
             {
+                if (!AlliedSettlementSurvivalMod.Current.systemEnabled)
+                {
+                    PauseWhileDisabled();
+                    return;
+                }
                 Refresh();
                 TickCrises();
+            }
+        }
+
+        private void PauseWhileDisabled()
+        {
+            int now = Find.TickManager.TicksGame;
+            foreach (AlliedSettlementState state in settlements)
+            {
+                int pausedTicks = System.Math.Max(0, now - state.lastCrisisTick);
+                state.nextCrisisTick += pausedTicks;
+                if (state.crisisActive) state.crisisDeadlineTick += pausedTicks;
+                state.lastTick = now;
+                state.lastCrisisTick = now;
             }
         }
 
@@ -115,6 +138,7 @@ namespace LiAIChat.AlliedSettlementSurvival
 
         public void Refresh()
         {
+            if (!AlliedSettlementSurvivalMod.Current.systemEnabled) return;
             int now = Find.TickManager.TicksGame;
             settlements.RemoveAll(s => s.settlement == null || !s.settlement.Spawned);
             foreach (Settlement settlement in Find.WorldObjects.Settlements)
@@ -157,7 +181,16 @@ namespace LiAIChat.AlliedSettlementSurvival
             int activeCount = settlements.Count(s => s.crisisActive);
             foreach (AlliedSettlementState state in settlements.OrderBy(s => s.nextCrisisTick).ToList())
             {
-                if (!state.active || state.settlement == null || state.strength <= 0f) continue;
+                if (state.settlement == null) continue;
+                if (state.pendingCollapse || state.strength <= 0f)
+                {
+                    bool crisisWasActive = state.crisisActive;
+                    BeginCollapse(state);
+                    if (crisisWasActive) activeCount--;
+                    TryRemoveCollapsedSettlement(state);
+                    continue;
+                }
+                if (!state.active) continue;
 
                 if (state.crisisActive)
                 {
@@ -235,6 +268,72 @@ namespace LiAIChat.AlliedSettlementSurvival
                 failedQuest.End(QuestEndOutcome.Fail, false);
             if (failedThreatQuest != null && failedThreatQuest.State == QuestState.Ongoing)
                 failedThreatQuest.End(QuestEndOutcome.Fail, false);
+        }
+
+        private void BeginCollapse(AlliedSettlementState state)
+        {
+            state.pendingCollapse = true;
+            state.active = false;
+            state.crisisActive = false;
+            state.crisisKind = AlliedSettlementCrisisKind.None;
+            state.crisisDeadlineTick = 0;
+            state.nextCrisisTick = 0;
+
+            Quest aidQuest = state.aidQuest;
+            Quest threatQuest = state.threatQuest;
+            state.aidQuest = null;
+            state.threatQuest = null;
+            if (aidQuest != null && aidQuest.State == QuestState.Ongoing)
+                aidQuest.End(QuestEndOutcome.Fail, false);
+            if (threatQuest != null && threatQuest.State == QuestState.Ongoing)
+                threatQuest.End(QuestEndOutcome.Fail, false);
+
+            if (!state.collapseNotified)
+            {
+                state.collapseNotified = true;
+                Find.LetterStack.ReceiveLetter(
+                    "LiASS_CollapseLetterLabel".Translate(state.settlement.LabelCap),
+                    (AlliedSettlementSurvivalMod.Current.removeAtZero
+                        ? "LiASS_CollapseLetterText"
+                        : "LiASS_CollapseLetterTextRetained").Translate(state.settlement.LabelCap),
+                    LetterDefOf.NegativeEvent,
+                    state.settlement);
+            }
+        }
+
+        private void TryRemoveCollapsedSettlement(AlliedSettlementState state)
+        {
+            if (!AlliedSettlementSurvivalMod.Current.removeAtZero || state?.settlement == null)
+                return;
+
+            Settlement settlement = state.settlement;
+            if (settlement.HasMap || Find.Maps.Any(map => map.Parent == settlement))
+                return;
+
+            if (Find.QuestManager != null && Find.QuestManager.QuestsListForReading.Any(quest =>
+                    quest != null && quest.State == QuestState.Ongoing &&
+                    quest.PartsListForReading.Any(part => part.QuestLookTargets != null &&
+                        part.QuestLookTargets.Any(target => target.HasWorldObject && target.WorldObject == settlement))))
+                return;
+
+            try
+            {
+                PlanetTile tile = settlement.Tile;
+                Faction faction = settlement.Faction;
+                var ruins = (DestroyedSettlement)WorldObjectMaker.MakeWorldObject(WorldObjectDefOf.DestroyedSettlement);
+                ruins.Tile = tile;
+                if (faction != null) ruins.SetFaction(faction);
+
+                if (!settlement.Destroyed)
+                    settlement.Destroy();
+                if (Find.WorldObjects.DestroyedSettlementAt(tile) == null)
+                    Find.WorldObjects.Add(ruins);
+                settlements.Remove(state);
+            }
+            catch (System.Exception error)
+            {
+                Log.Error("[LiAIChat] Could not safely remove collapsed allied settlement: " + error);
+            }
         }
 
         public bool CompleteCrisis(Settlement settlement, AlliedSettlementCrisisKind expectedKind)

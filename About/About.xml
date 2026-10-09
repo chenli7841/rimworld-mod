@@ -6,6 +6,7 @@
   <author>Li</author>
 
   <packageId>li.rimworld.aichat</packageId>
+  <modClass>LiAIChat.AlliedSettlementSurvival.AlliedSettlementSurvivalMod</modClass>
 
   <supportedVersions>
     <li>1.6</li>

@@ -21,6 +21,7 @@ namespace LiAIChat.AlliedSettlementSurvival
 
         public static string Rejection(Caravan caravan, Settlement settlement, Pawn pawn)
         {
+            if (!AlliedSettlementSurvivalMod.Current.systemEnabled) return "LiASS_Disabled";
             AlliedSettlementWorldComponent component = AlliedSettlementWorldComponent.Current;
             if (component == null || caravan == null || !caravan.Spawned || !caravan.IsPlayerControlled ||
                 settlement == null || caravan.Tile != settlement.Tile || !component.Eligible(settlement) || settlement.HasMap)
@@ -132,7 +133,7 @@ namespace LiAIChat.AlliedSettlementSurvival
         public static IEnumerable<Gizmo> Postfix(IEnumerable<Gizmo> __result, Caravan __instance)
         {
             foreach (Gizmo gizmo in __result) yield return gizmo;
-            if (!__instance.IsPlayerControlled) yield break;
+            if (!AlliedSettlementSurvivalMod.Current.systemEnabled || !__instance.IsPlayerControlled) yield break;
             AlliedSettlementWorldComponent component = AlliedSettlementWorldComponent.Current;
             if (component == null) yield break;
             foreach (Settlement settlement in Find.WorldObjects.Settlements.Where(s => s.Tile == __instance.Tile && component.Eligible(s)))

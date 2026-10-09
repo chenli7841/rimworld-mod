@@ -3,7 +3,7 @@
   <LiASS_Strength>Settlement strength: {0} / 100</LiASS_Strength>
   <LiASS_Active>Nearby ally</LiASS_Active>
   <LiASS_Frozen>Frozen (outside range or no longer allied)</LiASS_Frozen>
-  <LiASS_Pending>Collapsed (removal not enabled yet)</LiASS_Pending>
+  <LiASS_Pending>Collapsed; waiting for a safe removal point</LiASS_Pending>
   <LiASS_CrisisStatus>Active crisis: {0}; {1} days remaining.</LiASS_CrisisStatus>
   <LiASS_CrisisKind_FoodShortage>famine</LiASS_CrisisKind_FoodShortage>
   <LiASS_CrisisKind_DiseaseOutbreak>disease outbreak</LiASS_CrisisKind_DiseaseOutbreak>
@@ -42,4 +42,45 @@
   <LiASS_InventoryFailed>Inventory could not be fully transferred. Migration cancelled; the colonist and items remain in the caravan.</LiASS_InventoryFailed>
   <LiASS_TransferFailed>Migration failed. No strength was awarded. See the log for details.</LiASS_TransferFailed>
   <LiASS_Success>{0} has settled in {1}. Settlement strength: {2} / 100.</LiASS_Success>
+  <LiASS_Disabled>The allied settlement survival system is disabled in mod settings.</LiASS_Disabled>
+  <LiASS_CollapseLetterLabel>{0} has collapsed</LiASS_CollapseLetterLabel>
+  <LiASS_CollapseLetterText>{0} has lost all settlement strength. Its active aid or threat quests have ended. The settlement will be replaced by a destroyed-settlement marker when no map or active quest still refers to it.</LiASS_CollapseLetterText>
+  <LiASS_CollapseLetterTextRetained>{0} has lost all settlement strength. Its active aid or threat quests have ended. Automatic removal is disabled, so the settlement will remain on the world map.</LiASS_CollapseLetterTextRetained>
+  <LiASS_SettingsCategory>Allied settlement survival</LiASS_SettingsCategory>
+  <LiASS_Setting_Enabled>Enable allied settlement survival</LiASS_Setting_Enabled>
+  <LiASS_Setting_EnabledTip>When disabled, strength recovery and crisis timers pause. Settlement and caravan commands are hidden.</LiASS_Setting_EnabledTip>
+  <LiASS_Setting_RemoveAtZero>Remove settlements at zero strength</LiASS_Setting_RemoveAtZero>
+  <LiASS_Setting_RemoveAtZeroTip>Collapsed settlements remain pending when disabled. Removal waits until their map and active quests no longer reference them.</LiASS_Setting_RemoveAtZeroTip>
+  <LiASS_SettingsScope>Coverage</LiASS_SettingsScope>
+  <LiASS_SettingsStrength>Strength and migration</LiASS_SettingsStrength>
+  <LiASS_SettingsCrises>Crisis schedule</LiASS_SettingsCrises>
+  <LiASS_SettingsAid>Aid requirements</LiASS_SettingsAid>
+  <LiASS_SettingsThreat>Threat missions</LiASS_SettingsThreat>
+  <LiASS_Setting_Radius>Home-map radius: {0} tiles</LiASS_Setting_Radius>
+  <LiASS_Setting_InitialStrength>Initial strength: {0}</LiASS_Setting_InitialStrength>
+  <LiASS_Setting_RecoveryCap>Natural recovery cap: {0}</LiASS_Setting_RecoveryCap>
+  <LiASS_Setting_RecoveryPerDay>Natural recovery per day: {0}</LiASS_Setting_RecoveryPerDay>
+  <LiASS_Setting_MigrantStrength>Free colonist migration: +{0}</LiASS_Setting_MigrantStrength>
+  <LiASS_Setting_SlaveMigrantStrength>Slave migration: +{0}</LiASS_Setting_SlaveMigrantStrength>
+  <LiASS_Setting_ProtectionDays>First-crisis protection: {0} days</LiASS_Setting_ProtectionDays>
+  <LiASS_Setting_MinimumInterval>Minimum crisis interval: {0} days</LiASS_Setting_MinimumInterval>
+  <LiASS_Setting_MaximumInterval>Maximum crisis interval: {0} days</LiASS_Setting_MaximumInterval>
+  <LiASS_Setting_DeadlineDays>Crisis deadline: {0} days</LiASS_Setting_DeadlineDays>
+  <LiASS_Setting_MaximumConcurrent>Maximum concurrent crises: {0}</LiASS_Setting_MaximumConcurrent>
+  <LiASS_Setting_FailedLoss>Strength lost on failure: {0}</LiASS_Setting_FailedLoss>
+  <LiASS_Setting_FoodNutrition>Food requirement: {0} nutrition</LiASS_Setting_FoodNutrition>
+  <LiASS_Setting_MedicineUnits>Medicine requirement: {0} units</LiASS_Setting_MedicineUnits>
+  <LiASS_Setting_ThreatPoints>Threat site points: {0}</LiASS_Setting_ThreatPoints>
+  <LiASS_OverviewTitle>Allied settlements</LiASS_OverviewTitle>
+  <LiASS_OverviewUnavailable>The settlement survival component is not available.</LiASS_OverviewUnavailable>
+  <LiASS_OverviewEmpty>No allied settlements are currently registered.</LiASS_OverviewEmpty>
+  <LiASS_OverviewSettlement>Settlement</LiASS_OverviewSettlement>
+  <LiASS_OverviewStrength>Strength</LiASS_OverviewStrength>
+  <LiASS_OverviewStatus>Status</LiASS_OverviewStatus>
+  <LiASS_OverviewCrisis>Crisis / next crisis</LiASS_OverviewCrisis>
+  <LiASS_OverviewAction>World map</LiASS_OverviewAction>
+  <LiASS_OverviewActiveCrisis>{0} — {1} days left</LiASS_OverviewActiveCrisis>
+  <LiASS_OverviewCollapsed>Collapse pending</LiASS_OverviewCollapsed>
+  <LiASS_OverviewNextCrisis>Next crisis in {0} days</LiASS_OverviewNextCrisis>
+  <LiASS_OverviewGoTo>Show</LiASS_OverviewGoTo>
 </LanguageData>

@@ -11,4 +11,13 @@
     <closesWorldView>true</closesWorldView>
   </MainButtonDef>
 
+  <MainButtonDef>
+    <defName>LiAIChat_AlliedSettlements</defName>
+    <label>allied settlements</label>
+    <description>View the strength, crisis and status of nearby allied settlements.</description>
+    <tabWindowClass>LiAIChat.AlliedSettlementSurvival.MainTabWindow_AlliedSettlements</tabWindowClass>
+    <order>67</order>
+    <closesWorldView>true</closesWorldView>
+  </MainButtonDef>
+
 </Defs>

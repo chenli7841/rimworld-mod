@@ -49,7 +49,7 @@ namespace LiAIChat.Questing
             get
             {
                 if (site != null) yield return new GlobalTargetInfo(site);
-                else if (settlement != null) yield return new GlobalTargetInfo(settlement);
+                if (settlement != null) yield return new GlobalTargetInfo(settlement);
             }
         }
 
@@ -86,7 +86,7 @@ namespace LiAIChat.Questing
 
     public static class AlliedSettlementThreatQuestUtility
     {
-        private const float ThreatPoints = 500f;
+        private static float ThreatPoints => AlliedSettlementSurvivalMod.Current.threatPoints;
 
         public static bool TryCreate(AlliedSettlementState state, out Quest quest)
         {

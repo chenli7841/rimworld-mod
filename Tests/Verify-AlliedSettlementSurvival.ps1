@@ -41,5 +41,17 @@ foreach ($target in @(@('RimWorld.Planet.Settlement','GetInspectString'), @('Rim
 if (-not [Enum]::GetNames($gameAssembly.GetType('RimWorld.Planet.PawnDiscardDecideMode')).Contains('KeepForever')) {
     throw 'Permanent world-pawn retention API unavailable'
 }
+$worldObject = $gameAssembly.GetType('RimWorld.Planet.WorldObject', $true)
+if ($null -eq $worldObject.GetMethod('Destroy', [Type[]]@())) {
+    throw 'World-object destruction API unavailable'
+}
+$destroyedSettlement = $gameAssembly.GetType('RimWorld.WorldObjectDefOf', $true).GetField('DestroyedSettlement')
+if ($null -eq $destroyedSettlement) { throw 'Destroyed-settlement marker definition unavailable' }
+$settlementType = $gameAssembly.GetType('RimWorld.Planet.Settlement', $true)
+if ($null -eq $settlementType.GetProperty('HasMap')) { throw 'Settlement map-lifetime check unavailable' }
+$worldObjects = $gameAssembly.GetType('RimWorld.Planet.WorldObjectsHolder', $true)
+$ruinLookup = $worldObjects.GetMethod('DestroyedSettlementAt', [Type[]]@($gameAssembly.GetType('RimWorld.Planet.PlanetTile', $true)))
+if ($null -eq $ruinLookup) { throw 'Destroyed-settlement marker lookup unavailable' }
 'Allied settlement policy, localization and installed Harmony target checks passed.'
+'Safe collapse APIs for map checks and destroyed-settlement markers are available.'
 'Actual caravan transfer and save/load still require the documented in-game checks.'

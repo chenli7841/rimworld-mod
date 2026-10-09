@@ -3,7 +3,7 @@
   <LiASS_Strength>据点实力：{0} / 100</LiASS_Strength>
   <LiASS_Active>附近盟友</LiASS_Active>
   <LiASS_Frozen>冻结（超出范围或已解除盟约）</LiASS_Frozen>
-  <LiASS_Pending>已崩溃（尚未启用移除）</LiASS_Pending>
+  <LiASS_Pending>已崩溃，等待安全移除</LiASS_Pending>
   <LiASS_CrisisStatus>危机进行中：{0}；剩余{1}天。</LiASS_CrisisStatus>
   <LiASS_CrisisKind_FoodShortage>饥荒</LiASS_CrisisKind_FoodShortage>
   <LiASS_CrisisKind_DiseaseOutbreak>瘟疫</LiASS_CrisisKind_DiseaseOutbreak>
@@ -42,4 +42,45 @@
   <LiASS_InventoryFailed>库存未能全部转移，移民已取消。人物和物品仍在商队内。</LiASS_InventoryFailed>
   <LiASS_TransferFailed>移民失败，未增加实力。详情请查看日志。</LiASS_TransferFailed>
   <LiASS_Success>{0}已定居在{1}。据点实力：{2} / 100。</LiASS_Success>
+  <LiASS_Disabled>盟友据点生存系统已在 Mod 设置中关闭。</LiASS_Disabled>
+  <LiASS_CollapseLetterLabel>{0}已崩溃</LiASS_CollapseLetterLabel>
+  <LiASS_CollapseLetterText>{0}的据点实力已降至零。其进行中的援助或威胁任务已结束；待地图和活动任务都不再引用该据点后，将以废墟标记替换。</LiASS_CollapseLetterText>
+  <LiASS_CollapseLetterTextRetained>{0}的据点实力已降至零。其进行中的援助或威胁任务已结束。由于关闭了自动移除，该据点将保留在世界地图上。</LiASS_CollapseLetterTextRetained>
+  <LiASS_SettingsCategory>盟友据点生存</LiASS_SettingsCategory>
+  <LiASS_Setting_Enabled>启用盟友据点生存系统</LiASS_Setting_Enabled>
+  <LiASS_Setting_EnabledTip>关闭后，实力恢复和危机计时暂停，并隐藏据点与商队指令。</LiASS_Setting_EnabledTip>
+  <LiASS_Setting_RemoveAtZero>实力归零时移除据点</LiASS_Setting_RemoveAtZero>
+  <LiASS_Setting_RemoveAtZeroTip>关闭时崩溃据点会保留为待处理状态。只有在据点地图和活动任务都不再引用它后才会移除。</LiASS_Setting_RemoveAtZeroTip>
+  <LiASS_SettingsScope>适用范围</LiASS_SettingsScope>
+  <LiASS_SettingsStrength>实力与移民</LiASS_SettingsStrength>
+  <LiASS_SettingsCrises>危机调度</LiASS_SettingsCrises>
+  <LiASS_SettingsAid>援助需求</LiASS_SettingsAid>
+  <LiASS_SettingsThreat>威胁任务</LiASS_SettingsThreat>
+  <LiASS_Setting_Radius>主基地影响半径：{0}格</LiASS_Setting_Radius>
+  <LiASS_Setting_InitialStrength>初始实力：{0}</LiASS_Setting_InitialStrength>
+  <LiASS_Setting_RecoveryCap>自然恢复上限：{0}</LiASS_Setting_RecoveryCap>
+  <LiASS_Setting_RecoveryPerDay>每日自然恢复：{0}</LiASS_Setting_RecoveryPerDay>
+  <LiASS_Setting_MigrantStrength>自由殖民者移民：+{0}</LiASS_Setting_MigrantStrength>
+  <LiASS_Setting_SlaveMigrantStrength>奴隶移民：+{0}</LiASS_Setting_SlaveMigrantStrength>
+  <LiASS_Setting_ProtectionDays>首次危机保护期：{0}天</LiASS_Setting_ProtectionDays>
+  <LiASS_Setting_MinimumInterval>危机最短间隔：{0}天</LiASS_Setting_MinimumInterval>
+  <LiASS_Setting_MaximumInterval>危机最长间隔：{0}天</LiASS_Setting_MaximumInterval>
+  <LiASS_Setting_DeadlineDays>危机期限：{0}天</LiASS_Setting_DeadlineDays>
+  <LiASS_Setting_MaximumConcurrent>同时进行的危机上限：{0}</LiASS_Setting_MaximumConcurrent>
+  <LiASS_Setting_FailedLoss>失败时损失实力：{0}</LiASS_Setting_FailedLoss>
+  <LiASS_Setting_FoodNutrition>食物需求：{0}营养</LiASS_Setting_FoodNutrition>
+  <LiASS_Setting_MedicineUnits>药品需求：{0}单位</LiASS_Setting_MedicineUnits>
+  <LiASS_Setting_ThreatPoints>威胁据点点数：{0}</LiASS_Setting_ThreatPoints>
+  <LiASS_OverviewTitle>盟友据点</LiASS_OverviewTitle>
+  <LiASS_OverviewUnavailable>盟友据点生存组件当前不可用。</LiASS_OverviewUnavailable>
+  <LiASS_OverviewEmpty>当前没有已登记的盟友据点。</LiASS_OverviewEmpty>
+  <LiASS_OverviewSettlement>据点</LiASS_OverviewSettlement>
+  <LiASS_OverviewStrength>实力</LiASS_OverviewStrength>
+  <LiASS_OverviewStatus>状态</LiASS_OverviewStatus>
+  <LiASS_OverviewCrisis>当前危机 / 下次危机</LiASS_OverviewCrisis>
+  <LiASS_OverviewAction>世界地图</LiASS_OverviewAction>
+  <LiASS_OverviewActiveCrisis>{0}，剩余{1}天</LiASS_OverviewActiveCrisis>
+  <LiASS_OverviewCollapsed>等待崩溃处理</LiASS_OverviewCollapsed>
+  <LiASS_OverviewNextCrisis>{0}天后可能发生危机</LiASS_OverviewNextCrisis>
+  <LiASS_OverviewGoTo>定位</LiASS_OverviewGoTo>
 </LanguageData>

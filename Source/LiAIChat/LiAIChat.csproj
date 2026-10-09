@@ -66,7 +66,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlliedSettlementSurvival\SettlementStrengthPolicy.cs" />
+    <Compile Include="AlliedSettlementSurvival\AlliedSettlementSettings.cs" />
     <Compile Include="AlliedSettlementSurvival\AlliedSettlementWorldComponent.cs" />
+    <Compile Include="AlliedSettlementSurvival\MainTabWindow_AlliedSettlements.cs" />
     <Compile Include="AlliedSettlementSurvival\SettlementStrengthPatches.cs" />
     <Compile Include="AlliedSettlementSurvival\PermanentMigration.cs" />
     <Compile Include="Questing\AlliedSettlementAidQuest.cs" />
