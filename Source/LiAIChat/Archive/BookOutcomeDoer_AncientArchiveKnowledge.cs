@@ -74,14 +74,27 @@ namespace LiAIChat.Archive
 
 
             float progress = state.GetArchiveReadingProgress(studyId);
-
-            progress += factor * LiAIChat.Civilization.CivilizationTopicEffects.Factor(
+            float readingGain = factor * LiAIChat.Civilization.CivilizationTopicEffects.Factor(
                 reader, LiAIChat.Civilization.CivilizationTopicEffect.ReadingGain) *
                 IntellectualComprehensionFactor(reader);
+            float learningInterval = Mathf.Max(1f, Props.learningInterval);
+            progress += readingGain;
 
-            while (progress >= Props.learningInterval)
+            // Familiarity should reflect partial reading sessions too. Keep
+            // the configured total gain per learning interval, but distribute
+            // it across the actual reading ticks instead of waiting for a full
+            // interval before recording any understanding.
+            state.LearnEarthText(
+                studyId,
+                Props.learningStrength * readingGain / learningInterval);
+            CivilizationDomainKnowledgeUtility.ReconcileTextContribution(
+                state,
+                studyId,
+                archive.KnowledgeTopicId);
+
+            while (progress >= learningInterval)
             {
-                progress -= Props.learningInterval;
+                progress -= learningInterval;
 
                 ApplyKnowledge(
                     state,
@@ -116,10 +129,6 @@ namespace LiAIChat.Archive
             KnowledgeUpdater.Apply(
                 state.Knowledge,
                 acquisition);
-
-            state.LearnEarthText(
-                studyId,
-                Props.learningStrength);
 
             CivilizationDomainKnowledgeUtility.ReconcileTextContribution(
                 state,

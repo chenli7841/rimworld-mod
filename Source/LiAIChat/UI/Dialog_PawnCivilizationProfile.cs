@@ -241,7 +241,7 @@ namespace LiAIChat.UI
 
                 Widgets.Label(new Rect(rect.x, y, rect.width, 22f), title);
                 y += 22f;
-                Widgets.Label(new Rect(rect.x + 10f, y, rect.width - 10f, 20f), author + " · " + GetFamiliarityLabel(familiarity));
+                Widgets.Label(new Rect(rect.x + 10f, y, rect.width - 10f, 20f), author + " · " + GetFamiliarityLabel(familiarity) + " " + familiarity.ToStringPercent("F1"));
                 y += 20f;
                 Widgets.FillableBar(new Rect(rect.x + 10f, y, rect.width - 10f, 12f), familiarity);
                 y += 22f;
@@ -331,7 +331,7 @@ namespace LiAIChat.UI
         private static List<EarthTextDef> GetKnownTexts(PawnAIState state)
         {
             return DefDatabase<EarthTextDef>.AllDefsListForReading
-                .Where(text => text != null && state.GetEarthTextFamiliarity(text.defName) > 0.01f)
+                .Where(text => text != null && state.GetEarthTextFamiliarity(text.defName) > 0.001f)
                 .OrderByDescending(text => state.GetEarthTextFamiliarity(text.defName))
                 .ThenBy(text => text.title ?? text.label)
                 .ToList();
