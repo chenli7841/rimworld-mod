@@ -11,7 +11,7 @@ namespace LiAIChat.State
         // because they encountered an unrelated pawn.
         public static PawnAIState TryGetExistingState(Pawn pawn)
         {
-            if (pawn == null || Current.Game == null)
+            if (pawn == null || !pawn.RaceProps.Humanlike || Current.Game == null)
                 return null;
 
             LiAIChatGameComponent component = Current.Game.GetComponent<LiAIChatGameComponent>();
@@ -30,6 +30,15 @@ namespace LiAIChat.State
         {
             if (pawn == null)
             {
+                return null;
+            }
+
+            // Knowledge and conversation state belong to people. In particular,
+            // broad Pawn lifecycle patches also run for animals, so do not let
+            // those callbacks create persistent AI records for them.
+            if (!pawn.RaceProps.Humanlike)
+            {
+                RemoveExistingState(pawn);
                 return null;
             }
 
@@ -93,6 +102,21 @@ namespace LiAIChat.State
                 newState.Knowledge.ScienceKnowledge.ToString("0.00"));
 
             return newState;
+        }
+
+        private static void RemoveExistingState(Pawn pawn)
+        {
+            if (Current.Game == null)
+                return;
+
+            LiAIChatGameComponent component =
+                Current.Game.GetComponent<LiAIChatGameComponent>();
+            if (component == null || component.PawnStates == null)
+                return;
+
+            int pawnId = pawn.thingIDNumber;
+            component.PawnStates.RemoveAll(
+                state => state != null && state.PawnId == pawnId);
         }
     }
 }

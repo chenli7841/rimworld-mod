@@ -19,7 +19,7 @@ namespace LiAIChat.Archive
         {
             get
             {
-                EarthTextDef text = DefDatabase<EarthTextDef>.GetNamedSilentFail(earthTextDefName);
+                EarthTextDef text = EarthTextEndorsementUtility.FindText(earthTextDefName);
                 return text == null ? "对一部地球文献形成了鲜明、持久的认同。" :
                     "认同文献：《" + EarthTextEndorsementUtility.Title(text) + "》\n" + text.shortDescription;
             }
@@ -46,7 +46,7 @@ namespace LiAIChat.Archive
 
             List<EarthTextDef> eligible = EligibleTexts(state);
             int now = Find.TickManager.TicksGame;
-            EarthTextDef current = DefDatabase<EarthTextDef>.GetNamedSilentFail(state.EndorsedEarthTextId);
+            EarthTextDef current = FindText(state.EndorsedEarthTextId);
             bool currentEligible = current != null && eligible.Contains(current);
 
             if (eligible.Count == 0)
@@ -73,7 +73,7 @@ namespace LiAIChat.Archive
                 current = selected;
             }
 
-            SyncHediff(pawn, current ?? DefDatabase<EarthTextDef>.GetNamedSilentFail(state.EndorsedEarthTextId));
+            SyncHediff(pawn, current);
         }
 
         public static void AppendConversationContext(StringBuilder builder, PawnAIState state)
@@ -81,7 +81,7 @@ namespace LiAIChat.Archive
             if (builder == null || state == null || string.IsNullOrEmpty(state.EndorsedEarthTextId))
                 return;
 
-            EarthTextDef text = DefDatabase<EarthTextDef>.GetNamedSilentFail(state.EndorsedEarthTextId);
+            EarthTextDef text = FindText(state.EndorsedEarthTextId);
             if (text == null) return;
 
             builder.AppendLine();
@@ -110,7 +110,7 @@ namespace LiAIChat.Archive
 
         public static string IdentityLabel(string textDefName)
         {
-            EarthTextDef text = DefDatabase<EarthTextDef>.GetNamedSilentFail(textDefName);
+            EarthTextDef text = FindText(textDefName);
             string title = Title(text);
             switch (textDefName)
             {
@@ -139,7 +139,7 @@ namespace LiAIChat.Archive
             if (state.EarthTextFamiliarity == null) return new List<EarthTextDef>();
             return state.EarthTextFamiliarity
                 .Where(pair => pair.Value >= FamiliarityThreshold)
-                .Select(pair => DefDatabase<EarthTextDef>.GetNamedSilentFail(pair.Key))
+                .Select(pair => FindText(pair.Key))
                 .Where(text => text != null)
                 .ToList();
         }
@@ -177,8 +177,8 @@ namespace LiAIChat.Archive
             foreach (EarthTextStanceChange change in state.EarthTextStanceHistory.Skip(
                 Math.Max(0, state.EarthTextStanceHistory.Count - 3)))
             {
-                EarthTextDef previous = DefDatabase<EarthTextDef>.GetNamedSilentFail(change.PreviousTextDefName);
-                EarthTextDef current = DefDatabase<EarthTextDef>.GetNamedSilentFail(change.CurrentTextDefName);
+                EarthTextDef previous = FindText(change.PreviousTextDefName);
+                EarthTextDef current = FindText(change.CurrentTextDefName);
                 string before = previous == null ? "no earlier literary commitment" : IdentityLabel(previous.defName);
                 string after = current == null ? "unknown" : IdentityLabel(current.defName);
                 int daysAgo = Find.TickManager == null ? 0 : Mathf.Max(0, (Find.TickManager.TicksGame - change.ChangedAtTick) / GenDate.TicksPerDay);
@@ -208,6 +208,13 @@ namespace LiAIChat.Archive
                 pawn.health.AddHediff(endorsement);
             }
             endorsement.earthTextDefName = text.defName;
+        }
+
+        internal static EarthTextDef FindText(string defName)
+        {
+            return string.IsNullOrEmpty(defName)
+                ? null
+                : DefDatabase<EarthTextDef>.GetNamedSilentFail(defName);
         }
     }
 }
