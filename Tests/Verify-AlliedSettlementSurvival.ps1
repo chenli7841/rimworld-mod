@@ -1,3 +1,4 @@
+param([string]$GameManagedPath = 'C:/Program Files (x86)/Steam/steamapps/common/RimWorld/RimWorldWin64_Data/Managed')
 $ErrorActionPreference = 'Stop'
 $modRoot = Split-Path $PSScriptRoot -Parent
 Add-Type -Path (Join-Path $modRoot 'Source/LiAIChat/AlliedSettlementSurvival/SettlementStrengthPolicy.cs')
@@ -22,4 +23,23 @@ Assert-Close $stepped 60.5 'Tick subdivisions'
 $enKeys = @($english.LanguageData.ChildNodes | Where-Object NodeType -eq Element | ForEach-Object Name)
 $zhKeys = @($chinese.LanguageData.ChildNodes | Where-Object NodeType -eq Element | ForEach-Object Name)
 if (Compare-Object $enKeys $zhKeys) { throw 'Translation keys do not match' }
-'Allied settlement policy and localization checks passed.'
+$sources = Get-ChildItem (Join-Path $modRoot 'Source/LiAIChat/AlliedSettlementSurvival') -Filter '*.cs'
+foreach ($source in $sources) {
+    foreach ($match in [regex]::Matches((Get-Content $source.FullName -Raw), '"(LiASS_[A-Za-z]+)"')) {
+        if ($enKeys -notcontains $match.Groups[1].Value) { throw "Missing translation: $($match.Value)" }
+    }
+}
+[void][Reflection.Assembly]::LoadFrom((Join-Path $GameManagedPath 'UnityEngine.CoreModule.dll'))
+$gameAssembly = [Reflection.Assembly]::LoadFrom((Join-Path $GameManagedPath 'Assembly-CSharp.dll'))
+foreach ($target in @(@('RimWorld.Planet.Settlement','GetInspectString'), @('RimWorld.Planet.Settlement','GetGizmos'), @('RimWorld.Planet.Caravan','GetGizmos'))) {
+    $type = $gameAssembly.GetType($target[0], $true)
+    $method = $type.GetMethod($target[1])
+    if ($null -eq $method -or $method.DeclaringType -ne $type -or $method.GetParameters().Count -ne 0) {
+        throw "Harmony target changed: $($target -join '.')"
+    }
+}
+if (-not [Enum]::GetNames($gameAssembly.GetType('RimWorld.Planet.PawnDiscardDecideMode')).Contains('KeepForever')) {
+    throw 'Permanent world-pawn retention API unavailable'
+}
+'Allied settlement policy, localization and installed Harmony target checks passed.'
+'Actual caravan transfer and save/load still require the documented in-game checks.'

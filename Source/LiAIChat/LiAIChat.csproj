@@ -68,6 +68,7 @@
     <Compile Include="AlliedSettlementSurvival\SettlementStrengthPolicy.cs" />
     <Compile Include="AlliedSettlementSurvival\AlliedSettlementWorldComponent.cs" />
     <Compile Include="AlliedSettlementSurvival\SettlementStrengthPatches.cs" />
+    <Compile Include="AlliedSettlementSurvival\PermanentMigration.cs" />
     <Compile Include="AI\IChatProvider.cs" />
     <Compile Include="AI\IConversationSummarizer.cs" />
     <Compile Include="AI\IIntellectualExchangeDirector.cs" />

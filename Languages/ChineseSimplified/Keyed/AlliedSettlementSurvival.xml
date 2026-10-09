@@ -4,4 +4,17 @@
   <LiASS_Active>附近盟友</LiASS_Active>
   <LiASS_Frozen>冻结（超出范围或已解除盟约）</LiASS_Frozen>
   <LiASS_Pending>已崩溃（尚未启用移除）</LiASS_Pending>
+  <LiASS_Migrate>永久移民</LiASS_Migrate>
+  <LiASS_MigrateDescription>将成年自由殖民者永久交付给{0}。每人最多增加10点据点实力。</LiASS_MigrateDescription>
+  <LiASS_MigrantOption>{0} — 实力 +{1}</LiASS_MigrantOption>
+  <LiASS_Confirm>确定让{0}永久定居在{1}吗？\n\n实力增加：{2}。该殖民者将加入接收派系，本功能不提供召回。人物身份及关系保留；身上的衣物和装备随行，库存物品留给商队。成员离开后商队负重能力会减少，返程前请检查剩余货物。\n\n同一个人即使再次招募回来，也不能重复提供移民实力收益。商队必须留下至少一名有能力带队的成年自由殖民者。</LiASS_Confirm>
+  <LiASS_Unavailable>商队必须位于附近盟友据点所在格，且该据点没有已生成的活动地图。</LiASS_Unavailable>
+  <LiASS_NoCapacity>该据点已经崩溃或实力已满。</LiASS_NoCapacity>
+  <LiASS_Ineligible>仅限未倒地、未精神崩溃的成年自由殖民者；俘虏和奴隶不能移民。</LiASS_Ineligible>
+  <LiASS_Temporary>临时人员、借调人员或任务保留人员不能移民。</LiASS_Temporary>
+  <LiASS_AlreadyMigrated>此人已经提供过永久移民实力收益。</LiASS_AlreadyMigrated>
+  <LiASS_LastLeader>必须留下至少一名有能力带队的成年自由殖民者。</LiASS_LastLeader>
+  <LiASS_InventoryFailed>库存未能全部转移，移民已取消。人物和物品仍在商队内。</LiASS_InventoryFailed>
+  <LiASS_TransferFailed>移民失败，未增加实力。详情请查看日志。</LiASS_TransferFailed>
+  <LiASS_Success>{0}已定居在{1}。据点实力：{2} / 100。</LiASS_Success>
 </LanguageData>

@@ -31,6 +31,9 @@ namespace LiAIChat.AlliedSettlementSurvival
     public sealed class AlliedSettlementWorldComponent : WorldComponent
     {
         private List<AlliedSettlementState> settlements = new List<AlliedSettlementState>();
+        private List<string> migratedPawnIds = new List<string>();
+        public bool HasMigrated(Pawn pawn) => migratedPawnIds.Contains(pawn.GetUniqueLoadID());
+        public void RecordMigration(Pawn pawn) { if (!HasMigrated(pawn)) migratedPawnIds.Add(pawn.GetUniqueLoadID()); }
         public IEnumerable<AlliedSettlementState> States => settlements;
         public static AlliedSettlementWorldComponent Current => Find.World?.GetComponent<AlliedSettlementWorldComponent>();
 
@@ -40,9 +43,11 @@ namespace LiAIChat.AlliedSettlementSurvival
         {
             base.ExposeData();
             Scribe_Collections.Look(ref settlements, "liAlliedSettlements", LookMode.Deep);
+            Scribe_Collections.Look(ref migratedPawnIds, "liAlliedSettlementMigrants", LookMode.Value);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 if (settlements == null) settlements = new List<AlliedSettlementState>();
+                if (migratedPawnIds == null) migratedPawnIds = new List<string>();
                 settlements.RemoveAll(s => s == null || s.settlement == null);
             }
         }
