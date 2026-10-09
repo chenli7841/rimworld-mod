@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_AlliedSettlementAid.questNameRules.rulesStrings>
+    <li>questName-&gt;盟友据点紧急援助</li>
+  </LiAIChat_AlliedSettlementAid.questNameRules.rulesStrings>
+  <LiAIChat_AlliedSettlementAid.questDescriptionRules.rulesStrings>
+    <li>questDescription-&gt;附近的盟友据点急需物资。请派商队前往据点，并使用物资交付指令。交付的物资会从商队库存中扣除；请在危机期限前送达所需数量。</li>
+  </LiAIChat_AlliedSettlementAid.questDescriptionRules.rulesStrings>
+</LanguageData>

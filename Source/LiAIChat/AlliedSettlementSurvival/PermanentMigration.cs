@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
+using LiAIChat.Questing;
 using RimWorld;
 using RimWorld.Planet;
 using Verse;
@@ -144,6 +145,9 @@ namespace LiAIChat.AlliedSettlementSurvival
                     icon = LiAIChat.UI.LiAIChatTextures.PermanentMigration,
                     action = () => PermanentMigration.OpenMenu(__instance, target)
                 };
+                var aidGizmos = new List<Gizmo>();
+                AlliedSettlementAidQuestUtility.AddCaravanGizmo(__instance, target, component.Get(target), aidGizmos);
+                foreach (Gizmo aidGizmo in aidGizmos) yield return aidGizmo;
             }
         }
     }

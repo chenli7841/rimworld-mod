@@ -1,4 +1,4 @@
-# Allied Settlement Survival — stages 1–3
+# Allied Settlement Survival — stages 1–4
 
 ## Stage 1: strength
 
@@ -24,7 +24,13 @@ Each newly registered ally receives a 15-day protection period. The first crisis
 
 The player receives a letter when a crisis starts. Its 10-day deadline and kind are saved. The settlement inspect string shows the active kind and remaining days. Out-of-range settlements or settlements that cease to be allied pause both their interval and deadline; they resume without catching up when they become eligible again. A timeout lowers strength by 20 (clamped at zero), then schedules a 20–35 day recovery interval. Natural strength recovery pauses during a crisis. Resolving a crisis through the stage 4/5 quest hooks also schedules the same recovery interval. Old saves receive one fresh 15-day protection period when first loaded with this scheduler.
 
-This stage supplies the scheduler and `CompleteCrisis` hook. Food, medical and combat missions that allow the player to resolve each kind are implemented in the next stages.
+This stage supplies the scheduler and `CompleteCrisis` hook. Food and medical crises are resolved through the aid quests in stage 4; hostile-threat crises are resolved through the combat missions in stage 5.
+
+## Stage 4: food and medicine aid quests
+
+When a famine or disease crisis begins, an automatically accepted quest is generated and linked to the crisis letter. Food deliveries require 150 nutrition from human-edible food; medicine deliveries require 10 units of any medicine definition. The quest tracks partial deliveries across multiple item types and saves its progress. The Caravan's **Deliver food / Deliver medicine** command appears when it is on the target settlement tile. A confirmation names the amount and warns that the goods will be consumed from caravan inventory. Whole items are transferred, so a final food stack may deliver slightly more nutrition than requested.
+
+Completing the requested amount resolves the crisis and starts its recovery interval. If the deadline passes, the scheduler applies the strength loss once and ends the linked quest. The quest points to the allied settlement and shows delivery progress in its description. Threat crises still use the scheduler and timeout penalty, pending the stage 5 combat-site integration.
 
 ## Validation
 
@@ -41,6 +47,9 @@ In-game acceptance checks:
 - Make a settlement ineligible while its interval or deadline is running; after restoring eligibility, confirm the timer resumes without catching up.
 - Let a crisis expire: exactly 20 strength lost once, strength recovery remains paused while active, and next crisis is delayed 20–35 days after timeout.
 - Reach zero: pending collapse, no spontaneous recovery and no world-object removal.
+- Famine and disease crises generate their linked aid quest; deliver partial food and medicine amounts, save/reload and finish the remaining requirement.
+- From a caravan on the target tile, deliver food by nutrition and medicine by item count. Verify the confirmation, consumed inventory, quest progress, settlement target and resolution.
+- Leave an aid quest incomplete through its 10-day deadline; verify only one penalty, failure of the linked quest and the next recovery interval.
 - Check multiple home maps and non-surface maps; only eligible surface proximity counts.
 - Recheck Archive quests, civilization research and Pawn AI using the existing save.
 - Bring two adult free colonists, inventory, apparel and equipped weapons to an ally. Transfer one: +10 strength, same pawn identity and relationships, new faction, inventory retained by caravan, equipment retained by migrant.

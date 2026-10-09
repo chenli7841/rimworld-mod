@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <QuestScriptDef>
+    <defName>LiAIChat_AlliedSettlementAid</defName>
+    <rootSelectionWeight>0</rootSelectionWeight>
+    <rootMinPoints>0</rootMinPoints>
+    <autoAccept>true</autoAccept>
+    <questNameRules>
+      <rulesStrings>
+        <li>questName-&gt;Aid an allied settlement</li>
+      </rulesStrings>
+    </questNameRules>
+    <questDescriptionRules>
+      <rulesStrings>
+        <li>questDescription-&gt;A nearby allied settlement needs emergency supplies. Travel to the settlement by caravan and use the supply delivery command. Deliveries are taken from caravan inventory. The quest ends when the requested amount has been supplied or the crisis deadline passes.</li>
+      </rulesStrings>
+    </questDescriptionRules>
+    <root Class="QuestNode_Sequence">
+      <nodes>
+        <li Class="LiAIChat.Questing.QuestNode_CreateAlliedSettlementAid" />
+      </nodes>
+    </root>
+  </QuestScriptDef>
+</Defs>

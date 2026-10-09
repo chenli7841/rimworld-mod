@@ -14,6 +14,19 @@
   <LiASS_CrisisFailedText>The {1} at {0} was not resolved in time. Strength fell from {2} to {3}.</LiASS_CrisisFailedText>
   <LiASS_CrisisResolvedLabel>Crisis at {0} resolved</LiASS_CrisisResolvedLabel>
   <LiASS_CrisisResolvedText>The crisis at {0} was resolved. The settlement has entered a recovery period before another crisis.</LiASS_CrisisResolvedText>
+  <LiASS_DeliverFood>Deliver food</LiASS_DeliverFood>
+  <LiASS_DeliverFoodDescription>Supply food to this settlement. Remaining requirement: {0} nutrition.</LiASS_DeliverFoodDescription>
+  <LiASS_DeliverMedicine>Deliver medicine</LiASS_DeliverMedicine>
+  <LiASS_DeliverMedicineDescription>Supply medicine to this settlement. Remaining requirement: {0} units.</LiASS_DeliverMedicineDescription>
+  <LiASS_FoodOption>{0}: deliver {1} (about {2} nutrition; {3} available)</LiASS_FoodOption>
+  <LiASS_MedicineOption>{0}: deliver {1} ({2} available)</LiASS_MedicineOption>
+  <LiASS_NoAidItems>No matching food or medicine is available in the caravan.</LiASS_NoAidItems>
+  <LiASS_ConfirmFood>Deliver {0} food items (about {1} nutrition) to {2}? The items will be consumed and removed from caravan inventory.</LiASS_ConfirmFood>
+  <LiASS_ConfirmMedicine>Deliver {0} medicine units to {1}? They will be consumed and removed from caravan inventory.</LiASS_ConfirmMedicine>
+  <LiASS_DeliveryUnavailable>The caravan, crisis or selected supplies are no longer available for this delivery.</LiASS_DeliveryUnavailable>
+  <LiASS_AidDelivered>Delivered {1} supplies from {0} to {2}.</LiASS_AidDelivered>
+  <LiASS_AidFoodProgress>Food delivered: {0} / {1} nutrition</LiASS_AidFoodProgress>
+  <LiASS_AidMedicineProgress>Medicine delivered: {0} / {1} units</LiASS_AidMedicineProgress>
   <LiASS_Migrate>Permanent migration</LiASS_Migrate>
   <LiASS_MigrateDescription>Permanently settle an adult free colonist or colony slave in {0}. Free colonists add up to 10 strength; slaves add 5.</LiASS_MigrateDescription>
   <LiASS_MigrantOption>{0} — strength +{1}</LiASS_MigrantOption>

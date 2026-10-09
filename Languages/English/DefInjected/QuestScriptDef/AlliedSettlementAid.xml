@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_AlliedSettlementAid.questNameRules.rulesStrings>
+    <li>questName-&gt;Emergency aid for an ally</li>
+  </LiAIChat_AlliedSettlementAid.questNameRules.rulesStrings>
+  <LiAIChat_AlliedSettlementAid.questDescriptionRules.rulesStrings>
+    <li>questDescription-&gt;A nearby allied settlement needs emergency supplies. Travel there by caravan and use the supply delivery command. Supplies are taken from caravan inventory. Deliver the requested amount before the crisis deadline.</li>
+  </LiAIChat_AlliedSettlementAid.questDescriptionRules.rulesStrings>
+</LanguageData>

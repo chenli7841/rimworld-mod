@@ -14,6 +14,19 @@
   <LiASS_CrisisFailedText>{0}的{1}未能及时解决。据点实力从{2}下降至{3}。</LiASS_CrisisFailedText>
   <LiASS_CrisisResolvedLabel>{0}的危机已解决</LiASS_CrisisResolvedLabel>
   <LiASS_CrisisResolvedText>{0}的危机已经解决。据点将在恢复期后才会面临下一场危机。</LiASS_CrisisResolvedText>
+  <LiASS_DeliverFood>交付食物</LiASS_DeliverFood>
+  <LiASS_DeliverFoodDescription>向该据点供应食物。还需{0}营养。</LiASS_DeliverFoodDescription>
+  <LiASS_DeliverMedicine>交付药品</LiASS_DeliverMedicine>
+  <LiASS_DeliverMedicineDescription>向该据点供应药品。还需{0}单位。</LiASS_DeliverMedicineDescription>
+  <LiASS_FoodOption>{0}：交付{1}份（约{2}营养，库存{3}份）</LiASS_FoodOption>
+  <LiASS_MedicineOption>{0}：交付{1}单位（库存{2}单位）</LiASS_MedicineOption>
+  <LiASS_NoAidItems>商队中没有符合要求的食物或药品。</LiASS_NoAidItems>
+  <LiASS_ConfirmFood>向{2}交付{0}份食物（约{1}营养）吗？食物将被消耗并从商队库存中移除。</LiASS_ConfirmFood>
+  <LiASS_ConfirmMedicine>向{1}交付{0}单位药品吗？药品将被消耗并从商队库存中移除。</LiASS_ConfirmMedicine>
+  <LiASS_DeliveryUnavailable>商队、危机或所选物资已不可用于此次交付。</LiASS_DeliveryUnavailable>
+  <LiASS_AidDelivered>已从{0}向{2}交付{1}单位物资。</LiASS_AidDelivered>
+  <LiASS_AidFoodProgress>已交付食物：{0} / {1}营养</LiASS_AidFoodProgress>
+  <LiASS_AidMedicineProgress>已交付药品：{0} / {1}单位</LiASS_AidMedicineProgress>
   <LiASS_Migrate>永久移民</LiASS_Migrate>
   <LiASS_MigrateDescription>将成年自由殖民者或本殖民地的奴隶永久交付给{0}。自由殖民者增加10点实力，奴隶增加5点。</LiASS_MigrateDescription>
   <LiASS_MigrantOption>{0} — 实力 +{1}</LiASS_MigrantOption>

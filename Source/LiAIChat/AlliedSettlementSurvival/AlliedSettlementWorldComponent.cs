@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using LiAIChat.Questing;
 using RimWorld;
 using RimWorld.Planet;
 using Verse;
@@ -27,6 +28,7 @@ namespace LiAIChat.AlliedSettlementSurvival
         public int lastCrisisTick;
         public int crisisCount;
         public AlliedSettlementCrisisKind crisisKind;
+        public Quest aidQuest;
 
         public const int ProtectionTicks = 15 * SettlementStrengthPolicy.TicksPerDay;
         public const int MinimumCrisisIntervalTicks = 20 * SettlementStrengthPolicy.TicksPerDay;
@@ -48,6 +50,7 @@ namespace LiAIChat.AlliedSettlementSurvival
             Scribe_Values.Look(ref lastCrisisTick, "lastCrisisTick");
             Scribe_Values.Look(ref crisisCount, "crisisCount");
             Scribe_Values.Look(ref crisisKind, "crisisKind", AlliedSettlementCrisisKind.None);
+            Scribe_References.Look(ref aidQuest, "aidQuest");
             if (Scribe.mode == LoadSaveMode.PostLoadInit) strength = SettlementStrengthPolicy.Clamp(strength);
         }
     }
@@ -163,16 +166,27 @@ namespace LiAIChat.AlliedSettlementSurvival
                 }
 
                 if (now < state.nextCrisisTick || activeCount >= AlliedSettlementState.MaximumConcurrentCrises) continue;
-                StartCrisis(state, now);
-                activeCount++;
+                if (StartCrisis(state, now)) activeCount++;
             }
         }
 
-        private static void StartCrisis(AlliedSettlementState state, int now)
+        private bool StartCrisis(AlliedSettlementState state, int now)
         {
-            state.crisisKind = (AlliedSettlementCrisisKind)Rand.RangeInclusive(1, 3);
+            AlliedSettlementCrisisKind kind = (AlliedSettlementCrisisKind)Rand.RangeInclusive(1, 3);
+            Quest aidQuest = null;
+            if (kind == AlliedSettlementCrisisKind.FoodShortage || kind == AlliedSettlementCrisisKind.DiseaseOutbreak)
+            {
+                if (!AlliedSettlementAidQuestUtility.TryCreate(this, state, kind, out aidQuest))
+                {
+                    state.nextCrisisTick = now + 2500;
+                    return false;
+                }
+            }
+
+            state.crisisKind = kind;
             state.crisisActive = true;
             state.crisisDeadlineTick = now + AlliedSettlementState.CrisisDeadlineTicks;
+            state.aidQuest = aidQuest;
             state.crisisCount++;
             string kindLabel = CrisisKindLabel(state.crisisKind);
             Find.LetterStack.ReceiveLetter(
@@ -180,17 +194,22 @@ namespace LiAIChat.AlliedSettlementSurvival
                 "LiASS_CrisisLetterText".Translate(state.settlement.LabelCap, kindLabel,
                     (AlliedSettlementState.CrisisDeadlineTicks / (float)SettlementStrengthPolicy.TicksPerDay).ToString("0")),
                 LetterDefOf.NegativeEvent,
-                state.settlement);
+                state.settlement,
+                null,
+                aidQuest);
+            return true;
         }
 
         private static void FailCrisis(AlliedSettlementState state, int now)
         {
             AlliedSettlementCrisisKind failedKind = state.crisisKind;
             float oldStrength = state.strength;
+            Quest failedQuest = state.aidQuest;
             state.strength = SettlementStrengthPolicy.Clamp(state.strength - AlliedSettlementState.FailedCrisisStrengthLoss);
             state.crisisActive = false;
             state.crisisKind = AlliedSettlementCrisisKind.None;
             state.crisisDeadlineTick = 0;
+            state.aidQuest = null;
             state.nextCrisisTick = now + Rand.RangeInclusive(
                 AlliedSettlementState.MinimumCrisisIntervalTicks,
                 AlliedSettlementState.MaximumCrisisIntervalTicks);
@@ -200,15 +219,19 @@ namespace LiAIChat.AlliedSettlementSurvival
                     CrisisKindLabel(failedKind), oldStrength.ToString("0.#"), state.strength.ToString("0.#")),
                 LetterDefOf.NegativeEvent,
                 state.settlement);
+            if (failedQuest != null && failedQuest.State == QuestState.Ongoing)
+                failedQuest.End(QuestEndOutcome.Fail, false);
         }
 
         public bool CompleteCrisis(Settlement settlement, AlliedSettlementCrisisKind expectedKind)
         {
             AlliedSettlementState state = Get(settlement);
             if (state == null || !state.crisisActive || state.crisisKind != expectedKind) return false;
+            Quest completedQuest = state.aidQuest;
             state.crisisActive = false;
             state.crisisKind = AlliedSettlementCrisisKind.None;
             state.crisisDeadlineTick = 0;
+            state.aidQuest = null;
             state.nextCrisisTick = Find.TickManager.TicksGame + Rand.RangeInclusive(
                 AlliedSettlementState.MinimumCrisisIntervalTicks,
                 AlliedSettlementState.MaximumCrisisIntervalTicks);
@@ -217,6 +240,8 @@ namespace LiAIChat.AlliedSettlementSurvival
                 "LiASS_CrisisResolvedText".Translate(settlement.LabelCap),
                 LetterDefOf.PositiveEvent,
                 settlement);
+            if (completedQuest != null && completedQuest.State == QuestState.Ongoing)
+                completedQuest.End(QuestEndOutcome.Success, false);
             return true;
         }
 
