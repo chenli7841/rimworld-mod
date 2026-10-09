@@ -63,7 +63,7 @@ namespace LiAIChat.AlliedSettlementSurvival
     }
 
     // Separate save namespace: no changes to archive, knowledge or Pawn AI persistence.
-    public sealed class AlliedSettlementWorldComponent : WorldComponent
+    public sealed partial class AlliedSettlementWorldComponent : WorldComponent
     {
         private List<AlliedSettlementState> settlements = new List<AlliedSettlementState>();
         private List<string> migratedPawnIds = new List<string>();
@@ -79,11 +79,14 @@ namespace LiAIChat.AlliedSettlementSurvival
             base.ExposeData();
             Scribe_Collections.Look(ref settlements, "liAlliedSettlements", LookMode.Deep);
             Scribe_Collections.Look(ref migratedPawnIds, "liAlliedSettlementMigrants", LookMode.Value);
+            Scribe_Collections.Look(ref caravanGuardRecords, "liASSCaravanGuardRecords", LookMode.Deep);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 if (settlements == null) settlements = new List<AlliedSettlementState>();
                 if (migratedPawnIds == null) migratedPawnIds = new List<string>();
+                if (caravanGuardRecords == null) caravanGuardRecords = new List<AlliedCaravanGuardRecord>();
                 settlements.RemoveAll(s => s == null || s.settlement == null);
+                caravanGuardRecords.RemoveAll(record => record == null || record.pawn == null || record.sourceSettlement == null);
                 int now = Find.TickManager.TicksGame;
                 foreach (AlliedSettlementState state in settlements)
                 {

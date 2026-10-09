@@ -66,6 +66,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlliedSettlementSurvival\SettlementStrengthPolicy.cs" />
+    <Compile Include="AlliedSettlementSurvival\AlliedCaravanReinforcementPolicy.cs" />
+    <Compile Include="AlliedSettlementSurvival\AlliedCaravanReinforcement.cs" />
+    <Compile Include="AlliedSettlementSurvival\AlliedCaravanReinforcementPatches.cs" />
     <Compile Include="AlliedSettlementSurvival\AlliedSettlementSettings.cs" />
     <Compile Include="AlliedSettlementSurvival\AlliedSettlementWorldComponent.cs" />
     <Compile Include="AlliedSettlementSurvival\MainTabWindow_AlliedSettlements.cs" />
