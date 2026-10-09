@@ -1,4 +1,4 @@
-# Allied Settlement Survival — stages 1–6
+# Allied Settlement Survival — stages 1–7
 
 ## Stage 1: strength
 
@@ -44,6 +44,14 @@ When strength reaches zero, the settlement becomes terminal and its linked aid o
 
 The **Allied Settlements / 盟友据点** main tab lists registered settlements, strength, eligibility, current crisis or next crisis time, and a world-map jump action. The mod settings persist a master enable switch, removal-at-zero switch, coverage radius, initial strength, recovery values, migration rewards, crisis timing and limits, failure loss, aid amounts and threat-site points. Disabling the system pauses recovery and crisis timers; re-enabling it resumes them without catch-up.
 
+## Stage 7: allied trader caravan reinforcement
+
+On RimWorld 1.6.4871, the trader arrival worker calls the inherited `IncidentWorker_NeutralGroup.SpawnPawns(IncidentParms)` method to obtain its native pawn list, then builds the normal `LordJob_TradeWithColony`. The mod patches that generation method only when the runtime worker is `IncidentWorker_TraderCaravanArrival`. In this version, `PawnGroupMakerParms` carries the group kind, faction, trader kind, tile and points; `TraderKindDef` owns the stock generators, and `PawnKindDef` exposes the trader and combat-power roles. The patch leaves the trader kind and native list alone, appending guards before the existing lord is created.
+
+For an allied faction, the hook selects the nearest active, registered same-faction settlement to the incident target tile. If the system is disabled, the faction is not allied, no eligible source exists, the arrival is orbital, or faction guard definitions are unavailable, the vanilla pawn list is returned unchanged. Added guards are generated with RimWorld's `PawnGenerator` from the faction's own Trader pawn-group `guards` options. This preserves faction-specific tech and equipment and does not edit shared `PawnKindDef`s. Strength 25–49 adds one guard; 50–74 adds two and prefers the faction's stronger guard kinds; 75–89 adds three and marks one elite; 90+ adds four and marks up to two elites. Neolithic-and-lower-tech factions keep their native guard kinds and scale mainly by numbers: +4 at 50–74, up to 12 total at 75–89, and 17–22 total guards at 90+.
+
+The world component stores each escort's Pawn reference, source Settlement reference and casualty role. The highest-ranking guard (a faction-leader kind when present, otherwise the strongest guard) is the caravan leader. A narrowly scoped `Pawn.Kill` prefix/postfix pair records only guards belonging to `LordJob_TradeWithColony` and applies the loss only after the pawn is actually dead: 1 strength for a regular guard, 2 for an elite and 3 for the leader. A live pawn leaving the map clears its record, so retreat or normal caravan departure has no penalty. The records are saved through `IExposable`; older saves load with an empty record list. The optional arrival notification was omitted to avoid a second letter alongside the vanilla trader letter.
+
 ## Validation
 
 Run `Tests/Verify-AlliedSettlementSurvival.ps1` for numerical boundary, freeze, localization and installed Harmony API checks. Build against the installed RimWorld 1.6 assemblies. These checks cannot verify an actual running game.
@@ -70,6 +78,11 @@ In-game acceptance checks:
 - Trigger a hostile-threat crisis. Confirm the marked Bandit Camp is within 2–7 tiles of the allied settlement, uses a hostile mechanoid, insect or humanlike faction, and is linked to its quest.
 - Visit the site and defeat every defender: the quest should resolve the crisis and schedule the normal recovery interval. Save/reload with the site map generated and verify defender progress persists.
 - Retreat while defenders remain: the quest must stay active. Let it expire to confirm one 20-point penalty; the outpost should remain on the world map.
+- Receive a trader from an active allied settlement. Confirm native merchants and stock are unchanged, guards use only that faction's Trader guard definitions, the nearest same-faction settlement supplies the source, and the letter/arrival behavior remains vanilla.
+- Compare civilization tiers at strengths 24, 25, 50, 75 and 90; confirm the guard counts and stronger faction-defined guard kinds increase without changing settlement, raid or player-caravan pawn generation.
+- Compare Neolithic trader factions at 49, 50, 75 and 90; verify +4 guards at 50+, up to 12 at 75+, and 17–22 guards at 90+, all using tribal definitions.
+- Save and reload while a reinforced trade caravan is present. Kill one ordinary guard, one elite and its leader, verifying exact losses of 1, 2 and 3 once each. Down a guard, then let the caravan leave alive: neither event should reduce strength. Kill an ordinary merchant: it should not be tracked.
+- Repeat with no nearby registered same-faction settlement, a non-allied faction, an orbital trader, and the system disabled; each should use the vanilla group unchanged.
 - Check multiple home maps and non-surface maps; only eligible surface proximity counts.
 - Recheck Archive quests, civilization research and Pawn AI using the existing save.
 - Bring two adult free colonists, inventory, apparel and equipped weapons to an ally. Transfer one: +10 strength, same pawn identity and relationships, new faction, inventory retained by caravan, equipment retained by migrant.
