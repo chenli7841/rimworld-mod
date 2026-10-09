@@ -7,6 +7,8 @@
     <label>lost Earth archive site</label>
     <description>An ancient signal appears to originate from this location.</description>
     <workerClass>LiAIChat.Questing.SitePartWorker_LostEarthArchive</workerClass>
+    <siteTexture>World/WorldObjects/Sites/GenericSite</siteTexture>
+    <expandingIconTexture>World/WorldObjects/Expanding/Sites/ItemStash</expandingIconTexture>
   </SitePartDef>
 
 </Defs>

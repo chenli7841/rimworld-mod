@@ -6,6 +6,8 @@
     <label>ancient Earth archive site</label>
     <description>A ruined site containing traces of preserved records from ancient Earth.</description>
     <workerClass>LiAIChat.Archive.SitePartWorker_AncientArchive</workerClass>
+    <siteTexture>World/WorldObjects/Sites/GenericSite</siteTexture>
+    <expandingIconTexture>World/WorldObjects/Expanding/Sites/ItemStash</expandingIconTexture>
     <tags>
       <li>LiAIChat_AncientArchiveSite</li>
     </tags>
@@ -15,6 +17,8 @@
     <label>lost annotator's refuge</label>
     <description>A damaged refuge contains a scholar and fragments of an Ancient Earth commentary.</description>
     <workerClass>LiAIChat.Questing.SitePartWorker_LostAnnotator</workerClass>
+    <siteTexture>World/WorldObjects/Sites/GenericSite</siteTexture>
+    <expandingIconTexture>World/WorldObjects/Expanding/Sites/DownedRefugee</expandingIconTexture>
     <tags><li>LiAIChat_LostAnnotatorSite</li></tags>
   </SitePartDef>
 

@@ -47,6 +47,16 @@ Assert-Close ($caravanPolicy::DeathPenalty([LiAIChat.AlliedSettlementSurvival.Al
 $enKeys = @($english.LanguageData.ChildNodes | Where-Object NodeType -eq Element | ForEach-Object Name)
 $zhKeys = @($chinese.LanguageData.ChildNodes | Where-Object NodeType -eq Element | ForEach-Object Name)
 if (Compare-Object $enKeys $zhKeys) { throw 'Translation keys do not match' }
+$sitePartFiles = Get-ChildItem (Join-Path $modRoot 'Defs') -Recurse -Filter '*.xml'
+foreach ($file in $sitePartFiles) {
+    [xml]$defs = Get-Content $file.FullName -Raw
+    foreach ($sitePart in $defs.SelectNodes('//SitePartDef')) {
+        if ([string]::IsNullOrWhiteSpace($sitePart.siteTexture) -or
+            [string]::IsNullOrWhiteSpace($sitePart.expandingIconTexture)) {
+            throw "SitePartDef $($sitePart.defName) must define siteTexture and expandingIconTexture ($($file.Name))"
+        }
+    }
+}
 $sources = Get-ChildItem (Join-Path $modRoot 'Source/LiAIChat/AlliedSettlementSurvival') -Filter '*.cs'
 foreach ($source in $sources) {
     foreach ($match in [regex]::Matches((Get-Content $source.FullName -Raw), '"(LiASS_[A-Za-z]+)"')) {

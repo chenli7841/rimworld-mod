@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Defs><SitePartDef><defName>LiAIChat_FallenLetterSite</defName><label>家书线索地点</label><description>无线电记录指向一封被遗忘的家书。这里由非人类威胁守卫。</description><workerClass>LiAIChat.Archive.SitePartWorker_AncientArchive</workerClass><tags><li>LiAIChat_FallenLetterSite</li></tags></SitePartDef></Defs>
+<Defs><SitePartDef><defName>LiAIChat_FallenLetterSite</defName><label>家书线索地点</label><description>无线电记录指向一封被遗忘的家书。这里由非人类威胁守卫。</description><workerClass>LiAIChat.Archive.SitePartWorker_AncientArchive</workerClass><siteTexture>World/WorldObjects/Sites/GenericSite</siteTexture><expandingIconTexture>World/WorldObjects/Expanding/Sites/Ambush</expandingIconTexture><tags><li>LiAIChat_FallenLetterSite</li></tags></SitePartDef></Defs>
