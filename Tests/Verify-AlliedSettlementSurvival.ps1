@@ -103,6 +103,13 @@ if ($null -eq $gameAssembly.GetType('RimWorld.LordJob_TradeWithColony', $true) -
         $gameAssembly.GetType('RimWorld.Planet.PlanetTile', $true)))) {
     throw 'Trader guard generation or trade-lord APIs changed in the installed RimWorld assemblies'
 }
+$statDefOf = $gameAssembly.GetType('RimWorld.StatDefOf', $true)
+$shootingAccuracy = $statDefOf.GetField('ShootingAccuracyPawn', [Reflection.BindingFlags]'Public,Static')
+$statWorker = $gameAssembly.GetType('RimWorld.StatWorker', $true)
+if ($null -eq $shootingAccuracy -or $null -eq $statWorker.GetMethod('IsDisabledFor', [Type[]]@(
+        $gameAssembly.GetType('Verse.Thing', $true)))) {
+    throw 'Pawn shooting-stat compatibility check API changed in the installed RimWorld assemblies'
+}
 $raidWorker = $gameAssembly.GetType('RimWorld.IncidentWorker_Raid', $true)
 $raidFriendlyWorker = $gameAssembly.GetType('RimWorld.IncidentWorker_RaidFriendly', $true)
 $raidInfo = $raidWorker.GetMethod('TryGenerateRaidInfo', [Reflection.BindingFlags]'Instance,Public,NonPublic')

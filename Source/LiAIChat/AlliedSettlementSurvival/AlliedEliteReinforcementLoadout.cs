@@ -30,7 +30,9 @@ namespace LiAIChat.AlliedSettlementSurvival
 
             ThingDef armorDef = DefDatabase<ThingDef>.GetNamedSilentFail("Apparel_PowerArmor");
             ThingDef helmetDef = DefDatabase<ThingDef>.GetNamedSilentFail("Apparel_PowerArmorHelmet");
-            ThingDef weaponDef = ChooseWeapon();
+            bool canUseRangedWeapon = StatDefOf.ShootingAccuracyPawn == null ||
+                !StatDefOf.ShootingAccuracyPawn.Worker.IsDisabledFor(pawn);
+            ThingDef weaponDef = ChooseWeapon(canUseRangedWeapon);
             if (armorDef == null || helmetDef == null)
             {
                 Log.ErrorOnce("[LiAIChat] Could not equip top-tier allied reinforcements: power armor definitions are missing.",
@@ -64,27 +66,29 @@ namespace LiAIChat.AlliedSettlementSurvival
             }
         }
 
-        private static ThingDef ChooseWeapon()
+        private static ThingDef ChooseWeapon(bool allowRangedWeapons)
         {
             List<ThingDef> candidates = new List<ThingDef>();
             foreach (string defName in StandardWeaponDefNames)
             {
                 ThingDef def = DefDatabase<ThingDef>.GetNamedSilentFail(defName);
-                if (def != null && def.IsWeapon && !candidates.Contains(def))
+                if (def != null && def.IsWeapon && (allowRangedWeapons || def.IsMeleeWeapon) &&
+                    !candidates.Contains(def))
                     candidates.Add(def);
             }
 
             // DLCs and weapon mods may add unique/specialized ranged weapons. Include
             // only actual ranged weapon defs, so mech turrets and buildings are excluded.
-            if (specializedRangedWeapons == null)
+            if (allowRangedWeapons && specializedRangedWeapons == null)
             {
                 specializedRangedWeapons = DefDatabase<ThingDef>.AllDefsListForReading
                     .Where(def => def != null && def.IsRangedWeapon && def.defName != null &&
                         IsSpecializedRangedWeapon(def.defName))
                     .ToList();
             }
-            foreach (ThingDef def in specializedRangedWeapons)
-                if (!candidates.Contains(def)) candidates.Add(def);
+            if (allowRangedWeapons)
+                foreach (ThingDef def in specializedRangedWeapons)
+                    if (!candidates.Contains(def)) candidates.Add(def);
 
             return candidates.RandomElementWithFallback();
         }
