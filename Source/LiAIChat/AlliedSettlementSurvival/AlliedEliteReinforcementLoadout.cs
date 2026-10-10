@@ -42,10 +42,13 @@ namespace LiAIChat.AlliedSettlementSurvival
 
             List<Pawn> rangedCapableGuards = guards.Where(CanUseRangedWeapons).ToList();
             HashSet<Pawn> assigned = new HashSet<Pawn>();
+            List<ThingDef> specializedWeapons = SpecializedRangedWeapons();
             ThingDef tripleRocket = DefDatabase<ThingDef>.GetNamedSilentFail("Gun_TripleRocket");
             if (tripleRocket != null && tripleRocket.IsRangedWeapon && rangedCapableGuards.Count > 0)
             {
-                int rocketCount = Math.Min(rangedCapableGuards.Count, Rand.RangeInclusive(1, 2));
+                int availableForRockets = rangedCapableGuards.Count -
+                    (specializedWeapons.Count > 0 && rangedCapableGuards.Count > 1 ? 1 : 0);
+                int rocketCount = Math.Min(availableForRockets, Rand.RangeInclusive(1, 2));
                 for (int i = 0; i < rocketCount; i++)
                 {
                     Pawn bearer = rangedCapableGuards.RandomElement();
@@ -55,7 +58,6 @@ namespace LiAIChat.AlliedSettlementSurvival
                 }
             }
 
-            List<ThingDef> specializedWeapons = SpecializedRangedWeapons();
             if (specializedWeapons.Count > 0 && rangedCapableGuards.Count > 0)
             {
                 Pawn bearer = rangedCapableGuards.RandomElement();
