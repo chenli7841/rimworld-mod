@@ -80,11 +80,13 @@ namespace LiAIChat.Questing
             AlliedSettlementCrisisKind kind, out Quest quest)
         {
             quest = null;
-            string defName = kind == AlliedSettlementCrisisKind.FoodShortage
-                ? "LiAIChat_AlliedSettlementFoodAid"
-                : kind == AlliedSettlementCrisisKind.DiseaseOutbreak
-                    ? "LiAIChat_AlliedSettlementMedicineAid"
-                    : null;
+            if (kind != AlliedSettlementCrisisKind.FoodShortage &&
+                kind != AlliedSettlementCrisisKind.DiseaseOutbreak)
+                return false;
+
+            // Both supply crises use the same quest definition; crisisKind in the
+            // slate selects food or medicine requirements and delivery behavior.
+            const string defName = "LiAIChat_AlliedSettlementAid";
             QuestScriptDef def = defName == null ? null : DefDatabase<QuestScriptDef>.GetNamedSilentFail(defName);
             if (def == null || Find.QuestManager == null)
             {

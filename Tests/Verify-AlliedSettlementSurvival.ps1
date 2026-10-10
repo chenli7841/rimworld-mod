@@ -68,6 +68,13 @@ Assert-Close ($caravanPolicy::CappedMilitaryAidDeathPenalty(
     20, [LiAIChat.AlliedSettlementSurvival.AlliedCaravanGuardRole]::Leader)) 0 'Military-aid loss must not exceed its per-request cap'
 [xml]$english = Get-Content (Join-Path $modRoot 'Languages/English/Keyed/AlliedSettlementSurvival.xml') -Raw
 [xml]$chinese = Get-Content (Join-Path $modRoot 'Languages/ChineseSimplified/Keyed/AlliedSettlementSurvival.xml') -Raw
+$aidQuestDefPath = Join-Path $modRoot 'Defs/QuestScriptDefs/Quest_AlliedSettlementAid.xml'
+[xml]$aidQuestDef = Get-Content $aidQuestDefPath -Raw
+if ($aidQuestDef.Defs.QuestScriptDef.defName -ne 'LiAIChat_AlliedSettlementAid' -or
+    (Get-Content (Join-Path $modRoot 'Source/LiAIChat/Questing/AlliedSettlementAidQuest.cs') -Raw) -notmatch
+        'const string defName = "LiAIChat_AlliedSettlementAid"') {
+    throw 'Food and medicine crises must resolve to the existing shared allied settlement aid quest definition'
+}
 $enKeys = @($english.LanguageData.ChildNodes | Where-Object NodeType -eq Element | ForEach-Object Name)
 $zhKeys = @($chinese.LanguageData.ChildNodes | Where-Object NodeType -eq Element | ForEach-Object Name)
 if (Compare-Object $enKeys $zhKeys) { throw 'Translation keys do not match' }
