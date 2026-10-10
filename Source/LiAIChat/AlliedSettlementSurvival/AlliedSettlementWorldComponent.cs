@@ -80,13 +80,24 @@ namespace LiAIChat.AlliedSettlementSurvival
             Scribe_Collections.Look(ref settlements, "liAlliedSettlements", LookMode.Deep);
             Scribe_Collections.Look(ref migratedPawnIds, "liAlliedSettlementMigrants", LookMode.Value);
             Scribe_Collections.Look(ref caravanGuardRecords, "liASSCaravanGuardRecords", LookMode.Deep);
+            Scribe_Collections.Look(ref militaryAidLossGroups, "liASSMilitaryAidLossGroups", LookMode.Deep);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 if (settlements == null) settlements = new List<AlliedSettlementState>();
                 if (migratedPawnIds == null) migratedPawnIds = new List<string>();
                 if (caravanGuardRecords == null) caravanGuardRecords = new List<AlliedCaravanGuardRecord>();
+                if (militaryAidLossGroups == null) militaryAidLossGroups = new List<AlliedMilitaryAidLossGroup>();
                 settlements.RemoveAll(s => s == null || s.settlement == null);
                 caravanGuardRecords.RemoveAll(record => record == null || record.pawn == null || record.sourceSettlement == null);
+                militaryAidLossGroups.RemoveAll(group => group == null || string.IsNullOrEmpty(group.groupId));
+                foreach (AlliedMilitaryAidLossGroup group in militaryAidLossGroups)
+                {
+                    if (float.IsNaN(group.strengthLossAlreadyApplied) || float.IsInfinity(group.strengthLossAlreadyApplied))
+                        group.strengthLossAlreadyApplied = 0f;
+                    group.strengthLossAlreadyApplied = System.Math.Max(0f, System.Math.Min(
+                        AlliedCaravanReinforcementPolicy.MaximumMilitaryAidStrengthLoss,
+                        group.strengthLossAlreadyApplied));
+                }
                 int now = Find.TickManager.TicksGame;
                 foreach (AlliedSettlementState state in settlements)
                 {

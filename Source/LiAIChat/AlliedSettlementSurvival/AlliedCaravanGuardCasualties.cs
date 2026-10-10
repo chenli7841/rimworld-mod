@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Verse;
 using RimWorld.Planet;
 
@@ -18,18 +20,64 @@ namespace LiAIChat.AlliedSettlementSurvival
                 return;
 
             caravanGuardRecords.Remove(record);
-            if (!AlliedSettlementSurvivalMod.Current.systemEnabled || record.sourceSettlement == null)
-                return;
+            bool systemEnabled = AlliedSettlementSurvivalMod.Current.systemEnabled;
+            float penalty = systemEnabled
+                ? AlliedCaravanReinforcementPolicy.DeathPenalty(record.role)
+                : 0f;
+            if (systemEnabled && !string.IsNullOrEmpty(record.militaryAidGroupId))
+            {
+                AlliedMilitaryAidLossGroup group = GetOrCreateMilitaryAidLossGroup(record.militaryAidGroupId);
+                penalty = AlliedCaravanReinforcementPolicy.CappedMilitaryAidDeathPenalty(
+                    group.strengthLossAlreadyApplied, record.role);
+                group.strengthLossAlreadyApplied += penalty;
+            }
 
-            AlliedSettlementState state = Get(record.sourceSettlement);
-            if (state == null) return;
-            state.strength = SettlementStrengthPolicy.Clamp(state.strength -
-                AlliedCaravanReinforcementPolicy.DeathPenalty(record.role));
+            if (systemEnabled && record.sourceSettlement != null)
+            {
+                AlliedSettlementState state = Get(record.sourceSettlement);
+                if (state != null)
+                    state.strength = SettlementStrengthPolicy.Clamp(state.strength - penalty);
+            }
+
+            CleanupMilitaryAidLossGroup(record.militaryAidGroupId);
         }
 
         public void ForgetCaravanGuard(Pawn pawn)
         {
-            if (pawn != null) caravanGuardRecords.RemoveAll(record => record != null && record.pawn == pawn);
+            if (pawn == null || caravanGuardRecords == null) return;
+            List<string> groupIds = caravanGuardRecords
+                .Where(record => record != null && record.pawn == pawn &&
+                    !string.IsNullOrEmpty(record.militaryAidGroupId))
+                .Select(record => record.militaryAidGroupId)
+                .Distinct()
+                .ToList();
+            caravanGuardRecords.RemoveAll(record => record != null && record.pawn == pawn);
+            foreach (string groupId in groupIds)
+                CleanupMilitaryAidLossGroup(groupId);
+        }
+
+        private AlliedMilitaryAidLossGroup GetOrCreateMilitaryAidLossGroup(string groupId)
+        {
+            if (militaryAidLossGroups == null)
+                militaryAidLossGroups = new List<AlliedMilitaryAidLossGroup>();
+            AlliedMilitaryAidLossGroup group = militaryAidLossGroups
+                .FirstOrDefault(candidate => candidate != null && candidate.groupId == groupId);
+            if (group == null)
+            {
+                group = new AlliedMilitaryAidLossGroup { groupId = groupId };
+                militaryAidLossGroups.Add(group);
+            }
+            return group;
+        }
+
+        private void CleanupMilitaryAidLossGroup(string groupId)
+        {
+            if (string.IsNullOrEmpty(groupId) || militaryAidLossGroups == null)
+                return;
+            bool stillHasTrackedPawns = caravanGuardRecords != null && caravanGuardRecords
+                .Any(record => record != null && record.militaryAidGroupId == groupId);
+            if (!stillHasTrackedPawns)
+                militaryAidLossGroups.RemoveAll(group => group != null && group.groupId == groupId);
         }
     }
 }

@@ -199,7 +199,6 @@ namespace LiAIChat.AlliedSettlementSurvival
                 : 0;
             int extraCount = AlliedCaravanReinforcementPolicy.AdditionalGuardCount(
                 sourceState.strength, tribal, currentCount, tribalTarget);
-            if (extraCount <= 0) return;
 
             List<Pawn> reinforcements = new List<Pawn>();
             for (int i = 0; i < extraCount; i++)
@@ -209,13 +208,26 @@ namespace LiAIChat.AlliedSettlementSurvival
                 Pawn pawn = PawnGenerator.GeneratePawn(kind, parms.faction, targetTile);
                 if (pawn != null) reinforcements.Add(pawn);
             }
-            if (reinforcements.Count == 0) return;
+            if (reinforcements.Count > 0)
+            {
+                parms.raidArrivalMode.Worker.Arrive(reinforcements, parms);
+                pawns.AddRange(reinforcements);
+                Log.Message("[LiAIChat] Reinforced requested military aid from " +
+                    sourceState.settlement.Label + " (strength " + sourceState.strength.ToString("0") +
+                    ") with " + reinforcements.Count + " additional fighters.");
+            }
 
-            parms.raidArrivalMode.Worker.Arrive(reinforcements, parms);
-            pawns.AddRange(reinforcements);
-            Log.Message("[LiAIChat] Reinforced requested military aid from " +
-                sourceState.settlement.Label + " (strength " + sourceState.strength.ToString("0") +
-                ") with " + reinforcements.Count + " additional fighters.");
+            List<Pawn> fighters = pawns.Where(pawn => pawn != null && !pawn.Dead &&
+                pawn.kindDef != null && pawn.RaceProps.Humanlike && guardKinds.Contains(pawn.kindDef)).ToList();
+            if (fighters.Count == 0) return;
+            Pawn leader = fighters.Where(pawn => pawn.kindDef.factionLeader)
+                .OrderByDescending(pawn => pawn.kindDef.combatPower).FirstOrDefault() ??
+                fighters.OrderByDescending(pawn => pawn.kindDef.combatPower).First();
+            int eliteCount = AlliedCaravanReinforcementPolicy.EliteGuardCount(sourceState.strength);
+            List<Pawn> elites = fighters.Where(pawn => pawn != leader)
+                .OrderByDescending(pawn => pawn.kindDef.combatPower)
+                .Take(eliteCount).ToList();
+            component.RegisterMilitaryAidGuards(sourceState.settlement, fighters, leader, elites);
         }
 
         private static PawnKindDef ChooseCombatKind(List<PawnGenOption> options, float strength, bool tribal)

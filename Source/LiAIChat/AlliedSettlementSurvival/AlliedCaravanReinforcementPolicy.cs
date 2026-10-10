@@ -11,6 +11,8 @@ namespace LiAIChat.AlliedSettlementSurvival
 
     public static class AlliedCaravanReinforcementPolicy
     {
+        public const float MaximumMilitaryAidStrengthLoss = 20f;
+
         public static int AdditionalGuardCount(float strength, bool tribal, int currentGuardCount, int tribalEliteTarget)
         {
             strength = Math.Max(0f, Math.Min(100f, strength));
@@ -46,6 +48,16 @@ namespace LiAIChat.AlliedSettlementSurvival
                 case AlliedCaravanGuardRole.Elite: return 2f;
                 default: return 1f;
             }
+        }
+
+        public static float CappedMilitaryAidDeathPenalty(
+            float strengthLossAlreadyApplied, AlliedCaravanGuardRole role)
+        {
+            if (float.IsNaN(strengthLossAlreadyApplied) || float.IsInfinity(strengthLossAlreadyApplied))
+                strengthLossAlreadyApplied = 0f;
+            float remaining = Math.Max(0f,
+                MaximumMilitaryAidStrengthLoss - Math.Max(0f, strengthLossAlreadyApplied));
+            return Math.Min(DeathPenalty(role), remaining);
         }
     }
 }

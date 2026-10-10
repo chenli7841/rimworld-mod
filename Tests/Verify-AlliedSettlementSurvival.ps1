@@ -42,6 +42,16 @@ if ($caravanPolicy::EliteGuardCount(74.9) -ne 0 -or
 Assert-Close ($caravanPolicy::DeathPenalty([LiAIChat.AlliedSettlementSurvival.AlliedCaravanGuardRole]::Guard)) 1 'Ordinary guard casualty loss'
 Assert-Close ($caravanPolicy::DeathPenalty([LiAIChat.AlliedSettlementSurvival.AlliedCaravanGuardRole]::Elite)) 2 'Elite guard casualty loss'
 Assert-Close ($caravanPolicy::DeathPenalty([LiAIChat.AlliedSettlementSurvival.AlliedCaravanGuardRole]::Leader)) 3 'Caravan leader casualty loss'
+$militaryAidLoss = 0.0
+for ($i = 0; $i -lt 30; $i++) {
+    $militaryAidLoss += $caravanPolicy::CappedMilitaryAidDeathPenalty(
+        $militaryAidLoss, [LiAIChat.AlliedSettlementSurvival.AlliedCaravanGuardRole]::Guard)
+}
+Assert-Close $militaryAidLoss 20 'Military-aid losses must cap at 20 per request'
+Assert-Close ($caravanPolicy::CappedMilitaryAidDeathPenalty(
+    19, [LiAIChat.AlliedSettlementSurvival.AlliedCaravanGuardRole]::Elite)) 1 'Military-aid loss must stop at its per-request cap'
+Assert-Close ($caravanPolicy::CappedMilitaryAidDeathPenalty(
+    20, [LiAIChat.AlliedSettlementSurvival.AlliedCaravanGuardRole]::Leader)) 0 'Military-aid loss must not exceed its per-request cap'
 [xml]$english = Get-Content (Join-Path $modRoot 'Languages/English/Keyed/AlliedSettlementSurvival.xml') -Raw
 [xml]$chinese = Get-Content (Join-Path $modRoot 'Languages/ChineseSimplified/Keyed/AlliedSettlementSurvival.xml') -Raw
 $enKeys = @($english.LanguageData.ChildNodes | Where-Object NodeType -eq Element | ForEach-Object Name)

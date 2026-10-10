@@ -10,8 +10,7 @@ namespace LiAIChat.AlliedSettlementSurvival
         public static void Prefix(Pawn __instance, out AlliedCaravanGuardRecord __state)
         {
             __state = null;
-            if (__instance?.lord?.LordJob is LordJob_TradeWithColony)
-                __state = AlliedSettlementWorldComponent.Current?.FindActiveCaravanGuard(__instance);
+            __state = AlliedSettlementWorldComponent.Current?.FindActiveCaravanGuard(__instance);
         }
 
         public static void Postfix(Pawn __instance, AlliedCaravanGuardRecord __state)
