@@ -26,6 +26,12 @@ namespace LiAIChat.AlliedSettlementSurvival
             return Math.Max(1, (Math.Max(0, playerColonistCount) + 2) / 3);
         }
 
+        public static int TribalAnimalCount(int playerColonistCount, bool thrumbo)
+        {
+            int divisor = thrumbo ? 4 : 3;
+            return Math.Max(1, (Math.Max(0, playerColonistCount) + divisor - 1) / divisor);
+        }
+
         public static int AdditionalGuardCount(float strength, bool tribal, int currentGuardCount, int tribalEliteTarget)
         {
             strength = Math.Max(0f, Math.Min(100f, strength));

@@ -14,7 +14,12 @@ if (-not $caravanPolicy::IsTopTier(90) -or $caravanPolicy::IsTopTier(89.9) -or
     $caravanPolicy::TopTierReinforcementCount(1) -ne 1 -or
     $caravanPolicy::TopTierReinforcementCount(3) -ne 1 -or
     $caravanPolicy::TopTierReinforcementCount(4) -ne 2 -or
-    $caravanPolicy::TopTierReinforcementCount(9) -ne 3) {
+    $caravanPolicy::TopTierReinforcementCount(9) -ne 3 -or
+    $caravanPolicy::TribalAnimalCount(4, $true) -ne 1 -or
+    $caravanPolicy::TribalAnimalCount(8, $true) -ne 2 -or
+    $caravanPolicy::TribalAnimalCount(3, $false) -ne 1 -or
+    $caravanPolicy::TribalAnimalCount(4, $false) -ne 2 -or
+    $caravanPolicy::TribalAnimalCount(9, $false) -ne 3) {
     throw 'Top-tier allied reinforcement thresholds or colonist scaling changed'
 }
 Assert-Close ($policy::Recover(60, 60000, $true, $false)) 60.5 'Daily recovery'

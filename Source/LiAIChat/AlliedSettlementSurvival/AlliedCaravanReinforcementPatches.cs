@@ -59,21 +59,22 @@ namespace LiAIChat.AlliedSettlementSurvival
                 .FirstOrDefault();
             if (sourceState == null) return;
 
+            bool tribal = (int)parms.faction.def.techLevel <= (int)TechLevel.Neolithic;
+            bool tribalTopTier = tribal && AlliedCaravanReinforcementPolicy.IsTopTier(sourceState.strength);
             List<PawnGenOption> options = parms.faction.def.pawnGroupMakers
                 .Where(maker => maker != null && maker.kindDef == PawnGroupKindDefOf.Trader && maker.guards != null)
                 .SelectMany(maker => maker.guards)
                 .Where(option => option != null && option.kind != null && option.kind.RaceProps.Humanlike)
                 .ToList();
-            if (options.Count == 0) return;
+            if (options.Count == 0 && !tribalTopTier) return;
 
             List<PawnKindDef> guardKinds = options.Select(option => option.kind).Distinct().ToList();
             HashSet<PawnKindDef> guardKindSet = new HashSet<PawnKindDef>(guardKinds);
             List<Pawn> guards = result.Where(pawn => IsGuard(pawn, guardKindSet)).ToList();
-            bool tribal = (int)parms.faction.def.techLevel <= (int)TechLevel.Neolithic;
             int tribalTarget = tribal && sourceState.strength >= 90f ? Rand.RangeInclusive(17, 22) : 0;
             bool topTier = AlliedCaravanReinforcementPolicy.UsesTopTierCivilizedReinforcements(
                 sourceState.strength, tribal);
-            int extraCount = topTier
+            int extraCount = options.Count == 0 ? 0 : topTier
                 ? AlliedCaravanReinforcementPolicy.TopTierReinforcementCount(PlayerColonistCount())
                 : AlliedCaravanReinforcementPolicy.AdditionalGuardCount(
                     sourceState.strength, tribal, guards.Count, tribalTarget);
@@ -95,7 +96,30 @@ namespace LiAIChat.AlliedSettlementSurvival
                 guards.Add(guard);
             }
 
-            if (guards.Count == 0) return;
+            List<Pawn> animals = new List<Pawn>();
+            if (tribalTopTier)
+            {
+                foreach (Pawn animal in AlliedTribalAnimalReinforcement.Generate(
+                    parms.faction, targetTile, PlayerColonistCount()))
+                {
+                    IntVec3 spawnCell = CellFinder.RandomClosewalkCellNear(parms.spawnCenter, map, 5);
+                    GenSpawn.Spawn(animal, spawnCell, map);
+                    if (!animal.Spawned)
+                    {
+                        animal.Destroy(DestroyMode.Vanish);
+                        continue;
+                    }
+                    result.Add(animal);
+                    animals.Add(animal);
+                }
+            }
+
+            if (guards.Count == 0)
+            {
+                if (animals.Count > 0)
+                    component.RegisterCaravanGuards(sourceState.settlement, animals, null, null);
+                return;
+            }
             if (topTier)
                 AlliedEliteReinforcementLoadout.EquipGroup(guards);
 
@@ -106,7 +130,7 @@ namespace LiAIChat.AlliedSettlementSurvival
             List<Pawn> elites = guards.Where(pawn => pawn != leader)
                 .OrderByDescending(pawn => pawn.kindDef.combatPower)
                 .Take(eliteCount).ToList();
-            component.RegisterCaravanGuards(sourceState.settlement, guards, leader, elites);
+            component.RegisterCaravanGuards(sourceState.settlement, guards.Concat(animals), leader, elites);
         }
 
         private static bool IsGuard(Pawn pawn, HashSet<PawnKindDef> guardKinds)
@@ -198,18 +222,19 @@ namespace LiAIChat.AlliedSettlementSurvival
                 .SelectMany(maker => maker.options)
                 .Where(option => option != null && option.kind != null && option.kind.RaceProps.Humanlike)
                 .ToList();
-            if (options.Count == 0) return;
+            bool tribal = (int)parms.faction.def.techLevel <= (int)TechLevel.Neolithic;
+            bool tribalTopTier = tribal && AlliedCaravanReinforcementPolicy.IsTopTier(sourceState.strength);
+            if (options.Count == 0 && !tribalTopTier) return;
 
             HashSet<PawnKindDef> guardKinds = new HashSet<PawnKindDef>(options.Select(option => option.kind));
             int currentCount = pawns.Count(pawn => pawn != null && !pawn.Dead && pawn.kindDef != null &&
                 pawn.RaceProps.Humanlike && guardKinds.Contains(pawn.kindDef));
-            bool tribal = (int)parms.faction.def.techLevel <= (int)TechLevel.Neolithic;
             int tribalTarget = tribal && sourceState.strength >= 90f
                 ? Rand.RangeInclusive(17, 22)
                 : 0;
             bool topTier = AlliedCaravanReinforcementPolicy.UsesTopTierCivilizedReinforcements(
                 sourceState.strength, tribal);
-            int extraCount = topTier
+            int extraCount = options.Count == 0 ? 0 : topTier
                 ? AlliedCaravanReinforcementPolicy.TopTierReinforcementCount(PlayerColonistCount())
                 : AlliedCaravanReinforcementPolicy.AdditionalGuardCount(
                     sourceState.strength, tribal, currentCount, tribalTarget);
@@ -222,13 +247,17 @@ namespace LiAIChat.AlliedSettlementSurvival
                 Pawn pawn = PawnGenerator.GeneratePawn(kind, parms.faction, targetTile);
                 if (pawn != null) reinforcements.Add(pawn);
             }
-            if (reinforcements.Count > 0)
+            List<Pawn> animals = tribalTopTier
+                ? AlliedTribalAnimalReinforcement.Generate(parms.faction, targetTile, PlayerColonistCount())
+                : new List<Pawn>();
+            List<Pawn> arriving = reinforcements.Concat(animals).ToList();
+            if (arriving.Count > 0)
             {
-                parms.raidArrivalMode.Worker.Arrive(reinforcements, parms);
-                pawns.AddRange(reinforcements);
+                parms.raidArrivalMode.Worker.Arrive(arriving, parms);
+                pawns.AddRange(arriving);
                 Log.Message("[LiAIChat] Reinforced requested military aid from " +
                     sourceState.settlement.Label + " (strength " + sourceState.strength.ToString("0") +
-                    ") with " + reinforcements.Count + " additional fighters.");
+                    ") with " + reinforcements.Count + " additional fighters and " + animals.Count + " animals.");
             }
 
             List<Pawn> fighters = pawns.Where(pawn => pawn != null && !pawn.Dead &&
@@ -244,7 +273,7 @@ namespace LiAIChat.AlliedSettlementSurvival
             List<Pawn> elites = fighters.Where(pawn => pawn != leader)
                 .OrderByDescending(pawn => pawn.kindDef.combatPower)
                 .Take(eliteCount).ToList();
-            component.RegisterMilitaryAidGuards(sourceState.settlement, fighters, leader, elites);
+            component.RegisterMilitaryAidGuards(sourceState.settlement, fighters.Concat(animals), leader, elites);
         }
 
         private static int PlayerColonistCount() => PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive
