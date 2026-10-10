@@ -71,7 +71,8 @@ namespace LiAIChat.AlliedSettlementSurvival
             List<Pawn> guards = result.Where(pawn => IsGuard(pawn, guardKindSet)).ToList();
             bool tribal = (int)parms.faction.def.techLevel <= (int)TechLevel.Neolithic;
             int tribalTarget = tribal && sourceState.strength >= 90f ? Rand.RangeInclusive(17, 22) : 0;
-            bool topTier = AlliedCaravanReinforcementPolicy.IsTopTier(sourceState.strength);
+            bool topTier = AlliedCaravanReinforcementPolicy.UsesTopTierCivilizedReinforcements(
+                sourceState.strength, tribal);
             int extraCount = topTier
                 ? AlliedCaravanReinforcementPolicy.TopTierReinforcementCount(PlayerColonistCount())
                 : AlliedCaravanReinforcementPolicy.AdditionalGuardCount(
@@ -96,8 +97,7 @@ namespace LiAIChat.AlliedSettlementSurvival
 
             if (guards.Count == 0) return;
             if (topTier)
-                foreach (Pawn guard in guards)
-                    AlliedEliteReinforcementLoadout.Equip(guard);
+                AlliedEliteReinforcementLoadout.EquipGroup(guards);
 
             Pawn leader = guards.Where(pawn => pawn.kindDef.factionLeader)
                 .OrderByDescending(pawn => pawn.kindDef.combatPower).FirstOrDefault() ??
@@ -207,7 +207,8 @@ namespace LiAIChat.AlliedSettlementSurvival
             int tribalTarget = tribal && sourceState.strength >= 90f
                 ? Rand.RangeInclusive(17, 22)
                 : 0;
-            bool topTier = AlliedCaravanReinforcementPolicy.IsTopTier(sourceState.strength);
+            bool topTier = AlliedCaravanReinforcementPolicy.UsesTopTierCivilizedReinforcements(
+                sourceState.strength, tribal);
             int extraCount = topTier
                 ? AlliedCaravanReinforcementPolicy.TopTierReinforcementCount(PlayerColonistCount())
                 : AlliedCaravanReinforcementPolicy.AdditionalGuardCount(
@@ -234,8 +235,7 @@ namespace LiAIChat.AlliedSettlementSurvival
                 pawn.kindDef != null && pawn.RaceProps.Humanlike && guardKinds.Contains(pawn.kindDef)).ToList();
             if (fighters.Count == 0) return;
             if (topTier)
-                foreach (Pawn fighter in fighters)
-                    AlliedEliteReinforcementLoadout.Equip(fighter);
+                AlliedEliteReinforcementLoadout.EquipGroup(fighters);
 
             Pawn leader = fighters.Where(pawn => pawn.kindDef.factionLeader)
                 .OrderByDescending(pawn => pawn.kindDef.combatPower).FirstOrDefault() ??

@@ -9,6 +9,8 @@ function Assert-Close([double]$actual, [double]$expected, [string]$message) {
 $policy = [LiAIChat.AlliedSettlementSurvival.SettlementStrengthPolicy]
 $caravanPolicy = [LiAIChat.AlliedSettlementSurvival.AlliedCaravanReinforcementPolicy]
 if (-not $caravanPolicy::IsTopTier(90) -or $caravanPolicy::IsTopTier(89.9) -or
+    -not $caravanPolicy::UsesTopTierCivilizedReinforcements(100, $false) -or
+    $caravanPolicy::UsesTopTierCivilizedReinforcements(100, $true) -or
     $caravanPolicy::TopTierReinforcementCount(1) -ne 1 -or
     $caravanPolicy::TopTierReinforcementCount(3) -ne 1 -or
     $caravanPolicy::TopTierReinforcementCount(4) -ne 2 -or

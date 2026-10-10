@@ -16,6 +16,9 @@ namespace LiAIChat.AlliedSettlementSurvival
 
         public static bool IsTopTier(float strength) => strength >= TopTierStrength;
 
+        public static bool UsesTopTierCivilizedReinforcements(float strength, bool tribal) =>
+            !tribal && IsTopTier(strength);
+
         public static int TopTierReinforcementCount(int playerColonistCount)
         {
             // Round up so every group of up to three player colonists can contribute
