@@ -66,6 +66,32 @@ namespace LiAIChat.AlliedSettlementSurvival
             }
         }
 
+        public static void RepairIncompatibleRangedWeapon(Pawn pawn)
+        {
+            if (pawn == null || pawn.Dead || pawn.equipment == null ||
+                pawn.equipment.Primary == null || !pawn.equipment.Primary.def.IsRangedWeapon ||
+                StatDefOf.ShootingAccuracyPawn == null ||
+                !StatDefOf.ShootingAccuracyPawn.Worker.IsDisabledFor(pawn))
+                return;
+
+            ThingDef weaponDef = ChooseWeapon(false);
+            if (weaponDef == null)
+                weaponDef = DefDatabase<ThingDef>.GetNamedSilentFail("MeleeWeapon_LongSword");
+            if (weaponDef == null) return;
+
+            try
+            {
+                pawn.equipment.DestroyAllEquipment(DestroyMode.Vanish);
+                ThingWithComps weapon = ThingMaker.MakeThing(weaponDef) as ThingWithComps;
+                if (weapon != null)
+                    pawn.equipment.AddEquipment(weapon);
+            }
+            catch (Exception error)
+            {
+                Log.Error("[LiAIChat] Could not replace an incompatible allied guard weapon: " + error);
+            }
+        }
+
         private static ThingDef ChooseWeapon(bool allowRangedWeapons)
         {
             List<ThingDef> candidates = new List<ThingDef>();
@@ -89,6 +115,13 @@ namespace LiAIChat.AlliedSettlementSurvival
             if (allowRangedWeapons)
                 foreach (ThingDef def in specializedRangedWeapons)
                     if (!candidates.Contains(def)) candidates.Add(def);
+
+            if (!allowRangedWeapons && candidates.Count == 0)
+            {
+                ThingDef fallback = DefDatabase<ThingDef>.GetNamedSilentFail("MeleeWeapon_LongSword");
+                if (fallback != null && fallback.IsWeapon)
+                    candidates.Add(fallback);
+            }
 
             return candidates.RandomElementWithFallback();
         }

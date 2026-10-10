@@ -115,6 +115,11 @@ namespace LiAIChat.AlliedSettlementSurvival
         {
             if (Find.TickManager.TicksGame % 2500 == 0)
             {
+                if (caravanGuardRecords != null)
+                    foreach (AlliedCaravanGuardRecord record in caravanGuardRecords)
+                        if (record != null)
+                            AlliedEliteReinforcementLoadout.RepairIncompatibleRangedWeapon(record.pawn);
+
                 if (!AlliedSettlementSurvivalMod.Current.systemEnabled)
                 {
                     PauseWhileDisabled();
