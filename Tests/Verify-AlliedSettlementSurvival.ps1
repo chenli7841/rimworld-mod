@@ -8,6 +8,13 @@ function Assert-Close([double]$actual, [double]$expected, [string]$message) {
 }
 $policy = [LiAIChat.AlliedSettlementSurvival.SettlementStrengthPolicy]
 $caravanPolicy = [LiAIChat.AlliedSettlementSurvival.AlliedCaravanReinforcementPolicy]
+if (-not $caravanPolicy::IsTopTier(90) -or $caravanPolicy::IsTopTier(89.9) -or
+    $caravanPolicy::TopTierReinforcementCount(1) -ne 1 -or
+    $caravanPolicy::TopTierReinforcementCount(3) -ne 1 -or
+    $caravanPolicy::TopTierReinforcementCount(4) -ne 2 -or
+    $caravanPolicy::TopTierReinforcementCount(9) -ne 3) {
+    throw 'Top-tier allied reinforcement thresholds or colonist scaling changed'
+}
 Assert-Close ($policy::Recover(60, 60000, $true, $false)) 60.5 'Daily recovery'
 Assert-Close ($policy::Recover(79.9, 60000, $true, $false)) 80 'Recovery cap'
 Assert-Close ($policy::Recover(95, 60000, $true, $false)) 95 'Aid above cap must not decay'

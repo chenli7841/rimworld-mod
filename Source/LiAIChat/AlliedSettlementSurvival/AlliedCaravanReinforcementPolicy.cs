@@ -12,6 +12,16 @@ namespace LiAIChat.AlliedSettlementSurvival
     public static class AlliedCaravanReinforcementPolicy
     {
         public const float MaximumMilitaryAidStrengthLoss = 20f;
+        public const float TopTierStrength = 90f;
+
+        public static bool IsTopTier(float strength) => strength >= TopTierStrength;
+
+        public static int TopTierReinforcementCount(int playerColonistCount)
+        {
+            // Round up so every group of up to three player colonists can contribute
+            // at least one reinforcement, including very small colonies.
+            return Math.Max(1, (Math.Max(0, playerColonistCount) + 2) / 3);
+        }
 
         public static int AdditionalGuardCount(float strength, bool tribal, int currentGuardCount, int tribalEliteTarget)
         {

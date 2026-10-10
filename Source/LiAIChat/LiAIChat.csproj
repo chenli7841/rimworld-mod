@@ -69,6 +69,7 @@
     <Compile Include="AlliedSettlementSurvival\AlliedCaravanReinforcementPolicy.cs" />
     <Compile Include="AlliedSettlementSurvival\AlliedCaravanReinforcement.cs" />
     <Compile Include="AlliedSettlementSurvival\AlliedCaravanReinforcementPatches.cs" />
+    <Compile Include="AlliedSettlementSurvival\AlliedEliteReinforcementLoadout.cs" />
     <Compile Include="AlliedSettlementSurvival\AlliedCaravanGuardCasualties.cs" />
     <Compile Include="AlliedSettlementSurvival\AlliedCaravanGuardDeathPatch.cs" />
     <Compile Include="AlliedSettlementSurvival\AlliedSettlementSettings.cs" />

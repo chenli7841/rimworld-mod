@@ -71,8 +71,11 @@ namespace LiAIChat.AlliedSettlementSurvival
             List<Pawn> guards = result.Where(pawn => IsGuard(pawn, guardKindSet)).ToList();
             bool tribal = (int)parms.faction.def.techLevel <= (int)TechLevel.Neolithic;
             int tribalTarget = tribal && sourceState.strength >= 90f ? Rand.RangeInclusive(17, 22) : 0;
-            int extraCount = AlliedCaravanReinforcementPolicy.AdditionalGuardCount(
-                sourceState.strength, tribal, guards.Count, tribalTarget);
+            bool topTier = AlliedCaravanReinforcementPolicy.IsTopTier(sourceState.strength);
+            int extraCount = topTier
+                ? AlliedCaravanReinforcementPolicy.TopTierReinforcementCount(PlayerColonistCount())
+                : AlliedCaravanReinforcementPolicy.AdditionalGuardCount(
+                    sourceState.strength, tribal, guards.Count, tribalTarget);
 
             for (int i = 0; i < extraCount; i++)
             {
@@ -92,6 +95,10 @@ namespace LiAIChat.AlliedSettlementSurvival
             }
 
             if (guards.Count == 0) return;
+            if (topTier)
+                foreach (Pawn guard in guards)
+                    AlliedEliteReinforcementLoadout.Equip(guard);
+
             Pawn leader = guards.Where(pawn => pawn.kindDef.factionLeader)
                 .OrderByDescending(pawn => pawn.kindDef.combatPower).FirstOrDefault() ??
                 guards.OrderByDescending(pawn => pawn.kindDef.combatPower).First();
@@ -107,6 +114,9 @@ namespace LiAIChat.AlliedSettlementSurvival
             return pawn != null && !pawn.Dead && pawn.kindDef != null && pawn.RaceProps.Humanlike &&
                 guardKinds.Contains(pawn.kindDef);
         }
+
+        private static int PlayerColonistCount() => PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive
+            .Count(pawn => pawn != null && pawn.IsColonistPlayerControlled);
 
         private static PawnKindDef ChooseGuardKind(List<PawnGenOption> options, float strength, bool tribal)
         {
@@ -197,8 +207,11 @@ namespace LiAIChat.AlliedSettlementSurvival
             int tribalTarget = tribal && sourceState.strength >= 90f
                 ? Rand.RangeInclusive(17, 22)
                 : 0;
-            int extraCount = AlliedCaravanReinforcementPolicy.AdditionalGuardCount(
-                sourceState.strength, tribal, currentCount, tribalTarget);
+            bool topTier = AlliedCaravanReinforcementPolicy.IsTopTier(sourceState.strength);
+            int extraCount = topTier
+                ? AlliedCaravanReinforcementPolicy.TopTierReinforcementCount(PlayerColonistCount())
+                : AlliedCaravanReinforcementPolicy.AdditionalGuardCount(
+                    sourceState.strength, tribal, currentCount, tribalTarget);
 
             List<Pawn> reinforcements = new List<Pawn>();
             for (int i = 0; i < extraCount; i++)
@@ -220,6 +233,10 @@ namespace LiAIChat.AlliedSettlementSurvival
             List<Pawn> fighters = pawns.Where(pawn => pawn != null && !pawn.Dead &&
                 pawn.kindDef != null && pawn.RaceProps.Humanlike && guardKinds.Contains(pawn.kindDef)).ToList();
             if (fighters.Count == 0) return;
+            if (topTier)
+                foreach (Pawn fighter in fighters)
+                    AlliedEliteReinforcementLoadout.Equip(fighter);
+
             Pawn leader = fighters.Where(pawn => pawn.kindDef.factionLeader)
                 .OrderByDescending(pawn => pawn.kindDef.combatPower).FirstOrDefault() ??
                 fighters.OrderByDescending(pawn => pawn.kindDef.combatPower).First();
@@ -229,6 +246,9 @@ namespace LiAIChat.AlliedSettlementSurvival
                 .Take(eliteCount).ToList();
             component.RegisterMilitaryAidGuards(sourceState.settlement, fighters, leader, elites);
         }
+
+        private static int PlayerColonistCount() => PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive
+            .Count(pawn => pawn != null && pawn.IsColonistPlayerControlled);
 
         private static PawnKindDef ChooseCombatKind(List<PawnGenOption> options, float strength, bool tribal)
         {
