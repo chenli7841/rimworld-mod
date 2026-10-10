@@ -56,16 +56,27 @@ namespace LiAIChat.Questing
         public override void QuestPartTick()
         {
             base.QuestPartTick();
-            if (quest.State != QuestState.Ongoing || site == null || site.Map == null ||
-                Find.TickManager.TicksGame % 250 != 0)
+            if (quest.State != QuestState.Ongoing || Find.TickManager.TicksGame % 250 != 0)
                 return;
 
-            foreach (Pawn pawn in site.Map.mapPawns.AllPawnsSpawned)
-                if (pawn != null && pawn.Faction == faction && !defenders.Contains(pawn))
-                    defenders.Add(pawn);
+            // Keep checking the recorded defenders after the player leaves the camp.
+            // The site map is unloaded at that point, but the cached pawn references
+            // still tell us whether the defenders were defeated.
+            if (site != null && site.Map != null)
+            {
+                foreach (Pawn pawn in site.Map.mapPawns.AllPawnsSpawned)
+                    if (pawn != null && pawn.Faction == faction && !defenders.Contains(pawn))
+                        defenders.Add(pawn);
+            }
 
-            // A generated but empty map is not a victory; only observed defenders can satisfy this objective.
-            if (defenders.Count == 0 || defenders.Any(pawn => pawn != null && !pawn.Dead && !pawn.Downed))
+            // Destroying the camp itself is an explicit victory, even if no defenders
+            // were observed before the site was removed. Otherwise, require that we
+            // observed defenders and that none remain standing. An empty generated
+            // map alone is not enough to resolve the crisis.
+            bool campDestroyed = site != null && site.Destroyed;
+            bool defendersDefeated = defenders.Count > 0 &&
+                !defenders.Any(pawn => pawn != null && !pawn.Dead && !pawn.Downed);
+            if (!campDestroyed && !defendersDefeated)
                 return;
 
             AlliedSettlementWorldComponent.Current?.CompleteCrisis(
