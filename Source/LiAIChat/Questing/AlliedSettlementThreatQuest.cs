@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using HarmonyLib;
 using LiAIChat.AlliedSettlementSurvival;
 using RimWorld;
@@ -64,17 +65,14 @@ namespace LiAIChat.Questing
             // The site map is unloaded at that point, but the cached pawn references
             // still tell us whether the defenders were defeated.
             if (site != null && site.Map != null)
-            {
-                foreach (Pawn pawn in site.Map.mapPawns.AllPawnsSpawned)
-                    if (pawn != null && pawn.Faction == faction && !defenders.Contains(pawn))
-                        defenders.Add(pawn);
-            }
+                ObserveDefenders(site.Map);
 
             // Destroying the camp itself is an explicit victory, even if no defenders
             // were observed before the site was removed. Otherwise, require that we
             // observed defenders and that none remain standing. An empty generated
             // map alone is not enough to resolve the crisis.
-            bool campDestroyed = site != null && site.Destroyed;
+            bool campDestroyed = site != null && (site.Destroyed ||
+                AlliedSettlementThreatCompletionPatch.WasClearedByVanilla(site));
             bool defendersDefeated = defenders.Count > 0 &&
                 !defenders.Any(pawn => pawn != null && !pawn.Dead && !pawn.Downed);
             if (!campDestroyed && !defendersDefeated)
@@ -82,6 +80,14 @@ namespace LiAIChat.Questing
 
             AlliedSettlementWorldComponent.Current?.CompleteCrisis(
                 settlement, AlliedSettlementCrisisKind.HostileThreat);
+        }
+
+        public void ObserveDefenders(Map map)
+        {
+            if (map?.mapPawns == null || defenders == null) return;
+            foreach (Pawn pawn in map.mapPawns.AllPawnsSpawned)
+                if (pawn != null && pawn.Faction == faction && !defenders.Contains(pawn))
+                    defenders.Add(pawn);
         }
 
         public override void ExposeData()
@@ -192,6 +198,54 @@ namespace LiAIChat.Questing
                     quest.State == QuestState.Ongoing &&
                     quest.PartsListForReading.OfType<QuestPart_AlliedSettlementThreat>()
                         .Any(part => part.site == site));
+        }
+    }
+
+    // Capture all camp defenders as soon as world-site map generation finishes.
+    // This closes the fast-clear/fast-exit window before the first periodic quest tick.
+    [HarmonyPatch(typeof(Site), "PostMapGenerate")]
+    public static class AlliedSettlementThreatDefenderCapturePatch
+    {
+        public static void Postfix(Site __instance)
+        {
+            if (__instance == null || __instance.Map == null || Find.QuestManager == null) return;
+
+            QuestPart_AlliedSettlementThreat threatPart = FindThreatPart(__instance);
+            threatPart?.ObserveDefenders(__instance.Map);
+        }
+
+        internal static QuestPart_AlliedSettlementThreat FindThreatPart(Site site)
+        {
+            if (site == null || Find.QuestManager == null) return null;
+            return Find.QuestManager.QuestsListForReading
+                .Where(quest => quest != null && quest.State == QuestState.Ongoing)
+                .SelectMany(quest => quest.PartsListForReading.OfType<QuestPart_AlliedSettlementThreat>())
+                .FirstOrDefault(part => part.site == site);
+        }
+    }
+
+    // The vanilla Site records this state when all hostiles are dead or downed.
+    // It survives map unloads, so the crisis can still resolve after caravan exit.
+    [HarmonyPatch(typeof(Site), "CheckAllEnemiesDefeated")]
+    public static class AlliedSettlementThreatCompletionPatch
+    {
+        private static readonly FieldInfo AllEnemiesDefeatedField =
+            AccessTools.Field(typeof(Site), "allEnemiesDefeatedSignalSent");
+
+        public static bool WasClearedByVanilla(Site site)
+        {
+            return site != null && AllEnemiesDefeatedField != null &&
+                (bool)AllEnemiesDefeatedField.GetValue(site);
+        }
+
+        public static void Postfix(Site __instance)
+        {
+            if (!WasClearedByVanilla(__instance)) return;
+            QuestPart_AlliedSettlementThreat threatPart =
+                AlliedSettlementThreatDefenderCapturePatch.FindThreatPart(__instance);
+            if (threatPart != null)
+                AlliedSettlementWorldComponent.Current?.CompleteCrisis(
+                    threatPart.settlement, AlliedSettlementCrisisKind.HostileThreat);
         }
     }
 }

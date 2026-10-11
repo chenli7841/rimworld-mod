@@ -100,12 +100,17 @@ foreach ($source in $sources) {
 }
 [void][Reflection.Assembly]::LoadFrom((Join-Path $GameManagedPath 'UnityEngine.CoreModule.dll'))
 $gameAssembly = [Reflection.Assembly]::LoadFrom((Join-Path $GameManagedPath 'Assembly-CSharp.dll'))
-foreach ($target in @(@('RimWorld.Planet.Settlement','GetInspectString'), @('RimWorld.Planet.Settlement','GetGizmos'), @('RimWorld.Planet.Caravan','GetGizmos'))) {
+foreach ($target in @(@('RimWorld.Planet.Settlement','GetInspectString'), @('RimWorld.Planet.Settlement','GetGizmos'), @('RimWorld.Planet.Caravan','GetGizmos'), @('RimWorld.Planet.Site','PostMapGenerate'), @('RimWorld.Planet.Site','CheckAllEnemiesDefeated'))) {
     $type = $gameAssembly.GetType($target[0], $true)
-    $method = $type.GetMethod($target[1])
+    $method = $type.GetMethod($target[1], [Reflection.BindingFlags]'Instance,Public,NonPublic')
     if ($null -eq $method -or $method.DeclaringType -ne $type -or $method.GetParameters().Count -ne 0) {
         throw "Harmony target changed: $($target -join '.')"
     }
+}
+$siteType = $gameAssembly.GetType('RimWorld.Planet.Site', $true)
+$enemiesDefeatedField = $siteType.GetField('allEnemiesDefeatedSignalSent', [Reflection.BindingFlags]'Instance,NonPublic')
+if ($null -eq $enemiesDefeatedField -or $enemiesDefeatedField.FieldType -ne [bool]) {
+    throw 'Vanilla cleared-site state unavailable for resolving allied threat quests after map unload'
 }
 $traderArrival = $gameAssembly.GetType('RimWorld.IncidentWorker_TraderCaravanArrival', $true)
 $spawnPawns = $traderArrival.GetMethod('SpawnPawns', [Reflection.BindingFlags]'Instance,Public,NonPublic')
