@@ -32,6 +32,11 @@ namespace LiAIChat.AlliedSettlementSurvival
             return Math.Max(1, (Math.Max(0, playerColonistCount) + divisor - 1) / divisor);
         }
 
+        public static int AlliedThreatDefenderCount(int playerColonistCount)
+        {
+            return Math.Max(1, (Math.Max(0, playerColonistCount) + 1) / 2);
+        }
+
         public static int AdditionalGuardCount(float strength, bool tribal, int currentGuardCount, int tribalEliteTarget)
         {
             strength = Math.Max(0f, Math.Min(100f, strength));

@@ -19,7 +19,11 @@ if (-not $caravanPolicy::IsTopTier(90) -or $caravanPolicy::IsTopTier(89.9) -or
     $caravanPolicy::TribalAnimalCount(8, $true) -ne 2 -or
     $caravanPolicy::TribalAnimalCount(3, $false) -ne 1 -or
     $caravanPolicy::TribalAnimalCount(4, $false) -ne 2 -or
-    $caravanPolicy::TribalAnimalCount(9, $false) -ne 3) {
+    $caravanPolicy::TribalAnimalCount(9, $false) -ne 3 -or
+    $caravanPolicy::AlliedThreatDefenderCount(1) -ne 1 -or
+    $caravanPolicy::AlliedThreatDefenderCount(8) -ne 4 -or
+    $caravanPolicy::AlliedThreatDefenderCount(20) -ne 10 -or
+    $caravanPolicy::AlliedThreatDefenderCount(41) -ne 21) {
     throw 'Top-tier allied reinforcement thresholds or colonist scaling changed'
 }
 Assert-Close ($policy::Recover(60, 60000, $true, $false)) 60.5 'Daily recovery'
@@ -109,6 +113,13 @@ if ($null -eq $spawnPawns -or $spawnPawns.ReturnType.Name -ne 'List`1' -or
     $spawnPawns.GetParameters().Count -ne 1 -or $spawnPawns.GetParameters()[0].ParameterType.Name -ne 'IncidentParms' -or
     $spawnPawns.DeclaringType.FullName -ne 'RimWorld.IncidentWorker_NeutralGroup') {
     throw 'Trader caravan spawn hook changed in the installed RimWorld assemblies'
+}
+$outpostWorker = $gameAssembly.GetType('RimWorld.SitePartWorker_Outpost', $true)
+$enemyCountMethod = $outpostWorker.GetMethod('GetEnemiesCount', [Reflection.BindingFlags]'Instance,Public,NonPublic')
+if ($null -eq $enemyCountMethod -or $enemyCountMethod.ReturnType -ne [int] -or
+    $enemyCountMethod.GetParameters().Count -ne 2 -or
+    $enemyCountMethod.GetParameters()[0].ParameterType.FullName -ne 'RimWorld.Planet.Site') {
+    throw 'Vanilla outpost enemy-count generation hook changed'
 }
 if ($null -eq $gameAssembly.GetType('RimWorld.LordJob_TradeWithColony', $true) -or
     $null -eq $gameAssembly.GetType('RimWorld.PawnGroupKindDefOf', $true).GetField('Trader') -or

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HarmonyLib;
 using LiAIChat.AlliedSettlementSurvival;
 using RimWorld;
 using RimWorld.Planet;
@@ -166,6 +167,31 @@ namespace LiAIChat.Questing
             foreach (Faction faction in Find.FactionManager.AllFactionsListForReading)
                 if (faction != null && faction.def.humanlikeFaction && !faction.def.hidden && !faction.defeated)
                     yield return faction;
+        }
+    }
+
+    // BanditCamp uses the vanilla outpost worker and combat group generation.
+    // Override only the defender count for sites attached to this quest, leaving
+    // ordinary outposts and all of their vanilla generation untouched.
+    [HarmonyPatch(typeof(SitePartWorker_Outpost), "GetEnemiesCount")]
+    public static class AlliedSettlementThreatDefenderCountPatch
+    {
+        public static void Postfix(Site site, ref int __result)
+        {
+            if (!IsAlliedThreatSite(site)) return;
+
+            int colonists = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive
+                .Count(pawn => pawn != null && pawn.IsColonistPlayerControlled);
+            __result = AlliedCaravanReinforcementPolicy.AlliedThreatDefenderCount(colonists);
+        }
+
+        private static bool IsAlliedThreatSite(Site site)
+        {
+            return site != null && Find.QuestManager != null &&
+                Find.QuestManager.QuestsListForReading.Any(quest => quest != null &&
+                    quest.State == QuestState.Ongoing &&
+                    quest.PartsListForReading.OfType<QuestPart_AlliedSettlementThreat>()
+                        .Any(part => part.site == site));
         }
     }
 }
