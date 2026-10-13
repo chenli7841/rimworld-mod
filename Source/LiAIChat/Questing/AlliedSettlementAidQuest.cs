@@ -84,14 +84,14 @@ namespace LiAIChat.Questing
                 kind != AlliedSettlementCrisisKind.DiseaseOutbreak)
                 return false;
 
-            // Both supply crises use the same quest definition; crisisKind in the
-            // slate selects food or medicine requirements and delivery behavior.
-            const string defName = "LiAIChat_AlliedSettlementAid";
-            QuestScriptDef def = defName == null ? null : DefDatabase<QuestScriptDef>.GetNamedSilentFail(defName);
+            string defName = kind == AlliedSettlementCrisisKind.FoodShortage
+                ? "LiAIChat_AlliedSettlementFoodAid"
+                : "LiAIChat_AlliedSettlementMedicineAid";
+            QuestScriptDef def = DefDatabase<QuestScriptDef>.GetNamedSilentFail(defName);
             if (def == null || Find.QuestManager == null)
             {
                 Log.ErrorOnce("[LiAIChat] Allied settlement aid quest definition is missing: " + defName,
-                    defName == null ? 0 : defName.GetHashCode());
+                    defName.GetHashCode());
                 return false;
             }
 

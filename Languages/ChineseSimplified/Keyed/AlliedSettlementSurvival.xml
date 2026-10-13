@@ -26,7 +26,7 @@
   <LiASS_DeliveryUnavailable>商队、危机或所选物资已不可用于此次交付。</LiASS_DeliveryUnavailable>
   <LiASS_AidDelivered>已从{0}向{2}交付{1}单位物资。</LiASS_AidDelivered>
   <LiASS_AidFoodProgress>已交付食物：{0} / {1}营养</LiASS_AidFoodProgress>
-  <LiASS_AidMedicineProgress>已交付药品：{0} / {1}单位</LiASS_AidMedicineProgress>
+  <LiASS_AidMedicineProgress>援助目标：医药。已交付：{0} / {1}单位</LiASS_AidMedicineProgress>
   <LiASS_ThreatAwaitingDefenders>前往地图标记处的敌方据点并击败守军。</LiASS_ThreatAwaitingDefenders>
   <LiASS_ThreatDefenderProgress>仍有{0}名敌方守军保持战斗能力</LiASS_ThreatDefenderProgress>
   <LiASS_Migrate>永久移民</LiASS_Migrate>

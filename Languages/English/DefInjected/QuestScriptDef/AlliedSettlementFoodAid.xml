@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_AlliedSettlementFoodAid.questNameRules.rulesStrings>
+    <li>questName-&gt;Food aid for an ally</li>
+  </LiAIChat_AlliedSettlementFoodAid.questNameRules.rulesStrings>
+  <LiAIChat_AlliedSettlementFoodAid.questDescriptionRules.rulesStrings>
+    <li>questDescription-&gt;A nearby allied settlement is facing a famine and needs food. Travel there by caravan or shuttle and use the Deliver food command. The required nutrition and delivery progress are listed below. Food is taken from the caravan's inventory or shuttle cargo. Complete the delivery before the crisis deadline.</li>
+  </LiAIChat_AlliedSettlementFoodAid.questDescriptionRules.rulesStrings>
+</LanguageData>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_AlliedSettlementMedicineAid.questNameRules.rulesStrings>
+    <li>questName-&gt;Medicine aid for an ally</li>
+  </LiAIChat_AlliedSettlementMedicineAid.questNameRules.rulesStrings>
+  <LiAIChat_AlliedSettlementMedicineAid.questDescriptionRules.rulesStrings>
+    <li>questDescription-&gt;A nearby allied settlement is suffering a disease outbreak and urgently needs medicine. Travel there by caravan or shuttle and use the Deliver medicine command. Herbal, Industrial, and Glitterworld medicine all count. The required amount and delivery progress are listed below. Medicine is taken from the caravan's inventory or shuttle cargo. Complete the delivery before the crisis deadline.</li>
+  </LiAIChat_AlliedSettlementMedicineAid.questDescriptionRules.rulesStrings>
+</LanguageData>

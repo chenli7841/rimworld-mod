@@ -26,7 +26,7 @@
   <LiASS_DeliveryUnavailable>The caravan, crisis or selected supplies are no longer available for this delivery.</LiASS_DeliveryUnavailable>
   <LiASS_AidDelivered>Delivered {1} supplies from {0} to {2}.</LiASS_AidDelivered>
   <LiASS_AidFoodProgress>Food delivered: {0} / {1} nutrition</LiASS_AidFoodProgress>
-  <LiASS_AidMedicineProgress>Medicine delivered: {0} / {1} units</LiASS_AidMedicineProgress>
+  <LiASS_AidMedicineProgress>Aid objective: medicine. Delivered: {0} / {1} units</LiASS_AidMedicineProgress>
   <LiASS_ThreatAwaitingDefenders>Travel to the marked enemy outpost and defeat its defenders.</LiASS_ThreatAwaitingDefenders>
   <LiASS_ThreatDefenderProgress>Enemy defenders still able to fight: {0}</LiASS_ThreatDefenderProgress>
   <LiASS_Migrate>Permanent migration</LiASS_Migrate>

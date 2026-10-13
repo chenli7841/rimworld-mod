@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_AlliedSettlementFoodAid.questNameRules.rulesStrings>
+    <li>questName-&gt;盟友据点食物援助</li>
+  </LiAIChat_AlliedSettlementFoodAid.questNameRules.rulesStrings>
+  <LiAIChat_AlliedSettlementFoodAid.questDescriptionRules.rulesStrings>
+    <li>questDescription-&gt;附近的盟友据点正遭遇饥荒，急需食物援助。请派商队或穿梭机前往据点，使用“交付食物”指令。所需食物的营养总量和已交付进度会显示在下方；食物将从商队库存或穿梭机货舱中扣除。请在危机期限前完成交付。</li>
+  </LiAIChat_AlliedSettlementFoodAid.questDescriptionRules.rulesStrings>
+</LanguageData>

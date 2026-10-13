@@ -72,12 +72,16 @@ Assert-Close ($caravanPolicy::CappedMilitaryAidDeathPenalty(
     20, [LiAIChat.AlliedSettlementSurvival.AlliedCaravanGuardRole]::Leader)) 0 'Military-aid loss must not exceed its per-request cap'
 [xml]$english = Get-Content (Join-Path $modRoot 'Languages/English/Keyed/AlliedSettlementSurvival.xml') -Raw
 [xml]$chinese = Get-Content (Join-Path $modRoot 'Languages/ChineseSimplified/Keyed/AlliedSettlementSurvival.xml') -Raw
-$aidQuestDefPath = Join-Path $modRoot 'Defs/QuestScriptDefs/Quest_AlliedSettlementAid.xml'
-[xml]$aidQuestDef = Get-Content $aidQuestDefPath -Raw
-if ($aidQuestDef.Defs.QuestScriptDef.defName -ne 'LiAIChat_AlliedSettlementAid' -or
-    (Get-Content (Join-Path $modRoot 'Source/LiAIChat/Questing/AlliedSettlementAidQuest.cs') -Raw) -notmatch
-        'const string defName = "LiAIChat_AlliedSettlementAid"') {
-    throw 'Food and medicine crises must resolve to the existing shared allied settlement aid quest definition'
+$foodAidDefPath = Join-Path $modRoot 'Defs/QuestScriptDefs/Quest_AlliedSettlementFoodAid.xml'
+$medicineAidDefPath = Join-Path $modRoot 'Defs/QuestScriptDefs/Quest_AlliedSettlementMedicineAid.xml'
+[xml]$foodAidDef = Get-Content $foodAidDefPath -Raw
+[xml]$medicineAidDef = Get-Content $medicineAidDefPath -Raw
+$aidQuestSource = Get-Content (Join-Path $modRoot 'Source/LiAIChat/Questing/AlliedSettlementAidQuest.cs') -Raw
+if ($foodAidDef.Defs.QuestScriptDef.defName -ne 'LiAIChat_AlliedSettlementFoodAid' -or
+    $medicineAidDef.Defs.QuestScriptDef.defName -ne 'LiAIChat_AlliedSettlementMedicineAid' -or
+    $aidQuestSource -notmatch 'LiAIChat_AlliedSettlementFoodAid' -or
+    $aidQuestSource -notmatch 'LiAIChat_AlliedSettlementMedicineAid') {
+    throw 'Food and medicine crises must resolve to their specific allied settlement aid quest definitions'
 }
 $enKeys = @($english.LanguageData.ChildNodes | Where-Object NodeType -eq Element | ForEach-Object Name)
 $zhKeys = @($chinese.LanguageData.ChildNodes | Where-Object NodeType -eq Element | ForEach-Object Name)

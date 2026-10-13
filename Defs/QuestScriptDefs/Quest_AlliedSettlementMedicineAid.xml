@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <QuestScriptDef>
+    <defName>LiAIChat_AlliedSettlementMedicineAid</defName>
+    <rootSelectionWeight>0</rootSelectionWeight>
+    <rootMinPoints>0</rootMinPoints>
+    <autoAccept>true</autoAccept>
+    <questNameRules>
+      <rulesStrings><li>questName-&gt;Medicine aid for an ally</li></rulesStrings>
+    </questNameRules>
+    <questDescriptionRules>
+      <rulesStrings><li>questDescription-&gt;A nearby allied settlement is suffering a disease outbreak and needs medicine. Deliver the requested amount of medicine before the crisis deadline.</li></rulesStrings>
+    </questDescriptionRules>
+    <root Class="QuestNode_Sequence">
+      <nodes>
+        <li Class="LiAIChat.Questing.QuestNode_CreateAlliedSettlementAid" />
+      </nodes>
+    </root>
+  </QuestScriptDef>
+</Defs>

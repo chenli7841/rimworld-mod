@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_AlliedSettlementMedicineAid.questNameRules.rulesStrings>
+    <li>questName-&gt;盟友据点医药援助</li>
+  </LiAIChat_AlliedSettlementMedicineAid.questNameRules.rulesStrings>
+  <LiAIChat_AlliedSettlementMedicineAid.questDescriptionRules.rulesStrings>
+    <li>questDescription-&gt;附近的盟友据点正遭受瘟疫，急需医药。请派商队或穿梭机前往据点，使用“交付药品”指令。草药、普通医药和闪耀世界医药均可；所需数量及已交付进度会显示在下方。药品将从商队库存或穿梭机货舱中扣除，请在危机期限前完成交付。</li>
+  </LiAIChat_AlliedSettlementMedicineAid.questDescriptionRules.rulesStrings>
+</LanguageData>
