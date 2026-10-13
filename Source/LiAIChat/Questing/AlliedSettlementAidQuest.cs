@@ -16,12 +16,16 @@ namespace LiAIChat.Questing
 
         protected override void RunInt()
         {
+            Settlement settlement = QuestGen.slate.Get<Settlement>("alliedSettlement");
+            AlliedSettlementCrisisKind crisisKind =
+                QuestGen.slate.Get<AlliedSettlementCrisisKind>("alliedCrisisKind");
+            float strength = AlliedSettlementWorldComponent.Current?.Get(settlement)?.strength ?? 0f;
             QuestGen.quest.AddPart(new QuestPart_AlliedSettlementAid
             {
-                settlement = QuestGen.slate.Get<Settlement>("alliedSettlement"),
-                crisisKind = QuestGen.slate.Get<AlliedSettlementCrisisKind>("alliedCrisisKind"),
-                requiredNutrition = AlliedSettlementAidQuestUtility.RequiredFoodNutrition,
-                requiredMedicine = AlliedSettlementAidQuestUtility.RequiredMedicineUnits
+                settlement = settlement,
+                crisisKind = crisisKind,
+                requiredNutrition = AlliedSettlementAidQuestUtility.RequiredFoodNutrition(strength),
+                requiredMedicine = AlliedSettlementAidQuestUtility.RequiredMedicineUnits(strength)
             });
         }
     }
@@ -73,8 +77,10 @@ namespace LiAIChat.Questing
 
     public static class AlliedSettlementAidQuestUtility
     {
-        public static float RequiredFoodNutrition => AlliedSettlementSurvivalMod.Current.foodNutrition;
-        public static int RequiredMedicineUnits => AlliedSettlementSurvivalMod.Current.medicineUnits;
+        public static float RequiredFoodNutrition(float strength) => SettlementStrengthPolicy.ScaleFoodAidRequirement(
+            AlliedSettlementSurvivalMod.Current.foodNutrition, strength);
+        public static int RequiredMedicineUnits(float strength) => SettlementStrengthPolicy.ScaleMedicineAidRequirement(
+            AlliedSettlementSurvivalMod.Current.medicineUnits, strength);
 
         public static bool TryCreate(AlliedSettlementWorldComponent component, AlliedSettlementState state,
             AlliedSettlementCrisisKind kind, out Quest quest)

@@ -24,6 +24,22 @@ namespace LiAIChat.AlliedSettlementSurvival
 
         public static float Clamp(float value) => Math.Max(0f, Math.Min(100f, value));
 
+        public static float AidRequirementMultiplier(float strength)
+        {
+            strength = Clamp(strength);
+            if (strength < 25f) return 1f;
+            if (strength < 50f) return 1.25f;
+            if (strength < 75f) return 1.5f;
+            if (strength < 90f) return 1.75f;
+            return 2f;
+        }
+
+        public static float ScaleFoodAidRequirement(float baseNutrition, float strength) =>
+            Math.Max(1f, baseNutrition) * AidRequirementMultiplier(strength);
+
+        public static int ScaleMedicineAidRequirement(int baseUnits, float strength) =>
+            (int)Math.Ceiling(Math.Max(1, baseUnits) * AidRequirementMultiplier(strength));
+
         public static float Recover(float strength, int elapsedTicks, bool active, bool crisis)
         {
             strength = Clamp(strength);

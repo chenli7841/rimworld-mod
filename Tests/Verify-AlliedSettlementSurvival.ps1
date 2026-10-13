@@ -35,6 +35,17 @@ Assert-Close ($policy::Recover(0, 600000, $true, $false)) 0 'Collapsed settlemen
 Assert-Close ($policy::Recover(60, -1000, $true, $false)) 60 'Clock rollback'
 Assert-Close ($policy::Clamp(105)) 100 'Strength maximum'
 Assert-Close ($policy::Clamp(-20)) 0 'Strength minimum'
+Assert-Close ($policy::AidRequirementMultiplier(24.9)) 1 'Lowest aid-demand tier'
+Assert-Close ($policy::AidRequirementMultiplier(25)) 1.25 'Second aid-demand tier'
+Assert-Close ($policy::AidRequirementMultiplier(50)) 1.5 'Middle aid-demand tier'
+Assert-Close ($policy::AidRequirementMultiplier(75)) 1.75 'High aid-demand tier'
+Assert-Close ($policy::AidRequirementMultiplier(90)) 2 'Top aid-demand tier'
+Assert-Close ($policy::ScaleFoodAidRequirement(150, 100)) 300 'Top-tier food aid requirement'
+if ($policy::ScaleMedicineAidRequirement(10, 25) -ne 13 -or
+    $policy::ScaleMedicineAidRequirement(10, 50) -ne 15 -or
+    $policy::ScaleMedicineAidRequirement(10, 90) -ne 20) {
+    throw 'Medicine aid requirement tiers must scale up and round fractional units upward'
+}
 $stepped = 60.0
 for ($i = 0; $i -lt 24; $i++) { $stepped = $policy::Recover($stepped, 2500, $true, $false) }
 Assert-Close $stepped 60.5 'Tick subdivisions'
