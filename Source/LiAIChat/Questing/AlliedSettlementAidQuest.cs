@@ -146,7 +146,7 @@ namespace LiAIChat.Questing
         private static void OpenDeliveryMenu(Caravan caravan, Settlement settlement, QuestPart_AlliedSettlementAid part)
         {
             var options = new List<FloatMenuOption>();
-            List<Thing> inventory = CaravanInventoryUtility.AllInventoryItems(caravan);
+            List<Thing> inventory = AvailableDeliveryItems(caravan);
             if (part.crisisKind == AlliedSettlementCrisisKind.FoodShortage)
             {
                 float remaining = part.RemainingNutrition;
@@ -212,7 +212,7 @@ namespace LiAIChat.Questing
             }
 
             int unitsLeft = requestedCount;
-            List<Thing> taken = CaravanInventoryUtility.TakeThings(caravan, thing =>
+            List<Thing> taken = TakeDeliveryItems(caravan, thing =>
             {
                 if (unitsLeft <= 0 || thing.def != def || (food && !thing.IngestibleNow)) return 0;
                 int units = Math.Min(unitsLeft, thing.stackCount);
@@ -242,6 +242,47 @@ namespace LiAIChat.Questing
                 ? part.RemainingNutrition <= 0.001f
                 : part.RemainingMedicine <= 0;
             if (complete) component.CompleteCrisis(settlement, part.crisisKind);
+        }
+
+        private static List<Thing> AvailableDeliveryItems(Caravan caravan)
+        {
+            var items = new List<Thing>(CaravanInventoryUtility.AllInventoryItems(caravan));
+            var seen = new HashSet<Thing>(items);
+            foreach (ThingOwner cargo in ShuttleCargoOwners(caravan))
+            {
+                foreach (Thing thing in cargo)
+                    if (thing != null && seen.Add(thing))
+                        items.Add(thing);
+            }
+            return items;
+        }
+
+        private static List<Thing> TakeDeliveryItems(Caravan caravan, Func<Thing, int> countToTake)
+        {
+            List<Thing> taken = CaravanInventoryUtility.TakeThings(caravan, countToTake);
+            foreach (ThingOwner cargo in ShuttleCargoOwners(caravan))
+            {
+                if (cargo == null) continue;
+                foreach (Thing thing in cargo.ToList())
+                {
+                    int count = countToTake(thing);
+                    if (count <= 0) continue;
+                    Thing removed = cargo.Take(thing, Math.Min(count, thing.stackCount));
+                    if (removed != null) taken.Add(removed);
+                }
+            }
+            return taken;
+        }
+
+        private static IEnumerable<ThingOwner> ShuttleCargoOwners(Caravan caravan)
+        {
+            if (caravan == null) yield break;
+            foreach (Thing thing in CaravanInventoryUtility.AllInventoryItems(caravan))
+            {
+                Building_PassengerShuttle shuttle = thing as Building_PassengerShuttle;
+                if (shuttle?.TransporterComp != null)
+                    yield return shuttle.TransporterComp.GetDirectlyHeldThings();
+            }
         }
     }
 }

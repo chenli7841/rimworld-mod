@@ -112,6 +112,12 @@ $enemiesDefeatedField = $siteType.GetField('allEnemiesDefeatedSignalSent', [Refl
 if ($null -eq $enemiesDefeatedField -or $enemiesDefeatedField.FieldType -ne [bool]) {
     throw 'Vanilla cleared-site state unavailable for resolving allied threat quests after map unload'
 }
+$shuttleType = $gameAssembly.GetType('RimWorld.Building_PassengerShuttle', $true)
+$transporterType = $gameAssembly.GetType('RimWorld.CompTransporter', $true)
+if ($null -eq $shuttleType.GetProperty('TransporterComp') -or
+    $null -eq $transporterType.GetMethod('GetDirectlyHeldThings')) {
+    throw 'Shuttle cargo access API changed; allied supply delivery cannot inspect shuttle cargo'
+}
 $traderArrival = $gameAssembly.GetType('RimWorld.IncidentWorker_TraderCaravanArrival', $true)
 $spawnPawns = $traderArrival.GetMethod('SpawnPawns', [Reflection.BindingFlags]'Instance,Public,NonPublic')
 if ($null -eq $spawnPawns -or $spawnPawns.ReturnType.Name -ne 'List`1' -or
