@@ -22,8 +22,8 @@
     <TargetFramework Condition="'$(TargetFramework)' == '' and Exists('$(RimWorldManagedDir)\UnityStubs.dll')">net10.0</TargetFramework>
     <TargetFramework Condition="'$(TargetFramework)' == ''">net472</TargetFramework>
 
-    <HarmonyAssemblyPath Condition="'$(HarmonyAssemblyPath)' == '' and Exists('C:\Program Files (x86)\Steam\steamapps\workshop\content\294100\2009463077\1.7\Assemblies\0Harmony.dll')">C:\Program Files (x86)\Steam\steamapps\workshop\content\294100\2009463077\1.7\Assemblies\0Harmony.dll</HarmonyAssemblyPath>
-    <HarmonyAssemblyPath Condition="'$(HarmonyAssemblyPath)' == '' and Exists('C:\Program Files (x86)\Steam\steamapps\workshop\content\294100\2009463077\1.6\Assemblies\0Harmony.dll')">C:\Program Files (x86)\Steam\steamapps\workshop\content\294100\2009463077\1.6\Assemblies\0Harmony.dll</HarmonyAssemblyPath>
+    <HarmonyAssemblyPath Condition="'$(HarmonyAssemblyPath)' == '' and Exists('$(RimWorldManagedDir)\UnityStubs.dll') and Exists('C:\Program Files (x86)\Steam\steamapps\workshop\content\294100\2009463077\1.7\Assemblies\0Harmony.dll')">C:\Program Files (x86)\Steam\steamapps\workshop\content\294100\2009463077\1.7\Assemblies\0Harmony.dll</HarmonyAssemblyPath>
+    <HarmonyAssemblyPath Condition="'$(HarmonyAssemblyPath)' == '' and !Exists('$(RimWorldManagedDir)\UnityStubs.dll') and Exists('C:\Program Files (x86)\Steam\steamapps\workshop\content\294100\2009463077\1.6\Assemblies\0Harmony.dll')">C:\Program Files (x86)\Steam\steamapps\workshop\content\294100\2009463077\1.6\Assemblies\0Harmony.dll</HarmonyAssemblyPath>
     <HarmonyAssemblyPath Condition="'$(HarmonyAssemblyPath)' == '' and Exists('..\..\..\..\..\..\workshop\content\294100\2009463077\Current\Assemblies\0Harmony.dll')">..\..\..\..\..\..\workshop\content\294100\2009463077\Current\Assemblies\0Harmony.dll</HarmonyAssemblyPath>
     <HarmonyAssemblyPath Condition="'$(HarmonyAssemblyPath)' == '' and Exists('C:\Program Files (x86)\Steam\steamapps\workshop\content\294100\2009463077\Current\Assemblies\0Harmony.dll')">C:\Program Files (x86)\Steam\steamapps\workshop\content\294100\2009463077\Current\Assemblies\0Harmony.dll</HarmonyAssemblyPath>
 
@@ -32,6 +32,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Reference Include="System.Net.Http" Condition="'$(TargetFramework)' == 'net472'" />
+    <Reference Include="netstandard" Condition="Exists('$(RimWorldManagedDir)\netstandard.dll')">
+      <HintPath>$(RimWorldManagedDir)\netstandard.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="0Harmony">
       <HintPath>$(HarmonyAssemblyPath)</HintPath>
       <Private>false</Private>
