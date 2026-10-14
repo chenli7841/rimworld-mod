@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Patch>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[@Name="Human"]/recipes</xpath>
+    <value>
+      <li>LiAIChat_SiphonExperience</li>
+    </value>
+  </Operation>
+</Patch>
