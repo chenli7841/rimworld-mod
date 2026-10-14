@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>LiAIChat_SiphonExperience</defName>
+    <label>吸取经验</label>
+    <description>吸取囚犯的技能经验</description>
+    <jobString>吸取技能经验。</jobString>
+    <workerClass>LiAIChat.Skills.Recipe_SiphonExperience</workerClass>
+    <surgeryOutcomeEffect>SurgeryOutcomeMinorFailure</surgeryOutcomeEffect>
+    <workAmount>10000</workAmount>
+    <targetsBodyPart>false</targetsBodyPart>
+    <hideBodyPartNames>true</hideBodyPartNames>
+    <recipeUsers>
+      <li>Human</li>
+    </recipeUsers>
+    <ingredients>
+      <li>
+        <filter>
+          <thingDefs>
+            <li>MedicineUltratech</li>
+          </thingDefs>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>MedicineUltratech</li>
+      </thingDefs>
+    </fixedIngredientFilter>
+  </RecipeDef>
+</Defs>

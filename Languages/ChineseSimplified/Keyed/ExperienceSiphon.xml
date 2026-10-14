@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_ExperienceSiphonNoExperience>{0}已没有可吸取的技能经验。</LiAIChat_ExperienceSiphonNoExperience>
+  <LiAIChat_ExperienceSiphonResult>{0}从囚犯{1}身上吸取了{2}技能的{3}点经验，并获得了{4}点经验。</LiAIChat_ExperienceSiphonResult>
+</LanguageData>
