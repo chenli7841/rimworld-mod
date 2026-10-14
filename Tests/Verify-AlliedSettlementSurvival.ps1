@@ -1,6 +1,17 @@
-param([string]$GameManagedPath = 'C:/Program Files (x86)/Steam/steamapps/common/RimWorld/RimWorldWin64_Data/Managed')
+param([string]$GameManagedPath = '')
 $ErrorActionPreference = 'Stop'
 $modRoot = Split-Path $PSScriptRoot -Parent
+if ([string]::IsNullOrWhiteSpace($GameManagedPath)) {
+    $legacyManagedPath = 'C:/Program Files (x86)/Steam/steamapps/common/RimWorld/RimWorldWin64_Data/Managed'
+    $currentManagedPath = 'C:/Program Files (x86)/Steam/steamapps/common/RimWorld'
+    $GameManagedPath = if (Test-Path (Join-Path $legacyManagedPath 'Assembly-CSharp.dll')) {
+        $legacyManagedPath
+    } elseif (Test-Path (Join-Path $currentManagedPath 'Assembly-CSharp.dll')) {
+        $currentManagedPath
+    } else {
+        $legacyManagedPath
+    }
+}
 Add-Type -Path (Join-Path $modRoot 'Source/LiAIChat/AlliedSettlementSurvival/SettlementStrengthPolicy.cs')
 Add-Type -Path (Join-Path $modRoot 'Source/LiAIChat/AlliedSettlementSurvival/AlliedCaravanReinforcementPolicy.cs')
 function Assert-Close([double]$actual, [double]$expected, [string]$message) {
@@ -113,7 +124,10 @@ foreach ($source in $sources) {
         if ($enKeys -notcontains $match.Groups[1].Value) { throw "Missing translation: $($match.Value)" }
     }
 }
-[void][Reflection.Assembly]::LoadFrom((Join-Path $GameManagedPath 'UnityEngine.CoreModule.dll'))
+$unityAssemblyPath = Join-Path $GameManagedPath 'UnityEngine.CoreModule.dll'
+if (-not (Test-Path $unityAssemblyPath)) { $unityAssemblyPath = Join-Path $GameManagedPath 'UnityStubs.dll' }
+if (-not (Test-Path $unityAssemblyPath)) { throw "Unity assembly not found under $GameManagedPath" }
+[void][Reflection.Assembly]::LoadFrom($unityAssemblyPath)
 $gameAssembly = [Reflection.Assembly]::LoadFrom((Join-Path $GameManagedPath 'Assembly-CSharp.dll'))
 foreach ($target in @(@('RimWorld.Planet.Settlement','GetInspectString'), @('RimWorld.Planet.Settlement','GetGizmos'), @('RimWorld.Planet.Caravan','GetGizmos'), @('RimWorld.Planet.Site','PostMapGenerate'), @('RimWorld.Planet.Site','CheckAllEnemiesDefeated'))) {
     $type = $gameAssembly.GetType($target[0], $true)
