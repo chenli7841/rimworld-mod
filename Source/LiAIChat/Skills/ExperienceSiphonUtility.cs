@@ -94,6 +94,7 @@ namespace LiAIChat.Skills
         {
             if (!IsEligibleSurgeon(surgeon, patient))
             {
+                Log.Message("[LiAIChat Experience Siphon] Transfer skipped: " + EligibilityFailureReason(surgeon, patient));
                 return false;
             }
 
@@ -107,6 +108,8 @@ namespace LiAIChat.Skills
 
             if (donorSkills.Count == 0)
             {
+                Log.Message("[LiAIChat Experience Siphon] Transfer skipped: no eligible skill with experience. Patient=" +
+                    (patient?.LabelShort ?? "null") + ", surgeon=" + (surgeon?.LabelShort ?? "null"));
                 Messages.Message("LiAIChat_ExperienceSiphonNoExperience".Translate(patient.LabelShort),
                     patient, MessageTypeDefOf.NeutralEvent);
                 return false;
@@ -122,6 +125,12 @@ namespace LiAIChat.Skills
             RemoveExperience(donorSkill, takenExperience);
             int donorLevelAfter = donorSkill.Level;
             recipientSkill.Learn(receivedExperience, true, true);
+
+            Log.Message("[LiAIChat Experience Siphon] Experience transferred. Patient=" + patient.LabelShort +
+                ", surgeon=" + surgeon.LabelShort + ", skill=" + donorSkill.def.defName +
+                ", donorXpRemoved=" + takenExperience.ToString("0.##") +
+                ", recipientXpAdded=" + receivedExperience.ToString("0.##") +
+                ", donorLevel=" + donorLevelBefore + "->" + donorLevelAfter);
 
             Messages.Message(
                 "LiAIChat_ExperienceSiphonGained".Translate(
@@ -146,6 +155,10 @@ namespace LiAIChat.Skills
                 return;
             }
 
+            Log.Message("[LiAIChat Experience Siphon] Surgery success callback. Patient=" +
+                (patient?.LabelShort ?? "null") + ", surgeon=" + (surgeon?.LabelShort ?? "null") +
+                ", ingredients=" + DescribeMedicine(ingredients));
+
             if (bill is Bill_Medical medicalBill)
             {
                 PendingMedicineConsumption[medicalBill] = (ingredients ?? new List<Thing>())
@@ -161,21 +174,59 @@ namespace LiAIChat.Skills
         {
             if (bill == null || !PendingMedicineConsumption.TryGetValue(bill, out List<IngredientStackSnapshot> snapshots))
             {
+                Log.Message("[LiAIChat Experience Siphon] Bill completion had no recorded medicine stack snapshot.");
                 return;
             }
 
             PendingMedicineConsumption.Remove(bill);
+            Log.Message("[LiAIChat Experience Siphon] Checking medicine at bill completion. Recorded stacks=" +
+                string.Join(", ", snapshots.Select(snapshot => snapshot.Describe())));
             foreach (IngredientStackSnapshot snapshot in snapshots)
             {
                 Thing medicine = snapshot.Thing;
                 if (medicine == null || medicine.Destroyed || medicine.stackCount < snapshot.StackCount)
                 {
+                    Log.Message("[LiAIChat Experience Siphon] Medicine already consumed by vanilla bill flow. " + snapshot.Describe());
                     continue;
                 }
 
                 Thing consumed = medicine.stackCount == 1 ? medicine : medicine.SplitOff(1);
                 consumed?.Destroy(DestroyMode.Vanish);
+                Log.Message("[LiAIChat Experience Siphon] Medicine fallback consumption applied. " + snapshot.Describe() +
+                    ", remaining=" + (medicine.Destroyed ? 0 : medicine.stackCount));
             }
+        }
+
+        public static string EligibilityFailureReason(Pawn surgeon, Pawn patient)
+        {
+            if (surgeon == null) return "surgeon is null";
+            if (patient == null) return "patient is null";
+            if (patient.Dead) return "patient is dead";
+            if (!patient.IsPrisonerOfColony) return "patient is no longer a colony prisoner";
+            if (!IsEligiblePatient(patient)) return "patient no longer meets age, skill, room, or bed conditions";
+            if (surgeon.Dead) return "surgeon is dead";
+            if (surgeon.Downed) return "surgeon is downed";
+            if (!surgeon.IsColonist) return "surgeon is not a colonist";
+            if (surgeon.IsPrisoner) return "surgeon is a prisoner";
+            if (surgeon.ageTracker == null || surgeon.skills == null) return "surgeon age or skills tracker is missing";
+            if (surgeon.Map != patient.Map) return "surgeon and patient are on different maps";
+            if (HasCurrentRomanticRelationship(surgeon)) return "surgeon has a current romantic relationship";
+            if (AreFamily(surgeon, patient)) return "surgeon and patient are family";
+            if (surgeon.ageTracker.AgeBiologicalYears < 13f || surgeon.ageTracker.AgeBiologicalYears > 50f)
+                return "surgeon is outside the allowed age range";
+            if (!HasTransferableSkill(surgeon, patient)) return "no transferable skill remains";
+            return "eligibility check failed for an unknown reason";
+        }
+
+        private static string DescribeMedicine(List<Thing> ingredients)
+        {
+            if (ingredients == null || ingredients.Count == 0)
+            {
+                return "none";
+            }
+
+            return string.Join(", ", ingredients.Where(thing => thing != null)
+                .Select(thing => thing.def?.defName + " x" + thing.stackCount + (thing.Destroyed ? " (destroyed)" : "")));
         }
 
         private sealed class IngredientStackSnapshot
@@ -187,6 +238,13 @@ namespace LiAIChat.Skills
             {
                 Thing = thing;
                 StackCount = stackCount;
+            }
+
+            public string Describe()
+            {
+                return (Thing?.def?.defName ?? "null") + " original=" + StackCount +
+                    ", current=" + (Thing == null || Thing.Destroyed ? 0 : Thing.stackCount) +
+                    (Thing != null && Thing.Destroyed ? " (destroyed)" : "");
             }
         }
 
@@ -337,7 +395,10 @@ namespace LiAIChat.Skills
             Bill bill = __args != null && __args.Length > 4 ? __args[4] as Bill : null;
             if (bill?.recipe?.defName == ExperienceSiphonUtility.RecipeDefName)
             {
+                bool originalResult = __result;
                 __result = false;
+                Log.Message("[LiAIChat Experience Siphon] Surgery failure check intercepted. OriginalResult=" +
+                    originalResult + ", finalResult=false (continue as success).");
             }
         }
     }
@@ -354,12 +415,36 @@ namespace LiAIChat.Skills
     [HarmonyPatch(typeof(Bill_Medical), "Notify_IterationCompleted")]
     public static class Bill_Medical_ExperienceSiphonMedicineConsumptionPatch
     {
-        public static void Postfix(Bill_Medical __instance)
+        public static void Postfix(Bill_Medical __instance, Pawn billDoer, List<Thing> ingredients)
         {
             if (__instance?.recipe?.defName == ExperienceSiphonUtility.RecipeDefName)
             {
+                Log.Message("[LiAIChat Experience Siphon] Medical bill iteration completed. Doer=" +
+                    (billDoer?.LabelShort ?? "null") + ", ingredients=" +
+                    (ingredients == null ? "null" : ingredients.Count.ToString()) + ".");
                 ExperienceSiphonUtility.EnsureMedicineConsumed(__instance);
             }
+        }
+    }
+
+    [HarmonyPatch(typeof(JobDriver), "Notify_Starting")]
+    public static class JobDriver_ExperienceSiphonStartLogPatch
+    {
+        public static void Postfix(JobDriver __instance)
+        {
+            Job job = __instance?.job;
+            if (job?.bill?.recipe?.defName != ExperienceSiphonUtility.RecipeDefName)
+            {
+                return;
+            }
+
+            Pawn patient = job.targetA.Thing as Pawn;
+            Log.Message("[LiAIChat Experience Siphon] Job started. Surgeon=" +
+                (__instance.pawn?.LabelShort ?? "null") + ", patient=" +
+                (patient?.LabelShort ?? "null") + ", jobDef=" + job.def?.defName +
+                ", recipe=" + job.bill.recipe.defName + ", targetB=" +
+                (job.targetB.Thing?.def?.defName ?? "null") +
+                (job.targetB.Thing == null ? "" : " x" + job.targetB.Thing.stackCount));
         }
     }
 
