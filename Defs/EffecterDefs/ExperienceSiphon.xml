@@ -3,5 +3,6 @@
   <!-- Suppress the inherited surgical particles during this non-invasive operation. -->
   <EffecterDef>
     <defName>LiAIChat_ExperienceSiphon</defName>
+    <children />
   </EffecterDef>
 </Defs>
