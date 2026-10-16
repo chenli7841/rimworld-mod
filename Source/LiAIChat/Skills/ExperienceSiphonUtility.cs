@@ -12,6 +12,9 @@ namespace LiAIChat.Skills
     {
         public const string RecipeDefName = "LiAIChat_SiphonExperience";
 
+        private static readonly Dictionary<Bill_Medical, List<IngredientStackSnapshot>> PendingMedicineConsumption =
+            new Dictionary<Bill_Medical, List<IngredientStackSnapshot>>();
+
         private const float BaseDonorExperiencePerRecipientExperience = 3f;
         private const float MaximumDonorExperiencePerOperation = 8000f;
         private const float MedicalSkillBonusPerLevel = 0.025f;
@@ -134,6 +137,57 @@ namespace LiAIChat.Skills
             GrantMoodBoost(patient);
             GrantMoodBoost(surgeon);
             return true;
+        }
+
+        public static void RecordSuccessfulOperation(Pawn patient, Pawn surgeon, List<Thing> ingredients, Bill bill)
+        {
+            if (bill?.recipe?.defName != RecipeDefName)
+            {
+                return;
+            }
+
+            if (bill is Bill_Medical medicalBill)
+            {
+                PendingMedicineConsumption[medicalBill] = (ingredients ?? new List<Thing>())
+                    .Where(thing => thing != null && thing.def?.defName == "MedicineIndustrial")
+                    .Select(thing => new IngredientStackSnapshot(thing, thing.stackCount))
+                    .ToList();
+            }
+
+            TransferRandomSkillExperience(patient, surgeon);
+        }
+
+        public static void EnsureMedicineConsumed(Bill_Medical bill)
+        {
+            if (bill == null || !PendingMedicineConsumption.TryGetValue(bill, out List<IngredientStackSnapshot> snapshots))
+            {
+                return;
+            }
+
+            PendingMedicineConsumption.Remove(bill);
+            foreach (IngredientStackSnapshot snapshot in snapshots)
+            {
+                Thing medicine = snapshot.Thing;
+                if (medicine == null || medicine.Destroyed || medicine.stackCount < snapshot.StackCount)
+                {
+                    continue;
+                }
+
+                Thing consumed = medicine.stackCount == 1 ? medicine : medicine.SplitOff(1);
+                consumed?.Destroy(DestroyMode.Vanish);
+            }
+        }
+
+        private sealed class IngredientStackSnapshot
+        {
+            public readonly Thing Thing;
+            public readonly int StackCount;
+
+            public IngredientStackSnapshot(Thing thing, int stackCount)
+            {
+                Thing = thing;
+                StackCount = stackCount;
+            }
         }
 
         public static void TickExperienceSiphonRestAndHeart(Pawn pawn, int delta)
@@ -288,23 +342,33 @@ namespace LiAIChat.Skills
         }
     }
 
+    [HarmonyPatch(typeof(Recipe_Surgery), "OnSurgerySuccess")]
+    public static class Recipe_Surgery_ExperienceSiphonCompletionPatch
+    {
+        public static void Postfix(Pawn pawn, Pawn billDoer, List<Thing> ingredients, Bill bill)
+        {
+            ExperienceSiphonUtility.RecordSuccessfulOperation(pawn, billDoer, ingredients, bill);
+        }
+    }
+
+    [HarmonyPatch(typeof(Bill_Medical), "Notify_IterationCompleted")]
+    public static class Bill_Medical_ExperienceSiphonMedicineConsumptionPatch
+    {
+        public static void Postfix(Bill_Medical __instance)
+        {
+            if (__instance?.recipe?.defName == ExperienceSiphonUtility.RecipeDefName)
+            {
+                ExperienceSiphonUtility.EnsureMedicineConsumed(__instance);
+            }
+        }
+    }
+
     public class Recipe_SiphonExperience : Recipe_Surgery
     {
         public override bool AvailableOnNow(Thing thing, BodyPartRecord part)
         {
             return base.AvailableOnNow(thing, part) &&
                 ExperienceSiphonUtility.IsEligiblePatient(thing as Pawn);
-        }
-
-        protected override void OnSurgerySuccess(
-            Pawn pawn,
-            BodyPartRecord part,
-            Pawn billDoer,
-            List<Thing> ingredients,
-            Bill bill)
-        {
-            base.OnSurgerySuccess(pawn, part, billDoer, ingredients, bill);
-            ExperienceSiphonUtility.TransferRandomSkillExperience(pawn, billDoer);
         }
     }
 
