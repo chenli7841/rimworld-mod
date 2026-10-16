@@ -114,7 +114,11 @@ namespace LiAIChat.Skills
                 return false;
             }
 
-            SkillRecord donorSkill = donorSkills.RandomElement();
+            SkillRecord donorSkill = donorSkills
+                .OrderByDescending(skill => skill.Level)
+                .ThenByDescending(skill => skill.xpSinceLastLevel)
+                .ThenBy(skill => skill.def.defName, StringComparer.Ordinal)
+                .First();
             SkillRecord recipientSkill = surgeon.skills.GetSkill(donorSkill.def);
             int donorLevelBefore = donorSkill.Level;
             float donorExperienceBefore = TotalExperience(donorSkill);

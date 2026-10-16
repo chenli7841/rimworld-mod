@@ -7,6 +7,7 @@
     <jobString>吸取技能经验。</jobString>
     <workerClass>LiAIChat.Skills.Recipe_SiphonExperience</workerClass>
     <effectWorking>LiAIChat_ExperienceSiphon</effectWorking>
+    <workSkillLearnFactor>0</workSkillLearnFactor>
     <surgeryOutcomeEffect>SurgeryOutcomeMinorFailure</surgeryOutcomeEffect>
     <workAmount>10000</workAmount>
     <targetsBodyPart>false</targetsBodyPart>
