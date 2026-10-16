@@ -118,11 +118,8 @@ namespace LiAIChat.Skills
             recipientSkill.Learn(receivedExperience, true, true);
 
             Messages.Message(
-                "LiAIChat_ExperienceSiphonResult".Translate(
-                    surgeon.LabelShort,
-                    patient.LabelShort,
+                "LiAIChat_ExperienceSiphonGained".Translate(
                     donorSkill.def.LabelCap,
-                    takenExperience.ToString("0.##"),
                     receivedExperience.ToString("0.##")),
                 surgeon,
                 MessageTypeDefOf.PositiveEvent);
@@ -142,15 +139,29 @@ namespace LiAIChat.Skills
 
             pawn.needs.rest.CurLevel = Math.Min(1f, pawn.needs.rest.CurLevel + 0.0008f * delta);
 
-            int tick = Find.TickManager.TicksGame;
-            if ((tick + pawn.thingIDNumber) % 400 < delta)
+            Pawn patient = SiphonPatientForJob(pawn.CurJob);
+            if (patient != null)
             {
-                FleckDef heart = DefDatabase<FleckDef>.GetNamedSilentFail("Heart");
-                if (heart != null)
-                {
-                    FleckMaker.ThrowMetaIcon(pawn.Position, pawn.Map, heart, 0.8f);
-                }
+                GrantMoodBoostIfMissing(pawn);
+                GrantMoodBoostIfMissing(patient);
             }
+        }
+
+        private static Pawn SiphonPatientForJob(Job job)
+        {
+            if (job?.bill?.recipe?.defName != RecipeDefName)
+            {
+                return null;
+            }
+
+            Pawn patient = job.targetA.Thing as Pawn;
+            if (patient != null && patient.IsPrisonerOfColony)
+            {
+                return patient;
+            }
+
+            patient = job.targetB.Thing as Pawn;
+            return patient != null && patient.IsPrisonerOfColony ? patient : null;
         }
 
         private static bool HasHediff(Pawn pawn, string defName)
@@ -226,9 +237,39 @@ namespace LiAIChat.Skills
         private static void GrantMoodBoost(Pawn pawn)
         {
             ThoughtDef thought = DefDatabase<ThoughtDef>.GetNamedSilentFail("LiAIChat_ExperienceSiphonAfterglow");
-            if (pawn?.needs?.mood?.thoughts?.memories != null && thought != null)
+            MemoryThoughtHandler memories = pawn?.needs?.mood?.thoughts?.memories;
+            if (memories != null && thought != null)
             {
-                pawn.needs.mood.thoughts.memories.TryGainMemory(thought);
+                Thought_Memory oldMemory = memories.GetFirstMemoryOfDef(thought);
+                if (oldMemory != null)
+                {
+                    memories.RemoveMemory(oldMemory);
+                }
+
+                memories.TryGainMemory(thought, pawn);
+            }
+        }
+
+        private static void GrantMoodBoostIfMissing(Pawn pawn)
+        {
+            ThoughtDef thought = DefDatabase<ThoughtDef>.GetNamedSilentFail("LiAIChat_ExperienceSiphonAfterglow");
+            MemoryThoughtHandler memories = pawn?.needs?.mood?.thoughts?.memories;
+            if (memories != null && thought != null && memories.GetFirstMemoryOfDef(thought) == null)
+            {
+                memories.TryGainMemory(thought, pawn);
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(Recipe_Surgery), "CheckSurgeryFail")]
+    public static class Recipe_Surgery_ExperienceSiphonSuccessPatch
+    {
+        public static void Postfix(object[] __args, ref bool __result)
+        {
+            Bill bill = __args != null && __args.Length > 4 ? __args[4] as Bill : null;
+            if (bill?.recipe?.defName == ExperienceSiphonUtility.RecipeDefName)
+            {
+                __result = false;
             }
         }
     }

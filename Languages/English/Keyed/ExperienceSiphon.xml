@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <LiAIChat_ExperienceSiphonNoExperience>{0} has no skill experience left to siphon.</LiAIChat_ExperienceSiphonNoExperience>
-  <LiAIChat_ExperienceSiphonResult>{0} siphoned {3} experience in {2} from prisoner {1} and gained {4} experience.</LiAIChat_ExperienceSiphonResult>
+  <LiAIChat_ExperienceSiphonGained>Gained {1} experience in {0}.</LiAIChat_ExperienceSiphonGained>
 </LanguageData>

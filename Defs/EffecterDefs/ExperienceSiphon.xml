@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <!-- Suppress the inherited surgical particles during this non-invasive operation. -->
+  <EffecterDef>
+    <defName>LiAIChat_ExperienceSiphon</defName>
+  </EffecterDef>
+</Defs>
