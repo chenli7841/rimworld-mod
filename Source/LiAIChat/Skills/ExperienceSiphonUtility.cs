@@ -111,15 +111,23 @@ namespace LiAIChat.Skills
 
             SkillRecord donorSkill = donorSkills.RandomElement();
             SkillRecord recipientSkill = surgeon.skills.GetSkill(donorSkill.def);
-            float takenExperience = Math.Min(MaximumDonorExperiencePerOperation, donorSkill.XpTotalEarned);
+            int donorLevelBefore = donorSkill.Level;
+            float donorExperienceBefore = TotalExperience(donorSkill);
+            float takenExperience = Math.Min(MaximumDonorExperiencePerOperation, donorExperienceBefore);
             float receivedExperience = takenExperience / BaseDonorExperiencePerRecipientExperience * EfficiencyFactor(surgeon);
 
             RemoveExperience(donorSkill, takenExperience);
+            int donorLevelAfter = donorSkill.Level;
             recipientSkill.Learn(receivedExperience, true, true);
 
             Messages.Message(
                 "LiAIChat_ExperienceSiphonGained".Translate(
+                    patient.LabelShort,
                     donorSkill.def.LabelCap,
+                    takenExperience.ToString("0.##"),
+                    donorLevelBefore,
+                    donorLevelAfter,
+                    surgeon.LabelShort,
                     receivedExperience.ToString("0.##")),
                 surgeon,
                 MessageTypeDefOf.PositiveEvent);
@@ -213,7 +221,8 @@ namespace LiAIChat.Skills
 
         private static void RemoveExperience(SkillRecord skill, float amount)
         {
-            float remainingExperience = Math.Max(0f, skill.XpTotalEarned - amount);
+            // XpTotalEarned includes completed levels only; xpSinceLastLevel is separate.
+            float remainingExperience = Math.Max(0f, TotalExperience(skill) - amount);
             int newLevel = 0;
 
             while (newLevel < 20)
@@ -232,6 +241,11 @@ namespace LiAIChat.Skills
             skill.Level = newLevel;
             skill.xpSinceLastLevel = remainingExperience;
             skill.xpSinceMidnight = Math.Max(0f, skill.xpSinceMidnight - experienceLostToday);
+        }
+
+        private static float TotalExperience(SkillRecord skill)
+        {
+            return skill == null ? 0f : skill.XpTotalEarned + Math.Max(0f, skill.xpSinceLastLevel);
         }
 
         private static void GrantMoodBoost(Pawn pawn)
