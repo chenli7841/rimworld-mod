@@ -12,8 +12,7 @@ namespace LiAIChat.Skills
     {
         public const string RecipeDefName = "LiAIChat_SiphonExperience";
 
-        private static readonly Dictionary<Bill_Medical, List<IngredientStackSnapshot>> PendingMedicineConsumption =
-            new Dictionary<Bill_Medical, List<IngredientStackSnapshot>>();
+        private static readonly HashSet<Bill_Medical> CompletedOperations = new HashSet<Bill_Medical>();
 
         private const float BaseDonorExperiencePerRecipientExperience = 3f;
         private const float MaximumDonorExperiencePerOperation = 8000f;
@@ -158,43 +157,61 @@ namespace LiAIChat.Skills
             Log.Message("[LiAIChat Experience Siphon] Surgery success callback. Patient=" +
                 (patient?.LabelShort ?? "null") + ", surgeon=" + (surgeon?.LabelShort ?? "null") +
                 ", ingredients=" + DescribeMedicine(ingredients));
+        }
 
-            if (bill is Bill_Medical medicalBill)
+        public static void CompleteSuccessfulOperation(Bill_Medical bill, Pawn surgeon, List<Thing> ingredients)
+        {
+            if (bill == null || !CompletedOperations.Add(bill))
             {
-                PendingMedicineConsumption[medicalBill] = (ingredients ?? new List<Thing>())
-                    .Where(thing => thing != null && thing.def?.defName == "MedicineIndustrial")
-                    .Select(thing => new IngredientStackSnapshot(thing, thing.stackCount))
-                    .ToList();
+                return;
+            }
+
+            Pawn patient = bill.GiverPawn;
+            Log.Message("[LiAIChat Experience Siphon] Finalizing completed operation. Patient=" +
+                (patient?.LabelShort ?? "null") + ", surgeon=" + (surgeon?.LabelShort ?? "null") +
+                ", ingredients=" + DescribeMedicine(ingredients));
+
+            bool medicineWasBillIngredient = ingredients != null && ingredients.Any(thing =>
+                thing != null && thing.def?.defName == "MedicineIndustrial");
+            if (medicineWasBillIngredient)
+            {
+                Log.Message("[LiAIChat Experience Siphon] Medicine was supplied to the vanilla bill ingredient list.");
+            }
+            else
+            {
+                ConsumeMedicineFromMap(patient, surgeon);
             }
 
             TransferRandomSkillExperience(patient, surgeon);
         }
 
-        public static void EnsureMedicineConsumed(Bill_Medical bill)
+        private static void ConsumeMedicineFromMap(Pawn patient, Pawn surgeon)
         {
-            if (bill == null || !PendingMedicineConsumption.TryGetValue(bill, out List<IngredientStackSnapshot> snapshots))
+            ThingDef medicineDef = DefDatabase<ThingDef>.GetNamedSilentFail("MedicineIndustrial");
+            Map map = patient?.Map ?? surgeon?.Map;
+            if (medicineDef == null || map == null)
             {
-                Log.Message("[LiAIChat Experience Siphon] Bill completion had no recorded medicine stack snapshot.");
+                Log.Message("[LiAIChat Experience Siphon] Medicine not consumed: MedicineIndustrial def or map unavailable.");
                 return;
             }
 
-            PendingMedicineConsumption.Remove(bill);
-            Log.Message("[LiAIChat Experience Siphon] Checking medicine at bill completion. Recorded stacks=" +
-                string.Join(", ", snapshots.Select(snapshot => snapshot.Describe())));
-            foreach (IngredientStackSnapshot snapshot in snapshots)
-            {
-                Thing medicine = snapshot.Thing;
-                if (medicine == null || medicine.Destroyed || medicine.stackCount < snapshot.StackCount)
-                {
-                    Log.Message("[LiAIChat Experience Siphon] Medicine already consumed by vanilla bill flow. " + snapshot.Describe());
-                    continue;
-                }
+            Thing medicine = map.listerThings.ThingsOfDef(medicineDef)
+                .Where(thing => thing != null && thing.Spawned && !thing.Destroyed && thing.stackCount > 0 &&
+                    (surgeon == null || (!thing.IsForbidden(surgeon) && surgeon.CanReach(thing, PathEndMode.Touch, Danger.Deadly))))
+                .OrderBy(thing => patient == null ? 0 : patient.Position.DistanceToSquared(thing.Position))
+                .FirstOrDefault();
 
-                Thing consumed = medicine.stackCount == 1 ? medicine : medicine.SplitOff(1);
-                consumed?.Destroy(DestroyMode.Vanish);
-                Log.Message("[LiAIChat Experience Siphon] Medicine fallback consumption applied. " + snapshot.Describe() +
-                    ", remaining=" + (medicine.Destroyed ? 0 : medicine.stackCount));
+            if (medicine == null)
+            {
+                Log.Message("[LiAIChat Experience Siphon] Medicine not consumed: no reachable MedicineIndustrial stack on the map.");
+                return;
             }
+
+            int before = medicine.stackCount;
+            Thing consumed = before == 1 ? medicine : medicine.SplitOff(1);
+            consumed?.Destroy(DestroyMode.Vanish);
+            Log.Message("[LiAIChat Experience Siphon] Consumed one MedicineIndustrial from map stock. Stack=" +
+                before + "->" + (medicine.Destroyed ? 0 : medicine.stackCount));
         }
 
         public static string EligibilityFailureReason(Pawn surgeon, Pawn patient)
@@ -227,25 +244,6 @@ namespace LiAIChat.Skills
 
             return string.Join(", ", ingredients.Where(thing => thing != null)
                 .Select(thing => thing.def?.defName + " x" + thing.stackCount + (thing.Destroyed ? " (destroyed)" : "")));
-        }
-
-        private sealed class IngredientStackSnapshot
-        {
-            public readonly Thing Thing;
-            public readonly int StackCount;
-
-            public IngredientStackSnapshot(Thing thing, int stackCount)
-            {
-                Thing = thing;
-                StackCount = stackCount;
-            }
-
-            public string Describe()
-            {
-                return (Thing?.def?.defName ?? "null") + " original=" + StackCount +
-                    ", current=" + (Thing == null || Thing.Destroyed ? 0 : Thing.stackCount) +
-                    (Thing != null && Thing.Destroyed ? " (destroyed)" : "");
-            }
         }
 
         public static void TickExperienceSiphonRestAndHeart(Pawn pawn, int delta)
@@ -422,7 +420,7 @@ namespace LiAIChat.Skills
                 Log.Message("[LiAIChat Experience Siphon] Medical bill iteration completed. Doer=" +
                     (billDoer?.LabelShort ?? "null") + ", ingredients=" +
                     (ingredients == null ? "null" : ingredients.Count.ToString()) + ".");
-                ExperienceSiphonUtility.EnsureMedicineConsumed(__instance);
+                ExperienceSiphonUtility.CompleteSuccessfulOperation(__instance, billDoer, ingredients);
             }
         }
     }
