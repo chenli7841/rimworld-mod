@@ -5,7 +5,7 @@
     <driverClass>JobDriver_DoBill</driverClass>
     <reportString>吸取技能经验中。</reportString>
     <playerInterruptible>true</playerInterruptible>
-    <casualInterruptible>true</casualInterruptible>
+    <casualInterruptible>false</casualInterruptible>
     <suspendable>false</suspendable>
     <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
   </JobDef>
