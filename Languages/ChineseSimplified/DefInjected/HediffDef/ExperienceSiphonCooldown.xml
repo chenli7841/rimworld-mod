@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_ExperienceSiphonCooldown.label>经验吸取恢复期</LiAIChat_ExperienceSiphonCooldown.label>
+  <LiAIChat_ExperienceSiphonCooldown.description>囚犯需要休息一段时间，才能再次被吸取经验。</LiAIChat_ExperienceSiphonCooldown.description>
+</LanguageData>

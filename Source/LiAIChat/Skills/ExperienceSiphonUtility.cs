@@ -11,6 +11,7 @@ namespace LiAIChat.Skills
     public static class ExperienceSiphonUtility
     {
         public const string RecipeDefName = "LiAIChat_SiphonExperience";
+        public const string CooldownHediffDefName = "LiAIChat_ExperienceSiphonCooldown";
 
         private static readonly HashSet<Bill_Medical> CompletedOperations = new HashSet<Bill_Medical>();
 
@@ -24,6 +25,11 @@ namespace LiAIChat.Skills
         public static bool IsEligiblePatient(Pawn patient)
         {
             if (patient == null || patient.Dead || !patient.IsPrisonerOfColony || patient.ageTracker == null)
+            {
+                return false;
+            }
+
+            if (HasCooldown(patient))
             {
                 return false;
             }
@@ -175,6 +181,8 @@ namespace LiAIChat.Skills
                 (patient?.LabelShort ?? "null") + ", surgeon=" + (surgeon?.LabelShort ?? "null") +
                 ", ingredients=" + DescribeMedicine(ingredients));
 
+            ApplyOperationRestEffects(patient, surgeon);
+
             bool medicineWasBillIngredient = ingredients != null && ingredients.Any(thing =>
                 thing != null && thing.def?.defName == "MedicineIndustrial");
             if (medicineWasBillIngredient)
@@ -186,7 +194,46 @@ namespace LiAIChat.Skills
                 ConsumeMedicineFromMap(patient, surgeon);
             }
 
-            TransferRandomSkillExperience(patient, surgeon);
+            if (TransferRandomSkillExperience(patient, surgeon))
+            {
+                AddCooldown(patient);
+            }
+        }
+
+        private static void ApplyOperationRestEffects(Pawn patient, Pawn surgeon)
+        {
+            if (surgeon?.needs?.rest != null)
+            {
+                surgeon.needs.rest.CurLevel = 1f;
+            }
+
+            if (patient?.needs?.rest != null)
+            {
+                patient.needs.rest.CurLevel = 0f;
+            }
+
+            Log.Message("[LiAIChat Experience Siphon] Rest effects applied. Surgeon=" +
+                (surgeon?.LabelShort ?? "null") + " rest=" + (surgeon?.needs?.rest?.CurLevel.ToString("0.##") ?? "n/a") +
+                ", patient=" + (patient?.LabelShort ?? "null") + " rest=" +
+                (patient?.needs?.rest?.CurLevel.ToString("0.##") ?? "n/a"));
+        }
+
+        private static bool HasCooldown(Pawn patient)
+        {
+            HediffDef cooldownDef = DefDatabase<HediffDef>.GetNamedSilentFail(CooldownHediffDefName);
+            return cooldownDef != null && patient?.health?.hediffSet?.GetFirstHediffOfDef(cooldownDef) != null;
+        }
+
+        private static void AddCooldown(Pawn patient)
+        {
+            HediffDef cooldownDef = DefDatabase<HediffDef>.GetNamedSilentFail(CooldownHediffDefName);
+            if (cooldownDef == null || patient?.health == null || HasCooldown(patient))
+            {
+                return;
+            }
+
+            patient.health.AddHediff(HediffMaker.MakeHediff(cooldownDef, patient));
+            Log.Message("[LiAIChat Experience Siphon] Applied two-day patient cooldown. Patient=" + patient.LabelShort);
         }
 
         private static void ConsumeMedicineFromMap(Pawn patient, Pawn surgeon)

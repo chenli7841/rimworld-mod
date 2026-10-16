@@ -9,7 +9,7 @@
       <li>
         <label>吸取经验后的愉悦</label>
         <description>这次经验吸取令人精神振奋。</description>
-        <baseMoodEffect>40</baseMoodEffect>
+        <baseMoodEffect>15</baseMoodEffect>
       </li>
     </stages>
   </ThoughtDef>

@@ -8,6 +8,7 @@
     <workerClass>LiAIChat.Skills.Recipe_SiphonExperience</workerClass>
     <effectWorking>LiAIChat_ExperienceSiphon</effectWorking>
     <workSkillLearnFactor>0</workSkillLearnFactor>
+    <anesthetize>false</anesthetize>
     <surgeryOutcomeEffect>SurgeryOutcomeMinorFailure</surgeryOutcomeEffect>
     <workAmount>10000</workAmount>
     <targetsBodyPart>false</targetsBodyPart>
