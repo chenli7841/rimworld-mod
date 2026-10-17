@@ -145,12 +145,28 @@ namespace LiAIChat.Questing
                 defaultLabel = label.Translate(),
                 defaultDesc = description,
                 icon = UI.LiAIChatTextures.PermanentMigration,
-                action = () => OpenDeliveryMenu(caravan, settlement, part)
+                action = () => OpenDeliveryMenu(caravan, settlement)
             });
         }
 
-        private static void OpenDeliveryMenu(Caravan caravan, Settlement settlement, QuestPart_AlliedSettlementAid part)
+        private static void OpenDeliveryMenu(Caravan caravan, Settlement settlement)
         {
+            AlliedSettlementWorldComponent component = AlliedSettlementWorldComponent.Current;
+            if (component == null || caravan == null || settlement == null ||
+                !caravan.Spawned || !caravan.IsPlayerControlled || caravan.Tile != settlement.Tile)
+            {
+                Messages.Message("LiASS_DeliveryUnavailable".Translate(), MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
+            AlliedSettlementState state = component.Get(settlement);
+            QuestPart_AlliedSettlementAid part = PartFor(state);
+            if (part == null)
+            {
+                Messages.Message("LiASS_DeliveryUnavailable".Translate(), MessageTypeDefOf.RejectInput, false);
+                return;
+            }
+
             var options = new List<FloatMenuOption>();
             List<Thing> inventory = AvailableDeliveryItems(caravan);
             if (part.crisisKind == AlliedSettlementCrisisKind.FoodShortage)
@@ -283,12 +299,12 @@ namespace LiAIChat.Questing
         private static IEnumerable<ThingOwner> ShuttleCargoOwners(Caravan caravan)
         {
             if (caravan == null) yield break;
-            foreach (Thing thing in CaravanInventoryUtility.AllInventoryItems(caravan))
-            {
-                Building_PassengerShuttle shuttle = thing as Building_PassengerShuttle;
-                if (shuttle?.TransporterComp != null)
-                    yield return shuttle.TransporterComp.GetDirectlyHeldThings();
-            }
+
+            // The shuttle is not always returned by AllInventoryItems after landing.
+            // Find it through the caravan API so cargo remains visible on repeat visits.
+            Building_PassengerShuttle shuttle = CaravanInventoryUtility.FindShuttle(caravan);
+            if (shuttle?.TransporterComp != null)
+                yield return shuttle.TransporterComp.GetDirectlyHeldThings();
         }
     }
 }
