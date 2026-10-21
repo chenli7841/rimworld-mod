@@ -13,7 +13,7 @@
     </questNameRules>
     <questDescriptionRules>
       <rulesStrings>
-        <li>questDescription-&gt;A nearby site has been abandoned after toxic waste was dumped there. Clean the polluted ground and remove the exposed toxic wastepacks. The site contains ruined buildings that may offer some shelter while you work.</li>
+        <li>questDescription-&gt;A nearby site has been abandoned after toxic waste was dumped there. Within 20 days, clean at least 80% of its initial polluted ground and remove every toxic wastepack from the site. Exposed wastepacks can be hauled away by caravan. The site contains ruined buildings that may offer some shelter while you work.</li>
       </rulesStrings>
     </questDescriptionRules>
     <root Class="QuestNode_Sequence">
@@ -36,6 +36,45 @@
         <li Class="LiAIChat.Questing.QuestNode_CreateAbandonedWasteDump" />
         <li Class="QuestNode_SpawnWorldObjects">
           <worldObjects>$site</worldObjects>
+        </li>
+        <li Class="QuestNode_WorldObjectTimeout">
+          <worldObject>$site</worldObject>
+          <isQuestTimeout>true</isQuestTimeout>
+          <delayTicks>1200000</delayTicks>
+          <inSignalDisable>$wasteDumpCleanedSignal</inSignalDisable>
+          <destroyOnCleanup>true</destroyOnCleanup>
+          <node Class="QuestNode_Sequence">
+            <nodes>
+              <li Class="QuestNode_Letter">
+                <label TKey="LiAIChat_AbandonedWasteDumpExpiredLabel">Quest expired: [resolvedQuestName]</label>
+                <text TKey="LiAIChat_AbandonedWasteDumpExpiredText">The abandoned waste dump was not fully cleaned within 20 days. The site has been abandoned again.</text>
+              </li>
+              <li Class="QuestNode_End">
+                <outcome>Fail</outcome>
+              </li>
+            </nodes>
+          </node>
+        </li>
+        <li Class="QuestNode_Signal">
+          <inSignal>$wasteDumpCleanedSignal</inSignal>
+          <node Class="QuestNode_GiveRewards">
+            <parms>
+              <allowGoodwill>false</allowGoodwill>
+              <allowRoyalFavor>false</allowRoyalFavor>
+            </parms>
+            <customLetterLabel TKey="LiAIChat_AbandonedWasteDumpRewardLabel">Cleanup payment arrived</customLetterLabel>
+            <customLetterText TKey="LiAIChat_AbandonedWasteDumpRewardText">The waste dump has been cleaned. Payment for the cleanup has arrived.</customLetterText>
+          </node>
+        </li>
+        <li Class="QuestNode_End">
+          <inSignal>$wasteDumpCleanedSignal</inSignal>
+          <outcome>Success</outcome>
+        </li>
+        <li Class="QuestNode_Signal">
+          <inSignal>site.Destroyed</inSignal>
+          <node Class="QuestNode_End">
+            <outcome>Fail</outcome>
+          </node>
         </li>
       </nodes>
     </root>

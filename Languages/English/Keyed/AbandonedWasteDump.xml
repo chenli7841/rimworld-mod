@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_AbandonedWasteDumpAwaitingMap>Visit the site to begin recording its pollution cleanup.</LiAIChat_AbandonedWasteDumpAwaitingMap>
+  <LiAIChat_AbandonedWasteDumpProgress>Pollution cleanup: {0}% ({1}/{2} cells); exposed wastepacks remaining: {3}.</LiAIChat_AbandonedWasteDumpProgress>
+  <LiAIChat_AbandonedWasteDumpExpiredLabel>Cleanup deadline passed: [resolvedQuestName]</LiAIChat_AbandonedWasteDumpExpiredLabel>
+  <LiAIChat_AbandonedWasteDumpExpiredText>The waste dump was not fully cleaned within 20 days. The site has been abandoned again.</LiAIChat_AbandonedWasteDumpExpiredText>
+  <LiAIChat_AbandonedWasteDumpRewardLabel>Cleanup payment arrived</LiAIChat_AbandonedWasteDumpRewardLabel>
+  <LiAIChat_AbandonedWasteDumpRewardText>The waste dump has been cleaned. Payment for the cleanup has arrived.</LiAIChat_AbandonedWasteDumpRewardText>
+</LanguageData>

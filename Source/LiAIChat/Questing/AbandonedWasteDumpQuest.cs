@@ -1,6 +1,9 @@
+using System;
+using System.Linq;
 using RimWorld;
 using RimWorld.Planet;
 using RimWorld.QuestGen;
+using UnityEngine;
 using Verse;
 
 namespace LiAIChat.Questing
@@ -23,12 +26,153 @@ namespace LiAIChat.Questing
             if (site == null)
                 return;
 
+            float difficultyFactor = Mathf.Clamp01(QuestGen.quest.points / 4000f);
+            float pollutionPercent = Rand.Range(0.16f + 0.05f * difficultyFactor,
+                0.24f + 0.08f * difficultyFactor);
+            int minimumWastepacks = 14 + Mathf.RoundToInt(8f * difficultyFactor);
+            int maximumWastepacks = 26 + Mathf.RoundToInt(14f * difficultyFactor);
+            int wastepackCount = Rand.RangeInclusive(minimumWastepacks, maximumWastepacks);
+            int expectedPollution = Mathf.RoundToInt(
+                site.PreferredMapSize.x * site.PreferredMapSize.z * pollutionPercent);
+            float rewardValue = Math.Max(500,
+                Mathf.RoundToInt(expectedPollution * 0.12f + wastepackCount * 30f));
+            string cleanedSignal = QuestGen.GenerateNewSignal("AbandonedWasteDumpCleaned", true);
+
+            QuestGen.quest.AddPart(new QuestPart_AbandonedWasteDump
+            {
+                site = site,
+                pollutionPercent = pollutionPercent,
+                wastepackCount = wastepackCount,
+                cleanedSignal = cleanedSignal
+            });
+
+            QuestGen.slate.Set("wasteDumpCleanedSignal", cleanedSignal);
+            QuestGen.slate.Set("rewardValue", rewardValue);
             QuestGen.slate.Set("site", site);
         }
     }
 
     public class SitePartWorker_AbandonedWasteDump : SitePartWorker
     {
+        public override void PostMapGenerate(Map map)
+        {
+            base.PostMapGenerate(map);
+            QuestPart_AbandonedWasteDump.FindForSite(map?.Parent as Site)?.InitializeFromMap(map);
+        }
+    }
+
+    public class QuestPart_AbandonedWasteDump : QuestPartActivable
+    {
+        private const int PollInterval = 250;
+
+        public Site site;
+        public float pollutionPercent;
+        public int wastepackCount;
+        public int initialPollution;
+        public int initialWastepacks;
+        public int lastKnownPollution;
+        public int lastKnownWastepacks;
+        public string cleanedSignal;
+        public bool initialized;
+        public bool cleanedSignalSent;
+
+        public override string DescriptionPart
+        {
+            get
+            {
+                if (quest == null || quest.State != QuestState.Ongoing)
+                    return null;
+                if (!initialized)
+                    return "LiAIChat_AbandonedWasteDumpAwaitingMap".Translate();
+
+                int cleanedPollution = Math.Max(0, initialPollution - lastKnownPollution);
+                int progress = initialPollution <= 0
+                    ? 0
+                    : Mathf.Clamp(Mathf.RoundToInt(cleanedPollution * 100f / initialPollution), 0, 100);
+                return "LiAIChat_AbandonedWasteDumpProgress".Translate(
+                    progress, cleanedPollution, initialPollution, lastKnownWastepacks);
+            }
+        }
+
+        public static QuestPart_AbandonedWasteDump FindForSite(Site site)
+        {
+            if (site == null || Find.QuestManager == null)
+                return null;
+
+            return Find.QuestManager.QuestsListForReading
+                .Where(candidate => candidate != null && candidate.State == QuestState.Ongoing)
+                .SelectMany(candidate => candidate.PartsListForReading.OfType<QuestPart_AbandonedWasteDump>())
+                .FirstOrDefault(part => part.site == site);
+        }
+
+        public void InitializeFromMap(Map map)
+        {
+            if (initialized || map?.pollutionGrid == null)
+                return;
+
+            initialPollution = map.pollutionGrid.TotalPollution;
+            initialWastepacks = CountWastepacks(map);
+            lastKnownPollution = initialPollution;
+            lastKnownWastepacks = initialWastepacks;
+            initialized = true;
+            Log.Message("[LiAIChat] Abandoned waste dump baseline recorded for " + site?.Label +
+                ": pollutedCells=" + initialPollution + ", wastepacks=" + initialWastepacks + ".");
+        }
+
+        public override void QuestPartTick()
+        {
+            base.QuestPartTick();
+            if (quest == null || quest.State != QuestState.Ongoing || cleanedSignalSent ||
+                Find.TickManager.TicksGame % PollInterval != 0)
+                return;
+
+            Map map = site?.Map;
+            if (map?.pollutionGrid == null)
+                return;
+            if (!initialized)
+                InitializeFromMap(map);
+
+            lastKnownPollution = map.pollutionGrid.TotalPollution;
+            lastKnownWastepacks = CountWastepacks(map);
+            int removedPollution = Math.Max(0, initialPollution - lastKnownPollution);
+            bool pollutionCleaned = initialPollution > 0 && removedPollution * 100L >= initialPollution * 80L;
+            if (!pollutionCleaned || lastKnownWastepacks > 0)
+                return;
+
+            // Set the saved guard before sending the signal because signal delivery
+            // can end and clean up this quest immediately.
+            cleanedSignalSent = true;
+            Find.SignalManager.SendSignal(new Signal(cleanedSignal));
+            Log.Message("[LiAIChat] Abandoned waste dump cleaned: " + site?.Label +
+                "; initialPollution=" + initialPollution + "; remainingPollution=" +
+                map.pollutionGrid.TotalPollution + "; remainingWastepacks=0.");
+        }
+
+        private static int CountWastepacks(Map map)
+        {
+            ThingDef wastepackDef = DefDatabase<ThingDef>.GetNamedSilentFail("Wastepack");
+            if (map == null || wastepackDef == null)
+                return 0;
+
+            return map.listerThings.ThingsOfDef(wastepackDef)
+                .Where(thing => thing != null && thing.Spawned && thing.Map == map && !thing.Destroyed)
+                .Sum(thing => thing.stackCount);
+        }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_References.Look(ref site, "site");
+            Scribe_Values.Look(ref pollutionPercent, "pollutionPercent");
+            Scribe_Values.Look(ref wastepackCount, "wastepackCount");
+            Scribe_Values.Look(ref initialPollution, "initialPollution");
+            Scribe_Values.Look(ref initialWastepacks, "initialWastepacks");
+            Scribe_Values.Look(ref lastKnownPollution, "lastKnownPollution");
+            Scribe_Values.Look(ref lastKnownWastepacks, "lastKnownWastepacks");
+            Scribe_Values.Look(ref initialized, "initialized");
+            Scribe_Values.Look(ref cleanedSignalSent, "cleanedSignalSent");
+            Scribe_Values.Look(ref cleanedSignal, "cleanedSignal");
+        }
     }
 
     public class GenStep_AbandonedWasteDump : GenStep
@@ -46,7 +190,9 @@ namespace LiAIChat.Questing
             // Biotech's normal Pollution gen step runs at order 890. Raise this
             // quest map to a reliably visible cleanup scale while keeping its
             // contamination inside the vanilla pollution system.
-            float pollutionPercent = Rand.Range(0.16f, 0.30f);
+            QuestPart_AbandonedWasteDump questPart = QuestPart_AbandonedWasteDump.FindForSite(map.Parent as Site);
+            float pollutionPercent = questPart?.pollutionPercent ?? Rand.Range(0.16f, 0.30f);
+            int targetWastepacks = questPart?.wastepackCount ?? Rand.RangeInclusive(14, 32);
             PollutionUtility.PolluteMapToPercent(map, pollutionPercent, Rand.RangeInclusive(5, 9));
 
             ListSpawnablePollutedCells(map, out var candidates);
@@ -56,7 +202,7 @@ namespace LiAIChat.Questing
                 return;
             }
 
-            int remainingWastepacks = Rand.RangeInclusive(14, 32);
+            int remainingWastepacks = targetWastepacks;
             int spawnedWastepacks = 0;
             while (remainingWastepacks > 0 && candidates.Count > 0)
             {

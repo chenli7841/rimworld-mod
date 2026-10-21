@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_AbandonedWasteDumpAwaitingMap>前往废料场后开始记录净化进度。</LiAIChat_AbandonedWasteDumpAwaitingMap>
+  <LiAIChat_AbandonedWasteDumpProgress>污染净化进度：{0}%（已清除 {1}/{2} 个污染地块）；现场剩余露天毒废料包：{3}。</LiAIChat_AbandonedWasteDumpProgress>
+  <LiAIChat_AbandonedWasteDumpExpiredLabel>清理期限已到：[resolvedQuestName]</LiAIChat_AbandonedWasteDumpExpiredLabel>
+  <LiAIChat_AbandonedWasteDumpExpiredText>20天内未能完成废料场清理。该地点再次被遗弃。</LiAIChat_AbandonedWasteDumpExpiredText>
+  <LiAIChat_AbandonedWasteDumpRewardLabel>收到清理报酬</LiAIChat_AbandonedWasteDumpRewardLabel>
+  <LiAIChat_AbandonedWasteDumpRewardText>废料场已经清理完毕，清理报酬已送达。</LiAIChat_AbandonedWasteDumpRewardText>
+</LanguageData>
