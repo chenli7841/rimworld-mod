@@ -37,9 +37,10 @@ namespace LiAIChat.Questing
         public Faction faction;
         public int defenderCount;
         public bool mechanoidFallbackAttempted;
+        public bool mechanoidArrivalDeploymentComplete;
         private List<Pawn> defenders = new List<Pawn>();
         private List<Pawn> retreatedDefenders = new List<Pawn>();
-        internal bool HasSpawnedLivingDefender => defenders.Any(pawn => pawn != null && pawn.Spawned && !pawn.Dead);
+        internal IEnumerable<Pawn> TrackedDefenders => defenders;
 
         public override string DescriptionPart
         {
@@ -145,6 +146,7 @@ namespace LiAIChat.Questing
             Scribe_References.Look(ref faction, "faction");
             Scribe_Values.Look(ref defenderCount, "defenderCount");
             Scribe_Values.Look(ref mechanoidFallbackAttempted, "mechanoidFallbackAttempted");
+            Scribe_Values.Look(ref mechanoidArrivalDeploymentComplete, "mechanoidArrivalDeploymentComplete");
             Scribe_Collections.Look(ref defenders, "defenders", LookMode.Reference);
             Scribe_Collections.Look(ref retreatedDefenders, "retreatedDefenders", LookMode.Reference);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
@@ -310,13 +312,63 @@ namespace LiAIChat.Questing
             if (threatPart == null) return;
 
             threatPart.ObserveDefenders(__instance.Map);
-            if (threatPart.faction == Faction.OfMechanoids &&
-                !threatPart.HasSpawnedLivingDefender &&
-                !threatPart.mechanoidFallbackAttempted)
-                SpawnMissingMechanoidDefenders(threatPart, __instance.Map);
         }
 
-        private static void SpawnMissingMechanoidDefenders(QuestPart_AlliedSettlementThreat threatPart, Map map)
+        internal static void DeployMechanoidDefendersAfterGravshipLanding(Map map, Building_GravEngine engine)
+        {
+            if (map?.Parent is not Site site) return;
+            QuestPart_AlliedSettlementThreat threatPart = FindThreatPart(site);
+            if (threatPart == null || threatPart.faction != Faction.OfMechanoids ||
+                threatPart.mechanoidArrivalDeploymentComplete)
+                return;
+
+            threatPart.ObserveDefenders(map);
+            IntVec3 landingAnchor = engine != null && engine.Spawned && engine.Map == map
+                ? engine.Position
+                : map.Center;
+            List<Pawn> activeDefenders = threatPart.TrackedDefenders
+                .Where(pawn => pawn != null && !pawn.Destroyed && !pawn.Dead && !pawn.Downed)
+                .ToList();
+
+            if (activeDefenders.Count > 0)
+            {
+                // Older builds spawned the generated group at the map edge before the
+                // gravship landed. Redeploy those pawns near the landing zone so the
+                // player can actually see and engage them through the site's fog.
+                foreach (Pawn pawn in activeDefenders)
+                {
+                    if (pawn.Spawned && pawn.Map == map)
+                        pawn.DeSpawn(DestroyMode.Vanish);
+                    SpawnNearLanding(pawn, map, landingAnchor);
+                }
+                activeDefenders = activeDefenders.Where(pawn => pawn.Spawned && pawn.Map == map).ToList();
+                if (activeDefenders.Count > 0)
+                {
+                    LordMaker.MakeNewLord(threatPart.faction,
+                        new LordJob_AssaultColony(threatPart.faction, false, false, false, false, false, false, false),
+                        map, activeDefenders);
+                    threatPart.ObserveDefenders(map);
+                    threatPart.mechanoidArrivalDeploymentComplete = true;
+                    Log.Message("[LiAIChat] Deployed " + activeDefenders.Count + " existing mechanoid defenders near " +
+                        "the gravship landing at " + site.Label + "; landing=" + landingAnchor + ".");
+                }
+                return;
+            }
+
+            Pawn previouslyTracked = threatPart.TrackedDefenders.FirstOrDefault(pawn => pawn != null);
+            if (previouslyTracked != null)
+            {
+                // Do not create a replacement wave if the previous group was already
+                // defeated or downed before the player returned to the site.
+                threatPart.NotifyDefenderKilled(previouslyTracked);
+                return;
+            }
+
+            SpawnMissingMechanoidDefenders(threatPart, map, landingAnchor);
+        }
+
+        private static void SpawnMissingMechanoidDefenders(
+            QuestPart_AlliedSettlementThreat threatPart, Map map, IntVec3 landingAnchor)
         {
             threatPart.mechanoidFallbackAttempted = true;
             int targetCount = Math.Max(1, threatPart.defenderCount);
@@ -355,20 +407,28 @@ namespace LiAIChat.Questing
                     return;
                 }
 
-                IntVec3 edge;
-                if (!CellFinder.TryFindRandomEdgeCellWith(cell => cell.Standable(map), map, Rot4.North, 0f, out edge))
-                    edge = CellFinder.RandomEdgeCell(Rot4.North, map);
+                var spawned = new List<Pawn>();
                 foreach (Pawn pawn in generated)
                 {
-                    IntVec3 cell = CellFinder.RandomSpawnCellForPawnNear(edge, map, 10);
-                    GenSpawn.Spawn(pawn, cell, map);
+                    if (SpawnNearLanding(pawn, map, landingAnchor))
+                        spawned.Add(pawn);
                 }
+                if (spawned.Count == 0)
+                {
+                    Log.Error("[LiAIChat] Generated mechanoid defenders but none spawned on the map at " +
+                        threatPart.site?.Label + ".");
+                    return;
+                }
+
                 LordMaker.MakeNewLord(threatPart.faction,
                     new LordJob_AssaultColony(threatPart.faction, false, false, false, false, false, false, false),
-                    map, generated);
+                    map, spawned);
                 threatPart.ObserveDefenders(map);
-                Log.Message("[LiAIChat] Spawned " + generated.Count + " mechanoid defenders for allied threat site " +
-                    threatPart.site?.Label + " (target=" + targetCount + ").");
+                threatPart.mechanoidArrivalDeploymentComplete = true;
+                Log.Message("[LiAIChat] Spawned and deployed " + spawned.Count + "/" + targetCount +
+                    " mechanoid defenders near the gravship landing at " + threatPart.site?.Label +
+                    "; landing=" + landingAnchor + "; positions=" + string.Join(", ",
+                        spawned.Select(pawn => pawn.Position.ToString())) + ".");
             }
             catch (Exception error)
             {
@@ -379,6 +439,14 @@ namespace LiAIChat.Questing
             }
         }
 
+        private static bool SpawnNearLanding(Pawn pawn, Map map, IntVec3 landingAnchor)
+        {
+            if (pawn == null || map == null) return false;
+            IntVec3 cell = CellFinder.RandomSpawnCellForPawnNear(landingAnchor, map, 18);
+            GenSpawn.Spawn(pawn, cell, map);
+            return pawn.Spawned && pawn.Map == map;
+        }
+
         internal static QuestPart_AlliedSettlementThreat FindThreatPart(Site site)
         {
             if (site == null || Find.QuestManager == null) return null;
@@ -386,6 +454,15 @@ namespace LiAIChat.Questing
                 .Where(quest => quest != null && quest.State == QuestState.Ongoing)
                 .SelectMany(quest => quest.PartsListForReading.OfType<QuestPart_AlliedSettlementThreat>())
                 .FirstOrDefault(part => part.site == site);
+        }
+    }
+
+    [HarmonyPatch(typeof(WorldComponent_GravshipController), "PlaceGravship")]
+    public static class AlliedSettlementMechanoidLandingDeploymentPatch
+    {
+        public static void Postfix(Building_GravEngine __result, Map map)
+        {
+            AlliedSettlementThreatDefenderCapturePatch.DeployMechanoidDefendersAfterGravshipLanding(map, __result);
         }
     }
 
