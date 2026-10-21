@@ -33,13 +33,15 @@ namespace LiAIChat.Questing
         public Site site;
         public Faction faction;
         private List<Pawn> defenders = new List<Pawn>();
+        private List<Pawn> retreatedDefenders = new List<Pawn>();
 
         public override string DescriptionPart
         {
             get
             {
                 if (quest == null || quest.State != QuestState.Ongoing) return null;
-                int standing = defenders.Count(pawn => pawn != null && !pawn.Dead && !pawn.Downed);
+                int standing = defenders.Count(pawn => pawn != null && !pawn.Dead && !pawn.Downed &&
+                    !retreatedDefenders.Contains(pawn));
                 return defenders.Count == 0
                     ? "LiASS_ThreatAwaitingDefenders".Translate()
                     : "LiASS_ThreatDefenderProgress".Translate(standing);
@@ -74,7 +76,8 @@ namespace LiAIChat.Questing
             bool campDestroyed = site != null && (site.Destroyed ||
                 AlliedSettlementThreatCompletionPatch.WasClearedByVanilla(site));
             bool defendersDefeated = defenders.Count > 0 &&
-                !defenders.Any(pawn => pawn != null && !pawn.Dead && !pawn.Downed);
+                !defenders.Any(pawn => pawn != null && !pawn.Dead && !pawn.Downed &&
+                    !retreatedDefenders.Contains(pawn));
             if (!campDestroyed && !defendersDefeated)
                 return;
 
@@ -90,6 +93,24 @@ namespace LiAIChat.Questing
                     defenders.Add(pawn);
         }
 
+        public void NotifyDefenderRetreated(Pawn pawn, Map map)
+        {
+            if (pawn == null || map == null || site?.Map != map || pawn.Faction != faction)
+                return;
+
+            ObserveDefenders(map);
+            if (!defenders.Contains(pawn))
+                defenders.Add(pawn);
+            if (retreatedDefenders.Contains(pawn))
+                return;
+
+            retreatedDefenders.Add(pawn);
+            Log.Message("[LiAIChat] Enemy defender retreated from allied threat site: " + pawn.LabelShort +
+                "; site=" + site.Label + "; remaining defenders=" + defenders.Count(candidate =>
+                    candidate != null && !candidate.Dead && !candidate.Downed &&
+                    !retreatedDefenders.Contains(candidate)));
+        }
+
         public override void ExposeData()
         {
             base.ExposeData();
@@ -97,8 +118,12 @@ namespace LiAIChat.Questing
             Scribe_References.Look(ref site, "site");
             Scribe_References.Look(ref faction, "faction");
             Scribe_Collections.Look(ref defenders, "defenders", LookMode.Reference);
-            if (Scribe.mode == LoadSaveMode.PostLoadInit && defenders == null)
-                defenders = new List<Pawn>();
+            Scribe_Collections.Look(ref retreatedDefenders, "retreatedDefenders", LookMode.Reference);
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                if (defenders == null) defenders = new List<Pawn>();
+                if (retreatedDefenders == null) retreatedDefenders = new List<Pawn>();
+            }
         }
     }
 
@@ -246,6 +271,31 @@ namespace LiAIChat.Questing
             if (threatPart != null)
                 AlliedSettlementWorldComponent.Current?.CompleteCrisis(
                     threatPart.settlement, AlliedSettlementCrisisKind.HostileThreat);
+        }
+    }
+
+    // Mark tracked hostile pawns that leave the threat-site map as having retreated.
+    // This covers enemy lords that evacuate rather than fighting to the last pawn.
+    [HarmonyPatch(typeof(Pawn), "ExitMap")]
+    public static class AlliedSettlementThreatDefenderRetreatPatch
+    {
+        public static void Prefix(Pawn __instance, out Map __state)
+        {
+            __state = __instance?.Map;
+        }
+
+        public static void Postfix(Pawn __instance, Map __state)
+        {
+            if (__instance == null || __state == null || Find.QuestManager == null)
+                return;
+
+            foreach (QuestPart_AlliedSettlementThreat threatPart in Find.QuestManager.QuestsListForReading
+                .Where(quest => quest != null && quest.State == QuestState.Ongoing)
+                .SelectMany(quest => quest.PartsListForReading.OfType<QuestPart_AlliedSettlementThreat>())
+                .ToList())
+            {
+                threatPart.NotifyDefenderRetreated(__instance, __state);
+            }
         }
     }
 }

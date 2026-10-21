@@ -14,6 +14,7 @@
   <LiASS_CrisisFailedText>{0}的{1}未能及时解决。据点实力从{2}下降至{3}。</LiASS_CrisisFailedText>
   <LiASS_CrisisResolvedLabel>{0}的危机已解决</LiASS_CrisisResolvedLabel>
   <LiASS_CrisisResolvedText>{0}的危机已经解决。据点将在恢复期后才会面临下一场危机。</LiASS_CrisisResolvedText>
+  <LiASS_GravshipThreatResolvedText>盟友危机已解除，请在3天内离开盟友附近的领土</LiASS_GravshipThreatResolvedText>
   <LiASS_DeliverFood>交付食物</LiASS_DeliverFood>
   <LiASS_DeliverFoodDescription>向该据点供应食物。还需{0}营养。</LiASS_DeliverFoodDescription>
   <LiASS_DeliverMedicine>交付药品</LiASS_DeliverMedicine>

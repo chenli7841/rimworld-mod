@@ -14,6 +14,7 @@
   <LiASS_CrisisFailedText>The {1} at {0} was not resolved in time. Strength fell from {2} to {3}.</LiASS_CrisisFailedText>
   <LiASS_CrisisResolvedLabel>Crisis at {0} resolved</LiASS_CrisisResolvedLabel>
   <LiASS_CrisisResolvedText>The crisis at {0} was resolved. The settlement has entered a recovery period before another crisis.</LiASS_CrisisResolvedText>
+  <LiASS_GravshipThreatResolvedText>The allied crisis has ended. Leave the territory near the allied settlement within 3 days.</LiASS_GravshipThreatResolvedText>
   <LiASS_DeliverFood>Deliver food</LiASS_DeliverFood>
   <LiASS_DeliverFoodDescription>Supply food to this settlement. Remaining requirement: {0} nutrition.</LiASS_DeliverFoodDescription>
   <LiASS_DeliverMedicine>Deliver medicine</LiASS_DeliverMedicine>

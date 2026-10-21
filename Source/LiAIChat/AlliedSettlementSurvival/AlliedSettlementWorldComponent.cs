@@ -32,6 +32,8 @@ namespace LiAIChat.AlliedSettlementSurvival
         public AlliedSettlementCrisisKind crisisKind;
         public Quest aidQuest;
         public Quest threatQuest;
+        public bool gravshipRespondedToThreat;
+        public int proximityGoodwillExemptUntilTick;
 
         private static AlliedSettlementSettings Settings => AlliedSettlementSurvivalMod.Current;
         public static int ProtectionTicks => Settings.protectionDays * SettlementStrengthPolicy.TicksPerDay;
@@ -58,6 +60,8 @@ namespace LiAIChat.AlliedSettlementSurvival
             Scribe_Values.Look(ref crisisKind, "crisisKind", AlliedSettlementCrisisKind.None);
             Scribe_References.Look(ref aidQuest, "aidQuest");
             Scribe_References.Look(ref threatQuest, "threatQuest");
+            Scribe_Values.Look(ref gravshipRespondedToThreat, "gravshipRespondedToThreat");
+            Scribe_Values.Look(ref proximityGoodwillExemptUntilTick, "proximityGoodwillExemptUntilTick");
             if (Scribe.mode == LoadSaveMode.PostLoadInit) strength = SettlementStrengthPolicy.Clamp(strength);
         }
     }
@@ -274,6 +278,7 @@ namespace LiAIChat.AlliedSettlementSurvival
             state.crisisDeadlineTick = 0;
             state.aidQuest = null;
             state.threatQuest = null;
+            state.gravshipRespondedToThreat = false;
             state.nextCrisisTick = now + Rand.RangeInclusive(
                 AlliedSettlementState.MinimumCrisisIntervalTicks,
                 AlliedSettlementState.MaximumCrisisIntervalTicks);
@@ -361,6 +366,11 @@ namespace LiAIChat.AlliedSettlementSurvival
             if (state == null || !state.crisisActive || state.crisisKind != expectedKind) return false;
             Quest completedQuest = state.aidQuest;
             Quest completedThreatQuest = state.threatQuest;
+            bool grantGravshipGrace = expectedKind == AlliedSettlementCrisisKind.HostileThreat &&
+                state.gravshipRespondedToThreat;
+            if (grantGravshipGrace)
+                state.proximityGoodwillExemptUntilTick = Find.TickManager.TicksGame + 3 * SettlementStrengthPolicy.TicksPerDay;
+            state.gravshipRespondedToThreat = false;
             state.crisisActive = false;
             state.crisisKind = AlliedSettlementCrisisKind.None;
             state.crisisDeadlineTick = 0;
@@ -371,7 +381,9 @@ namespace LiAIChat.AlliedSettlementSurvival
                 AlliedSettlementState.MaximumCrisisIntervalTicks);
             Find.LetterStack.ReceiveLetter(
                 "LiASS_CrisisResolvedLabel".Translate(settlement.LabelCap),
-                "LiASS_CrisisResolvedText".Translate(settlement.LabelCap),
+                grantGravshipGrace
+                    ? "LiASS_GravshipThreatResolvedText".Translate()
+                    : "LiASS_CrisisResolvedText".Translate(settlement.LabelCap),
                 LetterDefOf.PositiveEvent,
                 settlement);
             if (completedQuest != null && completedQuest.State == QuestState.Ongoing)
