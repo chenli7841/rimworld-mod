@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiTWD_NoCapacity>This settlement has used all its waste disposal capacity this period.</LiTWD_NoCapacity>
+  <LiTWD_Insufficient>The wastepack quantity exceeds this settlement's remaining disposal capacity. Reduce the trade quantity.</LiTWD_Insufficient>
+</LanguageData>

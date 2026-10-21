@@ -12,3 +12,5 @@ C:\Users\liche\everything\RimWorld\Mods\LiAIChat\Source\LiAIChat\obj\Debug\LiAIC
 C:\Users\liche\everything\RimWorld\Mods\LiAIChat\Source\LiAIChat\obj\Debug\LiAIChat.pdb
 C:\Users\liche\everything\RimWorld\Mods\LiAIChat\Assemblies\LiAIChat.dll
 C:\Users\liche\everything\RimWorld\Mods\LiAIChat\Assemblies\LiAIChat.pdb
+C:\Users\liche\everything\RimWorld\Mods\LiAIChat\Source\LiAIChat\obj\Debug\LiAIChat.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\liche\everything\RimWorld\Mods\LiAIChat\Source\LiAIChat\obj\Debug\LiAIChat.sourcelink.json

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiTWD_NoCapacity>该据点本周期的毒废料处置容量已用完。</LiTWD_NoCapacity>
+  <LiTWD_Insufficient>毒废料数量超出该据点剩余处置容量；请减少交易数量。</LiTWD_Insufficient>
+</LanguageData>
