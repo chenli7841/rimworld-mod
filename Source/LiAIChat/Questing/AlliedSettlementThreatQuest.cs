@@ -39,6 +39,7 @@ namespace LiAIChat.Questing
         public bool mechanoidFallbackAttempted;
         public bool mechanoidArrivalDeploymentComplete;
         public bool mechanoidDeploymentWaitLogged;
+        public bool mechanoidCenterSpawnAwaitingLanding;
         private List<Pawn> defenders = new List<Pawn>();
         private List<Pawn> retreatedDefenders = new List<Pawn>();
         internal IEnumerable<Pawn> TrackedDefenders => defenders;
@@ -76,7 +77,7 @@ namespace LiAIChat.Questing
             // retried after the landing engine actually exists, even if a Harmony
             // hook on the placement method is skipped by a game/modded call path.
             if (site?.Map is Map siteMap && faction == Faction.OfMechanoids &&
-                !mechanoidArrivalDeploymentComplete)
+                (!mechanoidArrivalDeploymentComplete || mechanoidCenterSpawnAwaitingLanding))
             {
                 Building_GravEngine playerEngine = siteMap.listerThings.AllThings
                     .OfType<Building_GravEngine>()
@@ -173,6 +174,7 @@ namespace LiAIChat.Questing
             Scribe_Values.Look(ref mechanoidFallbackAttempted, "mechanoidFallbackAttempted");
             Scribe_Values.Look(ref mechanoidArrivalDeploymentComplete, "mechanoidArrivalDeploymentComplete");
             Scribe_Values.Look(ref mechanoidDeploymentWaitLogged, "mechanoidDeploymentWaitLogged");
+            Scribe_Values.Look(ref mechanoidCenterSpawnAwaitingLanding, "mechanoidCenterSpawnAwaitingLanding");
             Scribe_Collections.Look(ref defenders, "defenders", LookMode.Reference);
             Scribe_Collections.Look(ref retreatedDefenders, "retreatedDefenders", LookMode.Reference);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
@@ -358,6 +360,14 @@ namespace LiAIChat.Questing
             if (threatPart == null) return;
 
             threatPart.ObserveDefenders(__instance.Map);
+            if (threatPart.faction == Faction.OfMechanoids &&
+                !threatPart.mechanoidArrivalDeploymentComplete)
+            {
+                // This map-generation hook is known to run for gravship arrivals.
+                // Spawn at map center immediately so defenders cannot be lost when
+                // a later gravship-placement or quest-tick hook is skipped.
+                DeployMechanoidDefendersAfterGravshipLanding(__instance.Map, null);
+            }
         }
 
         internal static void DeployMechanoidDefendersAfterGravshipLanding(Map map, Building_GravEngine engine)
@@ -365,7 +375,8 @@ namespace LiAIChat.Questing
             if (map?.Parent is not Site site) return;
             QuestPart_AlliedSettlementThreat threatPart = FindThreatPart(site);
             if (threatPart == null || threatPart.faction != Faction.OfMechanoids ||
-                threatPart.mechanoidArrivalDeploymentComplete)
+                (threatPart.mechanoidArrivalDeploymentComplete &&
+                 !threatPart.mechanoidCenterSpawnAwaitingLanding))
                 return;
 
             threatPart.ObserveDefenders(map);
@@ -395,6 +406,7 @@ namespace LiAIChat.Questing
                         map, activeDefenders);
                     threatPart.ObserveDefenders(map);
                     threatPart.mechanoidArrivalDeploymentComplete = true;
+                    threatPart.mechanoidCenterSpawnAwaitingLanding = false;
                     Log.Message("[LiAIChat] Deployed " + activeDefenders.Count + " existing mechanoid defenders near " +
                         "the gravship landing at " + site.Label + "; landing=" + landingAnchor + ".");
                 }
@@ -410,11 +422,12 @@ namespace LiAIChat.Questing
                 return;
             }
 
-            SpawnMissingMechanoidDefenders(threatPart, map, landingAnchor);
+            SpawnMissingMechanoidDefenders(threatPart, map, landingAnchor, engine == null);
         }
 
         private static void SpawnMissingMechanoidDefenders(
-            QuestPart_AlliedSettlementThreat threatPart, Map map, IntVec3 landingAnchor)
+            QuestPart_AlliedSettlementThreat threatPart, Map map, IntVec3 landingAnchor,
+            bool awaitGravshipLanding)
         {
             threatPart.mechanoidFallbackAttempted = true;
             int targetCount = Math.Max(1, threatPart.defenderCount);
@@ -471,10 +484,11 @@ namespace LiAIChat.Questing
                     map, spawned);
                 threatPart.ObserveDefenders(map);
                 threatPart.mechanoidArrivalDeploymentComplete = true;
-                Log.Message("[LiAIChat] Spawned and deployed " + spawned.Count + "/" + targetCount +
-                    " mechanoid defenders near the gravship landing at " + threatPart.site?.Label +
-                    "; landing=" + landingAnchor + "; positions=" + string.Join(", ",
-                        spawned.Select(pawn => pawn.Position.ToString())) + ".");
+                threatPart.mechanoidCenterSpawnAwaitingLanding = awaitGravshipLanding;
+                Log.Message("[LiAIChat] Spawned " + spawned.Count + " mechanoid defenders for allied threat site " +
+                    threatPart.site?.Label + " (target=" + targetCount + ").");
+                Log.Message("[LiAIChat] Mechanoid defender landing=" + landingAnchor + "; positions=" +
+                    string.Join(", ", spawned.Select(pawn => pawn.Position.ToString())) + ".");
             }
             catch (Exception error)
             {
