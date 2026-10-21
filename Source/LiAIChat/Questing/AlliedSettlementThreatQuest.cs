@@ -285,16 +285,36 @@ namespace LiAIChat.Questing
     [HarmonyPatch(typeof(SitePartWorker_Outpost), "GetEnemiesCount")]
     public static class AlliedSettlementThreatDefenderCountPatch
     {
+        public static bool Prefix(Site site, ref int __result)
+        {
+            QuestPart_AlliedSettlementThreat part = FindThreatPart(site);
+            if (part?.faction != Faction.OfMechanoids)
+                return true;
+
+            // GetPostProcessedThreatLabel calls GetEnemiesCount while the site is
+            // selected on the world map. The vanilla count enumerates Settlement
+            // pawn kinds and logs an error for Mechanoid, which has no such maker.
+            // This site already has its stable, saved defender count, so skip that
+            // enumeration entirely for our mechanoid threat sites.
+            __result = GetDefenderCount(part);
+            return false;
+        }
+
         public static void Postfix(Site site, ref int __result)
         {
             QuestPart_AlliedSettlementThreat part = FindThreatPart(site);
             if (part == null) return;
 
+            __result = GetDefenderCount(part);
+        }
+
+        private static int GetDefenderCount(QuestPart_AlliedSettlementThreat part)
+        {
             if (part.defenderCount <= 0)
                 part.defenderCount = AlliedCaravanReinforcementPolicy.AlliedThreatDefenderCount(
                     PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive
                         .Count(pawn => pawn != null && pawn.IsColonistPlayerControlled));
-            __result = part.defenderCount;
+            return part.defenderCount;
         }
 
         private static QuestPart_AlliedSettlementThreat FindThreatPart(Site site)
