@@ -38,6 +38,7 @@ namespace LiAIChat.Questing
         public int defenderCount;
         public bool mechanoidFallbackAttempted;
         public bool mechanoidArrivalDeploymentComplete;
+        public bool mechanoidDeploymentWaitLogged;
         private List<Pawn> defenders = new List<Pawn>();
         private List<Pawn> retreatedDefenders = new List<Pawn>();
         internal IEnumerable<Pawn> TrackedDefenders => defenders;
@@ -69,6 +70,30 @@ namespace LiAIChat.Questing
             base.QuestPartTick();
             if (quest.State != QuestState.Ongoing || Find.TickManager.TicksGame % 250 != 0)
                 return;
+
+            // Site.PostMapGenerate runs before GravshipUtility finishes placing the
+            // player's ship. Poll the loaded site map so the fallback deployment is
+            // retried after the landing engine actually exists, even if a Harmony
+            // hook on the placement method is skipped by a game/modded call path.
+            if (site?.Map is Map siteMap && faction == Faction.OfMechanoids &&
+                !mechanoidArrivalDeploymentComplete)
+            {
+                Building_GravEngine playerEngine = siteMap.listerThings.AllThings
+                    .OfType<Building_GravEngine>()
+                    .FirstOrDefault(engine => engine.Spawned && engine.Faction == Faction.OfPlayer);
+                if (playerEngine != null)
+                {
+                    AlliedSettlementThreatDefenderCapturePatch
+                        .DeployMechanoidDefendersAfterGravshipLanding(siteMap, playerEngine);
+                    mechanoidDeploymentWaitLogged = false;
+                }
+                else if (!mechanoidDeploymentWaitLogged)
+                {
+                    mechanoidDeploymentWaitLogged = true;
+                    Log.Message("[LiAIChat] Mechanoid defenders are waiting for the player gravship to land at " +
+                        site.Label + "; quest tick will retry deployment.");
+                }
+            }
 
             // Keep checking the recorded defenders after the player leaves the camp.
             // The site map is unloaded at that point, but the cached pawn references
@@ -147,6 +172,7 @@ namespace LiAIChat.Questing
             Scribe_Values.Look(ref defenderCount, "defenderCount");
             Scribe_Values.Look(ref mechanoidFallbackAttempted, "mechanoidFallbackAttempted");
             Scribe_Values.Look(ref mechanoidArrivalDeploymentComplete, "mechanoidArrivalDeploymentComplete");
+            Scribe_Values.Look(ref mechanoidDeploymentWaitLogged, "mechanoidDeploymentWaitLogged");
             Scribe_Collections.Look(ref defenders, "defenders", LookMode.Reference);
             Scribe_Collections.Look(ref retreatedDefenders, "retreatedDefenders", LookMode.Reference);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
