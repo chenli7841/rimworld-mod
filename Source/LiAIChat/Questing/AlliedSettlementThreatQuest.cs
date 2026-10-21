@@ -5,6 +5,7 @@ using System.Reflection;
 using HarmonyLib;
 using LiAIChat.AlliedSettlementSurvival;
 using RimWorld;
+using RimWorld.BaseGen;
 using RimWorld.Planet;
 using RimWorld.QuestGen;
 using Verse;
@@ -277,6 +278,22 @@ namespace LiAIChat.Questing
                     quest.PartsListForReading != null)
                 .SelectMany(quest => quest.PartsListForReading.OfType<QuestPart_AlliedSettlementThreat>())
                 .FirstOrDefault(part => part.site == site);
+        }
+    }
+
+    // The vanilla outpost resolver requests the Settlement pawn-group kind. The
+    // Mechanoid faction has no maker for that kind, so suppress only that step for
+    // these quest sites; the post-map hook creates a normal Mechanoid Combat group.
+    [HarmonyPatch(typeof(SymbolResolver_Settlement), nameof(SymbolResolver_Settlement.Resolve))]
+    public static class AlliedMechanoidThreatSettlementPawnGenerationPatch
+    {
+        public static void Prefix(ref ResolveParams rp)
+        {
+            Site site = rp.sitePart?.site;
+            QuestPart_AlliedSettlementThreat threatPart =
+                AlliedSettlementThreatDefenderCapturePatch.FindThreatPart(site);
+            if (threatPart?.faction == Faction.OfMechanoids)
+                rp.settlementDontGeneratePawns = true;
         }
     }
 
