@@ -8,6 +8,7 @@ using RimWorld;
 using RimWorld.Planet;
 using RimWorld.QuestGen;
 using Verse;
+using Verse.AI.Group;
 
 namespace LiAIChat.Questing
 {
@@ -22,7 +23,8 @@ namespace LiAIChat.Questing
             {
                 settlement = QuestGen.slate.Get<Settlement>("alliedSettlement"),
                 site = QuestGen.slate.Get<Site>("threatSite"),
-                faction = QuestGen.slate.Get<Faction>("threatFaction")
+                faction = QuestGen.slate.Get<Faction>("threatFaction"),
+                defenderCount = QuestGen.slate.Get("threatDefenderCount", 1)
             });
         }
     }
@@ -32,8 +34,11 @@ namespace LiAIChat.Questing
         public Settlement settlement;
         public Site site;
         public Faction faction;
+        public int defenderCount;
+        public bool mechanoidFallbackAttempted;
         private List<Pawn> defenders = new List<Pawn>();
         private List<Pawn> retreatedDefenders = new List<Pawn>();
+        internal bool HasSpawnedLivingDefender => defenders.Any(pawn => pawn != null && pawn.Spawned && !pawn.Dead);
 
         public override string DescriptionPart
         {
@@ -117,6 +122,8 @@ namespace LiAIChat.Questing
             Scribe_References.Look(ref settlement, "settlement");
             Scribe_References.Look(ref site, "site");
             Scribe_References.Look(ref faction, "faction");
+            Scribe_Values.Look(ref defenderCount, "defenderCount");
+            Scribe_Values.Look(ref mechanoidFallbackAttempted, "mechanoidFallbackAttempted");
             Scribe_Collections.Look(ref defenders, "defenders", LookMode.Reference);
             Scribe_Collections.Look(ref retreatedDefenders, "retreatedDefenders", LookMode.Reference);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
@@ -152,6 +159,10 @@ namespace LiAIChat.Questing
             if (faction == null)
                 return false;
 
+            int colonistCount = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive
+                .Count(pawn => pawn != null && pawn.IsColonistPlayerControlled);
+            int defenderCount = AlliedCaravanReinforcementPolicy.AlliedThreatDefenderCount(colonistCount);
+
             PlanetTile tile;
             if (!TileFinder.TryFindTileWithDistance(state.settlement.Tile, 2, 7, out tile,
                     null, TileFinderMode.Near, true))
@@ -162,12 +173,16 @@ namespace LiAIChat.Questing
             {
                 site = SiteMaker.MakeSite(part, tile, faction, true, ThreatPoints, null);
                 if (site == null) return false;
+                SitePart outpostPart = site.parts.FirstOrDefault(sitePart => sitePart?.def?.workerClass == typeof(SitePartWorker_Outpost));
+                if (outpostPart != null)
+                    outpostPart.expectedEnemyCount = defenderCount;
                 Find.WorldObjects.Add(site);
 
                 var slate = new Slate();
                 slate.Set("alliedSettlement", state.settlement);
                 slate.Set("threatSite", site);
                 slate.Set("threatFaction", faction);
+                slate.Set("threatDefenderCount", defenderCount);
                 quest = QuestGen.Generate(def, slate);
                 if (quest == null)
                 {
@@ -209,20 +224,25 @@ namespace LiAIChat.Questing
     {
         public static void Postfix(Site site, ref int __result)
         {
-            if (!IsAlliedThreatSite(site)) return;
+            QuestPart_AlliedSettlementThreat part = FindThreatPart(site);
+            if (part == null) return;
 
-            int colonists = PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive
-                .Count(pawn => pawn != null && pawn.IsColonistPlayerControlled);
-            __result = AlliedCaravanReinforcementPolicy.AlliedThreatDefenderCount(colonists);
+            if (part.defenderCount <= 0)
+                part.defenderCount = AlliedCaravanReinforcementPolicy.AlliedThreatDefenderCount(
+                    PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive
+                        .Count(pawn => pawn != null && pawn.IsColonistPlayerControlled));
+            __result = part.defenderCount;
         }
 
-        private static bool IsAlliedThreatSite(Site site)
+        private static QuestPart_AlliedSettlementThreat FindThreatPart(Site site)
         {
-            return site != null && Find.QuestManager != null &&
-                Find.QuestManager.QuestsListForReading.Any(quest => quest != null &&
+            if (site == null || Find.QuestManager == null) return null;
+            return Find.QuestManager.QuestsListForReading
+                .Where(quest => quest != null &&
                     quest.State == QuestState.Ongoing &&
-                    quest.PartsListForReading.OfType<QuestPart_AlliedSettlementThreat>()
-                        .Any(part => part.site == site));
+                    quest.PartsListForReading != null)
+                .SelectMany(quest => quest.PartsListForReading.OfType<QuestPart_AlliedSettlementThreat>())
+                .FirstOrDefault(part => part.site == site);
         }
     }
 
@@ -236,7 +256,76 @@ namespace LiAIChat.Questing
             if (__instance == null || __instance.Map == null || Find.QuestManager == null) return;
 
             QuestPart_AlliedSettlementThreat threatPart = FindThreatPart(__instance);
-            threatPart?.ObserveDefenders(__instance.Map);
+            if (threatPart == null) return;
+
+            threatPart.ObserveDefenders(__instance.Map);
+            if (threatPart.faction == Faction.OfMechanoids &&
+                !threatPart.HasSpawnedLivingDefender &&
+                !threatPart.mechanoidFallbackAttempted)
+                SpawnMissingMechanoidDefenders(threatPart, __instance.Map);
+        }
+
+        private static void SpawnMissingMechanoidDefenders(QuestPart_AlliedSettlementThreat threatPart, Map map)
+        {
+            threatPart.mechanoidFallbackAttempted = true;
+            int targetCount = Math.Max(1, threatPart.defenderCount);
+            var generated = new List<Pawn>();
+            float pointsPerAttempt = Math.Max(AlliedSettlementSurvivalMod.Current.threatPoints, targetCount * 100f);
+
+            try
+            {
+                // Outpost settlement generation does not reliably create a Combat group for mechanoid factions.
+                // Use the faction's normal Combat pawn-group maker so its pawn kinds and tech remain vanilla.
+                for (int attempt = 0; attempt < 4 && generated.Count < targetCount; attempt++)
+                {
+                    var parms = new PawnGroupMakerParms
+                    {
+                        faction = threatPart.faction,
+                        groupKind = PawnGroupKindDefOf.Combat,
+                        points = pointsPerAttempt,
+                        tile = map.Tile,
+                        generateFightersOnly = true
+                    };
+                    generated.AddRange(PawnGroupMakerUtility.GeneratePawns(parms, true));
+                }
+
+                if (generated.Count > targetCount)
+                {
+                    foreach (Pawn excess in generated.Skip(targetCount).ToList())
+                        if (excess != null && !excess.Destroyed)
+                            excess.Destroy(DestroyMode.Vanish);
+                    generated.RemoveRange(targetCount, generated.Count - targetCount);
+                }
+
+                if (generated.Count == 0)
+                {
+                    Log.Error("[LiAIChat] No mechanoid Combat pawns could be generated for allied threat site " +
+                        threatPart.site?.Label + ".");
+                    return;
+                }
+
+                IntVec3 edge;
+                if (!CellFinder.TryFindRandomEdgeCellWith(cell => cell.Standable(map), map, Rot4.North, 0f, out edge))
+                    edge = CellFinder.RandomEdgeCell(Rot4.North, map);
+                foreach (Pawn pawn in generated)
+                {
+                    IntVec3 cell = CellFinder.RandomSpawnCellForPawnNear(edge, map, 10);
+                    GenSpawn.Spawn(pawn, cell, map);
+                }
+                LordMaker.MakeNewLord(threatPart.faction,
+                    new LordJob_AssaultColony(threatPart.faction, false, false, false, false, false, false, false),
+                    map, generated);
+                threatPart.ObserveDefenders(map);
+                Log.Message("[LiAIChat] Spawned " + generated.Count + " mechanoid defenders for allied threat site " +
+                    threatPart.site?.Label + " (target=" + targetCount + ").");
+            }
+            catch (Exception error)
+            {
+                foreach (Pawn pawn in generated)
+                    if (pawn != null && !pawn.Spawned && !pawn.Destroyed)
+                        pawn.Destroy(DestroyMode.Vanish);
+                Log.Error("[LiAIChat] Could not spawn mechanoid defenders for allied threat site: " + error);
+            }
         }
 
         internal static QuestPart_AlliedSettlementThreat FindThreatPart(Site site)
