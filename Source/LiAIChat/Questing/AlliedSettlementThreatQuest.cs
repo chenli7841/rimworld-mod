@@ -74,20 +74,7 @@ namespace LiAIChat.Questing
             if (site != null && site.Map != null)
                 ObserveDefenders(site.Map);
 
-            // Destroying the camp itself is an explicit victory, even if no defenders
-            // were observed before the site was removed. Otherwise, require that we
-            // observed defenders and that none remain standing. An empty generated
-            // map alone is not enough to resolve the crisis.
-            bool campDestroyed = site != null && (site.Destroyed ||
-                AlliedSettlementThreatCompletionPatch.WasClearedByVanilla(site));
-            bool defendersDefeated = defenders.Count > 0 &&
-                !defenders.Any(pawn => pawn != null && !pawn.Dead && !pawn.Downed &&
-                    !retreatedDefenders.Contains(pawn));
-            if (!campDestroyed && !defendersDefeated)
-                return;
-
-            AlliedSettlementWorldComponent.Current?.CompleteCrisis(
-                settlement, AlliedSettlementCrisisKind.HostileThreat);
+            TryCompleteCrisisAfterDefendersDefeated();
         }
 
         public void ObserveDefenders(Map map)
@@ -96,6 +83,38 @@ namespace LiAIChat.Questing
             foreach (Pawn pawn in map.mapPawns.AllPawnsSpawned)
                 if (pawn != null && pawn.Faction == faction && !defenders.Contains(pawn))
                     defenders.Add(pawn);
+        }
+
+        public void NotifyDefenderKilled(Pawn pawn)
+        {
+            if (pawn == null || defenders == null || !defenders.Contains(pawn)) return;
+            TryCompleteCrisisAfterDefendersDefeated();
+        }
+
+        private void TryCompleteCrisisAfterDefendersDefeated()
+        {
+            if (quest == null || quest.State != QuestState.Ongoing) return;
+            if (site != null && site.Map != null)
+                ObserveDefenders(site.Map);
+
+            // Pawns killed by explosions or other mods can be destroyed without
+            // retaining Dead/Downed state. Treat destroyed pawns as defeated too.
+            bool campDestroyed = site != null && (site.Destroyed ||
+                AlliedSettlementThreatCompletionPatch.WasClearedByVanilla(site));
+            bool defendersDefeated = defenders.Count > 0 &&
+                !defenders.Any(pawn => pawn != null && !pawn.Destroyed && !pawn.Dead && !pawn.Downed &&
+                    !retreatedDefenders.Contains(pawn));
+            if (!campDestroyed && !defendersDefeated) return;
+
+            bool completed = AlliedSettlementWorldComponent.Current?.CompleteCrisis(
+                settlement, AlliedSettlementCrisisKind.HostileThreat) ?? false;
+            if (!completed)
+            {
+                AlliedSettlementState state = AlliedSettlementWorldComponent.Current?.Get(settlement);
+                Log.Warning("[LiAIChat] Allied threat site was cleared but its crisis could not complete. Site=" +
+                    site?.Label + "; quest=" + quest.State + "; crisisActive=" + state?.crisisActive +
+                    "; crisisKind=" + state?.crisisKind + "; defenders=" + defenders.Count + ".");
+            }
         }
 
         public void NotifyDefenderRetreated(Pawn pawn, Map map)
@@ -112,8 +131,9 @@ namespace LiAIChat.Questing
             retreatedDefenders.Add(pawn);
             Log.Message("[LiAIChat] Enemy defender retreated from allied threat site: " + pawn.LabelShort +
                 "; site=" + site.Label + "; remaining defenders=" + defenders.Count(candidate =>
-                    candidate != null && !candidate.Dead && !candidate.Downed &&
+                    candidate != null && !candidate.Destroyed && !candidate.Dead && !candidate.Downed &&
                     !retreatedDefenders.Contains(candidate)));
+            TryCompleteCrisisAfterDefendersDefeated();
         }
 
         public override void ExposeData()
@@ -131,6 +151,20 @@ namespace LiAIChat.Questing
                 if (defenders == null) defenders = new List<Pawn>();
                 if (retreatedDefenders == null) retreatedDefenders = new List<Pawn>();
             }
+        }
+    }
+
+    [HarmonyPatch(typeof(Pawn), nameof(Pawn.Kill))]
+    public static class AlliedSettlementThreatDefenderDeathPatch
+    {
+        public static void Postfix(Pawn __instance)
+        {
+            if (__instance == null || Find.QuestManager == null) return;
+            foreach (QuestPart_AlliedSettlementThreat threatPart in Find.QuestManager.QuestsListForReading
+                .Where(quest => quest != null && quest.State == QuestState.Ongoing)
+                .SelectMany(quest => quest.PartsListForReading.OfType<QuestPart_AlliedSettlementThreat>())
+                .ToList())
+                threatPart.NotifyDefenderKilled(__instance);
         }
     }
 
