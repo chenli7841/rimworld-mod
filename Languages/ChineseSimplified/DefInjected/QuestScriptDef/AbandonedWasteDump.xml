@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_AbandonedWasteDump.questNameRules.rulesStrings>
+    <li>questName-&gt;遗弃的毒废料场</li>
+  </LiAIChat_AbandonedWasteDump.questNameRules.rulesStrings>
+  <LiAIChat_AbandonedWasteDump.questDescriptionRules.rulesStrings>
+    <li>questDescription-&gt;附近有一处因倾倒毒废料而被遗弃的地点。请净化受污染的地块，并清走所有露天毒废料包。现场的废弃建筑或许能在清理期间提供一些遮蔽。</li>
+  </LiAIChat_AbandonedWasteDump.questDescriptionRules.rulesStrings>
+</LanguageData>

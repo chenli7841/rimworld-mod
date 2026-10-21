@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <SitePartDef MayRequire="Ludeon.RimWorld.Biotech">
+    <defName>LiAIChat_AbandonedWasteDump</defName>
+    <label>abandoned waste dump</label>
+    <description>A contaminated dumping ground covered in toxic wastepacks and abandoned ruins.</description>
+    <workerClass>LiAIChat.Questing.SitePartWorker_AbandonedWasteDump</workerClass>
+    <siteTexture>World/WorldObjects/Sites/GenericSite</siteTexture>
+    <expandingIconTexture>World/WorldObjects/Expanding/Sites/ItemStash</expandingIconTexture>
+    <gravShipsCanLandOn>true</gravShipsCanLandOn>
+    <tags>
+      <li>LiAIChat_AbandonedWasteDump</li>
+    </tags>
+  </SitePartDef>
+
+  <GenStepDef MayRequire="Ludeon.RimWorld.Biotech">
+    <defName>LiAIChat_AbandonedWasteDump_Ruins</defName>
+    <linkWithSite>LiAIChat_AbandonedWasteDump</linkWithSite>
+    <order>760</order>
+    <genStep Class="GenStep_ScatterRuinsSimple">
+      <allowInWaterBiome>false</allowInWaterBiome>
+      <countPer10kCellsRange>1~2</countPer10kCellsRange>
+      <canBeOnEdge>true</canBeOnEdge>
+      <ignoreUsedRects>true</ignoreUsedRects>
+    </genStep>
+  </GenStepDef>
+
+  <GenStepDef MayRequire="Ludeon.RimWorld.Biotech">
+    <defName>LiAIChat_AbandonedWasteDump_Gen</defName>
+    <linkWithSite>LiAIChat_AbandonedWasteDump</linkWithSite>
+    <order>980</order>
+    <genStep Class="LiAIChat.Questing.GenStep_AbandonedWasteDump" />
+  </GenStepDef>
+</Defs>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <QuestScriptDef MayRequire="Ludeon.RimWorld.Biotech">
+    <defName>LiAIChat_AbandonedWasteDump</defName>
+    <rootSelectionWeight>0.5</rootSelectionWeight>
+    <rootMinPoints>250</rootMinPoints>
+    <minRefireDays>12</minRefireDays>
+    <autoAccept>true</autoAccept>
+    <questNameRules>
+      <rulesStrings>
+        <li>questName-&gt;Abandoned waste dump</li>
+      </rulesStrings>
+    </questNameRules>
+    <questDescriptionRules>
+      <rulesStrings>
+        <li>questDescription-&gt;A nearby site has been abandoned after toxic waste was dumped there. Clean the polluted ground and remove the exposed toxic wastepacks. The site contains ruined buildings that may offer some shelter while you work.</li>
+      </rulesStrings>
+    </questDescriptionRules>
+    <root Class="QuestNode_Sequence">
+      <nodes>
+        <li Class="QuestNode_QuestUnique">
+          <tag>LiAIChat_AbandonedWasteDump_Active</tag>
+        </li>
+        <li Class="QuestNode_GetMap">
+          <canBeSpace>false</canBeSpace>
+        </li>
+        <li Class="QuestNode_Set">
+          <name>siteDistRange</name>
+          <value>4~12</value>
+        </li>
+        <li Class="QuestNode_GetSiteTile">
+          <storeAs>siteTile</storeAs>
+          <preferCloserTiles>true</preferCloserTiles>
+          <canSelectSpace>false</canSelectSpace>
+        </li>
+        <li Class="LiAIChat.Questing.QuestNode_CreateAbandonedWasteDump" />
+        <li Class="QuestNode_SpawnWorldObjects">
+          <worldObjects>$site</worldObjects>
+        </li>
+      </nodes>
+    </root>
+  </QuestScriptDef>
+</Defs>
