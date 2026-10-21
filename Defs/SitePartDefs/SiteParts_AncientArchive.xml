@@ -19,6 +19,7 @@
     <workerClass>LiAIChat.Questing.SitePartWorker_LostAnnotator</workerClass>
     <siteTexture>World/WorldObjects/Sites/GenericSite</siteTexture>
     <expandingIconTexture>World/WorldObjects/Expanding/Sites/DownedRefugee</expandingIconTexture>
+    <gravShipsCanLandOn>true</gravShipsCanLandOn>
     <tags><li>LiAIChat_LostAnnotatorSite</li></tags>
   </SitePartDef>
 
