@@ -12,7 +12,7 @@ namespace LiAIChat.Blightfall
     public static class BlightfallJointExpeditionCommsPatch
     {
         public static IEnumerable<FloatMenuOption> Postfix(IEnumerable<FloatMenuOption> __result,
-            Building_CommsConsole __instance, Pawn selPawn)
+            Building_CommsConsole __instance, Pawn myPawn)
         {
             if (__result != null)
                 foreach (FloatMenuOption option in __result)
@@ -23,8 +23,8 @@ namespace LiAIChat.Blightfall
             WorldComponent_Blightfall campaign = WorldComponent_Blightfall.Current;
             BlightfallSiteState siteState = campaign?.GetSiteState(site);
             if (siteState == null || siteState.Status == BlightfallSiteStatus.Completed ||
-                siteState.Status == BlightfallSiteStatus.Removed || selPawn == null ||
-                !selPawn.IsColonistPlayerControlled || !__instance.CanUseCommsNow)
+                siteState.Status == BlightfallSiteStatus.Removed || myPawn == null ||
+                !myPawn.IsColonistPlayerControlled || !__instance.CanUseCommsNow)
                 yield break;
 
             List<AlliedSettlementState> sources = AlliedSettlementWorldComponent.Current?.States
