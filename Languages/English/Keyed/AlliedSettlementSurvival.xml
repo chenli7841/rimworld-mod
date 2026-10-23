@@ -84,4 +84,12 @@
   <LiASS_OverviewCollapsed>Collapse pending</LiASS_OverviewCollapsed>
   <LiASS_OverviewNextCrisis>Next crisis in {0} days</LiASS_OverviewNextCrisis>
   <LiASS_OverviewGoTo>Show</LiASS_OverviewGoTo>
+  <LiASS_CrisisKind_BlightfallEnvironmental>Blightfall contamination</LiASS_CrisisKind_BlightfallEnvironmental>
+  <LiASS_CrisisKind_BlightfallMilitary>Blightfall military threat</LiASS_CrisisKind_BlightfallMilitary>
+  <LiASS_AidPurificationProgress>Purification components delivered: {0} / {1}</LiASS_AidPurificationProgress>
+  <LiASS_DeliverPurificationSupplies>Deliver purification components</LiASS_DeliverPurificationSupplies>
+  <LiASS_DeliverPurificationSuppliesDescription>Deliver industrial components to support purification; {0} still required.</LiASS_DeliverPurificationSuppliesDescription>
+  <LiASS_PurificationSupplyOption>{0}: deliver {1} (carrying {2})</LiASS_PurificationSupplyOption>
+  <LiASS_ConfirmPurificationSupplies>Deliver {0} purification components to this settlement?</LiASS_ConfirmPurificationSupplies>
+  <LiASS_BlightfallAlliesWithdrawing>The threats at the contaminated site are gone. Allied reinforcements are withdrawing.</LiASS_BlightfallAlliesWithdrawing>
 </LanguageData>

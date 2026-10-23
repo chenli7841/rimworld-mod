@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="BuildingBase">
+    <defName>LiAIChat_BlightfallSporeMotherTree</defName>
+    <label>spore mother tree</label>
+    <description>A mature organism that steadily seeds the surrounding ground with contamination.</description>
+    <thingClass>Verse.Building</thingClass>
+    <graphicData>
+      <texPath>Things/Plant/TreeOak</texPath>
+      <graphicClass>Graphic_Random</graphicClass>
+      <drawSize>(3.2,3.2)</drawSize>
+    </graphicData>
+    <size>(2,2)</size>
+    <passability>Impassable</passability>
+    <fillPercent>1.0</fillPercent>
+    <statBases><MaxHitPoints>560</MaxHitPoints><Flammability>0</Flammability></statBases>
+  </ThingDef>
+  <ThingDef ParentName="BuildingBase">
+    <defName>LiAIChat_BlightfallToxicHiveObjective</defName>
+    <label>toxic brood hive</label>
+    <description>An active nest that periodically spawns Blightfall creatures.</description>
+    <thingClass>Verse.Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Ruins/AncientWarspiderRemains</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(3,3)</drawSize>
+    </graphicData>
+    <size>(2,2)</size>
+    <passability>Impassable</passability>
+    <fillPercent>1.0</fillPercent>
+    <statBases><MaxHitPoints>620</MaxHitPoints><Flammability>0</Flammability></statBases>
+  </ThingDef>
+  <ThingDef ParentName="BuildingBase">
+    <defName>LiAIChat_BlightfallProcessingPlantObjective</defName>
+    <label>ancient processing plant</label>
+    <description>An uncontrolled ancient machine that continuously contaminates the site.</description>
+    <thingClass>LiAIChat.Blightfall.Building_BlightfallProcessor</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Ruins/AncientSystemRack</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(2,3)</drawSize>
+    </graphicData>
+    <size>(2,2)</size>
+    <passability>Impassable</passability>
+    <fillPercent>1.0</fillPercent>
+    <statBases><MaxHitPoints>700</MaxHitPoints><Flammability>0</Flammability></statBases>
+  </ThingDef>
+  <ThingDef ParentName="BuildingBase">
+    <defName>LiAIChat_BlightfallCorePerimeterPylon</defName>
+    <label>core perimeter pylon</label>
+    <description>A defense pylon feeding the first ring around the Blight Heart.</description>
+    <thingClass>LiAIChat.Blightfall.Building_BlightfallCoreDefense</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Ruins/AncientWarspiderRemains</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2.5,2.5)</drawSize>
+    </graphicData>
+    <size>(2,2)</size>
+    <passability>Impassable</passability>
+    <fillPercent>1.0</fillPercent>
+    <statBases><MaxHitPoints>900</MaxHitPoints><Flammability>0</Flammability></statBases>
+  </ThingDef>
+  <ThingDef ParentName="BuildingBase">
+    <defName>LiAIChat_BlightfallCoreDefenseGenerator</defName>
+    <label>core shield generator</label>
+    <description>A shield generator protecting the Blight Heart from direct assault.</description>
+    <thingClass>LiAIChat.Blightfall.Building_BlightfallCoreDefense</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Misc/AncientTerminal/AncientTerminal</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(2.5,2.5)</drawSize>
+    </graphicData>
+    <size>(2,2)</size>
+    <passability>Impassable</passability>
+    <fillPercent>1.0</fillPercent>
+    <statBases><MaxHitPoints>1200</MaxHitPoints><Flammability>0</Flammability></statBases>
+  </ThingDef>
+  <ThingDef ParentName="BuildingBase">
+    <defName>LiAIChat_BlightfallHeart</defName>
+    <label>Blight Heart</label>
+    <description>The living core of the contamination network. It is protected until its defense rings and reinforcements are overcome.</description>
+    <thingClass>LiAIChat.Blightfall.Building_BlightfallHeart</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Misc/AncientTerminal/AncientTerminal</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(4,4)</drawSize>
+    </graphicData>
+    <size>(3,3)</size>
+    <passability>Impassable</passability>
+    <fillPercent>1.0</fillPercent>
+    <statBases><MaxHitPoints>2400</MaxHitPoints><Flammability>0</Flammability></statBases>
+  </ThingDef>
+</Defs>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_BlightfallSporeForestSiteLabel>枯蚀孢子林</LiAIChat_BlightfallSporeForestSiteLabel>
+  <LiAIChat_BlightfallToxicHiveSiteLabel>枯蚀毒巢</LiAIChat_BlightfallToxicHiveSiteLabel>
+  <LiAIChat_BlightfallProcessingPlantSiteLabel>古代污染处理厂</LiAIChat_BlightfallProcessingPlantSiteLabel>
+  <LiAIChat_BlightfallResonanceSiteLabel>共振防御塔</LiAIChat_BlightfallResonanceSiteLabel>
+  <LiAIChat_BlightfallResonanceShieldActive>本地共振护盾仍在运作：尖塔周围的守军受到的伤害降低 55%。</LiAIChat_BlightfallResonanceShieldActive>
+  <LiAIChat_BlightfallProcessorShutdown>关闭污染处理设备</LiAIChat_BlightfallProcessorShutdown>
+  <LiAIChat_BlightfallProcessorRestart>重新启动污染处理设备</LiAIChat_BlightfallProcessorRestart>
+  <LiAIChat_BlightfallProcessorToggleDesc>关闭后将停止该设施持续产生污染，并完成本站目标。</LiAIChat_BlightfallProcessorToggleDesc>
+  <LiAIChat_BlightfallProcessorStatusOn>设施状态：运行中，持续排放污染。</LiAIChat_BlightfallProcessorStatusOn>
+  <LiAIChat_BlightfallProcessorStatusOff>设施状态：已关闭。</LiAIChat_BlightfallProcessorStatusOff>
+  <LiAIChat_BlightfallSpecialSiteCompleteTitle>污染战场目标完成</LiAIChat_BlightfallSpecialSiteCompleteTitle>
+  <LiAIChat_BlightfallSporeForestComplete>孢子母树已被摧毁，孢子林不再继续扩散污染。污染源活跃度下降了。</LiAIChat_BlightfallSporeForestComplete>
+  <LiAIChat_BlightfallToxicHiveComplete>孵化巢已摧毁，现场污染已净化至少 80%。该据点的污染军团压力降低。</LiAIChat_BlightfallToxicHiveComplete>
+  <LiAIChat_BlightfallProcessingPlantComplete>古代处理设施已关闭或摧毁，现场不再继续产生污染。污染源活跃度下降，压制程度提高。</LiAIChat_BlightfallProcessingPlantComplete>
+  <LiAIChat_BlightfallResonanceSpireComplete>共振尖塔已摧毁，核心防护部分解除。剩余共振塔：{0}/{1}。</LiAIChat_BlightfallResonanceSpireComplete>
+  <LiAIChat_BlightfallBlightHeartSiteLabel>枯蚀之心</LiAIChat_BlightfallBlightHeartSiteLabel>
+  <LiAIChat_BlightfallPurifiedHeartSiteLabel>已净化的枯蚀核心</LiAIChat_BlightfallPurifiedHeartSiteLabel>
+  <LiAIChat_BlightfallCoreDefenseInspect>核心防御设施：摧毁该阶段的所有目标以继续。</LiAIChat_BlightfallCoreDefenseInspect>
+  <LiAIChat_BlightfallCoreBattleStageTitle>枯蚀之心战役阶段更新</LiAIChat_BlightfallCoreBattleStageTitle>
+  <LiAIChat_BlightfallCoreRetreatRule>撤离规则：已完成阶段和击毁数量会保留；未完成阶段的目标会在再次抵达时重建。核心已受损程度会保留，离开期间增援计时继续。</LiAIChat_BlightfallCoreRetreatRule>
+  <LiAIChat_BlightfallWeakenHeart>关闭核心屏障</LiAIChat_BlightfallWeakenHeart>
+  <LiAIChat_BlightfallCoreStageNotReady>先突破外围防线、摧毁核心防御并击退三波增援。</LiAIChat_BlightfallCoreStageNotReady>
+  <LiAIChat_BlightfallCoreStage_NotStarted>最终决战尚未开始。</LiAIChat_BlightfallCoreStage_NotStarted>
+  <LiAIChat_BlightfallCoreStage_PerimeterBreach>阶段 1/5：摧毁三座外围防御塔。</LiAIChat_BlightfallCoreStage_PerimeterBreach>
+  <LiAIChat_BlightfallCoreStage_DestroyCoreDefenses>阶段 2/5：摧毁核心护盾发生器。</LiAIChat_BlightfallCoreStage_DestroyCoreDefenses>
+  <LiAIChat_BlightfallCoreStage_RepelReinforcements>阶段 3/5：抵御三波枯蚀军团增援。</LiAIChat_BlightfallCoreStage_RepelReinforcements>
+  <LiAIChat_BlightfallCoreStage_WeakenHeart>阶段 4/5：核心防御已削弱。关闭最后屏障以进入最终净化。</LiAIChat_BlightfallCoreStage_WeakenHeart>
+  <LiAIChat_BlightfallCoreStage_FinalPurification>阶段 5/5：执行最终净化程序，摧毁枯蚀之心。</LiAIChat_BlightfallCoreStage_FinalPurification>
+  <LiAIChat_BlightfallCoreStage_Completed>枯蚀之心已摧毁。</LiAIChat_BlightfallCoreStage_Completed>
+  <LiAIChat_BlightfallFinalPurification>执行最终净化程序</LiAIChat_BlightfallFinalPurification>
+  <LiAIChat_BlightfallFinalPurificationDesc>核心屏障已关闭。摧毁枯蚀之心以永久终止污染扩散和军团袭击。</LiAIChat_BlightfallFinalPurificationDesc>
+</LanguageData>

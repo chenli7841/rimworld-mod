@@ -27,11 +27,15 @@ namespace LiAIChat.AlliedSettlementSurvival
     {
         public string groupId;
         public float strengthLossAlreadyApplied;
+        public bool evacuateWhenThreatCleared;
+        public int hostileFreeSinceTick = -1;
 
         public void ExposeData()
         {
             Scribe_Values.Look(ref groupId, "groupId");
             Scribe_Values.Look(ref strengthLossAlreadyApplied, "strengthLossAlreadyApplied", 0f);
+            Scribe_Values.Look(ref evacuateWhenThreatCleared, "evacuateWhenThreatCleared", false);
+            Scribe_Values.Look(ref hostileFreeSinceTick, "hostileFreeSinceTick", -1);
         }
     }
 
@@ -47,7 +51,7 @@ namespace LiAIChat.AlliedSettlementSurvival
         }
 
         public void RegisterMilitaryAidGuards(Settlement source, IEnumerable<Pawn> pawns,
-            Pawn leader, IEnumerable<Pawn> eliteGuards)
+            Pawn leader, IEnumerable<Pawn> eliteGuards, bool evacuateWhenThreatCleared = false)
         {
             if (source == null || pawns == null) return;
             string groupId = Guid.NewGuid().ToString("N");
@@ -56,7 +60,11 @@ namespace LiAIChat.AlliedSettlementSurvival
             {
                 if (militaryAidLossGroups == null)
                     militaryAidLossGroups = new List<AlliedMilitaryAidLossGroup>();
-                militaryAidLossGroups.Add(new AlliedMilitaryAidLossGroup { groupId = groupId });
+                militaryAidLossGroups.Add(new AlliedMilitaryAidLossGroup
+                {
+                    groupId = groupId,
+                    evacuateWhenThreatCleared = evacuateWhenThreatCleared
+                });
             }
         }
 

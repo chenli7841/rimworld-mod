@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_BlightfallSporeForest.label>Blightfall spore forest</LiAIChat_BlightfallSporeForest.label>
+  <LiAIChat_BlightfallSporeForest.description>A polluted grove dominated by a living spore mother tree.</LiAIChat_BlightfallSporeForest.description>
+  <LiAIChat_BlightfallToxicHive.label>Blightfall toxic hive</LiAIChat_BlightfallToxicHive.label>
+  <LiAIChat_BlightfallToxicHive.description>A toxic brood chamber where infected creatures continue to hatch.</LiAIChat_BlightfallToxicHive.description>
+  <LiAIChat_BlightfallProcessingPlant.label>Blightfall ancient processing plant</LiAIChat_BlightfallProcessingPlant.label>
+  <LiAIChat_BlightfallProcessingPlant.description>An uncontrolled ancient facility that continuously contaminates its surroundings.</LiAIChat_BlightfallProcessingPlant.description>
+  <LiAIChat_BlightfallResonanceDefense.label>Blightfall resonance defense site</LiAIChat_BlightfallResonanceDefense.label>
+  <LiAIChat_BlightfallResonanceDefense.description>A heavily defended resonance spire projects a local shield that protects the Blightfall core.</LiAIChat_BlightfallResonanceDefense.description>
+  <LiAIChat_BlightfallBlightHeart.label>Blightfall core</LiAIChat_BlightfallBlightHeart.label>
+  <LiAIChat_BlightfallBlightHeart.description>The exposed heart of the contamination network, surrounded by severe pollution. Destroy its defenses, repel the reinforcements, and destroy the heart to end the campaign.</LiAIChat_BlightfallBlightHeart.description>
+</LanguageData>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_BlightfallArrivalTitle>污染源降临</LiAIChat_BlightfallArrivalTitle>
+  <LiAIChat_BlightfallArrivalText>在距离我方基地适中的区域发现了新的污染源。中心周围另有 {0} 个 Tile 受到污染。世界地图上黄色为前线，红色为污染内区，紫色为污染核心，绿色为已净化区域。</LiAIChat_BlightfallArrivalText>
+  <LiAIChat_BlightfallDebugTriggered>已手动触发 The Blightfall 污染源降临。</LiAIChat_BlightfallDebugTriggered>
+  <LiAIChat_BlightfallDebugUnavailable>当前存档无法触发污染源降临：战役已开始、尚无玩家基地，或附近没有合适的世界格。</LiAIChat_BlightfallDebugUnavailable>
+  <LiAIChat_BlightfallSiteLabel>污染遗址</LiAIChat_BlightfallSiteLabel>
+  <LiAIChat_BlightfallInteriorLocked>该 Tile 位于前线之后。请先清理与安全区域相连的前线，再推进至此处。</LiAIChat_BlightfallInteriorLocked>
+  <LiAIChat_BlightfallCoreLocked>污染核心尚未暴露。请先净化所有外围污染 Tile。</LiAIChat_BlightfallCoreLocked>
+  <LiAIChat_BlightfallCoreProtected>仍有共振塔在保护污染核心。请先摧毁全部共振塔，再净化核心。</LiAIChat_BlightfallCoreProtected>
+  <LiAIChat_BlightfallCoreProtectedAndSealed>外围污染尚未清除，且仍有共振塔在保护核心。请先推进外围战线并摧毁全部共振塔。</LiAIChat_BlightfallCoreProtectedAndSealed>
+  <LiAIChat_BlightfallResonanceNetworkStatus>污染核心防护网络：剩余共振塔 {0}/{1}</LiAIChat_BlightfallResonanceNetworkStatus>
+  <LiAIChat_BlightfallEndingDestroyLabel>摧毁核心</LiAIChat_BlightfallEndingDestroyLabel>
+  <LiAIChat_BlightfallEndingDestroyDesc>永久摧毁污染源，停止扩散和敌对活动，但核心地块仍受污染，需要以后返回清理。</LiAIChat_BlightfallEndingDestroyDesc>
+  <LiAIChat_BlightfallEndingPurifyLabel>净化核心</LiAIChat_BlightfallEndingPurifyLabel>
+  <LiAIChat_BlightfallEndingPurifyDesc>需要完成制造学研究。改写污染源以停止敌对活动，并每五天逐步净化一个相连的污染世界格。</LiAIChat_BlightfallEndingPurifyDesc>
+  <LiAIChat_BlightfallEndingPurifyLocked>请先完成制造学研究。</LiAIChat_BlightfallEndingPurifyLocked>
+  <LiAIChat_BlightfallEndingHarnessLabel>驾驭核心</LiAIChat_BlightfallEndingHarnessLabel>
+  <LiAIChat_BlightfallEndingHarnessDesc>控制污染源，使其不再无限扩散。每五天需要50单位化合燃料；维护成功会产出10单位铀。维护连续失败两次会有失控袭击风险。</LiAIChat_BlightfallEndingHarnessDesc>
+  <LiAIChat_BlightfallEndingDestroyTitle>枯蚀之心已摧毁</LiAIChat_BlightfallEndingDestroyTitle>
+  <LiAIChat_BlightfallEndingDestroyText>污染源已被永久摧毁，污染扩散和枯蚀袭击已经停止。核心据点仍留有污染和毒废料包；请返回该据点完成现有的毒废料场清理任务。</LiAIChat_BlightfallEndingDestroyText>
+  <LiAIChat_BlightfallEndingPurifyTitle>枯蚀之心已净化</LiAIChat_BlightfallEndingPurifyTitle>
+  <LiAIChat_BlightfallEndingPurifyText>制造学技术已成功改写污染源。敌对活动已经结束，核心将每五天逐步净化相连的污染世界格。</LiAIChat_BlightfallEndingPurifyText>
+  <LiAIChat_BlightfallEndingHarnessTitle>枯蚀之心已受控</LiAIChat_BlightfallEndingHarnessTitle>
+  <LiAIChat_BlightfallEndingHarnessText>污染源已被控制，不再自由扩散。每五天消耗50单位化合燃料并产出10单位铀；如果维护连续失败两次，核心可能引发失控袭击。</LiAIChat_BlightfallEndingHarnessText>
+  <LiAIChat_BlightfallDestroyedHeartSiteLabel>已摧毁核心的残留污染</LiAIChat_BlightfallDestroyedHeartSiteLabel>
+  <LiAIChat_BlightfallHarnessedHeartSiteLabel>已驾驭的核心</LiAIChat_BlightfallHarnessedHeartSiteLabel>
+  <LiAIChat_BlightfallHarnessMaintainedTitle>核心维护完成</LiAIChat_BlightfallHarnessMaintainedTitle>
+  <LiAIChat_BlightfallHarnessMaintainedText>受控核心消耗了 {0} 单位化合燃料，并产出了 {1} 单位铀。</LiAIChat_BlightfallHarnessMaintainedText>
+  <LiAIChat_BlightfallHarnessFailureTitle>核心维护失败</LiAIChat_BlightfallHarnessFailureTitle>
+  <LiAIChat_BlightfallHarnessFailureText>受控核心无法消耗 {0} 单位化合燃料。连续失败次数：{1}。每连续失败两次，都可能引发失控袭击。</LiAIChat_BlightfallHarnessFailureText>
+  <LiAIChat_BlightfallHarnessIncursionTitle>核心发生失控</LiAIChat_BlightfallHarnessIncursionTitle>
+  <LiAIChat_BlightfallHarnessIncursionText>维护失败导致受控核心失稳，一支小规模枯蚀部队正在袭击殖民地。</LiAIChat_BlightfallHarnessIncursionText>
+  <LiAIChat_BlightfallPurificationWaveTitle>核心净化了新的地块</LiAIChat_BlightfallPurificationWaveTitle>
+  <LiAIChat_BlightfallPurificationWaveText>净化后的核心清除了一个相连的污染世界格，对应的污染据点已从世界地图移除。</LiAIChat_BlightfallPurificationWaveText>
+  <Blightfall_ResponseLetterLabel>{0} 的污染应对行动</Blightfall_ResponseLetterLabel>
+  <Blightfall_ResponseLetterText>{0}的据点{1}尝试了{2}，{3}。</Blightfall_ResponseLetterText>
+  <Blightfall_ResponseContainment>建立隔离带</Blightfall_ResponseContainment>
+  <Blightfall_ResponsePurification>净化外围污染</Blightfall_ResponsePurification>
+  <Blightfall_ResponseMilitary>派遣远征队摧毁污染节点</Blightfall_ResponseMilitary>
+  <Blightfall_ResponseEvacuation>撤离受威胁据点</Blightfall_ResponseEvacuation>
+  <Blightfall_ResponseSuccess>行动成功，污染扩散受到抑制。</Blightfall_ResponseSuccess>
+  <Blightfall_ResponseFailure>行动失败，污染活跃度有所上升。</Blightfall_ResponseFailure>
+  <LiAIChat_BlightfallRequestJointExpedition>请求盟友参加联合净化远征</LiAIChat_BlightfallRequestJointExpedition>
+  <LiAIChat_BlightfallJointExpeditionGizmoDesc>选择一个友好据点，请求其派遣战斗人员支援当前污染遗址。每个遗址只能请求一次。</LiAIChat_BlightfallJointExpeditionGizmoDesc>
+  <LiAIChat_BlightfallNoAlliedExpeditionSource>没有可响应的盟友据点</LiAIChat_BlightfallNoAlliedExpeditionSource>
+  <LiAIChat_BlightfallExpeditionSourceOption>{0}（{1}，实力 {2}）</LiAIChat_BlightfallExpeditionSourceOption>
+  <LiAIChat_BlightfallExpeditionAlreadyRequested>该污染据点已经请求过一次联合远征。</LiAIChat_BlightfallExpeditionAlreadyRequested>
+  <LiAIChat_BlightfallExpeditionUnavailable>目前无法向该污染据点请求支援。</LiAIChat_BlightfallExpeditionUnavailable>
+  <LiAIChat_BlightfallExpeditionRequested>{0} 已派遣远征部队前往 {1}。</LiAIChat_BlightfallExpeditionRequested>
+  <LiAIChat_BlightfallExpeditionFailed>盟友远征队无法抵达。该据点的支援请求已用完。</LiAIChat_BlightfallExpeditionFailed>
+</LanguageData>

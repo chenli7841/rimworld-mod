@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <AbilityDef>
+    <defName>LiAIChat_BlightfallSporeShot</defName>
+    <label>spore shot</label>
+    <description>Spit a toxic spore at a target.</description>
+    <cooldownTicksRange>240~300</cooldownTicksRange>
+    <aiCanUse>true</aiCanUse>
+    <verbProperties>
+      <verbClass>Verb_AbilityShoot</verbClass>
+      <warmupTime>1.2</warmupTime>
+      <range>12.9</range>
+      <defaultProjectile>LiAIChat_BlightfallSporeProjectile</defaultProjectile>
+      <ai_IsWeapon>false</ai_IsWeapon>
+    </verbProperties>
+  </AbilityDef>
+  <ThingDef ParentName="BaseBullet">
+    <defName>LiAIChat_BlightfallSporeProjectile</defName>
+    <label>toxic spore</label>
+    <graphicData>
+      <texPath>Things/Projectile/Bullet_Small</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>0.45</drawSize>
+    </graphicData>
+    <projectile>
+      <damageDef>ScratchToxic</damageDef>
+      <damageAmountBase>8</damageAmountBase>
+      <speed>40</speed>
+      <stoppingPower>0.5</stoppingPower>
+    </projectile>
+  </ThingDef>
+</Defs>

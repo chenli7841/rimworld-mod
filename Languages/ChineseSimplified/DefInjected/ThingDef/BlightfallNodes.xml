@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_BlightfallSporeTower.label>孢子塔</LiAIChat_BlightfallSporeTower.label>
+  <LiAIChat_BlightfallSporeTower.description>这种活体结构会强化附近污染的扩散。</LiAIChat_BlightfallSporeTower.description>
+  <LiAIChat_BlightfallBroodNest.label>育巢</LiAIChat_BlightfallBroodNest.label>
+  <LiAIChat_BlightfallBroodNest.description>这种活体结构会增强污染军团的生成能力。</LiAIChat_BlightfallBroodNest.description>
+  <LiAIChat_BlightfallResonanceSpire.label>共振尖塔</LiAIChat_BlightfallResonanceSpire.label>
+  <LiAIChat_BlightfallResonanceSpire.description>这种活体结构保护着污染核心。</LiAIChat_BlightfallResonanceSpire.description>
+</LanguageData>

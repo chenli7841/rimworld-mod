@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <PawnKindDef ParentName="Spelopede">
+    <defName>LiAIChat_BlightCrawler</defName>
+    <label>Blight Crawler</label>
+    <race>LiAIChat_BlightCrawlerRace</race>
+    <combatPower>55</combatPower>
+  </PawnKindDef>
+  <PawnKindDef ParentName="Megaspider">
+    <defName>LiAIChat_SporeSpitter</defName>
+    <label>Spore Spitter</label>
+    <race>LiAIChat_SporeSpitterRace</race>
+    <combatPower>90</combatPower>
+    <abilities>
+      <li>LiAIChat_BlightfallSporeShot</li>
+    </abilities>
+  </PawnKindDef>
+  <PawnKindDef ParentName="Megaspider">
+    <defName>LiAIChat_BlightBehemoth</defName>
+    <label>Blight Behemoth</label>
+    <race>LiAIChat_BlightBehemothRace</race>
+    <combatPower>260</combatPower>
+  </PawnKindDef>
+</Defs>

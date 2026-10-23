@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using LiAIChat.Blightfall;
 using LiAIChat.Questing;
 using RimWorld;
 using RimWorld.Planet;
@@ -12,7 +13,9 @@ namespace LiAIChat.AlliedSettlementSurvival
         None,
         FoodShortage,
         DiseaseOutbreak,
-        HostileThreat
+        HostileThreat,
+        BlightfallEnvironmental,
+        BlightfallMilitary
     }
 
     public sealed class AlliedSettlementState : IExposable
@@ -21,6 +24,7 @@ namespace LiAIChat.AlliedSettlementSurvival
         public float strength = SettlementStrengthPolicy.InitialStrength;
         public int registeredTick;
         public int lastTick;
+        public int lastBlightfallPressureTick;
         public bool active;
         public bool crisisActive;
         public bool pendingCollapse;
@@ -49,6 +53,7 @@ namespace LiAIChat.AlliedSettlementSurvival
             Scribe_Values.Look(ref strength, "strength", SettlementStrengthPolicy.InitialStrength);
             Scribe_Values.Look(ref registeredTick, "registeredTick");
             Scribe_Values.Look(ref lastTick, "lastTick");
+            Scribe_Values.Look(ref lastBlightfallPressureTick, "lastBlightfallPressureTick");
             Scribe_Values.Look(ref active, "active");
             Scribe_Values.Look(ref crisisActive, "crisisActive");
             Scribe_Values.Look(ref pendingCollapse, "pendingCollapse");
@@ -111,6 +116,8 @@ namespace LiAIChat.AlliedSettlementSurvival
                         state.crisisDeadlineTick = now + AlliedSettlementState.CrisisDeadlineTicks;
                     if (!state.crisisActive) state.crisisKind = AlliedSettlementCrisisKind.None;
                     if (state.lastCrisisTick <= 0) state.lastCrisisTick = now;
+                    // New field migration: do not apply environmental pressure retroactively to old saves.
+                    if (state.lastBlightfallPressureTick <= 0) state.lastBlightfallPressureTick = now;
                 }
             }
         }
@@ -119,6 +126,7 @@ namespace LiAIChat.AlliedSettlementSurvival
         {
             if (Find.TickManager.TicksGame % 2500 == 0)
             {
+                TickMilitaryAidEvacuation();
                 if (caravanGuardRecords != null)
                     foreach (AlliedCaravanGuardRecord record in caravanGuardRecords)
                         if (record != null)
@@ -144,6 +152,7 @@ namespace LiAIChat.AlliedSettlementSurvival
                 if (state.crisisActive) state.crisisDeadlineTick += pausedTicks;
                 state.lastTick = now;
                 state.lastCrisisTick = now;
+                state.lastBlightfallPressureTick = now;
             }
         }
 
@@ -176,16 +185,22 @@ namespace LiAIChat.AlliedSettlementSurvival
                         settlement = settlement,
                         registeredTick = now,
                         lastTick = now,
+                        lastBlightfallPressureTick = now,
                         active = true,
                         nextCrisisTick = now + AlliedSettlementState.ProtectionTicks,
                         lastCrisisTick = now
                     };
                     settlements.Add(state);
                 }
-                state.strength = SettlementStrengthPolicy.Recover(state.strength, now - state.lastTick,
+                int elapsedTicks = System.Math.Max(0, now - state.lastTick);
+                state.strength = SettlementStrengthPolicy.Recover(state.strength, elapsedTicks,
                     eligible && state.active, state.crisisActive);
+                int pressureElapsedTicks = System.Math.Max(0, now - state.lastBlightfallPressureTick);
+                if (eligible && state.active && !state.pendingCollapse)
+                    BlightfallSettlementPressure.ApplyStrengthPressure(state, pressureElapsedTicks);
                 // Advance even while frozen, preventing catch-up recovery after re-alliance.
                 state.lastTick = now;
+                state.lastBlightfallPressureTick = now;
                 if (!state.active)
                 {
                     // Pause both scheduled starts and active deadlines while outside the system.
@@ -230,12 +245,34 @@ namespace LiAIChat.AlliedSettlementSurvival
 
         private bool StartCrisis(AlliedSettlementState state, int now)
         {
-            AlliedSettlementCrisisKind kind = (AlliedSettlementCrisisKind)Rand.RangeInclusive(1, 3);
+            float contaminationExposure = BlightfallSettlementPressure.Exposure(state.settlement);
+            AlliedSettlementCrisisKind kind;
+            if (contaminationExposure >= 0.25f && Rand.Value < 0.25f + contaminationExposure * 0.55f)
+                kind = Rand.Value < 0.28f ? AlliedSettlementCrisisKind.BlightfallMilitary :
+                    AlliedSettlementCrisisKind.BlightfallEnvironmental;
+            else
+                kind = (AlliedSettlementCrisisKind)Rand.RangeInclusive(1, 3);
             Quest aidQuest = null;
             Quest threatQuest = null;
             if (kind == AlliedSettlementCrisisKind.FoodShortage || kind == AlliedSettlementCrisisKind.DiseaseOutbreak)
             {
                 if (!AlliedSettlementAidQuestUtility.TryCreate(this, state, kind, out aidQuest))
+                {
+                    state.nextCrisisTick = now + 2500;
+                    return false;
+                }
+            }
+            else if (kind == AlliedSettlementCrisisKind.BlightfallEnvironmental)
+            {
+                if (!AlliedSettlementAidQuestUtility.TryCreate(this, state, kind, out aidQuest))
+                {
+                    state.nextCrisisTick = now + 2500;
+                    return false;
+                }
+            }
+            else if (kind == AlliedSettlementCrisisKind.BlightfallMilitary)
+            {
+                if (!AlliedSettlementThreatQuestUtility.TryCreate(state, out threatQuest, kind))
                 {
                     state.nextCrisisTick = now + 2500;
                     return false;
@@ -366,7 +403,10 @@ namespace LiAIChat.AlliedSettlementSurvival
             if (state == null || !state.crisisActive || state.crisisKind != expectedKind) return false;
             Quest completedQuest = state.aidQuest;
             Quest completedThreatQuest = state.threatQuest;
-            bool grantGravshipGrace = expectedKind == AlliedSettlementCrisisKind.HostileThreat &&
+            AlliedSettlementAidType aidType = completedQuest?.PartsListForReading
+                .OfType<QuestPart_AlliedSettlementAid>().FirstOrDefault()?.aidType ?? AlliedSettlementAidType.None;
+            bool grantGravshipGrace = (expectedKind == AlliedSettlementCrisisKind.HostileThreat ||
+                expectedKind == AlliedSettlementCrisisKind.BlightfallMilitary) &&
                 state.gravshipRespondedToThreat;
             if (grantGravshipGrace)
                 state.proximityGoodwillExemptUntilTick = Find.TickManager.TicksGame + 3 * SettlementStrengthPolicy.TicksPerDay;
@@ -379,6 +419,10 @@ namespace LiAIChat.AlliedSettlementSurvival
             state.nextCrisisTick = Find.TickManager.TicksGame + Rand.RangeInclusive(
                 AlliedSettlementState.MinimumCrisisIntervalTicks,
                 AlliedSettlementState.MaximumCrisisIntervalTicks);
+            if (expectedKind == AlliedSettlementCrisisKind.BlightfallEnvironmental && aidType != AlliedSettlementAidType.None)
+                BlightfallSettlementPressure.ResolvePlayerAid(settlement, aidType);
+            else if (expectedKind == AlliedSettlementCrisisKind.BlightfallMilitary)
+                BlightfallSettlementPressure.ResolveMilitaryAid(settlement);
             Find.LetterStack.ReceiveLetter(
                 "LiASS_CrisisResolvedLabel".Translate(settlement.LabelCap),
                 grantGravshipGrace

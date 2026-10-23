@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using LiAIChat.Blightfall;
 using RimWorld;
 using RimWorld.Planet;
 using RimWorld.QuestGen;
@@ -8,6 +9,27 @@ using Verse;
 
 namespace LiAIChat.Questing
 {
+    public class QuestNode_AbandonedWasteDumpUnique : QuestNode
+    {
+        protected override bool TestRunInt(Slate slate)
+        {
+            Site targetSite;
+            bool boundToBlightfallSite = slate.TryGet("blightfallSite", out targetSite, false) && targetSite != null;
+            if (Find.QuestManager == null)
+                return true;
+
+            return !Find.QuestManager.QuestsListForReading
+                .Where(quest => quest != null && quest.State == QuestState.Ongoing &&
+                    quest.root?.defName == "LiAIChat_AbandonedWasteDump")
+                .SelectMany(quest => quest.PartsListForReading.OfType<QuestPart_AbandonedWasteDump>())
+                .Any(part => !boundToBlightfallSite || part.site == targetSite);
+        }
+
+        protected override void RunInt()
+        {
+        }
+    }
+
     public class QuestNode_CreateAbandonedWasteDump : QuestNode
     {
         protected override bool TestRunInt(Slate slate)
@@ -22,7 +44,10 @@ namespace LiAIChat.Questing
         {
             PlanetTile tile = QuestGen.slate.Get<PlanetTile>("siteTile");
             SitePartDef sitePart = DefDatabase<SitePartDef>.GetNamed("LiAIChat_AbandonedWasteDump");
-            Site site = SiteMaker.MakeSite(sitePart, tile, null, false, (float?)null, null);
+            Site site;
+            bool useExistingSite = QuestGen.slate.TryGet("blightfallSite", out site, false) && site != null;
+            if (!useExistingSite)
+                site = SiteMaker.MakeSite(sitePart, tile, null, false, (float?)null, null);
             if (site == null)
                 return;
 
@@ -52,12 +77,41 @@ namespace LiAIChat.Questing
         }
     }
 
+    public class QuestNode_SpawnAbandonedWasteDumpSite : QuestNode
+    {
+        protected override bool TestRunInt(Slate slate)
+        {
+            return slate.Get<Site>("site", null, false) != null && Find.WorldObjects != null;
+        }
+
+        protected override void RunInt()
+        {
+            Site site = QuestGen.slate.Get<Site>("site", null, false);
+            if (site == null || Find.WorldObjects == null)
+                return;
+
+            if (!Find.WorldObjects.AllWorldObjects.Contains(site))
+                Find.WorldObjects.Add(site);
+
+            if (site.MainSitePartDef?.defName == "LiAIChat_BlightfallContaminatedRuin")
+            {
+                WorldComponent_Blightfall component = WorldComponent_Blightfall.Current;
+                if (component != null && component.GetSiteState(site) == null)
+                    component.RegisterSite(site, BlightfallSiteType.ContaminatedRuin, component.SourceActivity);
+            }
+        }
+    }
+
     public class SitePartWorker_AbandonedWasteDump : SitePartWorker
     {
         public override void PostMapGenerate(Map map)
         {
             base.PostMapGenerate(map);
-            QuestPart_AbandonedWasteDump.FindForSite(map?.Parent as Site)?.InitializeFromMap(map);
+            Site site = map?.Parent as Site;
+            QuestPart_AbandonedWasteDump cleanupPart = QuestPart_AbandonedWasteDump.FindForSite(site);
+            if (cleanupPart == null && WorldComponent_Blightfall.Current?.GetSiteState(site) != null)
+                cleanupPart = QuestPart_AbandonedWasteDump.TryStartForBlightfallSite(site);
+            cleanupPart?.InitializeFromMap(map);
         }
     }
 
@@ -89,8 +143,25 @@ namespace LiAIChat.Questing
                 int progress = initialPollution <= 0
                     ? 0
                     : Mathf.Clamp(Mathf.RoundToInt(cleanedPollution * 100f / initialPollution), 0, 100);
-                return "LiAIChat_AbandonedWasteDumpProgress".Translate(
-                    progress, cleanedPollution, initialPollution, lastKnownWastepacks);
+                string description = "LiAIChat_AbandonedWasteDumpProgress".Translate(
+                    progress, cleanedPollution, initialPollution, lastKnownWastepacks).ToString();
+                BlightfallSiteState trackedSite = WorldComponent_Blightfall.Current?.GetSiteState(site);
+                WorldComponent_Blightfall component = WorldComponent_Blightfall.Current;
+                if (trackedSite != null && component != null && !component.CanPurifyTile(trackedSite.TileId))
+                {
+                    bool isCore = trackedSite.TileId == component.SourceCenterTileId;
+                    bool outerPollutionRemains = component.PollutedTileIds.Any(tileId =>
+                        tileId != component.SourceCenterTileId);
+                    string lockedReason = !isCore
+                        ? "LiAIChat_BlightfallInteriorLocked"
+                        : component.CoreProtected && outerPollutionRemains
+                            ? "LiAIChat_BlightfallCoreProtectedAndSealed"
+                            : component.CoreProtected
+                                ? "LiAIChat_BlightfallCoreProtected"
+                                : "LiAIChat_BlightfallCoreLocked";
+                    description += "\n" + lockedReason.Translate();
+                }
+                return description;
             }
         }
 
@@ -103,6 +174,32 @@ namespace LiAIChat.Questing
                 .Where(candidate => candidate != null && candidate.State == QuestState.Ongoing)
                 .SelectMany(candidate => candidate.PartsListForReading.OfType<QuestPart_AbandonedWasteDump>())
                 .FirstOrDefault(part => part.site == site);
+        }
+
+        public static QuestPart_AbandonedWasteDump TryStartForBlightfallSite(Site site)
+        {
+            BlightfallSiteState blightfallSite = WorldComponent_Blightfall.Current?.GetSiteState(site);
+            if (site == null || blightfallSite == null ||
+                blightfallSite.Status == BlightfallSiteStatus.Completed ||
+                blightfallSite.Status == BlightfallSiteStatus.Removed || Find.QuestManager == null)
+                return null;
+
+            QuestPart_AbandonedWasteDump existing = FindForSite(site);
+            if (existing != null)
+                return existing;
+
+            QuestScriptDef questDef = DefDatabase<QuestScriptDef>.GetNamedSilentFail("LiAIChat_AbandonedWasteDump");
+            if (questDef == null)
+                return null;
+
+            var slate = new Slate();
+            slate.Set("blightfallSite", site);
+            Quest generatedQuest = QuestUtility.GenerateQuestAndMakeAvailable(questDef, slate);
+            QuestPart_AbandonedWasteDump cleanupPart = FindForSite(site);
+            if (cleanupPart == null)
+                Log.Warning("[LiAIChat Blightfall] Could not attach the existing Abandoned Waste Dump quest to site " +
+                    site.Label + (generatedQuest == null ? ". Quest generation returned null." : ". Quest was generated without an active cleanup part."));
+            return cleanupPart;
         }
 
         public void InitializeFromMap(Map map)
@@ -139,9 +236,18 @@ namespace LiAIChat.Questing
             if (!pollutionCleaned || lastKnownWastepacks > 0)
                 return;
 
+            BlightfallSiteState blightfallSite = WorldComponent_Blightfall.Current?.GetSiteState(site);
+            WorldComponent_Blightfall component = WorldComponent_Blightfall.Current;
+            if (blightfallSite != null && (component == null ||
+                !component.CanPurifyTile(blightfallSite.TileId) ||
+                !component.PurifyTile(blightfallSite.TileId)))
+                return;
+
             // Set the saved guard before sending the signal because signal delivery
             // can end and clean up this quest immediately.
             cleanedSignalSent = true;
+            if (blightfallSite != null)
+                component.UpdateSiteStatus(site, BlightfallSiteStatus.Completed);
             Find.SignalManager.SendSignal(new Signal(cleanedSignal));
             Log.Message("[LiAIChat] Abandoned waste dump cleaned: " + site?.Label +
                 "; initialPollution=" + initialPollution + "; remainingPollution=" +

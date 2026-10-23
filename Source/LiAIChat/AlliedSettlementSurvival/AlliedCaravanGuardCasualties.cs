@@ -1,12 +1,69 @@
 using System.Collections.Generic;
 using System.Linq;
+using RimWorld;
+using Verse.AI.Group;
 using Verse;
+using Verse.AI;
 using RimWorld.Planet;
 
 namespace LiAIChat.AlliedSettlementSurvival
 {
     public sealed partial class AlliedSettlementWorldComponent
     {
+        private const int MilitaryAidClearDelayTicks = 2500;
+
+        private void TickMilitaryAidEvacuation()
+        {
+            if (militaryAidLossGroups == null || caravanGuardRecords == null)
+                return;
+
+            int now = Find.TickManager.TicksGame;
+            foreach (AlliedMilitaryAidLossGroup group in militaryAidLossGroups
+                .Where(candidate => candidate != null && candidate.evacuateWhenThreatCleared).ToList())
+            {
+                List<Pawn> survivors = caravanGuardRecords
+                    .Where(record => record != null && record.militaryAidGroupId == group.groupId)
+                    .Select(record => record.pawn)
+                    .Where(pawn => pawn != null && pawn.Spawned && !pawn.Dead && pawn.Map != null)
+                    .Distinct().ToList();
+                Map[] maps = survivors.Select(pawn => pawn.Map).Distinct().ToArray();
+                if (maps.Length != 1)
+                {
+                    group.hostileFreeSinceTick = -1;
+                    continue;
+                }
+
+                Map map = maps[0];
+                bool hostilesRemain = map.mapPawns.AllPawnsSpawned.Any(pawn => pawn != null && !pawn.Dead &&
+                    !pawn.Downed && pawn.Faction != null && pawn.Faction.HostileTo(Faction.OfPlayer));
+                if (hostilesRemain)
+                {
+                    group.hostileFreeSinceTick = -1;
+                    continue;
+                }
+
+                if (group.hostileFreeSinceTick < 0)
+                {
+                    group.hostileFreeSinceTick = now;
+                    continue;
+                }
+                if (now - group.hostileFreeSinceTick < MilitaryAidClearDelayTicks)
+                    continue;
+
+                foreach (Lord lord in survivors.Select(pawn =>
+                    {
+                        Lord found;
+                        return LordUtility.TryGetLord(pawn, out found) ? found : null;
+                    }).Where(lord => lord != null).Distinct())
+                {
+                    lord.SetJob(new LordJob_ExitMapBest(LocomotionUrgency.Jog, false, true), true);
+                }
+                group.evacuateWhenThreatCleared = false;
+                Messages.Message("LiASS_BlightfallAlliesWithdrawing".Translate(), map.Parent,
+                    MessageTypeDefOf.PositiveEvent);
+            }
+        }
+
         public AlliedCaravanGuardRecord FindActiveCaravanGuard(Pawn pawn)
         {
             if (pawn == null) return null;

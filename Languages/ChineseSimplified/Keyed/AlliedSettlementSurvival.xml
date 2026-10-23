@@ -84,4 +84,12 @@
   <LiASS_OverviewCollapsed>等待崩溃处理</LiASS_OverviewCollapsed>
   <LiASS_OverviewNextCrisis>{0}天后可能发生危机</LiASS_OverviewNextCrisis>
   <LiASS_OverviewGoTo>定位</LiASS_OverviewGoTo>
+  <LiASS_CrisisKind_BlightfallEnvironmental>污染威胁</LiASS_CrisisKind_BlightfallEnvironmental>
+  <LiASS_CrisisKind_BlightfallMilitary>污染军团威胁</LiASS_CrisisKind_BlightfallMilitary>
+  <LiASS_AidPurificationProgress>已交付净化组件：{0} / {1}</LiASS_AidPurificationProgress>
+  <LiASS_DeliverPurificationSupplies>交付净化组件</LiASS_DeliverPurificationSupplies>
+  <LiASS_DeliverPurificationSuppliesDescription>向据点交付工业组件以支持净化，尚需 {0} 个。</LiASS_DeliverPurificationSuppliesDescription>
+  <LiASS_PurificationSupplyOption>{0}：交付 {1} 个（携带 {2} 个）</LiASS_PurificationSupplyOption>
+  <LiASS_ConfirmPurificationSupplies>向该据点交付 {0} 个净化组件？</LiASS_ConfirmPurificationSupplies>
+  <LiASS_BlightfallAlliesWithdrawing>污染 Site 的威胁已清除，盟友援军正在撤离。</LiASS_BlightfallAlliesWithdrawing>
 </LanguageData>

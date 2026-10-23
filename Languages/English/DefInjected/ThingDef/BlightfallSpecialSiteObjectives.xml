@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_BlightfallSporeMotherTree.label>spore mother tree</LiAIChat_BlightfallSporeMotherTree.label>
+  <LiAIChat_BlightfallSporeMotherTree.description>A mature organism that steadily seeds the surrounding ground with contamination.</LiAIChat_BlightfallSporeMotherTree.description>
+  <LiAIChat_BlightfallToxicHiveObjective.label>toxic brood hive</LiAIChat_BlightfallToxicHiveObjective.label>
+  <LiAIChat_BlightfallToxicHiveObjective.description>An active nest that periodically spawns Blightfall creatures.</LiAIChat_BlightfallToxicHiveObjective.description>
+  <LiAIChat_BlightfallProcessingPlantObjective.label>ancient processing plant</LiAIChat_BlightfallProcessingPlantObjective.label>
+  <LiAIChat_BlightfallProcessingPlantObjective.description>An uncontrolled ancient machine that continuously contaminates the site.</LiAIChat_BlightfallProcessingPlantObjective.description>
+  <LiAIChat_BlightfallCorePerimeterPylon.label>core perimeter pylon</LiAIChat_BlightfallCorePerimeterPylon.label>
+  <LiAIChat_BlightfallCorePerimeterPylon.description>A defense pylon feeding the first ring around the Blight Heart.</LiAIChat_BlightfallCorePerimeterPylon.description>
+  <LiAIChat_BlightfallCoreDefenseGenerator.label>core shield generator</LiAIChat_BlightfallCoreDefenseGenerator.label>
+  <LiAIChat_BlightfallCoreDefenseGenerator.description>A shield generator protecting the Blight Heart from direct assault.</LiAIChat_BlightfallCoreDefenseGenerator.description>
+  <LiAIChat_BlightfallHeart.label>Blight Heart</LiAIChat_BlightfallHeart.label>
+  <LiAIChat_BlightfallHeart.description>The living core of the contamination network. It is protected until its defense rings and reinforcements are overcome.</LiAIChat_BlightfallHeart.description>
+</LanguageData>

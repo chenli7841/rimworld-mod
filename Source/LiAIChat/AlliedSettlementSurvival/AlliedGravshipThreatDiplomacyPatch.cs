@@ -30,7 +30,7 @@ namespace LiAIChat.AlliedSettlementSurvival
                 return;
 
             AlliedSettlementState state = AlliedSettlementWorldComponent.Current?.Get(threat.settlement);
-            if (state == null || !state.crisisActive || state.crisisKind != AlliedSettlementCrisisKind.HostileThreat)
+            if (state == null || !state.crisisActive || !IsMilitaryThreat(state.crisisKind))
                 return;
 
             bool alreadyRecorded = state.gravshipRespondedToThreat;
@@ -48,9 +48,12 @@ namespace LiAIChat.AlliedSettlementSurvival
                 return false;
 
             bool respondingToActiveThreat = state.crisisActive &&
-                state.crisisKind == AlliedSettlementCrisisKind.HostileThreat && state.gravshipRespondedToThreat;
+                IsMilitaryThreat(state.crisisKind) && state.gravshipRespondedToThreat;
             return respondingToActiveThreat || now < state.proximityGoodwillExemptUntilTick;
         }
+
+        private static bool IsMilitaryThreat(AlliedSettlementCrisisKind kind) =>
+            kind == AlliedSettlementCrisisKind.HostileThreat || kind == AlliedSettlementCrisisKind.BlightfallMilitary;
     }
 
     [HarmonyPatch(typeof(GravshipUtility), nameof(GravshipUtility.ArriveExistingMap))]

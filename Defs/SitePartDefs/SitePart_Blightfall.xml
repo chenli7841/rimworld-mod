@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <SitePartDef>
+    <defName>LiAIChat_BlightfallContaminatedRuin</defName>
+    <label>Blightfall contaminated ruin</label>
+    <description>An abandoned ruin in the Blightfall contamination zone, covered in pollution and toxic wastepacks.</description>
+    <workerClass>LiAIChat.Blightfall.SitePartWorker_BlightfallContaminatedRuin</workerClass>
+    <siteTexture>World/WorldObjects/Sites/GenericSite</siteTexture>
+    <expandingIconTexture>World/WorldObjects/Expanding/Sites/ItemStash</expandingIconTexture>
+    <gravShipsCanLandOn>true</gravShipsCanLandOn>
+    <tags>
+      <li>LiAIChat_BlightfallContaminatedRuin</li>
+    </tags>
+  </SitePartDef>
+
+  <SitePartDef>
+    <defName>LiAIChat_BlightfallSporeForest</defName>
+    <label>Blightfall spore forest</label>
+    <description>A polluted grove dominated by a living spore mother tree.</description>
+    <workerClass>LiAIChat.Blightfall.SitePartWorker_BlightfallContaminatedRuin</workerClass>
+    <siteTexture>World/WorldObjects/Sites/GenericSite</siteTexture>
+    <expandingIconTexture>World/WorldObjects/Expanding/Sites/Manhunters</expandingIconTexture>
+    <gravShipsCanLandOn>true</gravShipsCanLandOn>
+    <tags><li>LiAIChat_BlightfallSporeForest</li></tags>
+  </SitePartDef>
+  <SitePartDef>
+    <defName>LiAIChat_BlightfallToxicHive</defName>
+    <label>Blightfall toxic hive</label>
+    <description>A toxic brood chamber where infected creatures continue to hatch.</description>
+    <workerClass>LiAIChat.Blightfall.SitePartWorker_BlightfallContaminatedRuin</workerClass>
+    <siteTexture>World/WorldObjects/Sites/GenericSite</siteTexture>
+    <expandingIconTexture>World/WorldObjects/Expanding/Sites/ItemStash</expandingIconTexture>
+    <gravShipsCanLandOn>true</gravShipsCanLandOn>
+    <tags><li>LiAIChat_BlightfallToxicHive</li></tags>
+  </SitePartDef>
+  <SitePartDef>
+    <defName>LiAIChat_BlightfallProcessingPlant</defName>
+    <label>Blightfall ancient processing plant</label>
+    <description>An uncontrolled ancient facility that continuously contaminates its surroundings.</description>
+    <workerClass>LiAIChat.Blightfall.SitePartWorker_BlightfallContaminatedRuin</workerClass>
+    <siteTexture>World/WorldObjects/Sites/GenericSite</siteTexture>
+    <expandingIconTexture>World/WorldObjects/Expanding/Sites/Outpost</expandingIconTexture>
+    <gravShipsCanLandOn>true</gravShipsCanLandOn>
+    <tags><li>LiAIChat_BlightfallProcessingPlant</li></tags>
+  </SitePartDef>
+
+  <SitePartDef>
+    <defName>LiAIChat_BlightfallResonanceDefense</defName>
+    <label>Blightfall resonance defense site</label>
+    <description>A heavily defended resonance spire projects a local shield that protects the Blightfall core.</description>
+    <workerClass>LiAIChat.Blightfall.SitePartWorker_BlightfallContaminatedRuin</workerClass>
+    <siteTexture>World/WorldObjects/Sites/GenericSite</siteTexture>
+    <expandingIconTexture>World/WorldObjects/Expanding/Sites/Outpost</expandingIconTexture>
+    <gravShipsCanLandOn>true</gravShipsCanLandOn>
+    <tags><li>LiAIChat_BlightfallResonanceDefense</li></tags>
+  </SitePartDef>
+
+  <SitePartDef>
+    <defName>LiAIChat_BlightfallBlightHeart</defName>
+    <label>Blightfall core</label>
+    <description>The exposed heart of the Blightfall network. Destroy its defenses, survive its reinforcements, and destroy the heart to end the campaign.</description>
+    <workerClass>LiAIChat.Blightfall.SitePartWorker_BlightfallContaminatedRuin</workerClass>
+    <siteTexture>World/WorldObjects/Sites/GenericSite</siteTexture>
+    <expandingIconTexture>World/WorldObjects/Expanding/Sites/Outpost</expandingIconTexture>
+    <gravShipsCanLandOn>true</gravShipsCanLandOn>
+    <tags><li>LiAIChat_BlightfallBlightHeart</li></tags>
+  </SitePartDef>
+
+  <GenStepDef>
+    <defName>LiAIChat_BlightfallContaminatedRuin_Ruins</defName>
+    <linkWithSite>LiAIChat_BlightfallContaminatedRuin</linkWithSite>
+    <order>760</order>
+    <genStep Class="GenStep_ScatterRuinsSimple">
+      <allowInWaterBiome>false</allowInWaterBiome>
+      <countPer10kCellsRange>1~2</countPer10kCellsRange>
+      <canBeOnEdge>true</canBeOnEdge>
+      <ignoreUsedRects>true</ignoreUsedRects>
+    </genStep>
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>LiAIChat_BlightfallContaminatedRuin_Generation</defName>
+    <linkWithSite>LiAIChat_BlightfallContaminatedRuin</linkWithSite>
+    <order>980</order>
+    <genStep Class="LiAIChat.Blightfall.GenStep_BlightfallContaminatedRuin" />
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>LiAIChat_BlightfallNodeTargets</defName>
+    <linkWithSite>LiAIChat_BlightfallContaminatedRuin</linkWithSite>
+    <order>990</order>
+    <genStep Class="LiAIChat.Blightfall.GenStep_BlightfallNodeTargets" />
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>LiAIChat_BlightfallSporeForest_Ruins</defName>
+    <linkWithSite>LiAIChat_BlightfallSporeForest</linkWithSite>
+    <order>760</order>
+    <genStep Class="GenStep_ScatterRuinsSimple"><allowInWaterBiome>false</allowInWaterBiome><countPer10kCellsRange>1~2</countPer10kCellsRange><canBeOnEdge>true</canBeOnEdge><ignoreUsedRects>true</ignoreUsedRects></genStep>
+  </GenStepDef>
+  <GenStepDef>
+    <defName>LiAIChat_BlightfallSporeForest_Generation</defName>
+    <linkWithSite>LiAIChat_BlightfallSporeForest</linkWithSite>
+    <order>980</order>
+    <genStep Class="LiAIChat.Blightfall.GenStep_BlightfallContaminatedRuin" />
+  </GenStepDef>
+  <GenStepDef>
+    <defName>LiAIChat_BlightfallSporeForest_Nodes</defName>
+    <linkWithSite>LiAIChat_BlightfallSporeForest</linkWithSite>
+    <order>990</order>
+    <genStep Class="LiAIChat.Blightfall.GenStep_BlightfallNodeTargets" />
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>LiAIChat_BlightfallToxicHive_Ruins</defName>
+    <linkWithSite>LiAIChat_BlightfallToxicHive</linkWithSite>
+    <order>760</order>
+    <genStep Class="GenStep_ScatterRuinsSimple"><allowInWaterBiome>false</allowInWaterBiome><countPer10kCellsRange>1~2</countPer10kCellsRange><canBeOnEdge>true</canBeOnEdge><ignoreUsedRects>true</ignoreUsedRects></genStep>
+  </GenStepDef>
+  <GenStepDef>
+    <defName>LiAIChat_BlightfallToxicHive_Generation</defName>
+    <linkWithSite>LiAIChat_BlightfallToxicHive</linkWithSite>
+    <order>980</order>
+    <genStep Class="LiAIChat.Blightfall.GenStep_BlightfallContaminatedRuin" />
+  </GenStepDef>
+  <GenStepDef>
+    <defName>LiAIChat_BlightfallToxicHive_Nodes</defName>
+    <linkWithSite>LiAIChat_BlightfallToxicHive</linkWithSite>
+    <order>990</order>
+    <genStep Class="LiAIChat.Blightfall.GenStep_BlightfallNodeTargets" />
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>LiAIChat_BlightfallProcessingPlant_Ruins</defName>
+    <linkWithSite>LiAIChat_BlightfallProcessingPlant</linkWithSite>
+    <order>760</order>
+    <genStep Class="GenStep_ScatterRuinsSimple"><allowInWaterBiome>false</allowInWaterBiome><countPer10kCellsRange>1~3</countPer10kCellsRange><canBeOnEdge>true</canBeOnEdge><ignoreUsedRects>true</ignoreUsedRects></genStep>
+  </GenStepDef>
+  <GenStepDef>
+    <defName>LiAIChat_BlightfallProcessingPlant_Generation</defName>
+    <linkWithSite>LiAIChat_BlightfallProcessingPlant</linkWithSite>
+    <order>980</order>
+    <genStep Class="LiAIChat.Blightfall.GenStep_BlightfallContaminatedRuin" />
+  </GenStepDef>
+  <GenStepDef>
+    <defName>LiAIChat_BlightfallProcessingPlant_Nodes</defName>
+    <linkWithSite>LiAIChat_BlightfallProcessingPlant</linkWithSite>
+    <order>990</order>
+    <genStep Class="LiAIChat.Blightfall.GenStep_BlightfallNodeTargets" />
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>LiAIChat_BlightfallResonanceDefense_Ruins</defName>
+    <linkWithSite>LiAIChat_BlightfallResonanceDefense</linkWithSite>
+    <order>760</order>
+    <genStep Class="GenStep_ScatterRuinsSimple">
+      <allowInWaterBiome>false</allowInWaterBiome>
+      <countPer10kCellsRange>1~3</countPer10kCellsRange>
+      <canBeOnEdge>true</canBeOnEdge>
+      <ignoreUsedRects>true</ignoreUsedRects>
+    </genStep>
+  </GenStepDef>
+  <GenStepDef>
+    <defName>LiAIChat_BlightfallResonanceDefense_Generation</defName>
+    <linkWithSite>LiAIChat_BlightfallResonanceDefense</linkWithSite>
+    <order>980</order>
+    <genStep Class="LiAIChat.Blightfall.GenStep_BlightfallContaminatedRuin" />
+  </GenStepDef>
+  <GenStepDef>
+    <defName>LiAIChat_BlightfallResonanceDefense_Nodes</defName>
+    <linkWithSite>LiAIChat_BlightfallResonanceDefense</linkWithSite>
+    <order>990</order>
+    <genStep Class="LiAIChat.Blightfall.GenStep_BlightfallNodeTargets" />
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>LiAIChat_BlightfallBlightHeart_Ruins</defName>
+    <linkWithSite>LiAIChat_BlightfallBlightHeart</linkWithSite>
+    <order>760</order>
+    <genStep Class="GenStep_ScatterRuinsSimple">
+      <allowInWaterBiome>false</allowInWaterBiome>
+      <countPer10kCellsRange>2~4</countPer10kCellsRange>
+      <canBeOnEdge>true</canBeOnEdge>
+      <ignoreUsedRects>true</ignoreUsedRects>
+    </genStep>
+  </GenStepDef>
+  <GenStepDef>
+    <defName>LiAIChat_BlightfallBlightHeart_Generation</defName>
+    <linkWithSite>LiAIChat_BlightfallBlightHeart</linkWithSite>
+    <order>980</order>
+    <genStep Class="LiAIChat.Blightfall.GenStep_BlightfallContaminatedRuin" />
+  </GenStepDef>
+</Defs>

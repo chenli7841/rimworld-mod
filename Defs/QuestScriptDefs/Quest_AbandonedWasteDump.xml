@@ -18,9 +18,7 @@
     </questDescriptionRules>
     <root Class="QuestNode_Sequence">
       <nodes>
-        <li Class="QuestNode_QuestUnique">
-          <tag>LiAIChat_AbandonedWasteDump_Active</tag>
-        </li>
+        <li Class="LiAIChat.Questing.QuestNode_AbandonedWasteDumpUnique" />
         <li Class="QuestNode_GetMap">
           <canBeSpace>false</canBeSpace>
         </li>
@@ -34,9 +32,7 @@
           <canSelectSpace>false</canSelectSpace>
         </li>
         <li Class="LiAIChat.Questing.QuestNode_CreateAbandonedWasteDump" />
-        <li Class="QuestNode_SpawnWorldObjects">
-          <worldObjects>$site</worldObjects>
-        </li>
+        <li Class="LiAIChat.Questing.QuestNode_SpawnAbandonedWasteDumpSite" />
         <li Class="QuestNode_WorldObjectTimeout">
           <worldObject>$site</worldObject>
           <isQuestTimeout>true</isQuestTimeout>

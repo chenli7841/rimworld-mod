@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_BlightfallSporeForestSiteLabel>Blightfall spore forest</LiAIChat_BlightfallSporeForestSiteLabel>
+  <LiAIChat_BlightfallToxicHiveSiteLabel>Blightfall toxic hive</LiAIChat_BlightfallToxicHiveSiteLabel>
+  <LiAIChat_BlightfallProcessingPlantSiteLabel>Blightfall ancient processing plant</LiAIChat_BlightfallProcessingPlantSiteLabel>
+  <LiAIChat_BlightfallResonanceSiteLabel>Blightfall resonance defense site</LiAIChat_BlightfallResonanceSiteLabel>
+  <LiAIChat_BlightfallResonanceShieldActive>The local resonance shield is active: defenders near the spire take 55% less damage.</LiAIChat_BlightfallResonanceShieldActive>
+  <LiAIChat_BlightfallProcessorShutdown>Shut down pollution processor</LiAIChat_BlightfallProcessorShutdown>
+  <LiAIChat_BlightfallProcessorRestart>Restart pollution processor</LiAIChat_BlightfallProcessorRestart>
+  <LiAIChat_BlightfallProcessorToggleDesc>Shutting the facility down stops its pollution output and completes this site's objective.</LiAIChat_BlightfallProcessorToggleDesc>
+  <LiAIChat_BlightfallProcessorStatusOn>Facility status: running and releasing pollution.</LiAIChat_BlightfallProcessorStatusOn>
+  <LiAIChat_BlightfallProcessorStatusOff>Facility status: shut down.</LiAIChat_BlightfallProcessorStatusOff>
+  <LiAIChat_BlightfallSpecialSiteCompleteTitle>Blightfall objective complete</LiAIChat_BlightfallSpecialSiteCompleteTitle>
+  <LiAIChat_BlightfallSporeForestComplete>The spore mother tree is destroyed. The forest will no longer spread contamination, and source activity has fallen.</LiAIChat_BlightfallSporeForestComplete>
+  <LiAIChat_BlightfallToxicHiveComplete>The brood hive is destroyed and at least 80% of the site's pollution has been cleared. Blightfall raid pressure has fallen.</LiAIChat_BlightfallToxicHiveComplete>
+  <LiAIChat_BlightfallProcessingPlantComplete>The ancient processor has been shut down or destroyed. It will no longer produce pollution; source activity has fallen and suppression has increased.</LiAIChat_BlightfallProcessingPlantComplete>
+  <LiAIChat_BlightfallResonanceSpireComplete>The resonance spire is destroyed, partially releasing the core's defenses. Resonance spires remaining: {0}/{1}.</LiAIChat_BlightfallResonanceSpireComplete>
+  <LiAIChat_BlightfallBlightHeartSiteLabel>Blight Heart</LiAIChat_BlightfallBlightHeartSiteLabel>
+  <LiAIChat_BlightfallPurifiedHeartSiteLabel>Purified Blight Core</LiAIChat_BlightfallPurifiedHeartSiteLabel>
+  <LiAIChat_BlightfallCoreDefenseInspect>Core defense: destroy all objectives in this phase to proceed.</LiAIChat_BlightfallCoreDefenseInspect>
+  <LiAIChat_BlightfallCoreBattleStageTitle>Blight Heart battle phase updated</LiAIChat_BlightfallCoreBattleStageTitle>
+  <LiAIChat_BlightfallCoreRetreatRule>Retreat rule: completed phases and destroyed target counts persist. Remaining objectives respawn when you return. Heart damage persists, and reinforcement timers continue while away.</LiAIChat_BlightfallCoreRetreatRule>
+  <LiAIChat_BlightfallWeakenHeart>Shut down the core shield</LiAIChat_BlightfallWeakenHeart>
+  <LiAIChat_BlightfallCoreStageNotReady>Breach the perimeter, destroy the core defenses, and repel all three reinforcement waves first.</LiAIChat_BlightfallCoreStageNotReady>
+  <LiAIChat_BlightfallCoreStage_NotStarted>The final battle has not started.</LiAIChat_BlightfallCoreStage_NotStarted>
+  <LiAIChat_BlightfallCoreStage_PerimeterBreach>Stage 1/5: destroy the three perimeter pylons.</LiAIChat_BlightfallCoreStage_PerimeterBreach>
+  <LiAIChat_BlightfallCoreStage_DestroyCoreDefenses>Stage 2/5: destroy the core shield generators.</LiAIChat_BlightfallCoreStage_DestroyCoreDefenses>
+  <LiAIChat_BlightfallCoreStage_RepelReinforcements>Stage 3/5: survive three waves of Blightfall reinforcements.</LiAIChat_BlightfallCoreStage_RepelReinforcements>
+  <LiAIChat_BlightfallCoreStage_WeakenHeart>Stage 4/5: the heart's defenses are weakened. Disable the final shield to begin purification.</LiAIChat_BlightfallCoreStage_WeakenHeart>
+  <LiAIChat_BlightfallCoreStage_FinalPurification>Stage 5/5: execute the final purification and destroy the Blight Heart.</LiAIChat_BlightfallCoreStage_FinalPurification>
+  <LiAIChat_BlightfallCoreStage_Completed>The Blight Heart has been destroyed.</LiAIChat_BlightfallCoreStage_Completed>
+  <LiAIChat_BlightfallFinalPurification>Execute final purification</LiAIChat_BlightfallFinalPurification>
+  <LiAIChat_BlightfallFinalPurificationDesc>The core shield is down. Destroy the Blight Heart to permanently end contamination spread and army raids.</LiAIChat_BlightfallFinalPurificationDesc>
+</LanguageData>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_BlightfallArrivalTitle>Blightfall Arrival</LiAIChat_BlightfallArrivalTitle>
+  <LiAIChat_BlightfallArrivalText>A new pollution source has appeared at a moderate distance from your base. {0} additional tiles around its center are polluted. On the world map, yellow marks the frontline, red the contaminated interior, purple the core, and green purified territory.</LiAIChat_BlightfallArrivalText>
+  <LiAIChat_BlightfallDebugTriggered>The Blightfall arrival was triggered manually.</LiAIChat_BlightfallDebugTriggered>
+  <LiAIChat_BlightfallDebugUnavailable>The arrival cannot be triggered in this save: the campaign has already started, there is no player base, or no suitable nearby tile is available.</LiAIChat_BlightfallDebugUnavailable>
+  <LiAIChat_BlightfallSiteLabel>Contaminated Ruin</LiAIChat_BlightfallSiteLabel>
+  <LiAIChat_BlightfallInteriorLocked>This tile is behind the frontline. Clear a frontline connected to safe territory before claiming it.</LiAIChat_BlightfallInteriorLocked>
+  <LiAIChat_BlightfallCoreLocked>The contamination core is still sealed. Purify all other contaminated tiles first.</LiAIChat_BlightfallCoreLocked>
+  <LiAIChat_BlightfallCoreProtected>Resonance spires still shield the core. Destroy all of them before purifying the core.</LiAIChat_BlightfallCoreProtected>
+  <LiAIChat_BlightfallCoreProtectedAndSealed>The outer contamination remains, and resonance spires still shield the core. Advance the frontline and destroy all of them first.</LiAIChat_BlightfallCoreProtectedAndSealed>
+  <LiAIChat_BlightfallResonanceNetworkStatus>Blightfall core defense network: resonance spires remaining {0}/{1}</LiAIChat_BlightfallResonanceNetworkStatus>
+  <LiAIChat_BlightfallEndingDestroyLabel>Destroy the Heart</LiAIChat_BlightfallEndingDestroyLabel>
+  <LiAIChat_BlightfallEndingDestroyDesc>Destroy the source permanently. Spread and hostile activity stop, but the core tile remains polluted and must be cleaned later.</LiAIChat_BlightfallEndingDestroyDesc>
+  <LiAIChat_BlightfallEndingPurifyLabel>Purify the Heart</LiAIChat_BlightfallEndingPurifyLabel>
+  <LiAIChat_BlightfallEndingPurifyDesc>Requires Fabrication research. Rewrite the source to stop hostile activity and let it purify one connected polluted tile every five days.</LiAIChat_BlightfallEndingPurifyDesc>
+  <LiAIChat_BlightfallEndingPurifyLocked>Complete Fabrication research first.</LiAIChat_BlightfallEndingPurifyLocked>
+  <LiAIChat_BlightfallEndingHarnessLabel>Harness the Heart</LiAIChat_BlightfallEndingHarnessLabel>
+  <LiAIChat_BlightfallEndingHarnessDesc>Control the source. It will no longer spread without limit, but needs 50 Chemfuel every five days. Successful maintenance supplies 10 Uranium; every two failures risk an instability attack.</LiAIChat_BlightfallEndingHarnessDesc>
+  <LiAIChat_BlightfallEndingDestroyTitle>The Blight Heart is destroyed</LiAIChat_BlightfallEndingDestroyTitle>
+  <LiAIChat_BlightfallEndingDestroyText>The source is destroyed. Contamination spread and Blightfall attacks have permanently stopped. Pollution and wastepacks remain at the core site; return there to complete the existing waste dump cleanup task.</LiAIChat_BlightfallEndingDestroyText>
+  <LiAIChat_BlightfallEndingPurifyTitle>The Blight Heart is purified</LiAIChat_BlightfallEndingPurifyTitle>
+  <LiAIChat_BlightfallEndingPurifyText>Fabrication technology has rewritten the source. Hostile activity has ended, and the Heart will gradually purify connected polluted world tiles every five days.</LiAIChat_BlightfallEndingPurifyText>
+  <LiAIChat_BlightfallEndingHarnessTitle>The Blight Heart is under control</LiAIChat_BlightfallEndingHarnessTitle>
+  <LiAIChat_BlightfallEndingHarnessText>The source is contained and no longer spreads freely. Every five days it consumes 50 Chemfuel to produce 10 Uranium. If maintenance fails twice in a row, the Heart may trigger an instability attack.</LiAIChat_BlightfallEndingHarnessText>
+  <LiAIChat_BlightfallDestroyedHeartSiteLabel>Destroyed Heart Residue</LiAIChat_BlightfallDestroyedHeartSiteLabel>
+  <LiAIChat_BlightfallHarnessedHeartSiteLabel>Harnessed Heart</LiAIChat_BlightfallHarnessedHeartSiteLabel>
+  <LiAIChat_BlightfallHarnessMaintainedTitle>Heart maintenance complete</LiAIChat_BlightfallHarnessMaintainedTitle>
+  <LiAIChat_BlightfallHarnessMaintainedText>The controlled Heart consumed {0} Chemfuel and produced {1} Uranium.</LiAIChat_BlightfallHarnessMaintainedText>
+  <LiAIChat_BlightfallHarnessFailureTitle>Heart maintenance failed</LiAIChat_BlightfallHarnessFailureTitle>
+  <LiAIChat_BlightfallHarnessFailureText>The controlled Heart could not consume {0} Chemfuel. Consecutive failures: {1}. Every second failure may cause an instability attack.</LiAIChat_BlightfallHarnessFailureText>
+  <LiAIChat_BlightfallHarnessIncursionTitle>Heart instability</LiAIChat_BlightfallHarnessIncursionTitle>
+  <LiAIChat_BlightfallHarnessIncursionText>A maintenance failure destabilized the controlled Heart. A small Blight force is attacking the colony.</LiAIChat_BlightfallHarnessIncursionText>
+  <LiAIChat_BlightfallPurificationWaveTitle>The Heart purifies another tile</LiAIChat_BlightfallPurificationWaveTitle>
+  <LiAIChat_BlightfallPurificationWaveText>The purified Heart has cleansed one connected contaminated world tile. Its former site has been removed from the world map.</LiAIChat_BlightfallPurificationWaveText>
+  <Blightfall_ResponseLetterLabel>{0}'s environmental response</Blightfall_ResponseLetterLabel>
+  <Blightfall_ResponseLetterText>The settlement of {1}, belonging to {0}, attempted {2}. {3}</Blightfall_ResponseLetterText>
+  <Blightfall_ResponseContainment>establish containment</Blightfall_ResponseContainment>
+  <Blightfall_ResponsePurification>purify outer pollution</Blightfall_ResponsePurification>
+  <Blightfall_ResponseMilitary>send an expedition against a pollution node</Blightfall_ResponseMilitary>
+  <Blightfall_ResponseEvacuation>evacuate the threatened settlement</Blightfall_ResponseEvacuation>
+  <Blightfall_ResponseSuccess>The action succeeded and slowed pollution.</Blightfall_ResponseSuccess>
+  <Blightfall_ResponseFailure>The action failed and pollution activity increased.</Blightfall_ResponseFailure>
+  <LiAIChat_BlightfallRequestJointExpedition>Request an allied joint purification expedition</LiAIChat_BlightfallRequestJointExpedition>
+  <LiAIChat_BlightfallJointExpeditionGizmoDesc>Choose an allied settlement to send fighters to the current contaminated site. Each site accepts one request.</LiAIChat_BlightfallJointExpeditionGizmoDesc>
+  <LiAIChat_BlightfallNoAlliedExpeditionSource>No allied settlement is available to respond</LiAIChat_BlightfallNoAlliedExpeditionSource>
+  <LiAIChat_BlightfallExpeditionSourceOption>{0} ({1}, strength {2})</LiAIChat_BlightfallExpeditionSourceOption>
+  <LiAIChat_BlightfallExpeditionAlreadyRequested>A joint expedition has already been requested for this contaminated site.</LiAIChat_BlightfallExpeditionAlreadyRequested>
+  <LiAIChat_BlightfallExpeditionUnavailable>Support cannot be requested for this contaminated site right now.</LiAIChat_BlightfallExpeditionUnavailable>
+  <LiAIChat_BlightfallExpeditionRequested>{0} has sent an expedition to {1}.</LiAIChat_BlightfallExpeditionRequested>
+  <LiAIChat_BlightfallExpeditionFailed>The allied expedition could not arrive. This site's support request is consumed.</LiAIChat_BlightfallExpeditionFailed>
+</LanguageData>

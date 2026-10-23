@@ -21,4 +21,25 @@
       </nodes>
     </root>
   </QuestScriptDef>
+  <QuestScriptDef>
+    <defName>LiAIChat_AlliedSettlementBlightfallAid</defName>
+    <rootSelectionWeight>0</rootSelectionWeight>
+    <rootMinPoints>0</rootMinPoints>
+    <autoAccept>true</autoAccept>
+    <questNameRules>
+      <rulesStrings>
+        <li>questName-&gt;Blightfall relief supplies</li>
+      </rulesStrings>
+    </questNameRules>
+    <questDescriptionRules>
+      <rulesStrings>
+        <li>questDescription-&gt;A nearby allied settlement is under pressure from The Blightfall. Deliver the requested supplies by caravan before the crisis deadline.</li>
+      </rulesStrings>
+    </questDescriptionRules>
+    <root Class="QuestNode_Sequence">
+      <nodes>
+        <li Class="LiAIChat.Questing.QuestNode_CreateAlliedSettlementAid" />
+      </nodes>
+    </root>
+  </QuestScriptDef>
 </Defs>

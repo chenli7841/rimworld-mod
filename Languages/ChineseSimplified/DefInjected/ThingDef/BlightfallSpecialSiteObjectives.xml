@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_BlightfallSporeMotherTree.label>孢子母树</LiAIChat_BlightfallSporeMotherTree.label>
+  <LiAIChat_BlightfallSporeMotherTree.description>成熟的污染生物，会持续污染周围地面。</LiAIChat_BlightfallSporeMotherTree.description>
+  <LiAIChat_BlightfallToxicHiveObjective.label>毒性孵化巢</LiAIChat_BlightfallToxicHiveObjective.label>
+  <LiAIChat_BlightfallToxicHiveObjective.description>活跃的孵化巢，会周期性产生枯蚀生物。</LiAIChat_BlightfallToxicHiveObjective.description>
+  <LiAIChat_BlightfallProcessingPlantObjective.label>古代污染处理厂</LiAIChat_BlightfallProcessingPlantObjective.label>
+  <LiAIChat_BlightfallProcessingPlantObjective.description>失控的古代设备，持续污染该地点。</LiAIChat_BlightfallProcessingPlantObjective.description>
+  <LiAIChat_BlightfallCorePerimeterPylon.label>核心外围防御塔</LiAIChat_BlightfallCorePerimeterPylon.label>
+  <LiAIChat_BlightfallCorePerimeterPylon.description>供能给枯蚀之心第一道防线的防御塔。</LiAIChat_BlightfallCorePerimeterPylon.description>
+  <LiAIChat_BlightfallCoreDefenseGenerator.label>核心护盾发生器</LiAIChat_BlightfallCoreDefenseGenerator.label>
+  <LiAIChat_BlightfallCoreDefenseGenerator.description>保护枯蚀之心免受直接攻击的护盾发生器。</LiAIChat_BlightfallCoreDefenseGenerator.description>
+  <LiAIChat_BlightfallHeart.label>枯蚀之心</LiAIChat_BlightfallHeart.label>
+  <LiAIChat_BlightfallHeart.description>污染网络的活体核心。在防线和增援被击溃前，它受到保护。</LiAIChat_BlightfallHeart.description>
+</LanguageData>

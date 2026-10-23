@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System;
 using HarmonyLib;
+using LiAIChat.Blightfall;
 using RimWorld;
 using RimWorld.Planet;
 using Verse;
@@ -178,19 +179,22 @@ namespace LiAIChat.AlliedSettlementSurvival
             ref List<Pawn> pawns, bool debugTest, ref bool __result)
         {
             Map map = parms?.target as Map;
+            Site targetSite = map?.Parent as Site;
+            bool isBlightfallSite = targetSite != null &&
+                WorldComponent_Blightfall.Current?.GetSiteState(targetSite) != null;
             if (!__result || !(__instance is IncidentWorker_RaidFriendly) || debugTest ||
                 pawns == null || parms == null || !parms.raidArrivalModeForQuickMilitaryAid ||
                 parms.faction == null || parms.faction == Faction.OfPlayer ||
                 parms.faction.def == null || parms.faction.defeated ||
                 parms.faction.RelationKindWith(Faction.OfPlayer) != FactionRelationKind.Ally ||
-                map == null || !map.IsPlayerHome ||
+                map == null || (!map.IsPlayerHome && !isBlightfallSite) ||
                 parms.raidArrivalMode == null || Find.World == null || Find.WorldGrid == null ||
                 !AlliedSettlementSurvivalMod.Current.systemEnabled)
                 return;
 
             try
             {
-                Reinforce(parms, map, ref pawns);
+                Reinforce(parms, map, ref pawns, isBlightfallSite);
             }
             catch (Exception error)
             {
@@ -198,7 +202,8 @@ namespace LiAIChat.AlliedSettlementSurvival
             }
         }
 
-        private static void Reinforce(IncidentParms parms, Map map, ref List<Pawn> pawns)
+        private static void Reinforce(IncidentParms parms, Map map, ref List<Pawn> pawns,
+            bool evacuateWhenThreatCleared)
         {
             AlliedSettlementWorldComponent component = AlliedSettlementWorldComponent.Current;
             if (component == null) return;
@@ -222,6 +227,16 @@ namespace LiAIChat.AlliedSettlementSurvival
                 .SelectMany(maker => maker.options)
                 .Where(option => option != null && option.kind != null && option.kind.RaceProps.Humanlike)
                 .ToList();
+            bool empire = parms.faction == Faction.OfEmpire;
+            if (empire && pawns.Count > 4)
+            {
+                List<Pawn> retained = pawns.OrderByDescending(pawn => pawn?.kindDef?.combatPower ?? 0f)
+                    .Take(4).ToList();
+                foreach (Pawn excess in pawns.Except(retained).ToList())
+                    if (excess != null && !excess.Destroyed)
+                        excess.Destroy(DestroyMode.Vanish);
+                pawns = retained;
+            }
             bool tribal = (int)parms.faction.def.techLevel <= (int)TechLevel.Neolithic;
             bool tribalTopTier = tribal && AlliedCaravanReinforcementPolicy.IsTopTier(sourceState.strength);
             if (options.Count == 0 && !tribalTopTier) return;
@@ -234,10 +249,14 @@ namespace LiAIChat.AlliedSettlementSurvival
                 : 0;
             bool topTier = AlliedCaravanReinforcementPolicy.UsesTopTierCivilizedReinforcements(
                 sourceState.strength, tribal);
-            int extraCount = options.Count == 0 ? 0 : topTier
-                ? AlliedCaravanReinforcementPolicy.TopTierReinforcementCount(PlayerColonistCount())
-                : AlliedCaravanReinforcementPolicy.AdditionalGuardCount(
-                    sourceState.strength, tribal, currentCount, tribalTarget);
+            int extraCount = options.Count == 0 ? 0 : empire
+                ? Math.Min(Math.Max(0, 4 - currentCount), sourceState.strength < 25f ? 0 :
+                    Math.Min(2, AlliedCaravanReinforcementPolicy.AdditionalGuardCount(
+                        sourceState.strength, tribal, currentCount, tribalTarget)))
+                : topTier
+                    ? AlliedCaravanReinforcementPolicy.TopTierReinforcementCount(PlayerColonistCount())
+                    : AlliedCaravanReinforcementPolicy.AdditionalGuardCount(
+                        sourceState.strength, tribal, currentCount, tribalTarget);
 
             List<Pawn> reinforcements = new List<Pawn>();
             for (int i = 0; i < extraCount; i++)
@@ -262,18 +281,32 @@ namespace LiAIChat.AlliedSettlementSurvival
 
             List<Pawn> fighters = pawns.Where(pawn => pawn != null && !pawn.Dead &&
                 pawn.kindDef != null && pawn.RaceProps.Humanlike && guardKinds.Contains(pawn.kindDef)).ToList();
-            if (fighters.Count == 0) return;
+            if (fighters.Count == 0)
+            {
+                if (animals.Count > 0)
+                    component.RegisterMilitaryAidGuards(sourceState.settlement, animals, null, null,
+                        evacuateWhenThreatCleared);
+                return;
+            }
+            List<Pawn> artilleryCrew = new List<Pawn>();
             if (topTier)
                 AlliedEliteReinforcementLoadout.EquipGroup(fighters);
+            else if (evacuateWhenThreatCleared && !tribal && !empire)
+                artilleryCrew = AlliedEliteReinforcementLoadout.EquipArtillerySupport(fighters, sourceState.strength);
 
             Pawn leader = fighters.Where(pawn => pawn.kindDef.factionLeader)
                 .OrderByDescending(pawn => pawn.kindDef.combatPower).FirstOrDefault() ??
                 fighters.OrderByDescending(pawn => pawn.kindDef.combatPower).First();
-            int eliteCount = AlliedCaravanReinforcementPolicy.EliteGuardCount(sourceState.strength);
+            int eliteCount = empire
+                ? Math.Min(2, AlliedCaravanReinforcementPolicy.EliteGuardCount(sourceState.strength))
+                : AlliedCaravanReinforcementPolicy.EliteGuardCount(sourceState.strength);
             List<Pawn> elites = fighters.Where(pawn => pawn != leader)
                 .OrderByDescending(pawn => pawn.kindDef.combatPower)
-                .Take(eliteCount).ToList();
-            component.RegisterMilitaryAidGuards(sourceState.settlement, fighters.Concat(animals), leader, elites);
+                .Take(eliteCount).Concat(artilleryCrew).Where(pawn => pawn != leader).Distinct().ToList();
+            if (empire && elites.Count > 0)
+                AlliedEliteReinforcementLoadout.EquipGroup(elites);
+            component.RegisterMilitaryAidGuards(sourceState.settlement, fighters.Concat(animals), leader, elites,
+                evacuateWhenThreatCleared);
         }
 
         private static int PlayerColonistCount() => PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive

@@ -73,6 +73,23 @@ namespace LiAIChat.AlliedSettlementSurvival
             }
         }
 
+        public static List<Pawn> EquipArtillerySupport(IEnumerable<Pawn> pawns, float strength)
+        {
+            int requested = strength >= 75f ? 2 : strength >= 50f ? 1 : 0;
+            ThingDef artilleryWeapon = DefDatabase<ThingDef>.GetNamedSilentFail("Gun_TripleRocket") ??
+                DefDatabase<ThingDef>.GetNamedSilentFail("Gun_DoomsdayRocket");
+            if (requested == 0 || artilleryWeapon == null || !artilleryWeapon.IsRangedWeapon)
+                return new List<Pawn>();
+
+            List<Pawn> candidates = pawns == null ? new List<Pawn>() : pawns
+                .Where(IsEquipableGuard).Where(CanUseRangedWeapons).Distinct()
+                .OrderByDescending(pawn => pawn.kindDef?.combatPower ?? 0f).ToList();
+            List<Pawn> artilleryCrew = candidates.Take(requested).ToList();
+            foreach (Pawn pawn in artilleryCrew)
+                EquipWeapon(pawn, artilleryWeapon);
+            return artilleryCrew;
+        }
+
         private static void EquipArmor(Pawn pawn, ThingDef armorDef, ThingDef helmetDef)
         {
             try

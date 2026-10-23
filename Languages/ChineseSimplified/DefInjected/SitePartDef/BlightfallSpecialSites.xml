@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_BlightfallSporeForest.label>枯蚀孢子林</LiAIChat_BlightfallSporeForest.label>
+  <LiAIChat_BlightfallSporeForest.description>被污染的林地中央生长着一株活体孢子母树。</LiAIChat_BlightfallSporeForest.description>
+  <LiAIChat_BlightfallToxicHive.label>枯蚀毒巢</LiAIChat_BlightfallToxicHive.label>
+  <LiAIChat_BlightfallToxicHive.description>有毒的育巢仍在孵化枯蚀生物。</LiAIChat_BlightfallToxicHive.description>
+  <LiAIChat_BlightfallProcessingPlant.label>古代污染处理厂</LiAIChat_BlightfallProcessingPlant.label>
+  <LiAIChat_BlightfallProcessingPlant.description>失控的古代设施仍在持续污染周围环境。</LiAIChat_BlightfallProcessingPlant.description>
+  <LiAIChat_BlightfallResonanceDefense.label>共振防御塔</LiAIChat_BlightfallResonanceDefense.label>
+  <LiAIChat_BlightfallResonanceDefense.description>重兵把守的共振尖塔在周围投射护盾，保护着污染核心。</LiAIChat_BlightfallResonanceDefense.description>
+  <LiAIChat_BlightfallBlightHeart.label>枯蚀之心</LiAIChat_BlightfallBlightHeart.label>
+  <LiAIChat_BlightfallBlightHeart.description>枯蚀网络暴露的核心。地图受到严重污染。摧毁外围防御，击退增援，再摧毁核心以结束战役。</LiAIChat_BlightfallBlightHeart.description>
+</LanguageData>

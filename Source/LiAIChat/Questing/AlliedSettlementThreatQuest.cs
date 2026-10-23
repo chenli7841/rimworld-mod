@@ -25,7 +25,8 @@ namespace LiAIChat.Questing
                 settlement = QuestGen.slate.Get<Settlement>("alliedSettlement"),
                 site = QuestGen.slate.Get<Site>("threatSite"),
                 faction = QuestGen.slate.Get<Faction>("threatFaction"),
-                defenderCount = QuestGen.slate.Get("threatDefenderCount", 1)
+                defenderCount = QuestGen.slate.Get("threatDefenderCount", 1),
+                crisisKind = QuestGen.slate.Get("alliedCrisisKind", AlliedSettlementCrisisKind.HostileThreat)
             });
         }
     }
@@ -36,6 +37,7 @@ namespace LiAIChat.Questing
         public Site site;
         public Faction faction;
         public int defenderCount;
+        public AlliedSettlementCrisisKind crisisKind = AlliedSettlementCrisisKind.HostileThreat;
         public bool mechanoidFallbackAttempted;
         public bool mechanoidArrivalDeploymentComplete;
         public bool mechanoidDeploymentWaitLogged;
@@ -135,7 +137,7 @@ namespace LiAIChat.Questing
             if (!campDestroyed && !defendersDefeated) return;
 
             bool completed = AlliedSettlementWorldComponent.Current?.CompleteCrisis(
-                settlement, AlliedSettlementCrisisKind.HostileThreat) ?? false;
+                settlement, crisisKind) ?? false;
             if (!completed)
             {
                 AlliedSettlementState state = AlliedSettlementWorldComponent.Current?.Get(settlement);
@@ -171,6 +173,7 @@ namespace LiAIChat.Questing
             Scribe_References.Look(ref site, "site");
             Scribe_References.Look(ref faction, "faction");
             Scribe_Values.Look(ref defenderCount, "defenderCount");
+            Scribe_Values.Look(ref crisisKind, "crisisKind", AlliedSettlementCrisisKind.HostileThreat);
             Scribe_Values.Look(ref mechanoidFallbackAttempted, "mechanoidFallbackAttempted");
             Scribe_Values.Look(ref mechanoidArrivalDeploymentComplete, "mechanoidArrivalDeploymentComplete");
             Scribe_Values.Look(ref mechanoidDeploymentWaitLogged, "mechanoidDeploymentWaitLogged");
@@ -203,7 +206,8 @@ namespace LiAIChat.Questing
     {
         private static float ThreatPoints => AlliedSettlementSurvivalMod.Current.threatPoints;
 
-        public static bool TryCreate(AlliedSettlementState state, out Quest quest)
+        public static bool TryCreate(AlliedSettlementState state, out Quest quest,
+            AlliedSettlementCrisisKind crisisKind = AlliedSettlementCrisisKind.HostileThreat)
         {
             quest = null;
             if (state?.settlement == null || Find.QuestManager == null)
@@ -248,6 +252,7 @@ namespace LiAIChat.Questing
                 slate.Set("threatSite", site);
                 slate.Set("threatFaction", faction);
                 slate.Set("threatDefenderCount", defenderCount);
+                slate.Set("alliedCrisisKind", crisisKind);
                 quest = QuestGen.Generate(def, slate);
                 if (quest == null)
                 {
@@ -547,7 +552,7 @@ namespace LiAIChat.Questing
                 AlliedSettlementThreatDefenderCapturePatch.FindThreatPart(__instance);
             if (threatPart != null)
                 AlliedSettlementWorldComponent.Current?.CompleteCrisis(
-                    threatPart.settlement, AlliedSettlementCrisisKind.HostileThreat);
+                    threatPart.settlement, threatPart.crisisKind);
         }
     }
 

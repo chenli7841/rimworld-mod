@@ -9,6 +9,14 @@ using Verse;
 
 namespace LiAIChat.Questing
 {
+    public enum AlliedSettlementAidType
+    {
+        None,
+        Food,
+        Medicine,
+        Purification
+    }
+
     public class QuestNode_CreateAlliedSettlementAid : QuestNode
     {
         protected override bool TestRunInt(Slate slate) => slate.Get<Settlement>("alliedSettlement") != null &&
@@ -19,13 +27,22 @@ namespace LiAIChat.Questing
             Settlement settlement = QuestGen.slate.Get<Settlement>("alliedSettlement");
             AlliedSettlementCrisisKind crisisKind =
                 QuestGen.slate.Get<AlliedSettlementCrisisKind>("alliedCrisisKind");
+            AlliedSettlementAidType aidType = QuestGen.slate.Get("alliedAidType", AlliedSettlementAidType.None);
+            if (aidType == AlliedSettlementAidType.None)
+                aidType = crisisKind == AlliedSettlementCrisisKind.DiseaseOutbreak
+                    ? AlliedSettlementAidType.Medicine : AlliedSettlementAidType.Food;
             float strength = AlliedSettlementWorldComponent.Current?.Get(settlement)?.strength ?? 0f;
             QuestGen.quest.AddPart(new QuestPart_AlliedSettlementAid
             {
                 settlement = settlement,
                 crisisKind = crisisKind,
-                requiredNutrition = AlliedSettlementAidQuestUtility.RequiredFoodNutrition(strength),
-                requiredMedicine = AlliedSettlementAidQuestUtility.RequiredMedicineUnits(strength)
+                aidType = aidType,
+                requiredNutrition = aidType == AlliedSettlementAidType.Food
+                    ? AlliedSettlementAidQuestUtility.RequiredFoodNutrition(strength) : 0f,
+                requiredMedicine = aidType == AlliedSettlementAidType.Medicine
+                    ? AlliedSettlementAidQuestUtility.RequiredMedicineUnits(strength) : 0,
+                requiredPurificationSupplies = aidType == AlliedSettlementAidType.Purification
+                    ? AlliedSettlementAidQuestUtility.RequiredPurificationSupplies(strength) : 0
             });
         }
     }
@@ -34,10 +51,13 @@ namespace LiAIChat.Questing
     {
         public Settlement settlement;
         public AlliedSettlementCrisisKind crisisKind;
+        public AlliedSettlementAidType aidType;
         public float requiredNutrition;
         public int requiredMedicine;
+        public int requiredPurificationSupplies;
         public float deliveredNutrition;
         public int deliveredMedicine;
+        public int deliveredPurificationSupplies;
 
         public float RemainingNutrition => Math.Max(0f, requiredNutrition - deliveredNutrition);
         public int RemainingMedicine => Math.Max(0, requiredMedicine - deliveredMedicine);
@@ -47,10 +67,13 @@ namespace LiAIChat.Questing
             get
             {
                 if (quest == null || quest.State != QuestState.Ongoing) return null;
-                if (crisisKind == AlliedSettlementCrisisKind.FoodShortage)
+                if (aidType == AlliedSettlementAidType.Food)
                     return "LiASS_AidFoodProgress".Translate(deliveredNutrition.ToString("0.#"), requiredNutrition.ToString("0.#"));
-                if (crisisKind == AlliedSettlementCrisisKind.DiseaseOutbreak)
+                if (aidType == AlliedSettlementAidType.Medicine)
                     return "LiASS_AidMedicineProgress".Translate(deliveredMedicine, requiredMedicine);
+                if (aidType == AlliedSettlementAidType.Purification)
+                    return "LiASS_AidPurificationProgress".Translate(deliveredPurificationSupplies,
+                        requiredPurificationSupplies);
                 return null;
             }
         }
@@ -68,10 +91,16 @@ namespace LiAIChat.Questing
             base.ExposeData();
             Scribe_References.Look(ref settlement, "settlement");
             Scribe_Values.Look(ref crisisKind, "crisisKind", AlliedSettlementCrisisKind.None);
+            Scribe_Values.Look(ref aidType, "aidType", AlliedSettlementAidType.None);
             Scribe_Values.Look(ref requiredNutrition, "requiredNutrition");
             Scribe_Values.Look(ref requiredMedicine, "requiredMedicine");
+            Scribe_Values.Look(ref requiredPurificationSupplies, "requiredPurificationSupplies");
             Scribe_Values.Look(ref deliveredNutrition, "deliveredNutrition");
             Scribe_Values.Look(ref deliveredMedicine, "deliveredMedicine");
+            Scribe_Values.Look(ref deliveredPurificationSupplies, "deliveredPurificationSupplies");
+            if (Scribe.mode == LoadSaveMode.PostLoadInit && aidType == AlliedSettlementAidType.None)
+                aidType = crisisKind == AlliedSettlementCrisisKind.DiseaseOutbreak
+                    ? AlliedSettlementAidType.Medicine : AlliedSettlementAidType.Food;
         }
     }
 
@@ -81,18 +110,27 @@ namespace LiAIChat.Questing
             AlliedSettlementSurvivalMod.Current.foodNutrition, strength);
         public static int RequiredMedicineUnits(float strength) => SettlementStrengthPolicy.ScaleMedicineAidRequirement(
             AlliedSettlementSurvivalMod.Current.medicineUnits, strength);
+        public static int RequiredPurificationSupplies(float strength) => (int)Math.Ceiling(
+            6f * SettlementStrengthPolicy.AidRequirementMultiplier(strength));
 
         public static bool TryCreate(AlliedSettlementWorldComponent component, AlliedSettlementState state,
             AlliedSettlementCrisisKind kind, out Quest quest)
         {
             quest = null;
             if (kind != AlliedSettlementCrisisKind.FoodShortage &&
-                kind != AlliedSettlementCrisisKind.DiseaseOutbreak)
+                kind != AlliedSettlementCrisisKind.DiseaseOutbreak &&
+                kind != AlliedSettlementCrisisKind.BlightfallEnvironmental)
                 return false;
 
-            string defName = kind == AlliedSettlementCrisisKind.FoodShortage
-                ? "LiAIChat_AlliedSettlementFoodAid"
-                : "LiAIChat_AlliedSettlementMedicineAid";
+            AlliedSettlementAidType aidType = kind == AlliedSettlementCrisisKind.BlightfallEnvironmental
+                ? (AlliedSettlementAidType)Rand.RangeInclusive((int)AlliedSettlementAidType.Food,
+                    (int)AlliedSettlementAidType.Purification)
+                : kind == AlliedSettlementCrisisKind.FoodShortage
+                    ? AlliedSettlementAidType.Food : AlliedSettlementAidType.Medicine;
+            string defName = kind == AlliedSettlementCrisisKind.BlightfallEnvironmental
+                ? "LiAIChat_AlliedSettlementBlightfallAid"
+                : aidType == AlliedSettlementAidType.Food
+                    ? "LiAIChat_AlliedSettlementFoodAid" : "LiAIChat_AlliedSettlementMedicineAid";
             QuestScriptDef def = DefDatabase<QuestScriptDef>.GetNamedSilentFail(defName);
             if (def == null || Find.QuestManager == null)
             {
@@ -106,6 +144,7 @@ namespace LiAIChat.Questing
                 var slate = new Slate();
                 slate.Set("alliedSettlement", state.settlement);
                 slate.Set("alliedCrisisKind", kind);
+                slate.Set("alliedAidType", aidType);
                 quest = QuestGen.Generate(def, slate);
                 if (quest == null) return false;
                 quest.SetInitiallyAccepted();
@@ -133,13 +172,16 @@ namespace LiAIChat.Questing
         {
             QuestPart_AlliedSettlementAid part = PartFor(state);
             if (part == null || !caravan.IsPlayerControlled || !caravan.Spawned || caravan.Tile != settlement.Tile) return;
-            bool food = part.crisisKind == AlliedSettlementCrisisKind.FoodShortage;
-            if (!food && part.crisisKind != AlliedSettlementCrisisKind.DiseaseOutbreak) return;
-
-            string label = food ? "LiASS_DeliverFood" : "LiASS_DeliverMedicine";
-            string description = food
+            if (part.aidType == AlliedSettlementAidType.None) return;
+            string label = part.aidType == AlliedSettlementAidType.Food ? "LiASS_DeliverFood" :
+                part.aidType == AlliedSettlementAidType.Medicine ? "LiASS_DeliverMedicine" :
+                "LiASS_DeliverPurificationSupplies";
+            string description = part.aidType == AlliedSettlementAidType.Food
                 ? "LiASS_DeliverFoodDescription".Translate(part.RemainingNutrition.ToString("0.#"))
-                : "LiASS_DeliverMedicineDescription".Translate(part.RemainingMedicine);
+                : part.aidType == AlliedSettlementAidType.Medicine
+                    ? "LiASS_DeliverMedicineDescription".Translate(part.RemainingMedicine)
+                    : "LiASS_DeliverPurificationSuppliesDescription".Translate(
+                        Math.Max(0, part.requiredPurificationSupplies - part.deliveredPurificationSupplies));
             gizmos.Add(new Command_Action
             {
                 defaultLabel = label.Translate(),
@@ -169,7 +211,7 @@ namespace LiAIChat.Questing
 
             var options = new List<FloatMenuOption>();
             List<Thing> inventory = AvailableDeliveryItems(caravan);
-            if (part.crisisKind == AlliedSettlementCrisisKind.FoodShortage)
+            if (part.aidType == AlliedSettlementAidType.Food)
             {
                 float remaining = part.RemainingNutrition;
                 foreach (ThingDef def in inventory.Where(t => t.def.IsNutritionGivingIngestible &&
@@ -186,7 +228,7 @@ namespace LiAIChat.Questing
                             selected, count, "LiASS_ConfirmFood".Translate(count, (count * nutrition).ToString("0.#"), settlement.LabelCap))));
                 }
             }
-            else if (part.crisisKind == AlliedSettlementCrisisKind.DiseaseOutbreak)
+            else if (part.aidType == AlliedSettlementAidType.Medicine)
             {
                 int remaining = part.RemainingMedicine;
                 foreach (ThingDef def in inventory.Where(t => t.def.IsMedicine).Select(t => t.def)
@@ -199,6 +241,20 @@ namespace LiAIChat.Questing
                     options.Add(new FloatMenuOption("LiASS_MedicineOption".Translate(selected.LabelCap, count, available),
                         () => ConfirmDelivery(caravan, settlement, part, selected, count,
                             "LiASS_ConfirmMedicine".Translate(count, settlement.LabelCap))));
+                }
+            }
+            else if (part.aidType == AlliedSettlementAidType.Purification)
+            {
+                int remaining = Math.Max(0, part.requiredPurificationSupplies - part.deliveredPurificationSupplies);
+                ThingDef def = ThingDefOf.ComponentIndustrial;
+                int available = inventory.Where(thing => thing.def == def).Sum(thing => thing.stackCount);
+                int count = Math.Min(available, remaining);
+                if (count > 0)
+                {
+                    options.Add(new FloatMenuOption("LiASS_PurificationSupplyOption".Translate(
+                        def.LabelCap, count, available),
+                        () => ConfirmDelivery(caravan, settlement, part, def, count,
+                            "LiASS_ConfirmPurificationSupplies".Translate(count, settlement.LabelCap))));
                 }
             }
             if (options.Count == 0) options.Add(new FloatMenuOption("LiASS_NoAidItems".Translate(), null));
@@ -225,9 +281,14 @@ namespace LiAIChat.Questing
                 return;
             }
 
-            bool food = part.crisisKind == AlliedSettlementCrisisKind.FoodShortage;
+            bool food = part.aidType == AlliedSettlementAidType.Food;
+            bool medicine = part.aidType == AlliedSettlementAidType.Medicine;
+            bool purification = part.aidType == AlliedSettlementAidType.Purification;
             if ((food && (!def.IsNutritionGivingIngestible || !def.ingestible.HumanEdible || part.RemainingNutrition <= 0f)) ||
-                (!food && (part.crisisKind != AlliedSettlementCrisisKind.DiseaseOutbreak || !def.IsMedicine || part.RemainingMedicine <= 0)))
+                (medicine && (!def.IsMedicine || part.RemainingMedicine <= 0)) ||
+                (purification && (def != ThingDefOf.ComponentIndustrial ||
+                    part.requiredPurificationSupplies <= part.deliveredPurificationSupplies)) ||
+                (!food && !medicine && !purification))
             {
                 Messages.Message("LiASS_DeliveryUnavailable".Translate(), MessageTypeDefOf.RejectInput, false);
                 return;
@@ -250,19 +311,23 @@ namespace LiAIChat.Questing
             float nutritionDelivered = food
                 ? taken.Sum(thing => thing.def.GetStatValueAbstract(StatDefOf.Nutrition) * thing.stackCount)
                 : 0f;
-            int medicineDelivered = food ? 0 : taken.Sum(thing => thing.stackCount);
+            int medicineDelivered = medicine ? taken.Sum(thing => thing.stackCount) : 0;
+            int suppliesDelivered = purification ? taken.Sum(thing => thing.stackCount) : 0;
             foreach (Thing thing in taken) thing.Destroy(DestroyMode.Vanish);
 
             if (food) part.deliveredNutrition = Math.Min(part.requiredNutrition, part.deliveredNutrition + nutritionDelivered);
-            else part.deliveredMedicine = Math.Min(part.requiredMedicine, part.deliveredMedicine + medicineDelivered);
+            else if (medicine) part.deliveredMedicine = Math.Min(part.requiredMedicine, part.deliveredMedicine + medicineDelivered);
+            else part.deliveredPurificationSupplies = Math.Min(part.requiredPurificationSupplies,
+                part.deliveredPurificationSupplies + suppliesDelivered);
             caravan.RecacheInventory();
             Messages.Message("LiASS_AidDelivered".Translate(def.LabelCap,
-                food ? nutritionDelivered.ToString("0.#") : medicineDelivered.ToString(), settlement.LabelCap),
+                food ? nutritionDelivered.ToString("0.#") : medicine ? medicineDelivered.ToString() : suppliesDelivered.ToString(),
+                settlement.LabelCap),
                 settlement, MessageTypeDefOf.PositiveEvent);
 
-            bool complete = part.crisisKind == AlliedSettlementCrisisKind.FoodShortage
-                ? part.RemainingNutrition <= 0.001f
-                : part.RemainingMedicine <= 0;
+            bool complete = food ? part.RemainingNutrition <= 0.001f :
+                medicine ? part.RemainingMedicine <= 0 :
+                    part.deliveredPurificationSupplies >= part.requiredPurificationSupplies;
             if (complete) component.CompleteCrisis(settlement, part.crisisKind);
         }
 

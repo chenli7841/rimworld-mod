@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BuildingBase">
+    <defName>LiAIChat_BlightfallSporeTower</defName>
+    <label>spore tower</label>
+    <description>A living structure that strengthens the spread of nearby contamination.</description>
+    <thingClass>Verse.Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Ruins/AncientSystemRack</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(1,3)</drawSize>
+    </graphicData>
+    <size>(2,2)</size>
+    <passability>Impassable</passability>
+    <fillPercent>1.0</fillPercent>
+    <statBases>
+      <MaxHitPoints>420</MaxHitPoints>
+      <Flammability>0</Flammability>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>LiAIChat_BlightfallBroodNest</defName>
+    <label>brood nest</label>
+    <description>A living structure that amplifies future pollution army growth.</description>
+    <thingClass>Verse.Building</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Ruins/AncientWarspiderRemains</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <size>(2,2)</size>
+    <passability>Impassable</passability>
+    <fillPercent>1.0</fillPercent>
+    <statBases>
+      <MaxHitPoints>520</MaxHitPoints>
+      <Flammability>0</Flammability>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>LiAIChat_BlightfallResonanceSpire</defName>
+    <label>resonance spire</label>
+    <description>A living structure that shields the Blightfall core.</description>
+    <thingClass>LiAIChat.Blightfall.Building_BlightfallResonanceSpire</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Misc/AncientTerminal/AncientTerminal</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(2,2)</drawSize>
+    </graphicData>
+    <size>(2,2)</size>
+    <passability>Impassable</passability>
+    <fillPercent>1.0</fillPercent>
+    <statBases>
+      <MaxHitPoints>900</MaxHitPoints>
+      <Flammability>0</Flammability>
+    </statBases>
+  </ThingDef>
+</Defs>
