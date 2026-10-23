@@ -1,6 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <PawnKindDef ParentName="InsectKindBase">
+  <PawnKindDef Name="LiAIChat_BlightfallInsectBase" ParentName="InsectKindBase" Abstract="True">
+    <lifeStages>
+      <li>
+        <bodyGraphicData>
+          <texPath>Things/Pawn/Animal/Megaspider/Megaspider</texPath>
+          <drawSize>1.2</drawSize>
+          <color>(154,125,94)</color>
+        </bodyGraphicData>
+        <dessicatedBodyGraphicData>
+          <texPath>Things/Pawn/Animal/Megaspider/Dessicated_Megaspider</texPath>
+          <drawSize>1.2</drawSize>
+        </dessicatedBodyGraphicData>
+      </li>
+      <li>
+        <bodyGraphicData>
+          <texPath>Things/Pawn/Animal/Megaspider/Megaspider</texPath>
+          <drawSize>1.6</drawSize>
+          <color>(154,125,94)</color>
+        </bodyGraphicData>
+        <dessicatedBodyGraphicData>
+          <texPath>Things/Pawn/Animal/Megaspider/Dessicated_Megaspider</texPath>
+          <drawSize>1.6</drawSize>
+        </dessicatedBodyGraphicData>
+      </li>
+      <li>
+        <bodyGraphicData>
+          <texPath>Things/Pawn/Animal/Megaspider/Megaspider</texPath>
+          <drawSize>2.1</drawSize>
+          <color>(154,125,94)</color>
+          <shadowData>
+            <volume>(0.5, 0.6, 0.4)</volume>
+            <offset>(0,0,-0.15)</offset>
+          </shadowData>
+        </bodyGraphicData>
+        <dessicatedBodyGraphicData>
+          <texPath>Things/Pawn/Animal/Megaspider/Dessicated_Megaspider</texPath>
+          <drawSize>2.1</drawSize>
+        </dessicatedBodyGraphicData>
+      </li>
+    </lifeStages>
+  </PawnKindDef>
+  <PawnKindDef ParentName="LiAIChat_BlightfallInsectBase">
     <defName>LiAIChat_BlightCrawler</defName>
     <label>Blight Crawler</label>
     <race>LiAIChat_BlightCrawlerRace</race>
@@ -45,7 +86,7 @@
       </li>
     </lifeStages>
   </PawnKindDef>
-  <PawnKindDef ParentName="Megaspider">
+  <PawnKindDef ParentName="LiAIChat_BlightfallInsectBase">
     <defName>LiAIChat_SporeSpitter</defName>
     <label>Spore Spitter</label>
     <race>LiAIChat_SporeSpitterRace</race>
@@ -54,7 +95,7 @@
       <li>LiAIChat_BlightfallSporeShot</li>
     </abilities>
   </PawnKindDef>
-  <PawnKindDef ParentName="Megaspider">
+  <PawnKindDef ParentName="LiAIChat_BlightfallInsectBase">
     <defName>LiAIChat_BlightBehemoth</defName>
     <label>Blight Behemoth</label>
     <race>LiAIChat_BlightBehemothRace</race>
