@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Defs>
-  <PawnKindDef Name="LiAIChat_BlightfallInsectBase" ParentName="InsectKindBase" Abstract="True">
+  <PawnKindDef Name="LiAIChat_BlightfallMegaspiderKindBase" ParentName="InsectKindBase" Abstract="True">
     <lifeStages>
       <li>
         <bodyGraphicData>
@@ -41,7 +41,7 @@
       </li>
     </lifeStages>
   </PawnKindDef>
-  <PawnKindDef ParentName="LiAIChat_BlightfallInsectBase">
+  <PawnKindDef ParentName="InsectKindBase">
     <defName>LiAIChat_BlightCrawler</defName>
     <label>Blight Crawler</label>
     <race>LiAIChat_BlightCrawlerRace</race>
@@ -86,7 +86,7 @@
       </li>
     </lifeStages>
   </PawnKindDef>
-  <PawnKindDef ParentName="LiAIChat_BlightfallInsectBase">
+  <PawnKindDef ParentName="LiAIChat_BlightfallMegaspiderKindBase">
     <defName>LiAIChat_SporeSpitter</defName>
     <label>Spore Spitter</label>
     <race>LiAIChat_SporeSpitterRace</race>
@@ -95,7 +95,7 @@
       <li>LiAIChat_BlightfallSporeShot</li>
     </abilities>
   </PawnKindDef>
-  <PawnKindDef ParentName="LiAIChat_BlightfallInsectBase">
+  <PawnKindDef ParentName="LiAIChat_BlightfallMegaspiderKindBase">
     <defName>LiAIChat_BlightBehemoth</defName>
     <label>Blight Behemoth</label>
     <race>LiAIChat_BlightBehemothRace</race>
