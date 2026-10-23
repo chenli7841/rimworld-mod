@@ -245,12 +245,12 @@ namespace LiAIChat.AlliedSettlementSurvival
     [HarmonyPatch(typeof(Settlement), nameof(Settlement.GiveSoldThingToTrader))]
     public static class TribalWasteDisposalSettlementReceiptPatch
     {
-        public static bool Prefix(Settlement __instance, Thing thing, int count)
+        public static bool Prefix(Settlement __instance, Thing toGive, int countToGive)
         {
-            if (!TribalWasteDisposalService.IsWastepack(thing) ||
+            if (!TribalWasteDisposalService.IsWastepack(toGive) ||
                 !TribalWasteDisposalService.HasService(__instance)) return true;
 
-            TribalWasteDisposalService.DisposeSoldWastepacks(__instance, thing, count);
+            TribalWasteDisposalService.DisposeSoldWastepacks(__instance, toGive, countToGive);
             return false;
         }
     }
