@@ -40,7 +40,8 @@ namespace LiAIChat.Blightfall
         ToxicHive,
         AncientProcessingPlant,
         ResonanceDefense,
-        BlightHeart
+        BlightHeart,
+        CarrionPlague
     }
 
     public enum BlightfallSiteStatus
@@ -125,6 +126,10 @@ namespace LiAIChat.Blightfall
         public int CoreHeartThingId = -1;
         public List<int> CorePerimeterTargetThingIds = new List<int>();
         public List<int> CoreDefenseTargetThingIds = new List<int>();
+        public int CarrionPlagueWaveDueTick = -1;
+        public bool CarrionPlagueWaveSpawned;
+        public bool CarrionPlagueWarningSent;
+        public bool CarrionPlagueResolved;
 
         public void ExposeData()
         {
@@ -153,6 +158,10 @@ namespace LiAIChat.Blightfall
             Scribe_Values.Look(ref CoreHeartThingId, "coreHeartThingId", -1);
             Scribe_Collections.Look(ref CorePerimeterTargetThingIds, "corePerimeterTargetThingIds", LookMode.Value);
             Scribe_Collections.Look(ref CoreDefenseTargetThingIds, "coreDefenseTargetThingIds", LookMode.Value);
+            Scribe_Values.Look(ref CarrionPlagueWaveDueTick, "carrionPlagueWaveDueTick", -1);
+            Scribe_Values.Look(ref CarrionPlagueWaveSpawned, "carrionPlagueWaveSpawned", false);
+            Scribe_Values.Look(ref CarrionPlagueWarningSent, "carrionPlagueWarningSent", false);
+            Scribe_Values.Look(ref CarrionPlagueResolved, "carrionPlagueResolved", false);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
                 Normalize();
         }
@@ -186,6 +195,7 @@ namespace LiAIChat.Blightfall
             CoreDefenseTargetThingIds = CoreDefenseTargetThingIds ?? new List<int>();
             CorePerimeterTargetThingIds.RemoveAll(id => id < 0);
             CoreDefenseTargetThingIds.RemoveAll(id => id < 0);
+            if (CarrionPlagueWaveDueTick < -1) CarrionPlagueWaveDueTick = -1;
         }
     }
 

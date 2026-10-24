@@ -2,4 +2,6 @@
 <LanguageData>
   <LiAIChat_BlightfallContaminatedRuin.label>Blightfall contaminated ruin</LiAIChat_BlightfallContaminatedRuin.label>
   <LiAIChat_BlightfallContaminatedRuin.description>An abandoned ruin in the Blightfall contamination zone, covered in pollution and toxic wastepacks.</LiAIChat_BlightfallContaminatedRuin.description>
+  <LiAIChat_BlightfallCarrionPlague.label>Blightfall carrion plague</LiAIChat_BlightfallCarrionPlague.label>
+  <LiAIChat_BlightfallCarrionPlague.description>A contaminated site where infected wildlife will arrive after a short delay. Every infected corpse must be burned before the tile can be cleansed.</LiAIChat_BlightfallCarrionPlague.description>
 </LanguageData>

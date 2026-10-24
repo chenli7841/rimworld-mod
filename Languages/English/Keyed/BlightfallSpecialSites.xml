@@ -11,6 +11,12 @@
   <LiAIChat_BlightfallProcessorStatusOn>Facility status: running and releasing pollution.</LiAIChat_BlightfallProcessorStatusOn>
   <LiAIChat_BlightfallProcessorStatusOff>Facility status: shut down.</LiAIChat_BlightfallProcessorStatusOff>
   <LiAIChat_BlightfallSpecialSiteCompleteTitle>Blightfall objective complete</LiAIChat_BlightfallSpecialSiteCompleteTitle>
+  <LiAIChat_BlightfallCarrionPlagueWarningTitle>Carrion Plague approaching</LiAIChat_BlightfallCarrionPlagueWarningTitle>
+  <LiAIChat_BlightfallCarrionPlagueWarningText>Infected wildlife is gathering around the site. In about 24 hours, it will become manhunter and attack everyone on the map. Burn every corpse left by this wave to cleanse the site.</LiAIChat_BlightfallCarrionPlagueWarningText>
+  <LiAIChat_BlightfallCarrionPlagueSiteLabel>Carrion Plague site</LiAIChat_BlightfallCarrionPlagueSiteLabel>
+  <LiAIChat_BlightfallCarrionPlagueStatusCountdown>The infected animal wave arrives in {0} hours.</LiAIChat_BlightfallCarrionPlagueStatusCountdown>
+  <LiAIChat_BlightfallCarrionPlagueStatusCleanup>Infected animals alive: {0}; corpses left to burn: {1}.</LiAIChat_BlightfallCarrionPlagueStatusCleanup>
+  <LiAIChat_BlightfallCarrionPlagueComplete>The infected wave is defeated and every task corpse has been burned. The corresponding world tile is cleansed.</LiAIChat_BlightfallCarrionPlagueComplete>
   <LiAIChat_BlightfallSporeForestComplete>The spore mother tree is destroyed. The forest will no longer spread contamination, and source activity has fallen.</LiAIChat_BlightfallSporeForestComplete>
   <LiAIChat_BlightfallToxicHiveComplete>The brood hive is destroyed and at least 80% of the site's pollution has been cleared. Blightfall raid pressure has fallen.</LiAIChat_BlightfallToxicHiveComplete>
   <LiAIChat_BlightfallProcessingPlantComplete>The ancient processor has been shut down or destroyed. It will no longer produce pollution; source activity has fallen and suppression has increased.</LiAIChat_BlightfallProcessingPlantComplete>

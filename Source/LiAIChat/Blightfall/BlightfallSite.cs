@@ -121,11 +121,12 @@ namespace LiAIChat.Blightfall
                 return component.CampaignState == BlightfallCampaignState.CoreExposed
                     ? BlightfallSiteType.BlightHeart
                     : BlightfallSiteType.ContaminatedRuin;
-            switch ((tileId % 4 + 4) % 4)
+            switch ((tileId % 5 + 5) % 5)
             {
                 case 0: return BlightfallSiteType.SporeForest;
                 case 1: return BlightfallSiteType.ToxicHive;
                 case 2: return BlightfallSiteType.AncientProcessingPlant;
+                case 4 when component.CanPurifyTile(tileId): return BlightfallSiteType.CarrionPlague;
                 default: return BlightfallSiteType.ContaminatedRuin;
             }
         }
@@ -139,6 +140,7 @@ namespace LiAIChat.Blightfall
                 case BlightfallSiteType.AncientProcessingPlant: return "LiAIChat_BlightfallProcessingPlant";
                 case BlightfallSiteType.ResonanceDefense: return "LiAIChat_BlightfallResonanceDefense";
                 case BlightfallSiteType.BlightHeart: return "LiAIChat_BlightfallBlightHeart";
+                case BlightfallSiteType.CarrionPlague: return "LiAIChat_BlightfallCarrionPlague";
                 default: return "LiAIChat_BlightfallContaminatedRuin";
             }
         }
@@ -152,6 +154,7 @@ namespace LiAIChat.Blightfall
                 case BlightfallSiteType.AncientProcessingPlant: return "LiAIChat_BlightfallProcessingPlantSiteLabel";
                 case BlightfallSiteType.ResonanceDefense: return "LiAIChat_BlightfallResonanceSiteLabel";
                 case BlightfallSiteType.BlightHeart: return "LiAIChat_BlightfallBlightHeartSiteLabel";
+                case BlightfallSiteType.CarrionPlague: return "LiAIChat_BlightfallCarrionPlagueSiteLabel";
                 default: return "LiAIChat_BlightfallSiteLabel";
             }
         }
@@ -251,6 +254,7 @@ namespace LiAIChat.Blightfall
             BlightfallSpecialSiteUtility.Initialize(map);
             BlightfallResonanceDefenseUtility.Initialize(map);
             BlightfallFinalCoreUtility.Initialize(map);
+            LiAIChat.Blightfall.BlightfallCarrionPlagueUtility.Initialize(map);
         }
 
         public override void Notify_SiteMapAboutToBeRemoved(SitePart sitePart)
@@ -278,6 +282,23 @@ namespace LiAIChat.Blightfall
                 state.CoreDefenseTargetThingIds.Clear();
                 state.CoreHeartThingId = -1;
             }
+        }
+    }
+
+    public class SitePartWorker_BlightfallCarrionPlague : SitePartWorker
+    {
+        public override void PostMapGenerate(Map map)
+        {
+            base.PostMapGenerate(map);
+            Site site = map?.Parent as Site;
+            WorldComponent_Blightfall.Current?.UpdateSiteStatus(site, BlightfallSiteStatus.MapGenerated);
+            BlightfallCarrionPlagueUtility.Initialize(map);
+        }
+
+        public override void Notify_SiteMapAboutToBeRemoved(SitePart sitePart)
+        {
+            base.Notify_SiteMapAboutToBeRemoved(sitePart);
+            WorldComponent_Blightfall.Current?.UpdateSiteStatus(sitePart?.site, BlightfallSiteStatus.Visited);
         }
     }
 
@@ -673,6 +694,7 @@ namespace LiAIChat.Blightfall
             WorldComponent_Blightfall world = WorldComponent_Blightfall.Current;
             BlightfallSiteState state = world?.GetSiteState(site);
             if (map == null || state == null || state.Type == BlightfallSiteType.ContaminatedRuin ||
+                state.Type == BlightfallSiteType.CarrionPlague ||
                 state.Type == BlightfallSiteType.BlightHeart ||
                 state.Status == BlightfallSiteStatus.Completed || state.Status == BlightfallSiteStatus.Removed)
                 return;
@@ -752,6 +774,7 @@ namespace LiAIChat.Blightfall
             BlightfallSiteState state = world?.GetSiteState(site);
             if (state == null || world.CampaignState == BlightfallCampaignState.Completed ||
                 state.Type == BlightfallSiteType.ContaminatedRuin ||
+                state.Type == BlightfallSiteType.CarrionPlague ||
                 state.Status == BlightfallSiteStatus.Completed || state.Status == BlightfallSiteStatus.Removed)
                 return;
 
@@ -854,6 +877,7 @@ namespace LiAIChat.Blightfall
         {
             BlightfallSpecialSiteUtility.Tick(map);
             BlightfallFinalCoreUtility.Tick(map);
+            BlightfallCarrionPlagueUtility.Tick(map);
         }
     }
 

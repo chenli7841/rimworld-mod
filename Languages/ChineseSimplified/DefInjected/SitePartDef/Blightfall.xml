@@ -2,4 +2,6 @@
 <LanguageData>
   <LiAIChat_BlightfallContaminatedRuin.label>枯萎降临污染废墟</LiAIChat_BlightfallContaminatedRuin.label>
   <LiAIChat_BlightfallContaminatedRuin.description>位于枯萎降临污染区的废弃遗址，覆盖着污染地块和有毒废料包。</LiAIChat_BlightfallContaminatedRuin.description>
+  <LiAIChat_BlightfallCarrionPlague.label>枯萎降临腐尸瘟潮</LiAIChat_BlightfallCarrionPlague.label>
+  <LiAIChat_BlightfallCarrionPlague.description>一处受污染的遗址。倒计时结束后，受感染的野生动物将袭来。必须焚毁全部感染腐尸，才能净化这片土地。</LiAIChat_BlightfallCarrionPlague.description>
 </LanguageData>

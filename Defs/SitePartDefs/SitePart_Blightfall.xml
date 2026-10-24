@@ -14,6 +14,17 @@
   </SitePartDef>
 
   <SitePartDef>
+    <defName>LiAIChat_BlightfallCarrionPlague</defName>
+    <label>Blightfall carrion plague</label>
+    <description>A contaminated site where infected wildlife will arrive after a short delay. Every infected corpse must be burned before the tile can be cleansed.</description>
+    <workerClass>LiAIChat.Blightfall.SitePartWorker_BlightfallCarrionPlague</workerClass>
+    <siteTexture>World/WorldObjects/Sites/GenericSite</siteTexture>
+    <expandingIconTexture>World/WorldObjects/Expanding/Sites/Manhunters</expandingIconTexture>
+    <gravShipsCanLandOn>true</gravShipsCanLandOn>
+    <tags><li>LiAIChat_BlightfallCarrionPlague</li></tags>
+  </SitePartDef>
+
+  <SitePartDef>
     <defName>LiAIChat_BlightfallSporeForest</defName>
     <label>Blightfall spore forest</label>
     <description>A polluted grove dominated by a living spore mother tree.</description>
@@ -76,6 +87,24 @@
       <canBeOnEdge>true</canBeOnEdge>
       <ignoreUsedRects>true</ignoreUsedRects>
     </genStep>
+  </GenStepDef>
+
+  <GenStepDef>
+    <defName>LiAIChat_BlightfallCarrionPlague_Ruins</defName>
+    <linkWithSite>LiAIChat_BlightfallCarrionPlague</linkWithSite>
+    <order>760</order>
+    <genStep Class="GenStep_ScatterRuinsSimple">
+      <allowInWaterBiome>false</allowInWaterBiome>
+      <countPer10kCellsRange>1~2</countPer10kCellsRange>
+      <canBeOnEdge>true</canBeOnEdge>
+      <ignoreUsedRects>true</ignoreUsedRects>
+    </genStep>
+  </GenStepDef>
+  <GenStepDef>
+    <defName>LiAIChat_BlightfallCarrionPlague_Generation</defName>
+    <linkWithSite>LiAIChat_BlightfallCarrionPlague</linkWithSite>
+    <order>980</order>
+    <genStep Class="LiAIChat.Blightfall.GenStep_BlightfallContaminatedRuin" />
   </GenStepDef>
 
   <GenStepDef>
