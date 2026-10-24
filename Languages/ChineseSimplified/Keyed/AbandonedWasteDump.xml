@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <LiAIChat_AbandonedWasteDumpAwaitingMap>前往废料场后开始记录净化进度。</LiAIChat_AbandonedWasteDumpAwaitingMap>
-  <LiAIChat_AbandonedWasteDumpProgress>污染净化进度：{0}%（已清除 {1}/{2} 个污染地块）；现场剩余露天毒废料包：{3}。</LiAIChat_AbandonedWasteDumpProgress>
-  <LiAIChat_AbandonedWasteDumpExpiredLabel>清理期限已到：[resolvedQuestName]</LiAIChat_AbandonedWasteDumpExpiredLabel>
-  <LiAIChat_AbandonedWasteDumpExpiredText>20天内未能完成废料场清理。该地点再次被遗弃。</LiAIChat_AbandonedWasteDumpExpiredText>
+  <LiAIChat_AbandonedWasteDumpAwaitingMap>进入遗址后将记录初始污染量并开始清理。</LiAIChat_AbandonedWasteDumpAwaitingMap>
+  <LiAIChat_AbandonedWasteDumpProgress>污染地块净化进度：{0}%（已清除 {1}/{2} 格）；地图剩余露天毒废料包：{3} 个。需要达到80%并清走全部废料包。</LiAIChat_AbandonedWasteDumpProgress>
+  <LiAIChat_AbandonedWasteDumpAbandonedLabel>清理任务已放弃：[resolvedQuestName]</LiAIChat_AbandonedWasteDumpAbandonedLabel>
+  <LiAIChat_AbandonedWasteDumpAbandonedText>你在清理完成前离开了遗址，本次任务失败。再次进入时会重新记录初始污染并从头开始。</LiAIChat_AbandonedWasteDumpAbandonedText>
   <LiAIChat_AbandonedWasteDumpRewardLabel>收到清理报酬</LiAIChat_AbandonedWasteDumpRewardLabel>
   <LiAIChat_AbandonedWasteDumpRewardText>废料场已经清理完毕，清理报酬已送达。</LiAIChat_AbandonedWasteDumpRewardText>
 </LanguageData>

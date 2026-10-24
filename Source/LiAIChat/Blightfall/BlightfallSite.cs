@@ -257,6 +257,7 @@ namespace LiAIChat.Blightfall
         {
             base.Notify_SiteMapAboutToBeRemoved(sitePart);
             Site site = sitePart?.site;
+            LiAIChat.Questing.QuestPart_AbandonedWasteDump.FindForSite(site)?.NotifyMapLeaving(site?.Map);
             WorldComponent_Blightfall component = WorldComponent_Blightfall.Current;
             BlightfallSiteState state = component?.GetSiteState(site);
             component?.UpdateSiteStatus(site, BlightfallSiteStatus.Visited);

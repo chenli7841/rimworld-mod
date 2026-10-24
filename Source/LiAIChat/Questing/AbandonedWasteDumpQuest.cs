@@ -14,7 +14,8 @@ namespace LiAIChat.Questing
         protected override bool TestRunInt(Slate slate)
         {
             Site targetSite;
-            bool boundToBlightfallSite = slate.TryGet("blightfallSite", out targetSite, false) && targetSite != null;
+            bool boundToSite = (slate.TryGet("blightfallSite", out targetSite, false) ||
+                slate.TryGet("existingSite", out targetSite, false)) && targetSite != null;
             if (Find.QuestManager == null)
                 return true;
 
@@ -22,7 +23,7 @@ namespace LiAIChat.Questing
                 .Where(quest => quest != null && quest.State == QuestState.Ongoing &&
                     quest.root?.defName == "LiAIChat_AbandonedWasteDump")
                 .SelectMany(quest => quest.PartsListForReading.OfType<QuestPart_AbandonedWasteDump>())
-                .Any(part => !boundToBlightfallSite || part.site == targetSite);
+                .Any(part => !boundToSite || part.site == targetSite);
         }
 
         protected override void RunInt()
@@ -45,7 +46,8 @@ namespace LiAIChat.Questing
             PlanetTile tile = QuestGen.slate.Get<PlanetTile>("siteTile");
             SitePartDef sitePart = DefDatabase<SitePartDef>.GetNamed("LiAIChat_AbandonedWasteDump");
             Site site;
-            bool useExistingSite = QuestGen.slate.TryGet("blightfallSite", out site, false) && site != null;
+            bool useExistingSite = (QuestGen.slate.TryGet("blightfallSite", out site, false) ||
+                QuestGen.slate.TryGet("existingSite", out site, false)) && site != null;
             if (!useExistingSite)
                 site = SiteMaker.MakeSite(sitePart, tile, null, false, (float?)null, null);
             if (site == null)
@@ -62,16 +64,19 @@ namespace LiAIChat.Questing
             float rewardValue = Math.Max(500,
                 Mathf.RoundToInt(expectedPollution * 0.12f + wastepackCount * 30f));
             string cleanedSignal = QuestGen.GenerateNewSignal("AbandonedWasteDumpCleaned", true);
+            string abandonedSignal = QuestGen.GenerateNewSignal("AbandonedWasteDumpAbandoned", true);
 
             QuestGen.quest.AddPart(new QuestPart_AbandonedWasteDump
             {
                 site = site,
                 pollutionPercent = pollutionPercent,
                 wastepackCount = wastepackCount,
-                cleanedSignal = cleanedSignal
+                cleanedSignal = cleanedSignal,
+                abandonedSignal = abandonedSignal
             });
 
             QuestGen.slate.Set("wasteDumpCleanedSignal", cleanedSignal);
+            QuestGen.slate.Set("wasteDumpAbandonedSignal", abandonedSignal);
             QuestGen.slate.Set("rewardValue", rewardValue);
             QuestGen.slate.Set("site", site);
         }
@@ -108,10 +113,16 @@ namespace LiAIChat.Questing
         {
             base.PostMapGenerate(map);
             Site site = map?.Parent as Site;
-            QuestPart_AbandonedWasteDump cleanupPart = QuestPart_AbandonedWasteDump.FindForSite(site);
-            if (cleanupPart == null && WorldComponent_Blightfall.Current?.GetSiteState(site) != null)
-                cleanupPart = QuestPart_AbandonedWasteDump.TryStartForBlightfallSite(site);
+            QuestPart_AbandonedWasteDump cleanupPart = QuestPart_AbandonedWasteDump.FindForSite(site) ??
+                QuestPart_AbandonedWasteDump.TryStartForSite(site);
             cleanupPart?.InitializeFromMap(map);
+        }
+
+        public override void Notify_SiteMapAboutToBeRemoved(SitePart sitePart)
+        {
+            base.Notify_SiteMapAboutToBeRemoved(sitePart);
+            Site site = sitePart?.site;
+            QuestPart_AbandonedWasteDump.FindForSite(site)?.NotifyMapLeaving(site?.Map);
         }
     }
 
@@ -127,6 +138,7 @@ namespace LiAIChat.Questing
         public int lastKnownPollution;
         public int lastKnownWastepacks;
         public string cleanedSignal;
+        public string abandonedSignal;
         public bool initialized;
         public bool cleanedSignalSent;
 
@@ -184,6 +196,16 @@ namespace LiAIChat.Questing
                 blightfallSite.Status == BlightfallSiteStatus.Removed || Find.QuestManager == null)
                 return null;
 
+            return TryStartForSite(site);
+        }
+
+        public static QuestPart_AbandonedWasteDump TryStartForSite(Site site)
+        {
+            if (site == null || Find.QuestManager == null ||
+                (site.MainSitePartDef?.defName != "LiAIChat_AbandonedWasteDump" &&
+                 WorldComponent_Blightfall.Current?.GetSiteState(site)?.Type != BlightfallSiteType.ContaminatedRuin))
+                return null;
+
             QuestPart_AbandonedWasteDump existing = FindForSite(site);
             if (existing != null)
                 return existing;
@@ -193,7 +215,7 @@ namespace LiAIChat.Questing
                 return null;
 
             var slate = new Slate();
-            slate.Set("blightfallSite", site);
+            slate.Set("existingSite", site);
             Quest generatedQuest = QuestUtility.GenerateQuestAndMakeAvailable(questDef, slate);
             QuestPart_AbandonedWasteDump cleanupPart = FindForSite(site);
             if (cleanupPart == null)
@@ -229,29 +251,60 @@ namespace LiAIChat.Questing
             if (!initialized)
                 InitializeFromMap(map);
 
+            RefreshProgress(map);
+            TryComplete(map);
+        }
+
+        public void NotifyMapLeaving(Map map)
+        {
+            if (quest == null || quest.State != QuestState.Ongoing || cleanedSignalSent || !initialized)
+                return;
+            if (map?.pollutionGrid != null)
+            {
+                RefreshProgress(map);
+                if (TryComplete(map))
+                    return;
+            }
+            if (string.IsNullOrEmpty(abandonedSignal) || Find.SignalManager == null)
+            {
+                // Older saves may contain an active cleanup quest created before
+                // the abandonment signal was added.
+                quest.End(QuestEndOutcome.Fail, true);
+                return;
+            }
+            Find.SignalManager.SendSignal(new Signal(abandonedSignal));
+            Log.Message("[LiAIChat] Abandoned waste dump quest failed because the map was left before cleanup: " + site?.Label + ".");
+        }
+
+        private void RefreshProgress(Map map)
+        {
             lastKnownPollution = map.pollutionGrid.TotalPollution;
             lastKnownWastepacks = CountWastepacks(map);
+        }
+
+        private bool TryComplete(Map map)
+        {
             int removedPollution = Math.Max(0, initialPollution - lastKnownPollution);
             bool pollutionCleaned = initialPollution > 0 && removedPollution * 100L >= initialPollution * 80L;
             if (!pollutionCleaned || lastKnownWastepacks > 0)
-                return;
+                return false;
 
             BlightfallSiteState blightfallSite = WorldComponent_Blightfall.Current?.GetSiteState(site);
             WorldComponent_Blightfall component = WorldComponent_Blightfall.Current;
             if (blightfallSite != null && (component == null ||
                 !component.CanPurifyTile(blightfallSite.TileId) ||
                 !component.PurifyTile(blightfallSite.TileId)))
-                return;
+                return false;
 
-            // Set the saved guard before sending the signal because signal delivery
-            // can end and clean up this quest immediately.
             cleanedSignalSent = true;
             if (blightfallSite != null)
                 component.UpdateSiteStatus(site, BlightfallSiteStatus.Completed);
-            Find.SignalManager.SendSignal(new Signal(cleanedSignal));
+            if (!string.IsNullOrEmpty(cleanedSignal) && Find.SignalManager != null)
+                Find.SignalManager.SendSignal(new Signal(cleanedSignal));
             Log.Message("[LiAIChat] Abandoned waste dump cleaned: " + site?.Label +
                 "; initialPollution=" + initialPollution + "; remainingPollution=" +
                 map.pollutionGrid.TotalPollution + "; remainingWastepacks=0.");
+            return true;
         }
 
         private static int CountWastepacks(Map map)
@@ -278,6 +331,7 @@ namespace LiAIChat.Questing
             Scribe_Values.Look(ref initialized, "initialized");
             Scribe_Values.Look(ref cleanedSignalSent, "cleanedSignalSent");
             Scribe_Values.Look(ref cleanedSignal, "cleanedSignal");
+            Scribe_Values.Look(ref abandonedSignal, "abandonedSignal");
         }
     }
 
