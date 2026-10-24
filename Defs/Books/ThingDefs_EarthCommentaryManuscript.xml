@@ -7,6 +7,15 @@
     <category>Item</category><selectable>true</selectable><alwaysHaulable>true</alwaysHaulable><stackLimit>1</stackLimit><tradeNeverStack>true</tradeNeverStack><thingCategories><li>Books</li></thingCategories>
     <graphicData><texPath>Things/Item/Book/Novel/Novel</texPath><graphicClass>Graphic_Single</graphicClass><drawSize>0.8</drawSize></graphicData>
     <statBases><MarketValue>80</MarketValue><Mass>0.5</Mass><Flammability>1</Flammability><MaxHitPoints>40</MaxHitPoints></statBases>
-    <comps><li Class="CompProperties_Forbiddable"/><li Class="CompProperties_Book"><nameMaker>Namer_Novel</nameMaker><descriptionMaker>Namer_Novel</descriptionMaker></li></comps>
+    <comps>
+      <li Class="CompProperties_Forbiddable" />
+      <li Class="CompProperties_Book">
+        <nameMaker>Namer_Novel</nameMaker>
+        <descriptionMaker>Namer_Novel</descriptionMaker>
+        <doers>
+          <li Class="BookOutcomeProperties_JoyFactorModifier" />
+        </doers>
+      </li>
+    </comps>
   </ThingDef>
 </Defs>

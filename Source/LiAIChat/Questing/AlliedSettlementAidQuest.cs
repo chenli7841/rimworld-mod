@@ -216,7 +216,7 @@ namespace LiAIChat.Questing
                 float remaining = part.RemainingNutrition;
                 foreach (ThingDef def in inventory.Where(t => t.def.IsNutritionGivingIngestible &&
                     t.def.ingestible.HumanEdible && t.IngestibleNow)
-                    .Select(t => t.def).Distinct().OrderBy(d => d.LabelCap))
+                    .Select(t => t.def).Distinct().OrderBy(d => d.LabelCap.ToString(), StringComparer.CurrentCulture))
                 {
                     int available = inventory.Where(t => t.def == def).Sum(t => t.stackCount);
                     float nutrition = def.GetStatValueAbstract(StatDefOf.Nutrition);
@@ -232,7 +232,7 @@ namespace LiAIChat.Questing
             {
                 int remaining = part.RemainingMedicine;
                 foreach (ThingDef def in inventory.Where(t => t.def.IsMedicine).Select(t => t.def)
-                    .Distinct().OrderBy(d => d.LabelCap))
+                    .Distinct().OrderBy(d => d.LabelCap.ToString(), StringComparer.CurrentCulture))
                 {
                     int available = inventory.Where(t => t.def == def).Sum(t => t.stackCount);
                     if (available <= 0 || remaining <= 0) continue;
