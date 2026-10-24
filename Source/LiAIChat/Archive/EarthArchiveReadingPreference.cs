@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Verse;
+using Verse.AI;
 
 namespace LiAIChat.Archive
 {
@@ -45,7 +46,9 @@ namespace LiAIChat.Archive
             string reason;
             return candidates
                 .Where(book => book != null && book.Identified &&
-                    BookUtility.CanReadBook(book, pawn, out reason))
+                    !book.Destroyed && !book.IsForbidden(pawn) &&
+                    BookUtility.CanReadBook(book, pawn, out reason) &&
+                    pawn.CanReserveAndReach(book, PathEndMode.Touch, Danger.Some))
                 .InRandomOrder()
                 .FirstOrDefault();
         }
