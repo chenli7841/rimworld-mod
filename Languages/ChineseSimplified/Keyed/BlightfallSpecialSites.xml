@@ -13,6 +13,9 @@
   <LiAIChat_BlightfallSpecialSiteCompleteTitle>污染战场目标完成</LiAIChat_BlightfallSpecialSiteCompleteTitle>
   <LiAIChat_BlightfallCarrionPlagueWarningTitle>腐尸瘟潮即将来袭</LiAIChat_BlightfallCarrionPlagueWarningTitle>
   <LiAIChat_BlightfallCarrionPlagueWarningText>遗址附近的感染动物正在聚集。约24小时后，它们将进入狂暴状态并袭击地图上的所有人。清理战场时，必须焚毁此次兽潮留下的全部腐尸。</LiAIChat_BlightfallCarrionPlagueWarningText>
+  <LiAIChat_BlightfallCarrionPlagueArrivalTitle>腐尸瘟潮已抵达</LiAIChat_BlightfallCarrionPlagueArrivalTitle>
+  <LiAIChat_BlightfallCarrionPlagueArrivalText>{0}只感染动物已经进入狂暴状态。请焚毁它们留下的所有腐尸。</LiAIChat_BlightfallCarrionPlagueArrivalText>
+  <LiAIChat_BlightfallCarrionPlagueInfectedReason>枯萎污染使其陷入狂暴</LiAIChat_BlightfallCarrionPlagueInfectedReason>
   <LiAIChat_BlightfallCarrionPlagueSiteLabel>腐尸瘟潮遗址</LiAIChat_BlightfallCarrionPlagueSiteLabel>
   <LiAIChat_BlightfallCarrionPlagueStatusCountdown>感染兽潮将在 {0} 小时后抵达。</LiAIChat_BlightfallCarrionPlagueStatusCountdown>
   <LiAIChat_BlightfallCarrionPlagueStatusCleanup>感染动物存活：{0}；待焚化腐尸：{1}。</LiAIChat_BlightfallCarrionPlagueStatusCleanup>

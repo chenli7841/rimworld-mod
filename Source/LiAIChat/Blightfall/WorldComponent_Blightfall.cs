@@ -99,6 +99,28 @@ namespace LiAIChat.Blightfall
         }
     }
 
+    public sealed class BlightfallCarrionAnimalRecord : IExposable
+    {
+        public int PawnThingId = -1;
+        public int CorpseThingId = -1;
+        public bool Dead;
+        public bool Burned;
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref PawnThingId, "pawnThingId", -1);
+            Scribe_Values.Look(ref CorpseThingId, "corpseThingId", -1);
+            Scribe_Values.Look(ref Dead, "dead", false);
+            Scribe_Values.Look(ref Burned, "burned", false);
+            if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
+                if (PawnThingId < 0) PawnThingId = -1;
+                if (CorpseThingId < 0) CorpseThingId = -1;
+                if (Burned) Dead = true;
+            }
+        }
+    }
+
     public sealed class BlightfallSiteState : IExposable
     {
         public int SiteId = -1;
@@ -130,6 +152,7 @@ namespace LiAIChat.Blightfall
         public bool CarrionPlagueWaveSpawned;
         public bool CarrionPlagueWarningSent;
         public bool CarrionPlagueResolved;
+        public List<BlightfallCarrionAnimalRecord> CarrionAnimals = new List<BlightfallCarrionAnimalRecord>();
 
         public void ExposeData()
         {
@@ -162,6 +185,7 @@ namespace LiAIChat.Blightfall
             Scribe_Values.Look(ref CarrionPlagueWaveSpawned, "carrionPlagueWaveSpawned", false);
             Scribe_Values.Look(ref CarrionPlagueWarningSent, "carrionPlagueWarningSent", false);
             Scribe_Values.Look(ref CarrionPlagueResolved, "carrionPlagueResolved", false);
+            Scribe_Collections.Look(ref CarrionAnimals, "carrionAnimals", LookMode.Deep);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
                 Normalize();
         }
@@ -196,6 +220,8 @@ namespace LiAIChat.Blightfall
             CorePerimeterTargetThingIds.RemoveAll(id => id < 0);
             CoreDefenseTargetThingIds.RemoveAll(id => id < 0);
             if (CarrionPlagueWaveDueTick < -1) CarrionPlagueWaveDueTick = -1;
+            CarrionAnimals = CarrionAnimals ?? new List<BlightfallCarrionAnimalRecord>();
+            CarrionAnimals.RemoveAll(record => record == null || record.PawnThingId < 0);
         }
     }
 

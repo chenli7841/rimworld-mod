@@ -13,6 +13,9 @@
   <LiAIChat_BlightfallSpecialSiteCompleteTitle>Blightfall objective complete</LiAIChat_BlightfallSpecialSiteCompleteTitle>
   <LiAIChat_BlightfallCarrionPlagueWarningTitle>Carrion Plague approaching</LiAIChat_BlightfallCarrionPlagueWarningTitle>
   <LiAIChat_BlightfallCarrionPlagueWarningText>Infected wildlife is gathering around the site. In about 24 hours, it will become manhunter and attack everyone on the map. Burn every corpse left by this wave to cleanse the site.</LiAIChat_BlightfallCarrionPlagueWarningText>
+  <LiAIChat_BlightfallCarrionPlagueArrivalTitle>Carrion Plague arrived</LiAIChat_BlightfallCarrionPlagueArrivalTitle>
+  <LiAIChat_BlightfallCarrionPlagueArrivalText>{0} infected animals have entered a manhunter rage. Burn every corpse they leave behind.</LiAIChat_BlightfallCarrionPlagueArrivalText>
+  <LiAIChat_BlightfallCarrionPlagueInfectedReason>Driven into a frenzy by the Blight</LiAIChat_BlightfallCarrionPlagueInfectedReason>
   <LiAIChat_BlightfallCarrionPlagueSiteLabel>Carrion Plague site</LiAIChat_BlightfallCarrionPlagueSiteLabel>
   <LiAIChat_BlightfallCarrionPlagueStatusCountdown>The infected animal wave arrives in {0} hours.</LiAIChat_BlightfallCarrionPlagueStatusCountdown>
   <LiAIChat_BlightfallCarrionPlagueStatusCleanup>Infected animals alive: {0}; corpses left to burn: {1}.</LiAIChat_BlightfallCarrionPlagueStatusCleanup>
