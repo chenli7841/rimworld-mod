@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using LiAIChat.Blightfall;
 using RimWorld;
@@ -104,6 +105,42 @@ namespace LiAIChat.Questing
                 if (component != null && component.GetSiteState(site) == null)
                     component.RegisterSite(site, BlightfallSiteType.ContaminatedRuin, component.SourceActivity);
             }
+        }
+    }
+
+    public class QuestNode_GiveAbandonedWasteDumpReward : QuestNode
+    {
+        public SlateRef<string> inSignal;
+
+        protected override bool TestRunInt(Slate slate)
+        {
+            return slate != null;
+        }
+
+        protected override void RunInt()
+        {
+            Slate slate = QuestGen.slate;
+            string rawSignal = inSignal.GetValue(slate);
+            Map map = slate.Get<Map>("map") ?? Find.AnyPlayerHomeMap;
+            if (string.IsNullOrWhiteSpace(rawSignal) || map?.Parent == null)
+            {
+                Log.Warning("[LiAIChat] Could not prepare the Abandoned Waste Dump cleanup payment: missing signal or player map.");
+                return;
+            }
+
+            float rewardValue = slate.Get<float>("rewardValue", 500f, false);
+            int silverCount = Mathf.Max(1, Mathf.RoundToInt(rewardValue / ThingDefOf.Silver.BaseMarketValue));
+            Thing silver = ThingMaker.MakeThing(ThingDefOf.Silver);
+            silver.stackCount = silverCount;
+
+            QuestPart_DropPods dropPods = new QuestPart_DropPods
+            {
+                inSignal = QuestGenUtility.HardcodedSignalWithQuestID(rawSignal),
+                mapParent = map.Parent,
+                useTradeDropSpot = true,
+                Things = new List<Thing> { silver }
+            };
+            QuestGen.quest.AddPart(dropPods);
         }
     }
 
