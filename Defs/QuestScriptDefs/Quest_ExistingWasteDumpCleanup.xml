@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <QuestScriptDef MayRequire="Ludeon.RimWorld.Biotech">
+    <defName>LiAIChat_ExistingWasteDumpCleanup</defName>
+    <rootMinPoints>0</rootMinPoints>
+    <autoAccept>true</autoAccept>
+    <questNameRules>
+      <rulesStrings>
+        <li>questName-&gt;Abandoned waste dump</li>
+      </rulesStrings>
+    </questNameRules>
+    <questDescriptionRules>
+      <rulesStrings>
+        <li>questDescription-&gt;This site was once used to dump toxic waste. The pollution spiraled out of control, and the site was abandoned. Clean at least 80% of the initial polluted ground and remove every exposed wastepack. Ruined buildings may offer some shelter. Cleanup will be rewarded, and success will permanently purify this world tile. There is no time limit, but leaving before completion fails this attempt; returning will restart the cleanup.</li>
+      </rulesStrings>
+    </questDescriptionRules>
+    <root Class="QuestNode_Sequence">
+      <nodes>
+        <li Class="LiAIChat.Questing.QuestNode_AbandonedWasteDumpUnique" />
+        <li Class="LiAIChat.Questing.QuestNode_CreateAbandonedWasteDump" />
+        <li Class="LiAIChat.Questing.QuestNode_SpawnAbandonedWasteDumpSite" />
+        <li Class="QuestNode_Signal">
+          <inSignal>$wasteDumpCleanedSignal</inSignal>
+          <node Class="LiAIChat.Questing.QuestNode_GiveAbandonedWasteDumpReward">
+            <inSignal>$wasteDumpCleanedSignal</inSignal>
+          </node>
+        </li>
+        <li Class="QuestNode_Signal">
+          <inSignal>$wasteDumpAbandonedSignal</inSignal>
+          <node Class="QuestNode_Sequence">
+            <nodes>
+              <li Class="QuestNode_Letter">
+                <label TKey="LiAIChat_AbandonedWasteDumpAbandonedLabel">Cleanup abandoned: [resolvedQuestName]</label>
+                <text TKey="LiAIChat_AbandonedWasteDumpAbandonedText">The site was left before cleanup was complete. Returning to the site will begin a new attempt.</text>
+              </li>
+              <li Class="QuestNode_End">
+                <outcome>Fail</outcome>
+              </li>
+            </nodes>
+          </node>
+        </li>
+        <li Class="QuestNode_End">
+          <inSignal>$wasteDumpCleanedSignal</inSignal>
+          <outcome>Success</outcome>
+        </li>
+        <li Class="QuestNode_Signal">
+          <inSignal>site.Destroyed</inSignal>
+          <node Class="QuestNode_End">
+            <outcome>Fail</outcome>
+          </node>
+        </li>
+      </nodes>
+    </root>
+  </QuestScriptDef>
+</Defs>

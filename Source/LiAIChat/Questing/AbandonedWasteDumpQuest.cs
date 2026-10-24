@@ -22,7 +22,8 @@ namespace LiAIChat.Questing
 
             return !Find.QuestManager.QuestsListForReading
                 .Where(quest => quest != null && quest.State == QuestState.Ongoing &&
-                    quest.root?.defName == "LiAIChat_AbandonedWasteDump")
+                    (quest.root?.defName == "LiAIChat_AbandonedWasteDump" ||
+                     quest.root?.defName == "LiAIChat_ExistingWasteDumpCleanup"))
                 .SelectMany(quest => quest.PartsListForReading.OfType<QuestPart_AbandonedWasteDump>())
                 .Any(part => !boundToSite || part.site == targetSite);
         }
@@ -36,8 +37,11 @@ namespace LiAIChat.Questing
     {
         protected override bool TestRunInt(Slate slate)
         {
+            Site existingSite = null;
+            bool isBoundToExistingSite = (slate.TryGet("blightfallSite", out existingSite, false) ||
+                slate.TryGet("existingSite", out existingSite, false)) && existingSite != null;
             PlanetTile tile = slate.Get<PlanetTile>("siteTile");
-            return tile.Valid &&
+            return (isBoundToExistingSite || tile.Valid) &&
                 DefDatabase<ThingDef>.GetNamedSilentFail("Wastepack") != null &&
                 DefDatabase<SitePartDef>.GetNamedSilentFail("LiAIChat_AbandonedWasteDump") != null;
         }
@@ -247,13 +251,34 @@ namespace LiAIChat.Questing
             if (existing != null)
                 return existing;
 
-            QuestScriptDef questDef = DefDatabase<QuestScriptDef>.GetNamedSilentFail("LiAIChat_AbandonedWasteDump");
+            const string questDefName = "LiAIChat_ExistingWasteDumpCleanup";
+            QuestScriptDef questDef = DefDatabase<QuestScriptDef>.GetNamedSilentFail(questDefName);
             if (questDef == null)
+            {
+                Log.ErrorOnce("[LiAIChat] Missing cleanup quest definition: " + questDefName,
+                    questDefName.GetHashCode());
                 return null;
+            }
 
             var slate = new Slate();
             slate.Set("existingSite", site);
-            Quest generatedQuest = QuestUtility.GenerateQuestAndMakeAvailable(questDef, slate);
+            Quest generatedQuest = null;
+            try
+            {
+                generatedQuest = QuestGen.Generate(questDef, slate);
+                if (generatedQuest != null)
+                {
+                    generatedQuest.SetInitiallyAccepted();
+                    Find.QuestManager.Add(generatedQuest);
+                    Log.Message("[LiAIChat] Started cleanup quest " + generatedQuest.name +
+                        " for existing site " + site.Label + ".");
+                }
+            }
+            catch (Exception error)
+            {
+                Log.Error("[LiAIChat] Could not generate cleanup quest for existing site " +
+                    site.Label + ": " + error);
+            }
             QuestPart_AbandonedWasteDump cleanupPart = FindForSite(site);
             if (cleanupPart == null)
                 Log.Warning("[LiAIChat Blightfall] Could not attach the existing Abandoned Waste Dump quest to site " +
