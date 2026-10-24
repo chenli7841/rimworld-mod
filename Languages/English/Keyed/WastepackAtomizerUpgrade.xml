@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_AtomizerUpgradeLabel>Upgrade atomizer ({0}/{1})</LiAIChat_AtomizerUpgradeLabel>
+  <LiAIChat_AtomizerUpgradeDescription>Current: {0} hours per wastepack, capacity {1}. The next upgrade saves {2} hour and adds {3} capacity. Cost: {4} {5}, {6} steel, and {7} {8} (plasteel).</LiAIChat_AtomizerUpgradeDescription>
+  <LiAIChat_AtomizerUpgradeComplete>{0} upgraded to {1}/{2}: {3} hours per wastepack, capacity {4}.</LiAIChat_AtomizerUpgradeComplete>
+  <LiAIChat_AtomizerUpgradeMaxed>This wastepack atomizer has reached its maximum upgrade level.</LiAIChat_AtomizerUpgradeMaxed>
+  <LiAIChat_AtomizerUpgradeMaterialsMissing>Insufficient materials. Each upgrade requires 1 nanostructuring chip, 100 steel, and 50 plasteel.</LiAIChat_AtomizerUpgradeMaterialsMissing>
+  <LiAIChat_AtomizerUpgradeDefsMissing>Required item definition not found: {0}. Check that the required DLC or material mod is enabled.</LiAIChat_AtomizerUpgradeDefsMissing>
+</LanguageData>

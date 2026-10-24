@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_AtomizerUpgradeLabel>升级分解器（{0}/{1}）</LiAIChat_AtomizerUpgradeLabel>
+  <LiAIChat_AtomizerUpgradeDescription>当前：每份废料处理{0}小时，容量{1}份。下一次升级可减少{2}小时并增加{3}份容量。需要：{4}个{5}、{6}钢铁、{7}个{8}（精钢）。</LiAIChat_AtomizerUpgradeDescription>
+  <LiAIChat_AtomizerUpgradeComplete>{0}已升级至{1}/{2}级：每份废料处理{3}小时，容量{4}份。</LiAIChat_AtomizerUpgradeComplete>
+  <LiAIChat_AtomizerUpgradeMaxed>这台垃圾分解器已达到最高升级等级。</LiAIChat_AtomizerUpgradeMaxed>
+  <LiAIChat_AtomizerUpgradeMaterialsMissing>升级所需材料不足：1个纳米结构芯片、100钢铁和50精钢（Plasteel）。</LiAIChat_AtomizerUpgradeMaterialsMissing>
+  <LiAIChat_AtomizerUpgradeDefsMissing>未找到升级所需的物品定义：{0}。请确认对应 DLC 或材料 Mod 已启用。</LiAIChat_AtomizerUpgradeDefsMissing>
+</LanguageData>
