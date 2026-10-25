@@ -49,4 +49,5 @@
   <LiAIChat_BlightfallExpeditionUnavailable>目前无法向该污染据点请求支援。</LiAIChat_BlightfallExpeditionUnavailable>
   <LiAIChat_BlightfallExpeditionRequested>{0} 已派遣远征部队前往 {1}。</LiAIChat_BlightfallExpeditionRequested>
   <LiAIChat_BlightfallExpeditionFailed>盟友远征队无法抵达。该据点的支援请求已用完。</LiAIChat_BlightfallExpeditionFailed>
+  <LiAIChat_BlightfallLocalPollutionCount>当前地图污染地块：{0}</LiAIChat_BlightfallLocalPollutionCount>
 </LanguageData>

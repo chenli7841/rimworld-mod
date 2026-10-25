@@ -49,4 +49,5 @@
   <LiAIChat_BlightfallExpeditionUnavailable>Support cannot be requested for this contaminated site right now.</LiAIChat_BlightfallExpeditionUnavailable>
   <LiAIChat_BlightfallExpeditionRequested>{0} has sent an expedition to {1}.</LiAIChat_BlightfallExpeditionRequested>
   <LiAIChat_BlightfallExpeditionFailed>The allied expedition could not arrive. This site's support request is consumed.</LiAIChat_BlightfallExpeditionFailed>
+  <LiAIChat_BlightfallLocalPollutionCount>Polluted cells on this map: {0}</LiAIChat_BlightfallLocalPollutionCount>
 </LanguageData>
