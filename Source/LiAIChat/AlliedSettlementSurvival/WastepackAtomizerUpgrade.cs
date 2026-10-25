@@ -8,6 +8,30 @@ using Verse;
 
 namespace LiAIChat.AlliedSettlementSurvival
 {
+    public static class WastepackAtomizerUpgradeDefInjector
+    {
+        public static void EnsureUpgradeComp()
+        {
+            if (!ModsConfig.BiotechActive)
+                return;
+
+            ThingDef atomizer = DefDatabase<ThingDef>.GetNamedSilentFail("WastepackAtomizer");
+            if (atomizer == null)
+            {
+                Log.Warning("[LiAIChat] Biotech is active but WastepackAtomizer ThingDef was not found.");
+                return;
+            }
+
+            if (atomizer.comps == null)
+                atomizer.comps = new List<CompProperties>();
+            if (atomizer.comps.Any(props => props?.compClass == typeof(CompWastepackAtomizerUpgrade)))
+                return;
+
+            atomizer.comps.Add(new CompProperties_WastepackAtomizerUpgrade());
+            Log.Message("[LiAIChat] Added upgrade component to WastepackAtomizer ThingDef.");
+        }
+    }
+
     public class CompProperties_WastepackAtomizerUpgrade : CompProperties
     {
         public CompProperties_WastepackAtomizerUpgrade()

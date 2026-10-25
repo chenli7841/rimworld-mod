@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using LiAIChat.Dialogue;
+using LiAIChat.AlliedSettlementSurvival;
 using LiAIChat.Social;
 using RimWorld;
 using System;
@@ -33,6 +34,7 @@ namespace LiAIChat
             }
 
             Log.Message("[Li AI Chat] My mod loaded!");
+            WastepackAtomizerUpgradeDefInjector.EnsureUpgradeComp();
             var harmony = new Harmony("li.rimworld.aichat");
             harmony.PatchAll();
             Log.Message("[Li AI Chat] Harmony patches applied!");
