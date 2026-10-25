@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using HarmonyLib;
 using RimWorld;
 using UnityEngine;
@@ -51,6 +52,8 @@ namespace LiAIChat.AlliedSettlementSurvival
         public const int TicksPerHour = 2500;
 
         private const string PlasteelDefName = "Plasteel";
+        private static readonly FieldInfo ThingOwnerMaxStacksField = typeof(ThingOwner).GetField(
+            "maxStacks", BindingFlags.Instance | BindingFlags.NonPublic);
         private int upgradeLevel;
 
         public int UpgradeLevel => Mathf.Clamp(upgradeLevel, 0, MaximumUpgradeLevel);
@@ -60,7 +63,16 @@ namespace LiAIChat.AlliedSettlementSurvival
             base.PostExposeData();
             Scribe_Values.Look(ref upgradeLevel, "wastepackAtomizerUpgradeLevel", 0);
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
+            {
                 upgradeLevel = Mathf.Clamp(upgradeLevel, 0, MaximumUpgradeLevel);
+                ApplyCapacity();
+            }
+        }
+
+        public override void PostSpawnSetup(bool respawningAfterLoad)
+        {
+            base.PostSpawnSetup(respawningAfterLoad);
+            ApplyCapacity();
         }
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
@@ -121,11 +133,24 @@ namespace LiAIChat.AlliedSettlementSurvival
                 ConsumeResources(cost);
 
             upgradeLevel = Mathf.Clamp(upgradeLevel + 1, 0, MaximumUpgradeLevel);
+            ApplyCapacity();
             parent.Map.mapDrawer.MapMeshDirty(parent.Position, MapMeshFlagDefOf.Buildings);
             Messages.Message("LiAIChat_AtomizerUpgradeComplete".Translate(
                 parent.LabelCap, UpgradeLevel, MaximumUpgradeLevel, 12 - UpgradeLevel,
                 10 + UpgradeLevel * CapacityAddedPerUpgrade), parent,
                 MessageTypeDefOf.PositiveEvent);
+        }
+
+        private void ApplyCapacity()
+        {
+            CompAtomizer atomizer = parent?.GetComp<CompAtomizer>();
+            ThingOwner contents = atomizer?.SearchableContents;
+            if (contents == null || ThingOwnerMaxStacksField == null)
+                return;
+
+            int baseCapacity = Math.Max(0, atomizer.Props.stackLimit);
+            int upgradedCapacity = baseCapacity + UpgradeLevel * CapacityAddedPerUpgrade;
+            ThingOwnerMaxStacksField.SetValue(contents, upgradedCapacity);
         }
 
         private string GetUpgradeDisabledReason(ThingDef plasteel)
