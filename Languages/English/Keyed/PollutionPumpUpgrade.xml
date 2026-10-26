@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_PollutionPumpUpgradeLabel>Upgrade pollution pump ({0}/{1})</LiAIChat_PollutionPumpUpgradeLabel>
+  <LiAIChat_PollutionPumpUpgradeDescription>Current: {0} hours per cell and a radius of {1} cells. The next upgrade saves {2} hour per cell and adds {3} cell to the radius. Cost: {4} steel and {5} advanced component.</LiAIChat_PollutionPumpUpgradeDescription>
+  <LiAIChat_PollutionPumpUpgradeComplete>{0} upgraded to {1}/{2}: {3} hours per cell, radius {4} cells.</LiAIChat_PollutionPumpUpgradeComplete>
+  <LiAIChat_PollutionPumpUpgradeMaxed>This pollution pump has reached its maximum upgrade level.</LiAIChat_PollutionPumpUpgradeMaxed>
+  <LiAIChat_PollutionPumpUpgradeMaterialsMissing>Insufficient materials. Each upgrade requires 150 steel and 1 advanced component.</LiAIChat_PollutionPumpUpgradeMaterialsMissing>
+  <LiAIChat_PollutionPumpUpgradeDefsMissing>Could not find the vanilla material definitions required for this upgrade.</LiAIChat_PollutionPumpUpgradeDefsMissing>
+</LanguageData>

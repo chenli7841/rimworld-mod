@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_PollutionPumpUpgradeLabel>升级清污泵（{0}/{1}）</LiAIChat_PollutionPumpUpgradeLabel>
+  <LiAIChat_PollutionPumpUpgradeDescription>当前：每格清理间隔{0}小时，半径{1}格。下次升级可缩短{2}小时并扩大{3}格半径。需要：{4}钢铁和{5}个高级零部件。</LiAIChat_PollutionPumpUpgradeDescription>
+  <LiAIChat_PollutionPumpUpgradeComplete>{0}已升级至{1}/{2}级：每格清理间隔{3}小时，半径{4}格。</LiAIChat_PollutionPumpUpgradeComplete>
+  <LiAIChat_PollutionPumpUpgradeMaxed>这台清污泵已达到最高升级等级。</LiAIChat_PollutionPumpUpgradeMaxed>
+  <LiAIChat_PollutionPumpUpgradeMaterialsMissing>升级所需材料不足：150钢铁和1个高级零部件。</LiAIChat_PollutionPumpUpgradeMaterialsMissing>
+  <LiAIChat_PollutionPumpUpgradeDefsMissing>未找到升级所需的原版材料定义。</LiAIChat_PollutionPumpUpgradeDefsMissing>
+</LanguageData>

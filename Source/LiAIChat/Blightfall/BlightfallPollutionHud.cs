@@ -14,7 +14,8 @@ namespace LiAIChat.Blightfall
         public static void Postfix()
         {
             Map map = Find.CurrentMap;
-            if (map?.pollutionGrid == null || !ModsConfig.BiotechActive)
+            if (map?.pollutionGrid == null || !ModsConfig.BiotechActive ||
+                Find.PlaySettings == null || !Find.PlaySettings.showPollutionOverlay)
                 return;
 
             Rect panel = new Rect((Verse.UI.screenWidth - PanelWidth) * 0.5f, 42f, PanelWidth, PanelHeight);
