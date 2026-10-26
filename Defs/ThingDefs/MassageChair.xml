@@ -27,9 +27,6 @@
     </costList>
     <pathCost>30</pathCost>
     <designationCategory>Furniture</designationCategory>
-    <thingCategories>
-      <li>BuildingsFurniture</li>
-    </thingCategories>
     <researchPrerequisites>
       <li>MicroelectronicsBasics</li>
     </researchPrerequisites>
