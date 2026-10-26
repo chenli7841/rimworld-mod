@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_MassageChairEnjoyOption>Enjoy massage</LiAIChat_MassageChairEnjoyOption>
+  <LiAIChat_MassageChairPowerState>Power: {0}</LiAIChat_MassageChairPowerState>
+  <LiAIChat_MassageChairPowered>powered</LiAIChat_MassageChairPowered>
+  <LiAIChat_MassageChairUnpowered>unpowered; functions as a normal chair</LiAIChat_MassageChairUnpowered>
+  <LiAIChat_MassageChairUserNone>Nobody is using the chair.</LiAIChat_MassageChairUserNone>
+  <LiAIChat_MassageChairUser>In use by: {0}</LiAIChat_MassageChairUser>
+  <LiAIChat_MassageChairProgressIdle>Massage time: 0 / {0} hours</LiAIChat_MassageChairProgressIdle>
+  <LiAIChat_MassageChairProgress>Massage time: {0} / {1} hours</LiAIChat_MassageChairProgress>
+  <LiAIChat_MassageChairEffectsInfo>A massage grants mood +3 to +11 for 4 hours, based on natural limbs. Natural arms and legs gain +5% part efficiency for 2 hours.</LiAIChat_MassageChairEffectsInfo>
+  <LiAIChat_MassageChairPawnUnavailable>That colonist cannot use the chair right now.</LiAIChat_MassageChairPawnUnavailable>
+  <LiAIChat_MassageChairNeedsPower>Needs power for a massage.</LiAIChat_MassageChairNeedsPower>
+  <LiAIChat_MassageChairOccupied>The chair is occupied by {0}.</LiAIChat_MassageChairOccupied>
+  <LiAIChat_MassageChairCannotReach>Cannot reach the massage chair.</LiAIChat_MassageChairCannotReach>
+</LanguageData>

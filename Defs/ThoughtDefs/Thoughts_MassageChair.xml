@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThoughtDef>
+    <defName>LiAIChat_RelaxedByMassage</defName>
+    <thoughtClass>Thought_Memory</thoughtClass>
+    <durationDays>0.16666667</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>relaxed by massage</label>
+        <description>A soothing massage left me feeling relaxed.</description>
+        <baseMoodEffect>3</baseMoodEffect>
+      </li>
+      <li>
+        <label>relaxed by massage</label>
+        <description>A soothing massage left me feeling relaxed.</description>
+        <baseMoodEffect>5</baseMoodEffect>
+      </li>
+      <li>
+        <label>relaxed by massage</label>
+        <description>A soothing massage left me feeling relaxed.</description>
+        <baseMoodEffect>7</baseMoodEffect>
+      </li>
+      <li>
+        <label>relaxed by massage</label>
+        <description>A soothing massage left me feeling relaxed.</description>
+        <baseMoodEffect>9</baseMoodEffect>
+      </li>
+      <li>
+        <label>relaxed by massage</label>
+        <description>A soothing massage left me feeling relaxed.</description>
+        <baseMoodEffect>11</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+</Defs>

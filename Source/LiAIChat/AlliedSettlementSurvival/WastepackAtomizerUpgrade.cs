@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using HarmonyLib;
 using RimWorld;
 using UnityEngine;
@@ -235,6 +236,80 @@ namespace LiAIChat.AlliedSettlementSurvival
         {
             int level = __instance?.parent?.GetComp<CompWastepackAtomizerUpgrade>()?.UpgradeLevel ?? 0;
             __result += level * CompWastepackAtomizerUpgrade.CapacityAddedPerUpgrade;
+        }
+    }
+
+    [HarmonyPatch(typeof(CompAtomizer), "CompInspectStringExtra")]
+    public static class WastepackAtomizerInspectCapacityPatch
+    {
+        public static void Postfix(CompAtomizer __instance, ref string __result)
+        {
+            int level = __instance?.parent?.GetComp<CompWastepackAtomizerUpgrade>()?.UpgradeLevel ?? 0;
+            if (__instance == null || string.IsNullOrEmpty(__result) || __instance.Props == null)
+                return;
+
+            int baseCapacity = Math.Max(0, __instance.Props.stackLimit);
+            int upgradedCapacity = baseCapacity + level * CompWastepackAtomizerUpgrade.CapacityAddedPerUpgrade;
+            if (baseCapacity != upgradedCapacity)
+            {
+                string denominatorPattern = $@"(?<!\d)(?<count>\d+)\s*/\s*{baseCapacity}(?!\d)";
+                __result = Regex.Replace(__result, denominatorPattern,
+                    match => $"{match.Groups["count"].Value}/{upgradedCapacity}");
+            }
+
+            int stored = __instance.SearchableContents?.TotalStackCount ?? 0;
+            __result += "\n" + "LiAIChat_AtomizerBatchPerCycle".Translate(
+                WastepackAtomizerBatchUtility.BatchSizeFor(stored), stored);
+        }
+    }
+
+    public static class WastepackAtomizerBatchUtility
+    {
+        public static int BatchSizeFor(int storedCount)
+        {
+            if (storedCount <= 0)
+                return 0;
+
+            return storedCount / 10 + (storedCount % 10 == 0 ? 0 : 1);
+        }
+    }
+
+    [HarmonyPatch(typeof(CompAtomizer), "DoAtomize")]
+    public static class WastepackAtomizerBatchProcessingPatch
+    {
+        public static void Prefix(CompAtomizer __instance, out int __state)
+        {
+            __state = WastepackAtomizerBatchUtility.BatchSizeFor(
+                __instance?.SearchableContents?.TotalStackCount ?? 0);
+        }
+
+        public static void Postfix(CompAtomizer __instance, int __state)
+        {
+            int remainingToAtomize = __state - 1;
+            ThingOwner contents = __instance?.SearchableContents;
+            if (remainingToAtomize <= 0 || contents == null || contents.Count == 0)
+                return;
+
+            foreach (Thing wastepack in contents.ToList())
+            {
+                if (wastepack == null || wastepack.Destroyed || !contents.Contains(wastepack))
+                    continue;
+
+                int consumed = Math.Min(remainingToAtomize, Math.Max(0, wastepack.stackCount));
+                if (consumed <= 0)
+                    continue;
+
+                wastepack.stackCount -= consumed;
+                remainingToAtomize -= consumed;
+                if (wastepack.stackCount <= 0)
+                {
+                    contents.Remove(wastepack);
+                    wastepack.Destroy(DestroyMode.Vanish);
+                }
+
+                if (remainingToAtomize <= 0)
+                    break;
+            }
         }
     }
 }

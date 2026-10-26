@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <JobDef>
+    <defName>LiAIChat_EnjoyMassage</defName>
+    <driverClass>LiAIChat.Furniture.JobDriver_EnjoyMassage</driverClass>
+    <reportString>enjoying a massage.</reportString>
+    <joyDuration>1250</joyDuration>
+    <joyKind>Meditative</joyKind>
+    <casualInterruptible>true</casualInterruptible>
+  </JobDef>
+</Defs>

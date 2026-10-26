@@ -6,4 +6,5 @@
   <LiAIChat_AtomizerUpgradeMaxed>This wastepack atomizer has reached its maximum upgrade level.</LiAIChat_AtomizerUpgradeMaxed>
   <LiAIChat_AtomizerUpgradeMaterialsMissing>Insufficient materials. Each upgrade requires 1 nanostructuring chip, 100 steel, and 50 plasteel.</LiAIChat_AtomizerUpgradeMaterialsMissing>
   <LiAIChat_AtomizerUpgradeDefsMissing>Required item definition not found: {0}. Check that the required DLC or material mod is enabled.</LiAIChat_AtomizerUpgradeDefsMissing>
+  <LiAIChat_AtomizerBatchPerCycle>Next cycle: {0} wastepack(s) from {1} stored (10%, rounded up).</LiAIChat_AtomizerBatchPerCycle>
 </LanguageData>

@@ -6,4 +6,5 @@
   <LiAIChat_AtomizerUpgradeMaxed>这台垃圾分解器已达到最高升级等级。</LiAIChat_AtomizerUpgradeMaxed>
   <LiAIChat_AtomizerUpgradeMaterialsMissing>升级所需材料不足：1个纳米结构芯片、100钢铁和50精钢（Plasteel）。</LiAIChat_AtomizerUpgradeMaterialsMissing>
   <LiAIChat_AtomizerUpgradeDefsMissing>未找到升级所需的物品定义：{0}。请确认对应 DLC 或材料 Mod 已启用。</LiAIChat_AtomizerUpgradeDefsMissing>
+  <LiAIChat_AtomizerBatchPerCycle>下轮将分解：{0}份（当前储量{1}份的10%，向上取整）。</LiAIChat_AtomizerBatchPerCycle>
 </LanguageData>

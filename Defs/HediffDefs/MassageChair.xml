@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <HediffDef>
+    <defName>LiAIChat_MassageArmEfficiency</defName>
+    <label>massage-relaxed arm</label>
+    <description>The natural arm is temporarily more efficient after a massage.</description>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>5000</disappearsAfterTicks>
+        <showRemainingTime>true</showRemainingTime>
+      </li>
+      <li Class="LiAIChat.Furniture.HediffCompProperties_MassageLimb" />
+    </comps>
+    <stages>
+      <li>
+        <partEfficiencyOffset>0.05</partEfficiencyOffset>
+      </li>
+    </stages>
+  </HediffDef>
+  <HediffDef>
+    <defName>LiAIChat_MassageLegEfficiency</defName>
+    <label>massage-relaxed leg</label>
+    <description>The natural leg is temporarily more efficient after a massage.</description>
+    <isBad>false</isBad>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>5000</disappearsAfterTicks>
+        <showRemainingTime>true</showRemainingTime>
+      </li>
+      <li Class="LiAIChat.Furniture.HediffCompProperties_MassageLimb" />
+    </comps>
+    <stages>
+      <li>
+        <partEfficiencyOffset>0.05</partEfficiencyOffset>
+      </li>
+    </stages>
+  </HediffDef>
+</Defs>

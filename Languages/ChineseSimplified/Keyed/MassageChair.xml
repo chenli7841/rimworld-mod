@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_MassageChairEnjoyOption>享受按摩</LiAIChat_MassageChairEnjoyOption>
+  <LiAIChat_MassageChairPowerState>电力：{0}</LiAIChat_MassageChairPowerState>
+  <LiAIChat_MassageChairPowered>已通电</LiAIChat_MassageChairPowered>
+  <LiAIChat_MassageChairUnpowered>未通电；仍可作为普通椅子使用</LiAIChat_MassageChairUnpowered>
+  <LiAIChat_MassageChairUserNone>当前无人使用。</LiAIChat_MassageChairUserNone>
+  <LiAIChat_MassageChairUser>使用者：{0}</LiAIChat_MassageChairUser>
+  <LiAIChat_MassageChairProgressIdle>按摩进度：0 / {0} 小时</LiAIChat_MassageChairProgressIdle>
+  <LiAIChat_MassageChairProgress>按摩进度：{0} / {1} 小时</LiAIChat_MassageChairProgress>
+  <LiAIChat_MassageChairEffectsInfo>按摩后获得持续4小时的心情加成（+3至+11，按天然肢体数量计算）。天然手臂和腿的局部效率提高5%，持续2小时。</LiAIChat_MassageChairEffectsInfo>
+  <LiAIChat_MassageChairPawnUnavailable>该殖民者现在无法使用按摩椅。</LiAIChat_MassageChairPawnUnavailable>
+  <LiAIChat_MassageChairNeedsPower>按摩需要电力。</LiAIChat_MassageChairNeedsPower>
+  <LiAIChat_MassageChairOccupied>按摩椅正由{0}使用。</LiAIChat_MassageChairOccupied>
+  <LiAIChat_MassageChairCannotReach>无法到达按摩椅。</LiAIChat_MassageChairCannotReach>
+</LanguageData>

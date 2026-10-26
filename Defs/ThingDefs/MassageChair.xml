@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <ThingDef ParentName="FurnitureWithQualityBase">
+    <defName>LiAIChat_MassageChair</defName>
+    <label>massage chair</label>
+    <description>An electrically powered chair that provides soothing massages while colonists sit. Natural limbs receive temporary efficiency bonuses, while all users benefit from relaxation, even those with fully artificial limbs.</description>
+    <thingClass>LiAIChat.Furniture.Building_MassageChair</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Furniture/Armchair</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <size>(1,1)</size>
+    <statBases>
+      <MaxHitPoints>150</MaxHitPoints>
+      <WorkToBuild>12000</WorkToBuild>
+      <Mass>15</Mass>
+      <Flammability>0.7</Flammability>
+      <Beauty>8</Beauty>
+      <Comfort>0.95</Comfort>
+    </statBases>
+    <costList>
+      <Steel>100</Steel>
+      <ComponentIndustrial>6</ComponentIndustrial>
+      <Cloth>50</Cloth>
+    </costList>
+    <pathCost>30</pathCost>
+    <designationCategory>Furniture</designationCategory>
+    <thingCategories>
+      <li>BuildingsFurniture</li>
+    </thingCategories>
+    <researchPrerequisites>
+      <li>Microelectronics</li>
+    </researchPrerequisites>
+    <building>
+      <isSittable>true</isSittable>
+      <paintable>true</paintable>
+      <destroySound>BuildingDestroyed_Soft_Small</destroySound>
+    </building>
+    <tickerType>Normal</tickerType>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>120</basePowerConsumption>
+      </li>
+      <li Class="LiAIChat.Furniture.CompProperties_MassageChair" />
+    </comps>
+  </ThingDef>
+</Defs>
