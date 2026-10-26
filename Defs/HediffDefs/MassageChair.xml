@@ -2,6 +2,7 @@
 <Defs>
   <HediffDef>
     <defName>LiAIChat_MassageArmEfficiency</defName>
+    <hediffClass>HediffWithComps</hediffClass>
     <label>massage-relaxed arm</label>
     <description>The natural arm is temporarily more efficient after a massage.</description>
     <isBad>false</isBad>
@@ -20,6 +21,7 @@
   </HediffDef>
   <HediffDef>
     <defName>LiAIChat_MassageLegEfficiency</defName>
+    <hediffClass>HediffWithComps</hediffClass>
     <label>massage-relaxed leg</label>
     <description>The natural leg is temporarily more efficient after a massage.</description>
     <isBad>false</isBad>
