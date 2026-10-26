@@ -31,7 +31,7 @@
       <li>BuildingsFurniture</li>
     </thingCategories>
     <researchPrerequisites>
-      <li>Microelectronics</li>
+      <li>MicroelectronicsBasics</li>
     </researchPrerequisites>
     <building>
       <isSittable>true</isSittable>
