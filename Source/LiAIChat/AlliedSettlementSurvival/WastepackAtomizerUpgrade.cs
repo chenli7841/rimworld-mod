@@ -234,8 +234,43 @@ namespace LiAIChat.AlliedSettlementSurvival
     {
         public static void Postfix(CompAtomizer __instance, ref int __result)
         {
-            int level = __instance?.parent?.GetComp<CompWastepackAtomizerUpgrade>()?.UpgradeLevel ?? 0;
-            __result += level * CompWastepackAtomizerUpgrade.CapacityAddedPerUpgrade;
+            __result = WastepackAtomizerCapacityUtility.SpaceLeft(__instance);
+        }
+    }
+
+    [HarmonyPatch(typeof(CompAtomizer), nameof(CompAtomizer.Accepts), new[] { typeof(Thing) })]
+    public static class WastepackAtomizerAcceptsPatch
+    {
+        public static void Postfix(CompAtomizer __instance, Thing __0, ref bool __result)
+        {
+            if (__instance?.Props == null || __0 == null)
+                return;
+
+            // Keep haul destination checks aligned with the upgraded capacity shown to the player.
+            __result = __instance.Props.thingDef == __0.def &&
+                WastepackAtomizerCapacityUtility.SpaceLeft(__instance) > 0;
+        }
+    }
+
+    public static class WastepackAtomizerCapacityUtility
+    {
+        public static int Capacity(CompAtomizer atomizer)
+        {
+            if (atomizer?.Props == null)
+                return 0;
+
+            int baseCapacity = Math.Max(0, atomizer.Props.stackLimit);
+            int level = atomizer.parent?.GetComp<CompWastepackAtomizerUpgrade>()?.UpgradeLevel ?? 0;
+            return baseCapacity + level * CompWastepackAtomizerUpgrade.CapacityAddedPerUpgrade;
+        }
+
+        public static int SpaceLeft(CompAtomizer atomizer)
+        {
+            if (atomizer == null)
+                return 0;
+
+            int stored = atomizer.SearchableContents?.TotalStackCount ?? 0;
+            return Math.Max(0, Capacity(atomizer) - stored);
         }
     }
 
