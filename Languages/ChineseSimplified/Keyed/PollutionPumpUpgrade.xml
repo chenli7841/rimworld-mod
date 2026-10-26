@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <LiAIChat_PollutionPumpUpgradeLabel>升级清污泵（{0}/{1}）</LiAIChat_PollutionPumpUpgradeLabel>
-  <LiAIChat_PollutionPumpUpgradeDescription>当前：每格清理间隔{0}小时，半径{1}格。下次升级可缩短{2}小时并扩大{3}格半径。需要：{4}钢铁和{5}个高级零部件。</LiAIChat_PollutionPumpUpgradeDescription>
+  <LiAIChat_PollutionPumpUpgradeDescription>当前：每格清理间隔{0}小时，半径{1}格。下次升级可缩短{2}小时并扩大{3}格半径。需要：{4}钢铁和{5}个高级零部件。点击后选择殖民者；材料会先预留，施工完成后扣除。</LiAIChat_PollutionPumpUpgradeDescription>
   <LiAIChat_PollutionPumpUpgradeComplete>{0}已升级至{1}/{2}级：每格清理间隔{3}小时，半径{4}格。</LiAIChat_PollutionPumpUpgradeComplete>
   <LiAIChat_PollutionPumpUpgradeMaxed>这台清污泵已达到最高升级等级。</LiAIChat_PollutionPumpUpgradeMaxed>
+  <LiAIChat_PollutionPumpUpgradeInProgress>这台清污泵正在升级。</LiAIChat_PollutionPumpUpgradeInProgress>
   <LiAIChat_PollutionPumpUpgradeMaterialsMissing>升级所需材料不足：150钢铁和1个高级零部件。</LiAIChat_PollutionPumpUpgradeMaterialsMissing>
   <LiAIChat_PollutionPumpUpgradeDefsMissing>未找到升级所需的原版材料定义。</LiAIChat_PollutionPumpUpgradeDefsMissing>
+  <LiAIChat_PollutionPumpUpgradeWorkerOption>由{0}升级</LiAIChat_PollutionPumpUpgradeWorkerOption>
+  <LiAIChat_PollutionPumpUpgradeNoWorker>没有可以到达清污泵的殖民者</LiAIChat_PollutionPumpUpgradeNoWorker>
+  <LiAIChat_PollutionPumpUpgradeMaterialsLost>升级所预留的材料已不可用，清污泵未升级。</LiAIChat_PollutionPumpUpgradeMaterialsLost>
+  <LiAIChat_PollutionPumpUpgradeWorkReport>正在重建清污泵。</LiAIChat_PollutionPumpUpgradeWorkReport>
 </LanguageData>
