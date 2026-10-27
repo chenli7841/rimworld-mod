@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_SporeBioengineering.label>Spore Bioengineering</LiAIChat_SporeBioengineering.label>
+  <LiAIChat_SporeBioengineering.description>Study the structure and controlled behavior of Blightfall spores. Requires the Spore Bioengineering blueprint and 3 units of Blight research data when research begins.</LiAIChat_SporeBioengineering.description>
+  <LiAIChat_CorrosiveTechnology.label>Corrosive Technology</LiAIChat_CorrosiveTechnology.label>
+  <LiAIChat_CorrosiveTechnology.description>Study the Blightfall's corrosive compounds and how to control them. Requires the Corrosive Technology blueprint and 4 units of Blight research data when research begins.</LiAIChat_CorrosiveTechnology.description>
+  <LiAIChat_SymbioticArmor.label>Symbiotic Armor</LiAIChat_SymbioticArmor.label>
+  <LiAIChat_SymbioticArmor.description>Develop a living protective shell from symbiotic Blightfall organisms. Requires the Symbiotic Armor blueprint and 5 units of Blight research data when research begins.</LiAIChat_SymbioticArmor.description>
+  <LiAIChat_ResonanceTechnology.label>Resonance Technology</LiAIChat_ResonanceTechnology.label>
+  <LiAIChat_ResonanceTechnology.description>Analyze the resonance structures used by the Blightfall network. Requires the Resonance Technology blueprint and 6 units of Blight research data when research begins.</LiAIChat_ResonanceTechnology.description>
+  <LiAIChat_PhaseveilTechnology.label>Phaseveil Technology</LiAIChat_PhaseveilTechnology.label>
+  <LiAIChat_PhaseveilTechnology.description>Study how the Blightfall distorts local space and visibility. Requires the Phaseveil Technology blueprint and 8 units of Blight research data when research begins.</LiAIChat_PhaseveilTechnology.description>
+</LanguageData>

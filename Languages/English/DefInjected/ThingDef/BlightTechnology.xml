@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_BlightResearchData.label>Blight research data</LiAIChat_BlightResearchData.label>
+  <LiAIChat_BlightResearchData.description>Recovered scientific records from the Blightfall network. Research projects consume them when selected.</LiAIChat_BlightResearchData.description>
+  <LiAIChat_SporeBioengineeringBlueprint.label>Spore Bioengineering blueprint</LiAIChat_SporeBioengineeringBlueprint.label>
+  <LiAIChat_SporeBioengineeringBlueprint.description>A recoverable blueprint for engineering controlled Blightfall spores.</LiAIChat_SporeBioengineeringBlueprint.description>
+  <LiAIChat_CorrosiveTechnologyBlueprint.label>Corrosive Technology blueprint</LiAIChat_CorrosiveTechnologyBlueprint.label>
+  <LiAIChat_CorrosiveTechnologyBlueprint.description>A recoverable blueprint for Blightfall corrosive technology.</LiAIChat_CorrosiveTechnologyBlueprint.description>
+  <LiAIChat_SymbioticArmorBlueprint.label>Symbiotic Armor blueprint</LiAIChat_SymbioticArmorBlueprint.label>
+  <LiAIChat_SymbioticArmorBlueprint.description>A recoverable blueprint for symbiotic protective armor.</LiAIChat_SymbioticArmorBlueprint.description>
+  <LiAIChat_ResonanceTechnologyBlueprint.label>Resonance Technology blueprint</LiAIChat_ResonanceTechnologyBlueprint.label>
+  <LiAIChat_ResonanceTechnologyBlueprint.description>A recoverable blueprint for Blightfall resonance weapons and devices.</LiAIChat_ResonanceTechnologyBlueprint.description>
+  <LiAIChat_PhaseveilTechnologyBlueprint.label>Phaseveil Technology blueprint</LiAIChat_PhaseveilTechnologyBlueprint.label>
+  <LiAIChat_PhaseveilTechnologyBlueprint.description>A recoverable blueprint for phaseveil technology.</LiAIChat_PhaseveilTechnologyBlueprint.description>
+</LanguageData>

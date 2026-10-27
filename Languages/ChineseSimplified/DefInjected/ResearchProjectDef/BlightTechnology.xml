@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_SporeBioengineering.label>孢子生物工程</LiAIChat_SporeBioengineering.label>
+  <LiAIChat_SporeBioengineering.description>研究蚀潮孢子的结构与可控行为。需要解读孢子生物工程蓝图，并在开始研究时消耗3份蚀潮研究资料。</LiAIChat_SporeBioengineering.description>
+  <LiAIChat_CorrosiveTechnology.label>腐蚀技术</LiAIChat_CorrosiveTechnology.label>
+  <LiAIChat_CorrosiveTechnology.description>研究蚀潮腐蚀性化合物及其控制方法。需要解读腐蚀技术蓝图，并在开始研究时消耗4份蚀潮研究资料。</LiAIChat_CorrosiveTechnology.description>
+  <LiAIChat_SymbioticArmor.label>共生装甲</LiAIChat_SymbioticArmor.label>
+  <LiAIChat_SymbioticArmor.description>利用共生蚀潮生物研发活体防护甲壳。需要解读共生装甲蓝图，并在开始研究时消耗5份蚀潮研究资料。</LiAIChat_SymbioticArmor.description>
+  <LiAIChat_ResonanceTechnology.label>共鸣技术</LiAIChat_ResonanceTechnology.label>
+  <LiAIChat_ResonanceTechnology.description>分析蚀潮网络使用的共鸣结构。需要解读共鸣技术蓝图，并在开始研究时消耗6份蚀潮研究资料。</LiAIChat_ResonanceTechnology.description>
+  <LiAIChat_PhaseveilTechnology.label>相位隐身技术</LiAIChat_PhaseveilTechnology.label>
+  <LiAIChat_PhaseveilTechnology.description>研究蚀潮对局部空间与可见性的扭曲方式。需要解读相位隐身技术蓝图，并在开始研究时消耗8份蚀潮研究资料。</LiAIChat_PhaseveilTechnology.description>
+</LanguageData>

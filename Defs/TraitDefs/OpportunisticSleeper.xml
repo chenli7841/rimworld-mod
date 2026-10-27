@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <TraitDef>
+    <defName>LiAIChat_OpportunisticSleeper</defName>
+    <degreeDatas>
+      <li>
+        <label>Opportunistic Sleeper</label>
+        <description>{PAWN_nameDef} enjoys sleeping whenever there is nothing else to do, and rests more efficiently.</description>
+        <statOffsets>
+          <RestRateMultiplier>0.15</RestRateMultiplier>
+        </statOffsets>
+      </li>
+    </degreeDatas>
+  </TraitDef>
+</Defs>

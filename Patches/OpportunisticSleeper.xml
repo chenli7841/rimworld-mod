@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/ThinkTreeDef[defName="Humanlike"]/thinkRoot/subNodes/li[@Class="ThinkNode_ConditionalColonist"]/subNodes/li[@Class="ThinkNode_Tagger" and tagToGive="Idle"]/subNodes[.//li[@Class="JobGiver_IdleJoy"]]/li[@Class="JobGiver_WanderColony"]</xpath>
+    <value>
+      <li Class="ThinkNode_Priority">
+        <subNodes>
+          <li Class="LiAIChat.Traits.JobGiver_OpportunisticSleep" />
+          <li Class="JobGiver_WanderColony">
+            <maxDanger>None</maxDanger>
+          </li>
+        </subNodes>
+      </li>
+    </value>
+  </Operation>
+</Patch>

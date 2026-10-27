@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ResearchProjectDef>
+    <defName>LiAIChat_SporeBioengineering</defName><label>Spore Bioengineering</label>
+    <description>Study the structure and controlled behavior of Blightfall spores. Requires the Spore Bioengineering blueprint and 3 units of Blight research data when research begins.</description>
+    <baseCost>2000</baseCost><techLevel>Spacer</techLevel><requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding><researchViewX>1</researchViewX><researchViewY>11</researchViewY>
+    <prerequisites><li>MicroelectronicsBasics</li></prerequisites>
+    <modExtensions><li Class="LiAIChat.Blightfall.BlightTechnologyProjectExtension"><blueprintDefName>LiAIChat_SporeBioengineeringBlueprint</blueprintDefName><researchDataCost>3</researchDataCost></li></modExtensions>
+  </ResearchProjectDef>
+  <ResearchProjectDef>
+    <defName>LiAIChat_CorrosiveTechnology</defName><label>Corrosive Technology</label>
+    <description>Study the Blightfall's corrosive compounds and how to control them. Requires the Corrosive Technology blueprint and 4 units of Blight research data when research begins.</description>
+    <baseCost>2500</baseCost><techLevel>Spacer</techLevel><requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding><researchViewX>3</researchViewX><researchViewY>11</researchViewY>
+    <prerequisites><li>MicroelectronicsBasics</li><li>LiAIChat_SporeBioengineering</li></prerequisites>
+    <modExtensions><li Class="LiAIChat.Blightfall.BlightTechnologyProjectExtension"><blueprintDefName>LiAIChat_CorrosiveTechnologyBlueprint</blueprintDefName><researchDataCost>4</researchDataCost></li></modExtensions>
+  </ResearchProjectDef>
+  <ResearchProjectDef>
+    <defName>LiAIChat_SymbioticArmor</defName><label>Symbiotic Armor</label>
+    <description>Develop a living protective shell from symbiotic Blightfall organisms. Requires the Symbiotic Armor blueprint and 5 units of Blight research data when research begins.</description>
+    <baseCost>3000</baseCost><techLevel>Spacer</techLevel><requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding><researchViewX>5</researchViewX><researchViewY>11</researchViewY>
+    <prerequisites><li>MicroelectronicsBasics</li><li>LiAIChat_CorrosiveTechnology</li></prerequisites>
+    <modExtensions><li Class="LiAIChat.Blightfall.BlightTechnologyProjectExtension"><blueprintDefName>LiAIChat_SymbioticArmorBlueprint</blueprintDefName><researchDataCost>5</researchDataCost></li></modExtensions>
+  </ResearchProjectDef>
+  <ResearchProjectDef>
+    <defName>LiAIChat_ResonanceTechnology</defName><label>Resonance Technology</label>
+    <description>Analyze the resonance structures used by the Blightfall network. Requires the Resonance Technology blueprint and 6 units of Blight research data when research begins.</description>
+    <baseCost>4000</baseCost><techLevel>Spacer</techLevel><requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding><researchViewX>7</researchViewX><researchViewY>11</researchViewY>
+    <prerequisites><li>MicroelectronicsBasics</li><li>LiAIChat_SymbioticArmor</li></prerequisites>
+    <modExtensions><li Class="LiAIChat.Blightfall.BlightTechnologyProjectExtension"><blueprintDefName>LiAIChat_ResonanceTechnologyBlueprint</blueprintDefName><researchDataCost>6</researchDataCost></li></modExtensions>
+  </ResearchProjectDef>
+  <ResearchProjectDef>
+    <defName>LiAIChat_PhaseveilTechnology</defName><label>Phaseveil Technology</label>
+    <description>Study how the Blightfall distorts local space and visibility. Requires the Phaseveil Technology blueprint and 8 units of Blight research data when research begins.</description>
+    <baseCost>5000</baseCost><techLevel>Spacer</techLevel><requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding><researchViewX>9</researchViewX><researchViewY>11</researchViewY>
+    <prerequisites><li>MicroelectronicsBasics</li><li>LiAIChat_ResonanceTechnology</li></prerequisites>
+    <modExtensions><li Class="LiAIChat.Blightfall.BlightTechnologyProjectExtension"><blueprintDefName>LiAIChat_PhaseveilTechnologyBlueprint</blueprintDefName><researchDataCost>8</researchDataCost></li></modExtensions>
+  </ResearchProjectDef>
+</Defs>

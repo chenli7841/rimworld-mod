@@ -363,6 +363,7 @@ namespace LiAIChat.Questing
                 component.UpdateSiteStatus(site, BlightfallSiteStatus.Completed);
             if (!string.IsNullOrEmpty(cleanedSignal) && Find.SignalManager != null)
                 Find.SignalManager.SendSignal(new Signal(cleanedSignal));
+            BlightTechnologyRewards.AwardForWasteDump(map);
             Log.Message("[LiAIChat] Abandoned waste dump cleaned: " + site?.Label +
                 "; initialPollution=" + initialPollution + "; remainingPollution=" +
                 map.pollutionGrid.TotalPollution + "; remainingWastepacks=0.");

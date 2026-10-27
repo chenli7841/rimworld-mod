@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_BlightResearchData.label>蚀潮研究资料</LiAIChat_BlightResearchData.label>
+  <LiAIChat_BlightResearchData.description>从蚀潮网络中回收的科学记录。选择对应研究项目时会消耗资料。</LiAIChat_BlightResearchData.description>
+  <LiAIChat_SporeBioengineeringBlueprint.label>孢子生物工程蓝图</LiAIChat_SporeBioengineeringBlueprint.label>
+  <LiAIChat_SporeBioengineeringBlueprint.description>用于工程化控制蚀潮孢子的可解读蓝图。</LiAIChat_SporeBioengineeringBlueprint.description>
+  <LiAIChat_CorrosiveTechnologyBlueprint.label>腐蚀技术蓝图</LiAIChat_CorrosiveTechnologyBlueprint.label>
+  <LiAIChat_CorrosiveTechnologyBlueprint.description>介绍蚀潮腐蚀技术的可解读蓝图。</LiAIChat_CorrosiveTechnologyBlueprint.description>
+  <LiAIChat_SymbioticArmorBlueprint.label>共生装甲蓝图</LiAIChat_SymbioticArmorBlueprint.label>
+  <LiAIChat_SymbioticArmorBlueprint.description>用于研发共生防护甲壳的可解读蓝图。</LiAIChat_SymbioticArmorBlueprint.description>
+  <LiAIChat_ResonanceTechnologyBlueprint.label>共鸣技术蓝图</LiAIChat_ResonanceTechnologyBlueprint.label>
+  <LiAIChat_ResonanceTechnologyBlueprint.description>用于分析蚀潮共鸣武器与装置的可解读蓝图。</LiAIChat_ResonanceTechnologyBlueprint.description>
+  <LiAIChat_PhaseveilTechnologyBlueprint.label>相位隐身技术蓝图</LiAIChat_PhaseveilTechnologyBlueprint.label>
+  <LiAIChat_PhaseveilTechnologyBlueprint.description>用于研究相位隐身技术的可解读蓝图。</LiAIChat_PhaseveilTechnologyBlueprint.description>
+</LanguageData>

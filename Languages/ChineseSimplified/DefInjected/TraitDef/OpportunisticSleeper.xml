@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_OpportunisticSleeper.degreeDatas.0.label>随遇而眠</LiAIChat_OpportunisticSleeper.degreeDatas.0.label>
+  <LiAIChat_OpportunisticSleeper.degreeDatas.0.description>{PAWN_nameDef}在没有其他事情可做时就会睡觉，即使休息值已满也一样；休息恢复速度提高15%。</LiAIChat_OpportunisticSleeper.degreeDatas.0.description>
+</LanguageData>

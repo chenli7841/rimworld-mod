@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_DecodeBlightBlueprint>Analyze {0}</LiAIChat_DecodeBlightBlueprint>
+  <LiAIChat_BlightBlueprintUnreachable>The blueprint must be reachable to analyze it.</LiAIChat_BlightBlueprintUnreachable>
+  <LiAIChat_BlightBlueprintDuplicate>This blueprint was already decoded and was converted into Blight research data.</LiAIChat_BlightBlueprintDuplicate>
+  <LiAIChat_BlightBlueprintDecoded>Decoded the {0}. The matching Blight technology research is now available.</LiAIChat_BlightBlueprintDecoded>
+  <LiAIChat_BlightResearchBlueprintRequired>Decode the matching blueprint before selecting this research project.</LiAIChat_BlightResearchBlueprintRequired>
+  <LiAIChat_BlightResearchDataInsufficient>Not enough Blight research data. Need {0}; currently have {1}.</LiAIChat_BlightResearchDataInsufficient>
+  <LiAIChat_BlightResearchDataConsumed>Consumed {0} Blight research data to begin {1} research.</LiAIChat_BlightResearchDataConsumed>
+  <LiAIChat_BlightWasteDumpDataReward>Recovered {0} units of Blight research data from the waste dump.</LiAIChat_BlightWasteDumpDataReward>
+  <LiAIChat_BlightWasteDumpBlueprintReward>Recovered a new blueprint: {0}.</LiAIChat_BlightWasteDumpBlueprintReward>
+</LanguageData>

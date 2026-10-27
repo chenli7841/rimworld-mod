@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <JobDef>
+    <defName>LiAIChat_OpportunisticSleep</defName>
+    <driverClass>LiAIChat.Traits.JobDriver_OpportunisticSleep</driverClass>
+    <reportString>sleeping whenever there is nothing else to do.</reportString>
+    <neverShowWeapon>true</neverShowWeapon>
+  </JobDef>
+</Defs>

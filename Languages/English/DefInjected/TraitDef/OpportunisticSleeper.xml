@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <LiAIChat_OpportunisticSleeper.degreeDatas.0.label>Opportunistic Sleeper</LiAIChat_OpportunisticSleeper.degreeDatas.0.label>
+  <LiAIChat_OpportunisticSleeper.degreeDatas.0.description>{PAWN_nameDef} sleeps whenever there is nothing else to do, even when fully rested, and recovers rest 15% faster.</LiAIChat_OpportunisticSleeper.degreeDatas.0.description>
+</LanguageData>
