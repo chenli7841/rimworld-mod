@@ -30,6 +30,29 @@
     </stages>
   </HediffDef>
 
+  <HediffDef>
+    <defName>LiAIChat_NeuralDisruption</defName><label>neural disruption</label><labelNoun>neural disruption</labelNoun>
+    <description>A resonance pulse interferes with the nervous system, temporarily reducing consciousness and manipulation.</description>
+    <hediffClass>HediffWithComps</hediffClass><isBad>true</isBad><initialSeverity>1</initialSeverity><maxSeverity>1</maxSeverity>
+    <comps><li Class="LiAIChat.Blightfall.HediffCompProperties_BlightTimedEffect"><durationTicks>1200</durationTicks></li></comps>
+    <stages><li><label>disrupted</label><capMods><li><capacity>Consciousness</capacity><offset>-0.1</offset></li><li><capacity>Manipulation</capacity><offset>-0.08</offset></li></capMods></li></stages>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>LiAIChat_BlightSeedDisruption</defName><label>blight seed disruption</label><labelNoun>seed disruption</labelNoun>
+    <description>Alien spores and bioelectric signals interfere with movement near a Blight seed.</description>
+    <hediffClass>HediffWithComps</hediffClass><isBad>true</isBad><initialSeverity>1</initialSeverity><maxSeverity>1</maxSeverity>
+    <comps><li Class="LiAIChat.Blightfall.HediffCompProperties_BlightTimedEffect"><durationTicks>300</durationTicks></li></comps>
+    <stages><li><label>slowed</label><statFactors><MoveSpeed>0.9</MoveSpeed></statFactors></li></stages>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>LiAIChat_ShieldRecoveryDisrupted</defName><label>shield recovery disrupted</label><labelNoun>shield disruption</labelNoun>
+    <description>A resonance pulse temporarily suppresses personal shield recharge.</description>
+    <hediffClass>HediffWithComps</hediffClass><isBad>true</isBad><initialSeverity>1</initialSeverity><maxSeverity>1</maxSeverity>
+    <comps><li Class="LiAIChat.Blightfall.HediffCompProperties_BlightTimedEffect"><durationTicks>600</durationTicks></li></comps>
+  </HediffDef>
+
   <ThingDef ParentName="BaseBullet">
     <defName>LiAIChat_SporecasterBullet</defName><label>sporecaster round</label>
     <thingClass>LiAIChat.Blightfall.Projectile_BlightWeapon</thingClass>

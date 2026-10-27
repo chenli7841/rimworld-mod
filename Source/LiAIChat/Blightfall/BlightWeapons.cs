@@ -158,6 +158,8 @@ namespace LiAIChat.Blightfall
     {
         protected override void Impact(Thing hitThing, bool blockedByShield = false)
         {
+            Map impactMap = Map;
+            IntVec3 impactCell = Position;
             if (!blockedByShield && hitThing is Pawn pawn)
             {
                 if (def.defName == "LiAIChat_SporecasterBullet")
@@ -165,6 +167,8 @@ namespace LiAIChat.Blightfall
                 else if (def.defName == "LiAIChat_CorrosionProjectorBolt")
                     BlightWeaponImpactUtility.ApplyCorrosionHit(pawn);
             }
+            if (!blockedByShield)
+                AdvancedBlightWeaponUtility.OnProjectileImpact(def?.defName, hitThing, impactMap, impactCell, Launcher as Pawn);
             base.Impact(hitThing, blockedByShield);
         }
     }

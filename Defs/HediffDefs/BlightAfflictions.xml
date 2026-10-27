@@ -42,6 +42,7 @@
       <li><minSeverity>0.25</minSeverity><label>moderate</label><capMods><li><capacity>Consciousness</capacity><offset>-0.02</offset></li></capMods></li>
       <li><minSeverity>0.5</minSeverity><label>severe</label><painOffset>0.05</painOffset><capMods><li><capacity>Consciousness</capacity><offset>-0.07</offset></li></capMods></li>
       <li><minSeverity>0.75</minSeverity><label>dangerous</label><painOffset>0.1</painOffset><statOffsets><MentalBreakThreshold>0.04</MentalBreakThreshold></statOffsets><capMods><li><capacity>Consciousness</capacity><offset>-0.12</offset></li></capMods></li>
+      <li><minSeverity>0.9</minSeverity><label>severe feedback</label><painOffset>0.2</painOffset><statOffsets><MentalBreakThreshold>0.08</MentalBreakThreshold></statOffsets><capMods><li><capacity>Consciousness</capacity><offset>-0.2</offset></li><li><capacity>Manipulation</capacity><offset>-0.15</offset></li></capMods><statFactors><MoveSpeed>0.85</MoveSpeed></statFactors></li>
     </stages>
   </HediffDef>
 </Defs>

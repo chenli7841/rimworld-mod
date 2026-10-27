@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_ResonanceLance.label>共鸣长枪</LiAIChat_ResonanceLance.label>
+  <LiAIChat_ResonanceLance.description>精准打击武器，可短暂干扰生物目标的神经系统。射击会累积神经共鸣负荷；机械族免疫干扰效果。</LiAIChat_ResonanceLance.description>
+  <LiAIChat_SymbioticBlade.label>共生之刃</LiAIChat_SymbioticBlade.label>
+  <LiAIChat_SymbioticBlade.description>活体近战武器，可从受伤的生物敌人身上汲取少量生命来修复使用者。每次成功治疗都会增加饥饿并累积共生代谢负担。</LiAIChat_SymbioticBlade.description>
+  <LiAIChat_BlightSeeder.label>蚀潮播种器</LiAIChat_BlightSeeder.label>
+  <LiAIChat_BlightSeeder.description>地形控制武器，可发射播种节点。每个节点持续30秒，最多污染附近12格，并使4格范围内的敌对生物减速；每名使用者最多维持两个节点。射击会使使用者接触外星孢子。</LiAIChat_BlightSeeder.description>
+  <LiAIChat_HeartbreakerCannon.label>裂心炮</LiAIChat_HeartbreakerCannon.label>
+  <LiAIChat_HeartbreakerCannon.description>重型反护盾火炮。命中原版个人护盾时，额外消耗相当于正常值150%的护盾能量，并抑制护盾充能10秒。每次射击都会造成严重神经反馈并累积神经共鸣负荷。</LiAIChat_HeartbreakerCannon.description>
+  <LiAIChat_ResonanceLanceBolt.label>共鸣长枪弹</LiAIChat_ResonanceLanceBolt.label>
+  <LiAIChat_BlightSeederPod.label>蚀潮种子弹</LiAIChat_BlightSeederPod.label>
+  <LiAIChat_HeartbreakerBolt.label>裂心炮弹</LiAIChat_HeartbreakerBolt.label>
+  <LiAIChat_BlightSeedNode.label>蚀潮种子节点</LiAIChat_BlightSeedNode.label>
+  <LiAIChat_BlightSeedNode.description>临时存在的外星种子结构，会扩散有限污染并干扰附近敌对生物，随后枯萎消失。</LiAIChat_BlightSeedNode.description>
+</LanguageData>

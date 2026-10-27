@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_NeuralDisruption.label>神经干扰</LiAIChat_NeuralDisruption.label>
+  <LiAIChat_NeuralDisruption.labelNoun>神经干扰</LiAIChat_NeuralDisruption.labelNoun>
+  <LiAIChat_NeuralDisruption.description>共鸣脉冲扰乱神经系统，暂时降低意识和操作能力。</LiAIChat_NeuralDisruption.description>
+  <LiAIChat_NeuralDisruption.stages.0.label>受到干扰</LiAIChat_NeuralDisruption.stages.0.label>
+  <LiAIChat_BlightSeedDisruption.label>蚀潮种子干扰</LiAIChat_BlightSeedDisruption.label>
+  <LiAIChat_BlightSeedDisruption.labelNoun>种子干扰</LiAIChat_BlightSeedDisruption.labelNoun>
+  <LiAIChat_BlightSeedDisruption.description>蚀潮种子附近的外星孢子和生物电信号干扰了移动能力。</LiAIChat_BlightSeedDisruption.description>
+  <LiAIChat_BlightSeedDisruption.stages.0.label>行动迟缓</LiAIChat_BlightSeedDisruption.stages.0.label>
+  <LiAIChat_ShieldRecoveryDisrupted.label>护盾充能受干扰</LiAIChat_ShieldRecoveryDisrupted.label>
+  <LiAIChat_ShieldRecoveryDisrupted.labelNoun>护盾干扰</LiAIChat_ShieldRecoveryDisrupted.labelNoun>
+  <LiAIChat_ShieldRecoveryDisrupted.description>共鸣脉冲暂时抑制了个人护盾的充能。</LiAIChat_ShieldRecoveryDisrupted.description>
+</LanguageData>

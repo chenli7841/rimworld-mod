@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_NeuralDisruption.label>neural disruption</LiAIChat_NeuralDisruption.label>
+  <LiAIChat_NeuralDisruption.labelNoun>neural disruption</LiAIChat_NeuralDisruption.labelNoun>
+  <LiAIChat_NeuralDisruption.description>A resonance pulse interferes with the nervous system, temporarily reducing consciousness and manipulation.</LiAIChat_NeuralDisruption.description>
+  <LiAIChat_NeuralDisruption.stages.0.label>disrupted</LiAIChat_NeuralDisruption.stages.0.label>
+  <LiAIChat_BlightSeedDisruption.label>blight seed disruption</LiAIChat_BlightSeedDisruption.label>
+  <LiAIChat_BlightSeedDisruption.labelNoun>seed disruption</LiAIChat_BlightSeedDisruption.labelNoun>
+  <LiAIChat_BlightSeedDisruption.description>Alien spores and bioelectric signals interfere with movement near a Blight seed.</LiAIChat_BlightSeedDisruption.description>
+  <LiAIChat_BlightSeedDisruption.stages.0.label>slowed</LiAIChat_BlightSeedDisruption.stages.0.label>
+  <LiAIChat_ShieldRecoveryDisrupted.label>shield recovery disrupted</LiAIChat_ShieldRecoveryDisrupted.label>
+  <LiAIChat_ShieldRecoveryDisrupted.labelNoun>shield disruption</LiAIChat_ShieldRecoveryDisrupted.labelNoun>
+  <LiAIChat_ShieldRecoveryDisrupted.description>A resonance pulse temporarily suppresses personal shield recharge.</LiAIChat_ShieldRecoveryDisrupted.description>
+</LanguageData>

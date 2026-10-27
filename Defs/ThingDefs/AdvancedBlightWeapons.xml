@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>LiAIChat_ResonanceLance</defName><label>Resonance Lance</label>
+    <description>A precision weapon that disrupts living targets' nervous systems for a short time. Firing builds neural resonance strain; mechanoids are immune to the disruption.</description>
+    <graphicData><texPath>Things/Item/Equipment/WeaponRanged/ChargeLance</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <uiIconScale>1.5</uiIconScale>
+    <statBases><WorkToMake>54000</WorkToMake><Mass>5.2</Mass><AccuracyTouch>0.5</AccuracyTouch><AccuracyShort>0.82</AccuracyShort><AccuracyMedium>0.78</AccuracyMedium><AccuracyLong>0.68</AccuracyLong><RangedWeapon_Cooldown>2.5</RangedWeapon_Cooldown><MarketValue>2600</MarketValue></statBases>
+    <weaponTags><li>SpacerGun</li><li>BlightfallResonanceWeapon</li></weaponTags><weaponClasses><li>RangedHeavy</li></weaponClasses>
+    <costList><Plasteel>90</Plasteel><ComponentSpacer>6</ComponentSpacer><LiAIChat_BlightResearchData>6</LiAIChat_BlightResearchData></costList>
+    <recipeMaker><researchPrerequisite>LiAIChat_ResonanceTechnology</researchPrerequisite><skillRequirements><Crafting>10</Crafting></skillRequirements><displayPriority>920</displayPriority></recipeMaker>
+    <verbs><li><verbClass>Verb_Shoot</verbClass><hasStandardCommand>true</hasStandardCommand><defaultProjectile>LiAIChat_ResonanceLanceBolt</defaultProjectile><warmupTime>0.8</warmupTime><range>30</range><soundCast>Shot_ChargeRifle</soundCast><soundCastTail>GunTail_Heavy</soundCastTail><muzzleFlashScale>10</muzzleFlashScale></li></verbs>
+    <tools><li><label>stock</label><capacities><li>Blunt</li></capacities><power>10</power><cooldownTime>2</cooldownTime></li><li><label>barrel</label><capacities><li>Blunt</li><li>Poke</li></capacities><power>10</power><cooldownTime>2</cooldownTime></li></tools>
+    <modExtensions><li Class="LiAIChat.Blightfall.BlightWeaponAfflictionExtension"><neuralSeverityPerUse>0.015</neuralSeverityPerUse></li></modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseMeleeWeapon_Sharp_Quality">
+    <defName>LiAIChat_SymbioticBlade</defName><label>Symbiotic Blade</label>
+    <description>A living close-combat weapon that siphons a small amount of vitality from wounded biological enemies to repair its wielder. Each successful healing pulse increases hunger and symbiotic metabolic strain.</description>
+    <graphicData><texPath>Things/Item/Equipment/WeaponMelee/LongSword</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <techLevel>Spacer</techLevel><possessionCount>1</possessionCount><costStuffCount>0</costStuffCount>
+    <statBases><WorkToMake>48000</WorkToMake><Mass>2.3</Mass><MarketValue>2100</MarketValue></statBases>
+    <weaponTags><li>SpacerMelee</li><li>BlightfallSymbioticWeapon</li></weaponTags>
+    <costList><Plasteel>55</Plasteel><ComponentSpacer>3</ComponentSpacer><LiAIChat_BlightResearchData>5</LiAIChat_BlightResearchData></costList>
+    <recipeMaker><researchPrerequisite>LiAIChat_SymbioticArmor</researchPrerequisite><skillRequirements><Crafting>9</Crafting></skillRequirements><displayPriority>930</displayPriority></recipeMaker>
+    <equippedAngleOffset>-65</equippedAngleOffset>
+    <tools>
+      <li><label>handle</label><capacities><li>Blunt</li></capacities><power>10</power><cooldownTime>2</cooldownTime></li>
+      <li><label>point</label><capacities><li>Stab</li></capacities><power>24</power><cooldownTime>2.6</cooldownTime></li>
+      <li><label>edge</label><capacities><li>Cut</li></capacities><power>24</power><cooldownTime>2.6</cooldownTime></li>
+    </tools>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>LiAIChat_BlightSeeder</defName><label>Blight Seeder</label>
+    <description>A terrain-control weapon that launches a seed node. Each node lasts 30 seconds, can pollute at most 12 nearby cells, slows hostile living targets within four cells, and is limited to two active nodes per wielder. Firing exposes the wielder to alien spores.</description>
+    <graphicData><texPath>Things/Item/Equipment/WeaponRanged/ChargeRifle</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <uiIconScale>1.5</uiIconScale>
+    <statBases><WorkToMake>44000</WorkToMake><Mass>5</Mass><AccuracyTouch>0.45</AccuracyTouch><AccuracyShort>0.72</AccuracyShort><AccuracyMedium>0.62</AccuracyMedium><AccuracyLong>0.42</AccuracyLong><RangedWeapon_Cooldown>3.5</RangedWeapon_Cooldown><MarketValue>1900</MarketValue></statBases>
+    <weaponTags><li>SpacerGun</li><li>BlightfallSeederWeapon</li></weaponTags><weaponClasses><li>RangedHeavy</li></weaponClasses>
+    <costList><Plasteel>65</Plasteel><ComponentSpacer>4</ComponentSpacer><LiAIChat_BlightResearchData>5</LiAIChat_BlightResearchData></costList>
+    <recipeMaker><researchPrerequisite>LiAIChat_SporeBioengineering</researchPrerequisite><skillRequirements><Crafting>9</Crafting></skillRequirements><displayPriority>940</displayPriority></recipeMaker>
+    <verbs><li><verbClass>Verb_Shoot</verbClass><hasStandardCommand>true</hasStandardCommand><defaultProjectile>LiAIChat_BlightSeederPod</defaultProjectile><warmupTime>0.8</warmupTime><range>24</range><soundCast>Shot_ChargeRifle</soundCast><soundCastTail>GunTail_Heavy</soundCastTail><muzzleFlashScale>8</muzzleFlashScale></li></verbs>
+    <tools><li><label>stock</label><capacities><li>Blunt</li></capacities><power>8</power><cooldownTime>2</cooldownTime></li><li><label>barrel</label><capacities><li>Blunt</li><li>Poke</li></capacities><power>8</power><cooldownTime>2</cooldownTime></li></tools>
+    <modExtensions><li Class="LiAIChat.Blightfall.BlightWeaponAfflictionExtension"><sporeSeverityPerUse>0.02</sporeSeverityPerUse></li></modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>LiAIChat_HeartbreakerCannon</defName><label>Heartbreaker Cannon</label>
+    <description>A heavy anti-shield cannon. Hits absorbed by a vanilla personal shield drain an additional 150% of normal shield energy and suppress its recharge for 10 seconds. Firing causes severe neural feedback and strain.</description>
+    <graphicData><texPath>Things/Item/Equipment/WeaponRanged/ChargeLance</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <uiIconScale>1.6</uiIconScale>
+    <statBases><WorkToMake>72000</WorkToMake><Mass>8</Mass><AccuracyTouch>0.3</AccuracyTouch><AccuracyShort>0.7</AccuracyShort><AccuracyMedium>0.72</AccuracyMedium><AccuracyLong>0.62</AccuracyLong><RangedWeapon_Cooldown>5</RangedWeapon_Cooldown><MarketValue>4200</MarketValue></statBases>
+    <weaponTags><li>SpacerGun</li><li>BlightfallHeavyWeapon</li></weaponTags><weaponClasses><li>RangedHeavy</li></weaponClasses>
+    <costList><Plasteel>150</Plasteel><ComponentSpacer>8</ComponentSpacer><LiAIChat_BlightResearchData>10</LiAIChat_BlightResearchData></costList>
+    <recipeMaker><researchPrerequisite>LiAIChat_PhaseveilTechnology</researchPrerequisite><skillRequirements><Crafting>12</Crafting></skillRequirements><displayPriority>950</displayPriority></recipeMaker>
+    <verbs><li><verbClass>Verb_Shoot</verbClass><hasStandardCommand>true</hasStandardCommand><defaultProjectile>LiAIChat_HeartbreakerBolt</defaultProjectile><warmupTime>1.2</warmupTime><range>35</range><soundCast>Shot_ChargeRifle</soundCast><soundCastTail>GunTail_Heavy</soundCastTail><muzzleFlashScale>13</muzzleFlashScale></li></verbs>
+    <tools><li><label>stock</label><capacities><li>Blunt</li></capacities><power>13</power><cooldownTime>2</cooldownTime></li><li><label>barrel</label><capacities><li>Blunt</li><li>Poke</li></capacities><power>13</power><cooldownTime>2</cooldownTime></li></tools>
+    <modExtensions><li Class="LiAIChat.Blightfall.BlightWeaponAfflictionExtension"><neuralSeverityPerUse>0.04</neuralSeverityPerUse></li></modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>LiAIChat_ResonanceLanceBolt</defName><label>resonance lance bolt</label><thingClass>LiAIChat.Blightfall.Projectile_BlightWeapon</thingClass>
+    <graphicData><texPath>Things/Projectile/Bullet_Small</texPath><graphicClass>Graphic_Single</graphicClass><drawSize>1</drawSize></graphicData>
+    <projectile><damageDef>Bullet</damageDef><damageAmountBase>18</damageAmountBase><armorPenetrationBase>0.6</armorPenetrationBase><speed>75</speed><stoppingPower>2</stoppingPower></projectile>
+  </ThingDef>
+  <ThingDef ParentName="BaseBullet">
+    <defName>LiAIChat_BlightSeederPod</defName><label>blight seed pod</label><thingClass>LiAIChat.Blightfall.Projectile_BlightWeapon</thingClass>
+    <graphicData><texPath>Things/Projectile/Bullet_Small</texPath><graphicClass>Graphic_Single</graphicClass><drawSize>1.2</drawSize></graphicData>
+    <projectile><damageDef>Bullet</damageDef><damageAmountBase>3</damageAmountBase><armorPenetrationBase>0.05</armorPenetrationBase><speed>45</speed><stoppingPower>0.2</stoppingPower></projectile>
+  </ThingDef>
+  <ThingDef ParentName="BaseBullet">
+    <defName>LiAIChat_HeartbreakerBolt</defName><label>heartbreaker bolt</label><thingClass>LiAIChat.Blightfall.Projectile_BlightWeapon</thingClass>
+    <graphicData><texPath>Things/Projectile/Bullet_Small</texPath><graphicClass>Graphic_Single</graphicClass><drawSize>1.3</drawSize></graphicData>
+    <projectile><damageDef>Bullet</damageDef><damageAmountBase>25</damageAmountBase><armorPenetrationBase>0.65</armorPenetrationBase><speed>80</speed><stoppingPower>3</stoppingPower></projectile>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>LiAIChat_BlightSeedNode</defName><label>Blight seed node</label>
+    <description>A temporary alien seed structure. It spreads a limited amount of pollution and disrupts nearby hostile life before withering.</description>
+    <thingClass>Building</thingClass><category>Building</category><tickerType>Normal</tickerType><size>(1,1)</size><passability>Impassable</passability><fillPercent>0.75</fillPercent><altitudeLayer>Building</altitudeLayer><useHitPoints>true</useHitPoints>
+    <graphicData><texPath>Things/Plant/Glowstool</texPath><graphicClass>Graphic_Single</graphicClass><drawSize>(1.2,1.2)</drawSize></graphicData>
+    <statBases><MaxHitPoints>250</MaxHitPoints><ArmorRating_Sharp>0.1</ArmorRating_Sharp><ArmorRating_Blunt>0.15</ArmorRating_Blunt><Flammability>0.8</Flammability><Mass>8</Mass></statBases>
+    <comps><li Class="LiAIChat.Blightfall.CompProperties_BlightSeed"/></comps>
+  </ThingDef>
+</Defs>

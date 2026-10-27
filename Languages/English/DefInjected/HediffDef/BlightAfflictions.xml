@@ -21,4 +21,5 @@
   <LiAIChat_NeuralResonanceStrain.stages.1.label>moderate</LiAIChat_NeuralResonanceStrain.stages.1.label>
   <LiAIChat_NeuralResonanceStrain.stages.2.label>severe</LiAIChat_NeuralResonanceStrain.stages.2.label>
   <LiAIChat_NeuralResonanceStrain.stages.3.label>dangerous</LiAIChat_NeuralResonanceStrain.stages.3.label>
+  <LiAIChat_NeuralResonanceStrain.stages.4.label>severe feedback</LiAIChat_NeuralResonanceStrain.stages.4.label>
 </LanguageData>

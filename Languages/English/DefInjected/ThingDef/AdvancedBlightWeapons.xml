@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_ResonanceLance.label>Resonance Lance</LiAIChat_ResonanceLance.label>
+  <LiAIChat_ResonanceLance.description>A precision weapon that disrupts living targets' nervous systems for a short time. Firing builds neural resonance strain; mechanoids are immune to the disruption.</LiAIChat_ResonanceLance.description>
+  <LiAIChat_SymbioticBlade.label>Symbiotic Blade</LiAIChat_SymbioticBlade.label>
+  <LiAIChat_SymbioticBlade.description>A living close-combat weapon that siphons a small amount of vitality from wounded biological enemies to repair its wielder. Each successful healing pulse increases hunger and symbiotic metabolic strain.</LiAIChat_SymbioticBlade.description>
+  <LiAIChat_BlightSeeder.label>Blight Seeder</LiAIChat_BlightSeeder.label>
+  <LiAIChat_BlightSeeder.description>A terrain-control weapon that launches a seed node. Each node lasts 30 seconds, can pollute at most 12 nearby cells, slows hostile living targets within four cells, and is limited to two active nodes per wielder. Firing exposes the wielder to alien spores.</LiAIChat_BlightSeeder.description>
+  <LiAIChat_HeartbreakerCannon.label>Heartbreaker Cannon</LiAIChat_HeartbreakerCannon.label>
+  <LiAIChat_HeartbreakerCannon.description>A heavy anti-shield cannon. Hits absorbed by a vanilla personal shield drain an additional 150% of normal shield energy and suppress its recharge for 10 seconds. Firing causes severe neural feedback and strain.</LiAIChat_HeartbreakerCannon.description>
+  <LiAIChat_ResonanceLanceBolt.label>resonance lance bolt</LiAIChat_ResonanceLanceBolt.label>
+  <LiAIChat_BlightSeederPod.label>blight seed pod</LiAIChat_BlightSeederPod.label>
+  <LiAIChat_HeartbreakerBolt.label>heartbreaker bolt</LiAIChat_HeartbreakerBolt.label>
+  <LiAIChat_BlightSeedNode.label>Blight seed node</LiAIChat_BlightSeedNode.label>
+  <LiAIChat_BlightSeedNode.description>A temporary alien seed structure. It spreads a limited amount of pollution and disrupts nearby hostile life before withering.</LiAIChat_BlightSeedNode.description>
+</LanguageData>
