@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_BlightSporeInfection.label>孢子感染</LiAIChat_BlightSporeInfection.label>
+  <LiAIChat_BlightSporeInfection.labelNoun>孢子感染</LiAIChat_BlightSporeInfection.labelNoun>
+  <LiAIChat_BlightSporeInfection.description>外星孢子会损害呼吸能力并降低移动速度。感染严重的目标死亡时会释放短暂毒孢子云。</LiAIChat_BlightSporeInfection.description>
+  <LiAIChat_BlightSporeInfection.stages.0.label>轻微</LiAIChat_BlightSporeInfection.stages.0.label>
+  <LiAIChat_BlightSporeInfection.stages.1.label>中度</LiAIChat_BlightSporeInfection.stages.1.label>
+  <LiAIChat_BlightSporeInfection.stages.2.label>严重</LiAIChat_BlightSporeInfection.stages.2.label>
+  <LiAIChat_BlightSporeInfection.stages.3.label>危险</LiAIChat_BlightSporeInfection.stages.3.label>
+  <LiAIChat_BlightArmorCorrosion.label>护甲腐蚀</LiAIChat_BlightArmorCorrosion.label>
+  <LiAIChat_BlightArmorCorrosion.labelNoun>腐蚀</LiAIChat_BlightArmorCorrosion.labelNoun>
+  <LiAIChat_BlightArmorCorrosion.description>腐蚀化合物会暂时削弱护甲效能。重复命中最多叠加三层，后续命中会刷新持续时间。</LiAIChat_BlightArmorCorrosion.description>
+  <LiAIChat_BlightArmorCorrosion.stages.0.label>轻微</LiAIChat_BlightArmorCorrosion.stages.0.label>
+  <LiAIChat_BlightArmorCorrosion.stages.1.label>已腐蚀</LiAIChat_BlightArmorCorrosion.stages.1.label>
+  <LiAIChat_BlightArmorCorrosion.stages.2.label>严重腐蚀</LiAIChat_BlightArmorCorrosion.stages.2.label>
+  <LiAIChat_BlightArmorCorrosion.stages.3.label>重度腐蚀</LiAIChat_BlightArmorCorrosion.stages.3.label>
+</LanguageData>

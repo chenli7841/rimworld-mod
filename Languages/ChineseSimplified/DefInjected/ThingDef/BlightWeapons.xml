@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_Sporecaster.label>孢蚀步枪</LiAIChat_Sporecaster.label>
+  <LiAIChat_Sporecaster.description>一把中远程生物污染步枪。孢子会在生物目标体内累积，严重感染的目标死亡时会释放局部毒孢子云。每次发射都会使使用者轻微吸入孢子。</LiAIChat_Sporecaster.description>
+  <LiAIChat_CorrosionProjector.label>蚀甲喷射器</LiAIChat_CorrosionProjector.label>
+  <LiAIChat_CorrosionProjector.description>一把中距离反重甲武器。腐蚀弹可暂时使目标护甲效能降低最多24%。每次发射会损伤使用者的天然手臂；仿生手臂不受影响。</LiAIChat_CorrosionProjector.description>
+  <LiAIChat_SporecasterBullet.label>孢蚀步枪弹</LiAIChat_SporecasterBullet.label>
+  <LiAIChat_CorrosionProjectorBolt.label>腐蚀弹</LiAIChat_CorrosionProjectorBolt.label>
+</LanguageData>

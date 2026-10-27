@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_Sporecaster.label>Sporecaster</LiAIChat_Sporecaster.label>
+  <LiAIChat_Sporecaster.description>A mid-range bio-contamination rifle. Its spores accumulate in living targets and can spread as a toxic cloud when a heavily infected target dies. Firing causes mild spore exposure to the user.</LiAIChat_Sporecaster.description>
+  <LiAIChat_CorrosionProjector.label>Corrosion Projector</LiAIChat_CorrosionProjector.label>
+  <LiAIChat_CorrosionProjector.description>A mid-range anti-armor weapon. Its corrosive bolts temporarily reduce effective armor by up to 24%. Each shot damages the user's natural arms; artificial arms are unaffected.</LiAIChat_CorrosionProjector.description>
+  <LiAIChat_SporecasterBullet.label>sporecaster round</LiAIChat_SporecasterBullet.label>
+  <LiAIChat_CorrosionProjectorBolt.label>corrosive bolt</LiAIChat_CorrosionProjectorBolt.label>
+</LanguageData>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>LiAIChat_Sporecaster</defName><label>Sporecaster</label>
+    <description>A mid-range bio-contamination rifle. Its spores accumulate in living targets and can spread as a toxic cloud when a heavily infected target dies. Firing causes mild spore exposure to the user.</description>
+    <graphicData><texPath>Things/Item/Equipment/WeaponRanged/ChargeRifle</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <uiIconScale>1.5</uiIconScale>
+    <statBases><WorkToMake>9000</WorkToMake><Mass>4.2</Mass><AccuracyTouch>0.55</AccuracyTouch><AccuracyShort>0.78</AccuracyShort><AccuracyMedium>0.72</AccuracyMedium><AccuracyLong>0.58</AccuracyLong><RangedWeapon_Cooldown>1.5</RangedWeapon_Cooldown><MarketValue>1100</MarketValue></statBases>
+    <weaponTags><li>SpacerGun</li><li>BlightfallSporeWeapon</li></weaponTags>
+    <weaponClasses><li>RangedHeavy</li></weaponClasses>
+    <costList><Plasteel>35</Plasteel><ComponentSpacer>3</ComponentSpacer><LiAIChat_BlightResearchData>2</LiAIChat_BlightResearchData></costList>
+    <recipeMaker><researchPrerequisite>LiAIChat_SporeBioengineering</researchPrerequisite><skillRequirements><Crafting>8</Crafting></skillRequirements><displayPriority>900</displayPriority></recipeMaker>
+    <verbs><li><verbClass>Verb_Shoot</verbClass><hasStandardCommand>true</hasStandardCommand><defaultProjectile>LiAIChat_SporecasterBullet</defaultProjectile><warmupTime>0.5</warmupTime><range>27</range><soundCast>Shot_ChargeRifle</soundCast><soundCastTail>GunTail_Heavy</soundCastTail><muzzleFlashScale>9</muzzleFlashScale></li></verbs>
+    <tools><li><label>stock</label><capacities><li>Blunt</li></capacities><power>9</power><cooldownTime>2</cooldownTime></li><li><label>barrel</label><capacities><li>Blunt</li><li>Poke</li></capacities><power>9</power><cooldownTime>2</cooldownTime></li></tools>
+    <modExtensions><li Class="LiAIChat.Blightfall.BlightWeaponAfflictionExtension"><sporeSeverityPerUse>0.005</sporeSeverityPerUse></li></modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>LiAIChat_CorrosionProjector</defName><label>Corrosion Projector</label>
+    <description>A mid-range anti-armor weapon. Its corrosive bolts temporarily reduce effective armor by up to 24%. Each shot damages the user's natural arms; artificial arms are unaffected.</description>
+    <graphicData><texPath>Things/Item/Equipment/WeaponRanged/ChargeLance</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <uiIconScale>1.5</uiIconScale>
+    <statBases><WorkToMake>8500</WorkToMake><Mass>3.7</Mass><AccuracyTouch>0.6</AccuracyTouch><AccuracyShort>0.78</AccuracyShort><AccuracyMedium>0.68</AccuracyMedium><AccuracyLong>0.4</AccuracyLong><RangedWeapon_Cooldown>2</RangedWeapon_Cooldown><MarketValue>950</MarketValue></statBases>
+    <weaponTags><li>SpacerGun</li><li>BlightfallCorrosiveWeapon</li></weaponTags>
+    <weaponClasses><li>RangedHeavy</li></weaponClasses>
+    <costList><Plasteel>30</Plasteel><ComponentSpacer>2</ComponentSpacer><LiAIChat_BlightResearchData>2</LiAIChat_BlightResearchData></costList>
+    <recipeMaker><researchPrerequisite>LiAIChat_CorrosiveTechnology</researchPrerequisite><skillRequirements><Crafting>7</Crafting></skillRequirements><displayPriority>910</displayPriority></recipeMaker>
+    <verbs><li><verbClass>Verb_Shoot</verbClass><hasStandardCommand>true</hasStandardCommand><defaultProjectile>LiAIChat_CorrosionProjectorBolt</defaultProjectile><warmupTime>0.6</warmupTime><range>18</range><soundCast>Shot_ChargeRifle</soundCast><soundCastTail>GunTail_Heavy</soundCastTail><muzzleFlashScale>8</muzzleFlashScale></li></verbs>
+    <tools><li><label>stock</label><capacities><li>Blunt</li></capacities><power>9</power><cooldownTime>2</cooldownTime></li><li><label>barrel</label><capacities><li>Blunt</li><li>Poke</li></capacities><power>9</power><cooldownTime>2</cooldownTime></li></tools>
+    <modExtensions><li Class="LiAIChat.Blightfall.BlightWeaponAfflictionExtension"><corrosiveSeverityPerUse>0.004</corrosiveSeverityPerUse></li></modExtensions>
+  </ThingDef>
+</Defs>

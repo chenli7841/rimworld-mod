@@ -187,7 +187,8 @@ namespace LiAIChat.Blightfall
                 .ToList();
             if (naturalArms.Count == 0) return;
 
-            float dosePerArm = severityPerUse / naturalArms.Count;
+            // Corrosive weapon dose is specified per natural arm; each eligible arm gets the full dose.
+            float dosePerArm = severityPerUse;
             foreach (BodyPartRecord arm in naturalArms)
                 ApplyToPart(pawn, CorrosiveHediff, arm, dosePerArm, source, null);
         }
@@ -279,11 +280,11 @@ namespace LiAIChat.Blightfall
             if (weapon != null)
             {
                 if (weapon.sporeSeverityPerUse > 0f)
-                    __result += "\n" + "LiAIChat_BlightWeaponSporeSideEffect".Translate(weapon.sporeSeverityPerUse.ToStringPercent());
+                    __result += "\n" + "LiAIChat_BlightWeaponSporeSideEffect".Translate(weapon.sporeSeverityPerUse.ToStringPercent("F1"));
                 if (weapon.corrosiveSeverityPerUse > 0f)
-                    __result += "\n" + "LiAIChat_BlightWeaponCorrosiveSideEffect".Translate(weapon.corrosiveSeverityPerUse.ToStringPercent());
+                    __result += "\n" + "LiAIChat_BlightWeaponCorrosiveSideEffect".Translate(weapon.corrosiveSeverityPerUse.ToStringPercent("F1"));
                 if (weapon.neuralSeverityPerUse > 0f)
-                    __result += "\n" + "LiAIChat_BlightWeaponNeuralSideEffect".Translate(weapon.neuralSeverityPerUse.ToStringPercent());
+                    __result += "\n" + "LiAIChat_BlightWeaponNeuralSideEffect".Translate(weapon.neuralSeverityPerUse.ToStringPercent("F1"));
             }
 
             BlightApparelAfflictionExtension apparel = __instance.def.GetModExtension<BlightApparelAfflictionExtension>();

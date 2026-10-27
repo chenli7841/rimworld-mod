@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_SporeInfectionTooltip>侵蚀程度：{0}。达到{1}后，目标死亡时会在3格范围内释放毒孢子。</LiAIChat_SporeInfectionTooltip>
+  <LiAIChat_ArmorCorrosionTooltip>层数：{0}/3。护甲效能：-{1}。剩余时间：{2}秒。</LiAIChat_ArmorCorrosionTooltip>
+</LanguageData>

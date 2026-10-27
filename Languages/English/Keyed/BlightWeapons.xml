@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_SporeInfectionTooltip>Severity: {0}. At {1}, a lethal hit releases toxic spores within 3 cells.</LiAIChat_SporeInfectionTooltip>
+  <LiAIChat_ArmorCorrosionTooltip>Layers: {0}/3. Armor effectiveness: -{1}. Remaining: {2} seconds.</LiAIChat_ArmorCorrosionTooltip>
+</LanguageData>

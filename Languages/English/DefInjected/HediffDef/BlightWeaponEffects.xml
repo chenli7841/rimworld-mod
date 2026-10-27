@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_BlightSporeInfection.label>spore infection</LiAIChat_BlightSporeInfection.label>
+  <LiAIChat_BlightSporeInfection.labelNoun>spore infection</LiAIChat_BlightSporeInfection.labelNoun>
+  <LiAIChat_BlightSporeInfection.description>Alien spores impair breathing and movement. At high severity, death releases a short toxic spore cloud.</LiAIChat_BlightSporeInfection.description>
+  <LiAIChat_BlightSporeInfection.stages.0.label>minor</LiAIChat_BlightSporeInfection.stages.0.label>
+  <LiAIChat_BlightSporeInfection.stages.1.label>moderate</LiAIChat_BlightSporeInfection.stages.1.label>
+  <LiAIChat_BlightSporeInfection.stages.2.label>severe</LiAIChat_BlightSporeInfection.stages.2.label>
+  <LiAIChat_BlightSporeInfection.stages.3.label>dangerous</LiAIChat_BlightSporeInfection.stages.3.label>
+  <LiAIChat_BlightArmorCorrosion.label>armor corrosion</LiAIChat_BlightArmorCorrosion.label>
+  <LiAIChat_BlightArmorCorrosion.labelNoun>corrosion</LiAIChat_BlightArmorCorrosion.labelNoun>
+  <LiAIChat_BlightArmorCorrosion.description>Corrosive compounds temporarily weaken armor. Repeated hits stack up to three layers; further hits refresh the duration.</LiAIChat_BlightArmorCorrosion.description>
+  <LiAIChat_BlightArmorCorrosion.stages.0.label>minor</LiAIChat_BlightArmorCorrosion.stages.0.label>
+  <LiAIChat_BlightArmorCorrosion.stages.1.label>corroded</LiAIChat_BlightArmorCorrosion.stages.1.label>
+  <LiAIChat_BlightArmorCorrosion.stages.2.label>heavily corroded</LiAIChat_BlightArmorCorrosion.stages.2.label>
+  <LiAIChat_BlightArmorCorrosion.stages.3.label>severely corroded</LiAIChat_BlightArmorCorrosion.stages.3.label>
+</LanguageData>
