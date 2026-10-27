@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <HediffDef>
+    <defName>LiAIChat_SymbioticCarapaceBond</defName><label>symbiotic carapace bond</label>
+    <description>Symbiotic armor is bonded to the wearer, accelerating hunger while its regenerative systems are active.</description>
+    <hediffClass>HediffWithComps</hediffClass><isBad>false</isBad><initialSeverity>1</initialSeverity><maxSeverity>1</maxSeverity>
+    <comps><li Class="LiAIChat.Blightfall.HediffCompProperties_SymbioticRegeneration"><checkIntervalTicks>1000</checkIntervalTicks><injuryHealPerCheck>1.5</injuryHealPerCheck><metabolicSeverityPerRegeneration>0.004</metabolicSeverityPerRegeneration></li></comps>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>LiAIChat_SymbioticMetabolicStrain</defName><label>symbiotic metabolic strain</label><labelNoun>metabolic strain</labelNoun>
+    <description>Repeated symbiotic regeneration overtaxes the wearer's metabolism. Severe strain lowers immunity and increases rest loss; extreme strain can cause abnormal tissue growth and can be treated by a doctor.</description>
+    <hediffClass>HediffWithComps</hediffClass><isBad>true</isBad><tendable>true</tendable><alwaysShowSeverity>true</alwaysShowSeverity>
+    <initialSeverity>0</initialSeverity><maxSeverity>1</maxSeverity>
+    <comps><li Class="LiAIChat.Blightfall.HediffCompProperties_BlightAffliction"><naturalRecoveryPerDay>0.04</naturalRecoveryPerDay><severeThreshold>0.5</severeThreshold><severeRecoveryFactor>0.3</severeRecoveryFactor><treatmentRecovery>0.15</treatmentRecovery></li></comps>
+    <stages>
+      <li><label>minor</label></li>
+      <li><minSeverity>0.25</minSeverity><label>moderate</label><statFactors><ImmunityGainSpeed>0.97</ImmunityGainSpeed></statFactors></li>
+      <li><minSeverity>0.5</minSeverity><label>severe</label><statFactors><ImmunityGainSpeed>0.9</ImmunityGainSpeed><RestFallRateFactor>1.08</RestFallRateFactor></statFactors></li>
+      <li><minSeverity>0.75</minSeverity><label>dangerous</label><statFactors><ImmunityGainSpeed>0.8</ImmunityGainSpeed><RestFallRateFactor>1.15</RestFallRateFactor><WorkSpeedGlobal>0.9</WorkSpeedGlobal></statFactors></li>
+      <li><minSeverity>0.9</minSeverity><label>abnormal tissue growth</label><statFactors><ImmunityGainSpeed>0.7</ImmunityGainSpeed><RestFallRateFactor>1.2</RestFallRateFactor><WorkSpeedGlobal>0.8</WorkSpeedGlobal></statFactors></li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>LiAIChat_PhaseveilNeuralFatigue</defName><label>phaseveil neural fatigue</label><labelNoun>neural fatigue</labelNoun>
+    <description>Repeated phase shifting strains the nervous system. It recovers slowly, and faster while the wearer rests. At severe levels it impairs consciousness, movement, and manipulation; at dangerous levels Phaseveil cannot be activated.</description>
+    <hediffClass>HediffWithComps</hediffClass><isBad>true</isBad><tendable>true</tendable><alwaysShowSeverity>true</alwaysShowSeverity>
+    <initialSeverity>0</initialSeverity><maxSeverity>1</maxSeverity>
+    <comps><li Class="LiAIChat.Blightfall.HediffCompProperties_BlightAffliction"><naturalRecoveryPerDay>0.06</naturalRecoveryPerDay><severeThreshold>0.5</severeThreshold><severeRecoveryFactor>0.35</severeRecoveryFactor><treatmentRecovery>0.15</treatmentRecovery></li></comps>
+    <stages>
+      <li><label>minor</label></li>
+      <li><minSeverity>0.25</minSeverity><label>moderate</label><capMods><li><capacity>Consciousness</capacity><offset>-0.02</offset></li></capMods></li>
+      <li><minSeverity>0.5</minSeverity><label>severe</label><capMods><li><capacity>Consciousness</capacity><offset>-0.07</offset></li><li><capacity>Manipulation</capacity><offset>-0.05</offset></li></capMods><statFactors><MoveSpeed>0.95</MoveSpeed></statFactors></li>
+      <li><minSeverity>0.75</minSeverity><label>dangerous</label><capMods><li><capacity>Consciousness</capacity><offset>-0.12</offset></li><li><capacity>Manipulation</capacity><offset>-0.12</offset></li></capMods><statFactors><MoveSpeed>0.88</MoveSpeed></statFactors></li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>LiAIChat_PhaseveilActive</defName><label>phaseveil active</label>
+    <description>The wearer is phase-shifted and difficult to perceive.</description>
+    <hediffClass>HediffWithComps</hediffClass><isBad>false</isBad><initialSeverity>1</initialSeverity><maxSeverity>1</maxSeverity>
+    <comps>
+      <li Class="HediffCompProperties_Invisibility"><visibleToPlayer>true</visibleToPlayer></li>
+      <li Class="HediffCompProperties_Disappears"><disappearsAfterTicks>1200</disappearsAfterTicks><showRemainingTime>true</showRemainingTime></li>
+      <li Class="HediffCompProperties_DisappearsOnDeath"/>
+      <li Class="LiAIChat.Blightfall.HediffCompProperties_PhaseveilActive"><neuralFatiguePerSecond>0.004</neuralFatiguePerSecond></li>
+    </comps>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>LiAIChat_PhaseveilCooldown</defName><label>phaseveil cooldown</label>
+    <description>The phase-distortion system is recharging.</description>
+    <hediffClass>HediffWithComps</hediffClass><isBad>false</isBad><initialSeverity>1</initialSeverity><maxSeverity>1</maxSeverity>
+    <comps><li Class="HediffCompProperties_Disappears"><disappearsAfterTicks>5400</disappearsAfterTicks><showRemainingTime>true</showRemainingTime></li></comps>
+  </HediffDef>
+</Defs>

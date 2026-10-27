@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_SymbioticCarapace.label>共生甲壳</LiAIChat_SymbioticCarapace.label>
+  <LiAIChat_SymbioticCarapace.description>穿戴时，这套活体装甲会缓慢修复普通伤口。再生会消耗穿戴者的代谢能力，使饥饿速度提高50%；每次修复还会累积共生代谢负担。穿戴者感到饥饿后，再生会暂停。</LiAIChat_SymbioticCarapace.description>
+  <LiAIChat_PhaseveilArmor.label>相位隐身装甲</LiAIChat_PhaseveilArmor.label>
+  <LiAIChat_PhaseveilArmor.description>轻型相位偏转装甲。选中穿戴者并启动相位隐身后，可隐身至多20秒，冷却时间为90秒。攻击或倒地会立即结束隐身；隐身期间会累积神经疲劳，休息时恢复更快。</LiAIChat_PhaseveilArmor.description>
+</LanguageData>

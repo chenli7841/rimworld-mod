@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_ActivatePhaseveil>Activate Phaseveil</LiAIChat_ActivatePhaseveil>
+  <LiAIChat_ActivatePhaseveilDesc>Become invisible for up to 20 seconds. Attacking or being downed ends the effect. Activation starts a 90-second cooldown and adds neural fatigue while active.</LiAIChat_ActivatePhaseveilDesc>
+  <LiAIChat_PhaseveilMustBeWorn>Wear Phaseveil Armor to use this ability.</LiAIChat_PhaseveilMustBeWorn>
+  <LiAIChat_PhaseveilAlreadyActive>Phaseveil is already active.</LiAIChat_PhaseveilAlreadyActive>
+  <LiAIChat_PhaseveilOnCooldown>Phaseveil is recharging.</LiAIChat_PhaseveilOnCooldown>
+  <LiAIChat_PhaseveilTooFatigued>Neural fatigue is too severe to activate Phaseveil.</LiAIChat_PhaseveilTooFatigued>
+  <LiAIChat_PhaseveilUnconscious>The wearer must be conscious and standing to activate Phaseveil.</LiAIChat_PhaseveilUnconscious>
+  <LiAIChat_PhaseveilActivated>{0} activates Phaseveil.</LiAIChat_PhaseveilActivated>
+  <LiAIChat_SymbioticCarapace>Symbiotic Carapace</LiAIChat_SymbioticCarapace>
+</LanguageData>

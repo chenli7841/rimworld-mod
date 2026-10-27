@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_SymbioticCarapace.label>Symbiotic Carapace</LiAIChat_SymbioticCarapace.label>
+  <LiAIChat_SymbioticCarapace.description>A living armor shell that slowly repairs ordinary wounds while worn. Regeneration consumes the wearer's metabolism: hunger rises 50% faster, and each repair adds symbiotic strain. It pauses while the wearer is hungry.</LiAIChat_SymbioticCarapace.description>
+  <LiAIChat_PhaseveilArmor.label>Phaseveil Armor</LiAIChat_PhaseveilArmor.label>
+  <LiAIChat_PhaseveilArmor.description>A light phase-distortion suit. Select its wearer and activate Phaseveil to become invisible for up to 20 seconds; the ability has a 90-second cooldown. Attacking or being downed ends the effect. Active cloaking builds neural fatigue, which recovers faster during rest.</LiAIChat_PhaseveilArmor.description>
+</LanguageData>

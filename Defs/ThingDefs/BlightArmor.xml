@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="ApparelArmorReconBase">
+    <defName>LiAIChat_SymbioticCarapace</defName>
+    <label>Symbiotic Carapace</label>
+    <description>A living armor shell that slowly repairs ordinary wounds while worn. Regeneration consumes the wearer's metabolism: hunger rises 50% faster, and each repair adds symbiotic strain. It pauses while the wearer is hungry.</description>
+    <graphicData><texPath>Things/Pawn/Humanlike/Apparel/PowerArmor/PowerArmor</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <statBases>
+      <WorkToMake>42000</WorkToMake><MaxHitPoints>260</MaxHitPoints><Mass>8</Mass><Flammability>0.35</Flammability>
+      <ArmorRating_Sharp>0.82</ArmorRating_Sharp><ArmorRating_Blunt>0.55</ArmorRating_Blunt><ArmorRating_Heat>0.45</ArmorRating_Heat>
+      <Insulation_Cold>50</Insulation_Cold><Insulation_Heat>8</Insulation_Heat><EquipDelay>11</EquipDelay>
+    </statBases>
+    <costList><ComponentSpacer>4</ComponentSpacer><Plasteel>60</Plasteel><LiAIChat_BlightResearchData>5</LiAIChat_BlightResearchData></costList>
+    <recipeMaker><researchPrerequisite>LiAIChat_SymbioticArmor</researchPrerequisite><skillRequirements><Crafting>8</Crafting></skillRequirements><displayPriority>110</displayPriority></recipeMaker>
+    <apparel><wornGraphicPath>Things/Pawn/Humanlike/Apparel/PowerArmor/PowerArmor</wornGraphicPath></apparel>
+    <comps><li Class="LiAIChat.Blightfall.CompProperties_BlightArmor"/></comps>
+  </ThingDef>
+
+  <ThingDef ParentName="ApparelArmorReconBase">
+    <defName>LiAIChat_PhaseveilArmor</defName>
+    <label>Phaseveil Armor</label>
+    <description>A light phase-distortion suit. Select its wearer and activate Phaseveil to become invisible for up to 20 seconds; the ability has a 90-second cooldown. Attacking or being downed ends the effect. Active cloaking builds neural fatigue, which recovers faster during rest.</description>
+    <graphicData><texPath>Things/Pawn/Humanlike/Apparel/ReconArmor/ReconArmor</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <statBases>
+      <WorkToMake>48000</WorkToMake><MaxHitPoints>240</MaxHitPoints><Mass>6.5</Mass><Flammability>0.4</Flammability>
+      <ArmorRating_Sharp>0.62</ArmorRating_Sharp><ArmorRating_Blunt>0.42</ArmorRating_Blunt><ArmorRating_Heat>0.38</ArmorRating_Heat>
+      <Insulation_Cold>42</Insulation_Cold><Insulation_Heat>6</Insulation_Heat><EquipDelay>9</EquipDelay>
+    </statBases>
+    <costList><ComponentSpacer>4</ComponentSpacer><Plasteel>50</Plasteel><LiAIChat_BlightResearchData>8</LiAIChat_BlightResearchData></costList>
+    <recipeMaker><researchPrerequisite>LiAIChat_PhaseveilTechnology</researchPrerequisite><skillRequirements><Crafting>9</Crafting></skillRequirements><displayPriority>120</displayPriority></recipeMaker>
+    <apparel><wornGraphicPath>Things/Pawn/Humanlike/Apparel/ReconArmor/ReconArmor</wornGraphicPath></apparel>
+    <comps><li Class="LiAIChat.Blightfall.CompProperties_BlightArmor"/></comps>
+  </ThingDef>
+</Defs>

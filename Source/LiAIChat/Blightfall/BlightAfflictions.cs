@@ -49,6 +49,9 @@ namespace LiAIChat.Blightfall
             float recoveryPerDay = Props.naturalRecoveryPerDay;
             if (parent.Severity >= Props.severeThreshold)
                 recoveryPerDay *= Props.severeRecoveryFactor;
+            if (parent.def?.defName == BlightAfflictionUtility.PhaseveilHediff && parent.pawn?.needs?.rest != null &&
+                parent.pawn.needs.rest.CurLevelPercentage > 0.7f)
+                recoveryPerDay *= 3f;
             severityAdjustment -= recoveryPerDay * interval / GenDate.TicksPerDay;
         }
 
@@ -106,12 +109,16 @@ namespace LiAIChat.Blightfall
         public const string SporeHediff = "LiAIChat_SporeLungInfection";
         public const string CorrosiveHediff = "LiAIChat_CorrosiveTissueDamage";
         public const string NeuralHediff = "LiAIChat_NeuralResonanceStrain";
+        public const string SymbioticHediff = "LiAIChat_SymbioticMetabolicStrain";
+        public const string PhaseveilHediff = "LiAIChat_PhaseveilNeuralFatigue";
         private static readonly Dictionary<BlightAfflictionType, string> AfflictionDefs =
             new Dictionary<BlightAfflictionType, string>
             {
                 { BlightAfflictionType.SporeLungInfection, SporeHediff },
                 { BlightAfflictionType.CorrosiveTissueDamage, CorrosiveHediff },
-                { BlightAfflictionType.NeuralResonanceStrain, NeuralHediff }
+                { BlightAfflictionType.NeuralResonanceStrain, NeuralHediff },
+                { BlightAfflictionType.SymbioticMetabolicStrain, SymbioticHediff },
+                { BlightAfflictionType.PhaseveilNeuralFatigue, PhaseveilHediff }
             };
 
         public static void RegisterAfflictionDef(BlightAfflictionType type, string hediffDefName)

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_SymbioticCarapaceBond.label>共生甲壳连接</LiAIChat_SymbioticCarapaceBond.label>
+  <LiAIChat_SymbioticCarapaceBond.description>共生装甲已与穿戴者连接。装甲再生系统会提高饥饿速度，并在穿戴者不感到饥饿时修复普通伤口。</LiAIChat_SymbioticCarapaceBond.description>
+  <LiAIChat_SymbioticMetabolicStrain.label>共生代谢负担</LiAIChat_SymbioticMetabolicStrain.label>
+  <LiAIChat_SymbioticMetabolicStrain.labelNoun>代谢负担</LiAIChat_SymbioticMetabolicStrain.labelNoun>
+  <LiAIChat_SymbioticMetabolicStrain.description>反复进行共生再生会使穿戴者的代谢系统过载。严重时会降低免疫能力并加快休息值消耗；极端时可能出现异常组织增生，可由医生治疗。</LiAIChat_SymbioticMetabolicStrain.description>
+  <LiAIChat_SymbioticMetabolicStrain.stages.0.label>轻微</LiAIChat_SymbioticMetabolicStrain.stages.0.label>
+  <LiAIChat_SymbioticMetabolicStrain.stages.1.label>中度</LiAIChat_SymbioticMetabolicStrain.stages.1.label>
+  <LiAIChat_SymbioticMetabolicStrain.stages.2.label>严重</LiAIChat_SymbioticMetabolicStrain.stages.2.label>
+  <LiAIChat_SymbioticMetabolicStrain.stages.3.label>危险</LiAIChat_SymbioticMetabolicStrain.stages.3.label>
+  <LiAIChat_SymbioticMetabolicStrain.stages.4.label>异常组织增生</LiAIChat_SymbioticMetabolicStrain.stages.4.label>
+  <LiAIChat_PhaseveilNeuralFatigue.label>相位神经疲劳</LiAIChat_PhaseveilNeuralFatigue.label>
+  <LiAIChat_PhaseveilNeuralFatigue.labelNoun>神经疲劳</LiAIChat_PhaseveilNeuralFatigue.labelNoun>
+  <LiAIChat_PhaseveilNeuralFatigue.description>反复进行相位转移会使神经系统疲劳。疲劳会缓慢恢复，休息时恢复更快；严重时会降低意识、移动和操作能力，达到危险程度后无法再次启动相位隐身。</LiAIChat_PhaseveilNeuralFatigue.description>
+  <LiAIChat_PhaseveilNeuralFatigue.stages.0.label>轻微</LiAIChat_PhaseveilNeuralFatigue.stages.0.label>
+  <LiAIChat_PhaseveilNeuralFatigue.stages.1.label>中度</LiAIChat_PhaseveilNeuralFatigue.stages.1.label>
+  <LiAIChat_PhaseveilNeuralFatigue.stages.2.label>严重</LiAIChat_PhaseveilNeuralFatigue.stages.2.label>
+  <LiAIChat_PhaseveilNeuralFatigue.stages.3.label>危险</LiAIChat_PhaseveilNeuralFatigue.stages.3.label>
+  <LiAIChat_PhaseveilActive.label>相位隐身中</LiAIChat_PhaseveilActive.label>
+  <LiAIChat_PhaseveilActive.description>穿戴者已进入相位偏移状态，难以被察觉。</LiAIChat_PhaseveilActive.description>
+  <LiAIChat_PhaseveilCooldown.label>相位隐身冷却中</LiAIChat_PhaseveilCooldown.label>
+  <LiAIChat_PhaseveilCooldown.description>相位偏转系统正在重新充能。</LiAIChat_PhaseveilCooldown.description>
+</LanguageData>

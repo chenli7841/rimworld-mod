@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_SymbioticCarapaceBond.label>symbiotic carapace bond</LiAIChat_SymbioticCarapaceBond.label>
+  <LiAIChat_SymbioticCarapaceBond.description>Symbiotic armor is bonded to the wearer. Its regenerative systems increase hunger and repair ordinary injuries while the wearer is not hungry.</LiAIChat_SymbioticCarapaceBond.description>
+  <LiAIChat_SymbioticMetabolicStrain.label>symbiotic metabolic strain</LiAIChat_SymbioticMetabolicStrain.label>
+  <LiAIChat_SymbioticMetabolicStrain.labelNoun>metabolic strain</LiAIChat_SymbioticMetabolicStrain.labelNoun>
+  <LiAIChat_SymbioticMetabolicStrain.description>Repeated symbiotic regeneration overtaxes the wearer's metabolism. Severe strain lowers immunity and increases rest loss; extreme strain can cause abnormal tissue growth and can be treated by a doctor.</LiAIChat_SymbioticMetabolicStrain.description>
+  <LiAIChat_SymbioticMetabolicStrain.stages.0.label>minor</LiAIChat_SymbioticMetabolicStrain.stages.0.label>
+  <LiAIChat_SymbioticMetabolicStrain.stages.1.label>moderate</LiAIChat_SymbioticMetabolicStrain.stages.1.label>
+  <LiAIChat_SymbioticMetabolicStrain.stages.2.label>severe</LiAIChat_SymbioticMetabolicStrain.stages.2.label>
+  <LiAIChat_SymbioticMetabolicStrain.stages.3.label>dangerous</LiAIChat_SymbioticMetabolicStrain.stages.3.label>
+  <LiAIChat_SymbioticMetabolicStrain.stages.4.label>abnormal tissue growth</LiAIChat_SymbioticMetabolicStrain.stages.4.label>
+  <LiAIChat_PhaseveilNeuralFatigue.label>phaseveil neural fatigue</LiAIChat_PhaseveilNeuralFatigue.label>
+  <LiAIChat_PhaseveilNeuralFatigue.labelNoun>neural fatigue</LiAIChat_PhaseveilNeuralFatigue.labelNoun>
+  <LiAIChat_PhaseveilNeuralFatigue.description>Repeated phase shifting strains the nervous system. It recovers slowly, and faster while resting. At severe levels it impairs consciousness, movement, and manipulation; at dangerous levels Phaseveil cannot be activated.</LiAIChat_PhaseveilNeuralFatigue.description>
+  <LiAIChat_PhaseveilNeuralFatigue.stages.0.label>minor</LiAIChat_PhaseveilNeuralFatigue.stages.0.label>
+  <LiAIChat_PhaseveilNeuralFatigue.stages.1.label>moderate</LiAIChat_PhaseveilNeuralFatigue.stages.1.label>
+  <LiAIChat_PhaseveilNeuralFatigue.stages.2.label>severe</LiAIChat_PhaseveilNeuralFatigue.stages.2.label>
+  <LiAIChat_PhaseveilNeuralFatigue.stages.3.label>dangerous</LiAIChat_PhaseveilNeuralFatigue.stages.3.label>
+  <LiAIChat_PhaseveilActive.label>phaseveil active</LiAIChat_PhaseveilActive.label>
+  <LiAIChat_PhaseveilActive.description>The wearer is phase-shifted and difficult to perceive.</LiAIChat_PhaseveilActive.description>
+  <LiAIChat_PhaseveilCooldown.label>phaseveil cooldown</LiAIChat_PhaseveilCooldown.label>
+  <LiAIChat_PhaseveilCooldown.description>The phase-distortion system is recharging.</LiAIChat_PhaseveilCooldown.description>
+</LanguageData>

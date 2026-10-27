@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_ActivatePhaseveil>启动相位隐身</LiAIChat_ActivatePhaseveil>
+  <LiAIChat_ActivatePhaseveilDesc>进入隐身状态，最长持续20秒。攻击或倒地会结束效果；启动后进入90秒冷却，隐身期间累积神经疲劳。</LiAIChat_ActivatePhaseveilDesc>
+  <LiAIChat_PhaseveilMustBeWorn>必须穿戴相位隐身装甲才能使用此能力。</LiAIChat_PhaseveilMustBeWorn>
+  <LiAIChat_PhaseveilAlreadyActive>相位隐身已经启动。</LiAIChat_PhaseveilAlreadyActive>
+  <LiAIChat_PhaseveilOnCooldown>相位隐身仍在冷却。</LiAIChat_PhaseveilOnCooldown>
+  <LiAIChat_PhaseveilTooFatigued>神经疲劳过于严重，无法启动相位隐身。</LiAIChat_PhaseveilTooFatigued>
+  <LiAIChat_PhaseveilUnconscious>穿戴者必须保持清醒且未倒地才能启动相位隐身。</LiAIChat_PhaseveilUnconscious>
+  <LiAIChat_PhaseveilActivated>{0}启动了相位隐身。</LiAIChat_PhaseveilActivated>
+  <LiAIChat_SymbioticCarapace>共生甲壳</LiAIChat_SymbioticCarapace>
+</LanguageData>
