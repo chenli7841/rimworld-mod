@@ -5,9 +5,10 @@
     <label>massage chair</label>
     <description>An electrically powered chair that provides soothing massages while colonists sit. Natural limbs receive temporary efficiency bonuses, while all users benefit from relaxation, even those with fully artificial limbs.</description>
     <thingClass>LiAIChat.Furniture.Building_MassageChair</thingClass>
+    <uiIconPath>UI/Buildings/MassageChair</uiIconPath>
     <graphicData>
-      <texPath>Things/Building/Furniture/Armchair</texPath>
-      <graphicClass>Graphic_Multi</graphicClass>
+      <texPath>Things/Building/MassageChair</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1,1)</drawSize>
     </graphicData>
     <altitudeLayer>Building</altitudeLayer>
