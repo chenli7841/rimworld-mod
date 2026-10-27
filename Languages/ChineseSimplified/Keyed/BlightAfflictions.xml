@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_BlightAfflictionSeverity>侵蚀程度：{0}</LiAIChat_BlightAfflictionSeverity>
+  <LiAIChat_BlightAfflictionSource>来源：{0}</LiAIChat_BlightAfflictionSource>
+  <LiAIChat_BlightAfflictionProtection>器官保护：{0}</LiAIChat_BlightAfflictionProtection>
+  <LiAIChat_BlightAfflictionTend>医生治疗可以降低侵蚀程度；停止接触后也会缓慢恢复。</LiAIChat_BlightAfflictionTend>
+  <LiAIChat_DetoxifierLungProtection>净化者肺保护正在生效。</LiAIChat_DetoxifierLungProtection>
+  <LiAIChat_BlightWeaponSporeSideEffect>每次成功发射可能增加{0}孢子肺部侵蚀。净化者肺可以减轻或消除对应肺部的侵蚀。</LiAIChat_BlightWeaponSporeSideEffect>
+  <LiAIChat_BlightWeaponCorrosiveSideEffect>每次成功发射可能使天然手臂增加{0}腐蚀性组织损伤；仿生手臂不受影响。</LiAIChat_BlightWeaponCorrosiveSideEffect>
+  <LiAIChat_BlightWeaponNeuralSideEffect>每次成功发射可能增加{0}神经共鸣负荷。</LiAIChat_BlightWeaponNeuralSideEffect>
+  <LiAIChat_BlightApparelNeuralSideEffect>穿戴此装备每天会累积{0}神经共鸣负荷。</LiAIChat_BlightApparelNeuralSideEffect>
+  <LiAIChat_BlightApparelSymbioticSideEffect>穿戴此装备每天会累积{0}共生代谢负担。</LiAIChat_BlightApparelSymbioticSideEffect>
+  <LiAIChat_BlightApparelPhaseveilSideEffect>穿戴此装备每天会累积{0}相位神经疲劳。</LiAIChat_BlightApparelPhaseveilSideEffect>
+</LanguageData>

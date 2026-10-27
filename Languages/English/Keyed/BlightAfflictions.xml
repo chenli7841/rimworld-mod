@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_BlightAfflictionSeverity>Severity: {0}</LiAIChat_BlightAfflictionSeverity>
+  <LiAIChat_BlightAfflictionSource>Source: {0}</LiAIChat_BlightAfflictionSource>
+  <LiAIChat_BlightAfflictionProtection>Protection: {0}</LiAIChat_BlightAfflictionProtection>
+  <LiAIChat_BlightAfflictionTend>Medical tending reduces severity. Without further exposure, the condition slowly recovers.</LiAIChat_BlightAfflictionTend>
+  <LiAIChat_DetoxifierLungProtection>Detoxifier lung protection is active.</LiAIChat_DetoxifierLungProtection>
+  <LiAIChat_BlightWeaponSporeSideEffect>Each successful shot may add {0} spore lung infection. Detoxifier lungs reduce or prevent exposure.</LiAIChat_BlightWeaponSporeSideEffect>
+  <LiAIChat_BlightWeaponCorrosiveSideEffect>Each successful shot may add {0} corrosive damage to natural arms. Artificial arms are protected.</LiAIChat_BlightWeaponCorrosiveSideEffect>
+  <LiAIChat_BlightWeaponNeuralSideEffect>Each successful shot may add {0} neural resonance strain.</LiAIChat_BlightWeaponNeuralSideEffect>
+  <LiAIChat_BlightApparelNeuralSideEffect>Wearing this apparel accumulates {0} neural resonance strain per day.</LiAIChat_BlightApparelNeuralSideEffect>
+  <LiAIChat_BlightApparelSymbioticSideEffect>Wearing this apparel accumulates {0} symbiotic metabolic strain per day.</LiAIChat_BlightApparelSymbioticSideEffect>
+  <LiAIChat_BlightApparelPhaseveilSideEffect>Wearing this apparel accumulates {0} phaseveil neural fatigue per day.</LiAIChat_BlightApparelPhaseveilSideEffect>
+</LanguageData>

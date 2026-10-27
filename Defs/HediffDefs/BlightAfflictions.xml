@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <HediffDef>
+    <defName>LiAIChat_SporeLungInfection</defName>
+    <label>spore lung infection</label><labelNoun>spore infection</labelNoun>
+    <description>Alien spores accumulate in this natural lung. Severity lowers this lung's efficiency; severe infection also slows movement. Detoxifier lungs protect only the lung they replace; a single detoxifier lung also halves the remaining exposure.</description>
+    <hediffClass>HediffWithComps</hediffClass><isBad>true</isBad><tendable>true</tendable><alwaysShowSeverity>true</alwaysShowSeverity>
+    <initialSeverity>0</initialSeverity><maxSeverity>1</maxSeverity>
+    <comps><li Class="LiAIChat.Blightfall.HediffCompProperties_BlightAffliction"><naturalRecoveryPerDay>0.025</naturalRecoveryPerDay><severeThreshold>0.5</severeThreshold><severeRecoveryFactor>0.25</severeRecoveryFactor><treatmentRecovery>0.15</treatmentRecovery></li></comps>
+    <stages>
+      <li><label>minor</label></li>
+      <li><minSeverity>0.25</minSeverity><label>moderate</label><partEfficiencyOffset>-0.10</partEfficiencyOffset></li>
+      <li><minSeverity>0.5</minSeverity><label>severe</label><partEfficiencyOffset>-0.24</partEfficiencyOffset><statFactors><MoveSpeed>0.97</MoveSpeed></statFactors></li>
+      <li><minSeverity>0.75</minSeverity><label>dangerous</label><partEfficiencyOffset>-0.4</partEfficiencyOffset><statFactors><MoveSpeed>0.9</MoveSpeed></statFactors></li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>LiAIChat_CorrosiveTissueDamage</defName>
+    <label>corrosive tissue damage</label><labelNoun>corrosive damage</labelNoun>
+    <description>Corrosive residue damages this natural arm and reduces its efficiency. Artificial arms and missing limbs are not affected. Medical tending and time away from the weapon help recovery.</description>
+    <hediffClass>HediffWithComps</hediffClass><isBad>true</isBad><tendable>true</tendable><alwaysShowSeverity>true</alwaysShowSeverity>
+    <initialSeverity>0</initialSeverity><maxSeverity>1</maxSeverity>
+    <comps><li Class="LiAIChat.Blightfall.HediffCompProperties_BlightAffliction"><naturalRecoveryPerDay>0.02</naturalRecoveryPerDay><severeThreshold>0.5</severeThreshold><severeRecoveryFactor>0.3</severeRecoveryFactor><treatmentRecovery>0.15</treatmentRecovery></li></comps>
+    <stages>
+      <li><label>minor</label></li>
+      <li><minSeverity>0.25</minSeverity><label>moderate</label><partEfficiencyOffset>-0.1</partEfficiencyOffset></li>
+      <li><minSeverity>0.5</minSeverity><label>severe</label><partEfficiencyOffset>-0.24</partEfficiencyOffset></li>
+      <li><minSeverity>0.75</minSeverity><label>dangerous</label><partEfficiencyOffset>-0.4</partEfficiencyOffset></li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>LiAIChat_NeuralResonanceStrain</defName>
+    <label>neural resonance strain</label><labelNoun>resonance strain</labelNoun>
+    <description>Repeated resonance exposure overloads the nervous system. Severe strain lowers consciousness and causes pain. It cannot by itself kill the pawn and recovers when exposure stops.</description>
+    <hediffClass>HediffWithComps</hediffClass><isBad>true</isBad><tendable>true</tendable><alwaysShowSeverity>true</alwaysShowSeverity>
+    <initialSeverity>0</initialSeverity><maxSeverity>1</maxSeverity>
+    <comps><li Class="LiAIChat.Blightfall.HediffCompProperties_BlightAffliction"><naturalRecoveryPerDay>0.035</naturalRecoveryPerDay><severeThreshold>0.5</severeThreshold><severeRecoveryFactor>0.25</severeRecoveryFactor><treatmentRecovery>0.15</treatmentRecovery></li></comps>
+    <stages>
+      <li><label>minor</label></li>
+      <li><minSeverity>0.25</minSeverity><label>moderate</label><capMods><li><capacity>Consciousness</capacity><offset>-0.02</offset></li></capMods></li>
+      <li><minSeverity>0.5</minSeverity><label>severe</label><painOffset>0.05</painOffset><capMods><li><capacity>Consciousness</capacity><offset>-0.07</offset></li></capMods></li>
+      <li><minSeverity>0.75</minSeverity><label>dangerous</label><painOffset>0.1</painOffset><statOffsets><MentalBreakThreshold>0.04</MentalBreakThreshold></statOffsets><capMods><li><capacity>Consciousness</capacity><offset>-0.12</offset></li></capMods></li>
+    </stages>
+  </HediffDef>
+</Defs>

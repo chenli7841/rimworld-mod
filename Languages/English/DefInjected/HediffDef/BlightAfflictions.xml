@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_SporeLungInfection.label>spore lung infection</LiAIChat_SporeLungInfection.label>
+  <LiAIChat_SporeLungInfection.labelNoun>spore infection</LiAIChat_SporeLungInfection.labelNoun>
+  <LiAIChat_SporeLungInfection.description>Alien spores accumulate in this natural lung. Severity lowers this lung's efficiency; severe infection also slows movement. Detoxifier lungs protect only the lung they replace; a single detoxifier lung also halves the remaining exposure.</LiAIChat_SporeLungInfection.description>
+  <LiAIChat_SporeLungInfection.stages.0.label>minor</LiAIChat_SporeLungInfection.stages.0.label>
+  <LiAIChat_SporeLungInfection.stages.1.label>moderate</LiAIChat_SporeLungInfection.stages.1.label>
+  <LiAIChat_SporeLungInfection.stages.2.label>severe</LiAIChat_SporeLungInfection.stages.2.label>
+  <LiAIChat_SporeLungInfection.stages.3.label>dangerous</LiAIChat_SporeLungInfection.stages.3.label>
+  <LiAIChat_CorrosiveTissueDamage.label>corrosive tissue damage</LiAIChat_CorrosiveTissueDamage.label>
+  <LiAIChat_CorrosiveTissueDamage.labelNoun>corrosive damage</LiAIChat_CorrosiveTissueDamage.labelNoun>
+  <LiAIChat_CorrosiveTissueDamage.description>Corrosive residue damages this natural arm and reduces its efficiency. Artificial arms and missing limbs are not affected. Medical tending and time away from the weapon help recovery.</LiAIChat_CorrosiveTissueDamage.description>
+  <LiAIChat_CorrosiveTissueDamage.stages.0.label>minor</LiAIChat_CorrosiveTissueDamage.stages.0.label>
+  <LiAIChat_CorrosiveTissueDamage.stages.1.label>moderate</LiAIChat_CorrosiveTissueDamage.stages.1.label>
+  <LiAIChat_CorrosiveTissueDamage.stages.2.label>severe</LiAIChat_CorrosiveTissueDamage.stages.2.label>
+  <LiAIChat_CorrosiveTissueDamage.stages.3.label>dangerous</LiAIChat_CorrosiveTissueDamage.stages.3.label>
+  <LiAIChat_NeuralResonanceStrain.label>neural resonance strain</LiAIChat_NeuralResonanceStrain.label>
+  <LiAIChat_NeuralResonanceStrain.labelNoun>resonance strain</LiAIChat_NeuralResonanceStrain.labelNoun>
+  <LiAIChat_NeuralResonanceStrain.description>Repeated resonance exposure overloads the nervous system. Severe strain lowers consciousness and causes pain. It cannot by itself kill the pawn and recovers when exposure stops.</LiAIChat_NeuralResonanceStrain.description>
+  <LiAIChat_NeuralResonanceStrain.stages.0.label>minor</LiAIChat_NeuralResonanceStrain.stages.0.label>
+  <LiAIChat_NeuralResonanceStrain.stages.1.label>moderate</LiAIChat_NeuralResonanceStrain.stages.1.label>
+  <LiAIChat_NeuralResonanceStrain.stages.2.label>severe</LiAIChat_NeuralResonanceStrain.stages.2.label>
+  <LiAIChat_NeuralResonanceStrain.stages.3.label>dangerous</LiAIChat_NeuralResonanceStrain.stages.3.label>
+</LanguageData>

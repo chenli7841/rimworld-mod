@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_SporeLungInfection.label>孢子肺部侵蚀</LiAIChat_SporeLungInfection.label>
+  <LiAIChat_SporeLungInfection.labelNoun>孢子侵蚀</LiAIChat_SporeLungInfection.labelNoun>
+  <LiAIChat_SporeLungInfection.description>外星孢子积聚在这侧天然肺中，严重时会降低肺部效率并减慢移动速度。净化者肺只保护被其替换的那一侧；只有一侧安装净化者肺时，也会使另一侧受到的孢子暴露减半。</LiAIChat_SporeLungInfection.description>
+  <LiAIChat_SporeLungInfection.stages.0.label>轻微</LiAIChat_SporeLungInfection.stages.0.label>
+  <LiAIChat_SporeLungInfection.stages.1.label>中度</LiAIChat_SporeLungInfection.stages.1.label>
+  <LiAIChat_SporeLungInfection.stages.2.label>严重</LiAIChat_SporeLungInfection.stages.2.label>
+  <LiAIChat_SporeLungInfection.stages.3.label>危险</LiAIChat_SporeLungInfection.stages.3.label>
+  <LiAIChat_CorrosiveTissueDamage.label>腐蚀性组织损伤</LiAIChat_CorrosiveTissueDamage.label>
+  <LiAIChat_CorrosiveTissueDamage.labelNoun>腐蚀损伤</LiAIChat_CorrosiveTissueDamage.labelNoun>
+  <LiAIChat_CorrosiveTissueDamage.description>腐蚀残留物会损伤这条天然手臂并降低其效率。仿生手臂和缺失的肢体不受影响。停止使用武器并接受医疗照料可以促进恢复。</LiAIChat_CorrosiveTissueDamage.description>
+  <LiAIChat_CorrosiveTissueDamage.stages.0.label>轻微</LiAIChat_CorrosiveTissueDamage.stages.0.label>
+  <LiAIChat_CorrosiveTissueDamage.stages.1.label>中度</LiAIChat_CorrosiveTissueDamage.stages.1.label>
+  <LiAIChat_CorrosiveTissueDamage.stages.2.label>严重</LiAIChat_CorrosiveTissueDamage.stages.2.label>
+  <LiAIChat_CorrosiveTissueDamage.stages.3.label>危险</LiAIChat_CorrosiveTissueDamage.stages.3.label>
+  <LiAIChat_NeuralResonanceStrain.label>神经共鸣负荷</LiAIChat_NeuralResonanceStrain.label>
+  <LiAIChat_NeuralResonanceStrain.labelNoun>共鸣负荷</LiAIChat_NeuralResonanceStrain.labelNoun>
+  <LiAIChat_NeuralResonanceStrain.description>反复暴露于共鸣会使神经系统过载。严重负荷会降低意识并造成疼痛；这种负荷本身不会杀死殖民者，停止暴露后会逐渐恢复。</LiAIChat_NeuralResonanceStrain.description>
+  <LiAIChat_NeuralResonanceStrain.stages.0.label>轻微</LiAIChat_NeuralResonanceStrain.stages.0.label>
+  <LiAIChat_NeuralResonanceStrain.stages.1.label>中度</LiAIChat_NeuralResonanceStrain.stages.1.label>
+  <LiAIChat_NeuralResonanceStrain.stages.2.label>严重</LiAIChat_NeuralResonanceStrain.stages.2.label>
+  <LiAIChat_NeuralResonanceStrain.stages.3.label>危险</LiAIChat_NeuralResonanceStrain.stages.3.label>
+</LanguageData>
