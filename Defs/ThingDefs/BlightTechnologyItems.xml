@@ -5,7 +5,7 @@
     <label>Blight research data</label>
     <description>Recovered scientific records from the Blightfall network. Research projects consume them when selected.</description>
     <thingCategories><li>Manufactured</li></thingCategories>
-    <graphicData><texPath>Things/Item/Resource/ComponentIndustrial</texPath><graphicClass>Graphic_Single</graphicClass><drawSize>0.8</drawSize></graphicData>
+    <graphicData><texPath>Things/Item/Resource/ComponentIndustrial</texPath><graphicClass>Graphic_StackCount</graphicClass><drawSize>0.8</drawSize></graphicData>
     <statBases><MarketValue>45</MarketValue><Mass>0.02</Mass><Flammability>0.2</Flammability></statBases>
     <stackLimit>75</stackLimit>
   </ThingDef>
