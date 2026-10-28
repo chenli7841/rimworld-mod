@@ -2,6 +2,7 @@
 <Defs>
   <ThingDef ParentName="ApparelArmorReconBase">
     <defName>LiAIChat_SymbioticCarapace</defName>
+    <generateCommonality>0.05</generateCommonality>
     <label>Symbiotic Carapace</label>
     <description>A living armor shell that slowly repairs ordinary wounds while worn. Regeneration consumes the wearer's metabolism: hunger rises 50% faster, and each repair adds symbiotic strain. It pauses while the wearer is hungry.</description>
     <graphicData><texPath>Things/Pawn/Humanlike/Apparel/PowerArmor/PowerArmor</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
@@ -10,14 +11,15 @@
       <ArmorRating_Sharp>0.82</ArmorRating_Sharp><ArmorRating_Blunt>0.55</ArmorRating_Blunt><ArmorRating_Heat>0.45</ArmorRating_Heat>
       <Insulation_Cold>50</Insulation_Cold><Insulation_Heat>8</Insulation_Heat><EquipDelay>11</EquipDelay>
     </statBases>
-    <costList><ComponentSpacer>4</ComponentSpacer><Plasteel>60</Plasteel><LiAIChat_BlightResearchData>5</LiAIChat_BlightResearchData></costList>
+    <costList><ComponentIndustrial>8</ComponentIndustrial><ComponentSpacer>2</ComponentSpacer><Plasteel>60</Plasteel><LiAIChat_BlightResearchData>1</LiAIChat_BlightResearchData></costList>
     <recipeMaker><researchPrerequisite>LiAIChat_SymbioticArmor</researchPrerequisite><skillRequirements><Crafting>8</Crafting></skillRequirements><displayPriority>110</displayPriority></recipeMaker>
-    <apparel><wornGraphicPath>Things/Pawn/Humanlike/Apparel/PowerArmor/PowerArmor</wornGraphicPath></apparel>
+    <apparel><defaultOutfitTags Inherit="False"><li>LiAIChatBlightfallGear</li></defaultOutfitTags><wornGraphicPath>Things/Pawn/Humanlike/Apparel/PowerArmor/PowerArmor</wornGraphicPath></apparel>
     <comps><li Class="LiAIChat.Blightfall.CompProperties_BlightArmor"/></comps>
   </ThingDef>
 
   <ThingDef ParentName="ApparelArmorReconBase">
     <defName>LiAIChat_PhaseveilArmor</defName>
+    <generateCommonality>0.01</generateCommonality>
     <label>Phaseveil Armor</label>
     <description>A light phase-distortion suit. Select its wearer and activate Phaseveil to become invisible for up to 20 seconds; the ability has a 90-second cooldown. Attacking or being downed ends the effect. Active cloaking builds neural fatigue, which recovers faster during rest.</description>
     <graphicData><texPath>Things/Pawn/Humanlike/Apparel/ReconArmor/ReconArmor</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
@@ -26,9 +28,42 @@
       <ArmorRating_Sharp>0.62</ArmorRating_Sharp><ArmorRating_Blunt>0.42</ArmorRating_Blunt><ArmorRating_Heat>0.38</ArmorRating_Heat>
       <Insulation_Cold>42</Insulation_Cold><Insulation_Heat>6</Insulation_Heat><EquipDelay>9</EquipDelay>
     </statBases>
-    <costList><ComponentSpacer>4</ComponentSpacer><Plasteel>50</Plasteel><LiAIChat_BlightResearchData>8</LiAIChat_BlightResearchData></costList>
+    <costList><ComponentIndustrial>8</ComponentIndustrial><ComponentSpacer>5</ComponentSpacer><Plasteel>50</Plasteel><LiAIChat_BlightResearchData>3</LiAIChat_BlightResearchData></costList>
     <recipeMaker><researchPrerequisite>LiAIChat_PhaseveilTechnology</researchPrerequisite><skillRequirements><Crafting>9</Crafting></skillRequirements><displayPriority>120</displayPriority></recipeMaker>
-    <apparel><wornGraphicPath>Things/Pawn/Humanlike/Apparel/ReconArmor/ReconArmor</wornGraphicPath></apparel>
+    <apparel><defaultOutfitTags Inherit="False"><li>LiAIChatBlightfallGear</li></defaultOutfitTags><wornGraphicPath>Things/Pawn/Humanlike/Apparel/ReconArmor/ReconArmor</wornGraphicPath></apparel>
     <comps><li Class="LiAIChat.Blightfall.CompProperties_BlightArmor"/></comps>
+  </ThingDef>
+
+  <ThingDef ParentName="ApparelArmorReconBase">
+    <defName>LiAIChat_BlightAbsorberArmor</defName><label>Blight Absorber Armor</label>
+    <generateCommonality>0.03</generateCommonality>
+    <description>On polluted ground, this armor absorbs nearby pollution into a reserve of up to 100 energy. Its active shield can spend that reserve to absorb incoming damage. Pollution absorption and shield activation slowly build toxic accumulation.</description>
+    <graphicData><texPath>Things/Pawn/Humanlike/Apparel/ReconArmor/ReconArmor</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <statBases><WorkToMake>46000</WorkToMake><MaxHitPoints>250</MaxHitPoints><Mass>7</Mass><Flammability>0.35</Flammability><ArmorRating_Sharp>0.68</ArmorRating_Sharp><ArmorRating_Blunt>0.5</ArmorRating_Blunt><ArmorRating_Heat>0.42</ArmorRating_Heat><Insulation_Cold>45</Insulation_Cold><Insulation_Heat>7</Insulation_Heat><EquipDelay>10</EquipDelay></statBases>
+    <costList><ComponentIndustrial>6</ComponentIndustrial><ComponentSpacer>3</ComponentSpacer><Plasteel>55</Plasteel><LiAIChat_BlightResearchData>2</LiAIChat_BlightResearchData></costList>
+    <recipeMaker><researchPrerequisite>LiAIChat_ResonanceTechnology</researchPrerequisite><skillRequirements><Crafting>8</Crafting></skillRequirements><displayPriority>125</displayPriority></recipeMaker>
+    <apparel><defaultOutfitTags Inherit="False"><li>LiAIChatBlightfallGear</li></defaultOutfitTags><wornGraphicPath>Things/Pawn/Humanlike/Apparel/ReconArmor/ReconArmor</wornGraphicPath></apparel><comps><li Class="LiAIChat.Blightfall.CompProperties_BlightArmor"/></comps>
+  </ThingDef>
+
+  <ThingDef ParentName="ApparelArmorReconBase">
+    <defName>LiAIChat_RetaliatorCarapace</defName><label>Retaliator Carapace</label>
+    <generateCommonality>0.03</generateCommonality>
+    <description>This living shell grows venomous spines that can retaliate against damaging melee attacks. Each retaliation causes dermal erosion; the spines cannot respond to ranged or environmental damage.</description>
+    <graphicData><texPath>Things/Pawn/Humanlike/Apparel/PowerArmor/PowerArmor</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <statBases><WorkToMake>44000</WorkToMake><MaxHitPoints>270</MaxHitPoints><Mass>8</Mass><Flammability>0.4</Flammability><ArmorRating_Sharp>0.78</ArmorRating_Sharp><ArmorRating_Blunt>0.58</ArmorRating_Blunt><ArmorRating_Heat>0.42</ArmorRating_Heat><Insulation_Cold>48</Insulation_Cold><Insulation_Heat>8</Insulation_Heat><EquipDelay>11</EquipDelay></statBases>
+    <costList><ComponentIndustrial>6</ComponentIndustrial><ComponentSpacer>3</ComponentSpacer><Plasteel>55</Plasteel><LiAIChat_BlightResearchData>2</LiAIChat_BlightResearchData></costList>
+    <recipeMaker><researchPrerequisite>LiAIChat_ResonanceTechnology</researchPrerequisite><skillRequirements><Crafting>8</Crafting></skillRequirements><displayPriority>126</displayPriority></recipeMaker>
+    <apparel><defaultOutfitTags Inherit="False"><li>LiAIChatBlightfallGear</li></defaultOutfitTags><wornGraphicPath>Things/Pawn/Humanlike/Apparel/PowerArmor/PowerArmor</wornGraphicPath></apparel><comps><li Class="LiAIChat.Blightfall.CompProperties_BlightArmor"/></comps>
+  </ThingDef>
+
+  <ThingDef ParentName="ApparelArmorReconBase">
+    <defName>LiAIChat_ResonanceMantle</defName><label>Resonance Mantle</label>
+    <generateCommonality>0.01</generateCommonality>
+    <description>Activate a short-range resonance field to disrupt nearby hostile biological enemies. The field strains the wearer's nervous system and has a long cooldown.</description>
+    <graphicData><texPath>Things/Pawn/Humanlike/Apparel/ReconArmor/ReconArmor</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
+    <statBases><WorkToMake>52000</WorkToMake><MaxHitPoints>230</MaxHitPoints><Mass>6.5</Mass><Flammability>0.4</Flammability><ArmorRating_Sharp>0.58</ArmorRating_Sharp><ArmorRating_Blunt>0.4</ArmorRating_Blunt><ArmorRating_Heat>0.36</ArmorRating_Heat><Insulation_Cold>40</Insulation_Cold><Insulation_Heat>6</Insulation_Heat><EquipDelay>9</EquipDelay></statBases>
+    <costList><ComponentIndustrial>8</ComponentIndustrial><ComponentSpacer>5</ComponentSpacer><Plasteel>60</Plasteel><LiAIChat_BlightResearchData>3</LiAIChat_BlightResearchData></costList>
+    <recipeMaker><researchPrerequisite>LiAIChat_PhaseveilTechnology</researchPrerequisite><skillRequirements><Crafting>9</Crafting></skillRequirements><displayPriority>127</displayPriority></recipeMaker>
+    <apparel><defaultOutfitTags Inherit="False"><li>LiAIChatBlightfallGear</li></defaultOutfitTags><wornGraphicPath>Things/Pawn/Humanlike/Apparel/ReconArmor/ReconArmor</wornGraphicPath></apparel><comps><li Class="LiAIChat.Blightfall.CompProperties_BlightArmor"/></comps>
   </ThingDef>
 </Defs>

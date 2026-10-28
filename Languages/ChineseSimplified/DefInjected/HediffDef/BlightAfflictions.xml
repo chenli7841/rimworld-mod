@@ -22,4 +22,10 @@
   <LiAIChat_NeuralResonanceStrain.stages.2.label>严重</LiAIChat_NeuralResonanceStrain.stages.2.label>
   <LiAIChat_NeuralResonanceStrain.stages.3.label>危险</LiAIChat_NeuralResonanceStrain.stages.3.label>
   <LiAIChat_NeuralResonanceStrain.stages.4.label>严重神经反馈</LiAIChat_NeuralResonanceStrain.stages.4.label>
+  <LiAIChat_ToxicAccumulation.label>毒素积累</LiAIChat_ToxicAccumulation.label><LiAIChat_ToxicAccumulation.labelNoun>毒素负荷</LiAIChat_ToxicAccumulation.labelNoun>
+  <LiAIChat_ToxicAccumulation.description>吸蚀装甲储存的污染正在渗入穿戴者体内。净化肺可以降低积累，但无法完全消除。</LiAIChat_ToxicAccumulation.description>
+  <LiAIChat_ToxicAccumulation.stages.0.label>轻微</LiAIChat_ToxicAccumulation.stages.0.label><LiAIChat_ToxicAccumulation.stages.1.label>中度</LiAIChat_ToxicAccumulation.stages.1.label><LiAIChat_ToxicAccumulation.stages.2.label>严重</LiAIChat_ToxicAccumulation.stages.2.label><LiAIChat_ToxicAccumulation.stages.3.label>危险</LiAIChat_ToxicAccumulation.stages.3.label>
+  <LiAIChat_DermalErosion.label>皮肤侵蚀</LiAIChat_DermalErosion.label><LiAIChat_DermalErosion.labelNoun>皮肤侵蚀</LiAIChat_DermalErosion.labelNoun>
+  <LiAIChat_DermalErosion.description>反击甲壳的共生尖刺会刺激并损伤穿戴者皮肤。严重侵蚀会引起疼痛，且恢复缓慢。</LiAIChat_DermalErosion.description>
+  <LiAIChat_DermalErosion.stages.0.label>轻微</LiAIChat_DermalErosion.stages.0.label><LiAIChat_DermalErosion.stages.1.label>中度</LiAIChat_DermalErosion.stages.1.label><LiAIChat_DermalErosion.stages.2.label>严重</LiAIChat_DermalErosion.stages.2.label><LiAIChat_DermalErosion.stages.3.label>危险</LiAIChat_DermalErosion.stages.3.label>
 </LanguageData>

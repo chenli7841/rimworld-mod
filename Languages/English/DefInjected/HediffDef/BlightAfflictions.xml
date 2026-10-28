@@ -22,4 +22,10 @@
   <LiAIChat_NeuralResonanceStrain.stages.2.label>severe</LiAIChat_NeuralResonanceStrain.stages.2.label>
   <LiAIChat_NeuralResonanceStrain.stages.3.label>dangerous</LiAIChat_NeuralResonanceStrain.stages.3.label>
   <LiAIChat_NeuralResonanceStrain.stages.4.label>severe feedback</LiAIChat_NeuralResonanceStrain.stages.4.label>
+  <LiAIChat_ToxicAccumulation.label>toxic accumulation</LiAIChat_ToxicAccumulation.label><LiAIChat_ToxicAccumulation.labelNoun>toxin load</LiAIChat_ToxicAccumulation.labelNoun>
+  <LiAIChat_ToxicAccumulation.description>The absorber armor's stored pollution is leaking into the wearer's body. Detoxifier lungs reduce the buildup but cannot eliminate it.</LiAIChat_ToxicAccumulation.description>
+  <LiAIChat_ToxicAccumulation.stages.0.label>minor</LiAIChat_ToxicAccumulation.stages.0.label><LiAIChat_ToxicAccumulation.stages.1.label>moderate</LiAIChat_ToxicAccumulation.stages.1.label><LiAIChat_ToxicAccumulation.stages.2.label>severe</LiAIChat_ToxicAccumulation.stages.2.label><LiAIChat_ToxicAccumulation.stages.3.label>dangerous</LiAIChat_ToxicAccumulation.stages.3.label>
+  <LiAIChat_DermalErosion.label>dermal erosion</LiAIChat_DermalErosion.label><LiAIChat_DermalErosion.labelNoun>skin erosion</LiAIChat_DermalErosion.labelNoun>
+  <LiAIChat_DermalErosion.description>The retaliator carapace's symbiotic spines irritate and damage the wearer's skin. Severe erosion causes pain and recovers slowly.</LiAIChat_DermalErosion.description>
+  <LiAIChat_DermalErosion.stages.0.label>minor</LiAIChat_DermalErosion.stages.0.label><LiAIChat_DermalErosion.stages.1.label>moderate</LiAIChat_DermalErosion.stages.1.label><LiAIChat_DermalErosion.stages.2.label>severe</LiAIChat_DermalErosion.stages.2.label><LiAIChat_DermalErosion.stages.3.label>dangerous</LiAIChat_DermalErosion.stages.3.label>
 </LanguageData>

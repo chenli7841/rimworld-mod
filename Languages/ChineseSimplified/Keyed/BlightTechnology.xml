@@ -7,6 +7,9 @@
   <LiAIChat_BlightResearchBlueprintRequired>解读对应蓝图后才能选择此研究项目。</LiAIChat_BlightResearchBlueprintRequired>
   <LiAIChat_BlightResearchDataInsufficient>蚀潮研究资料不足：需要{0}份，目前有{1}份。</LiAIChat_BlightResearchDataInsufficient>
   <LiAIChat_BlightResearchDataConsumed>已消耗{0}份蚀潮研究资料，开始研究“{1}”。</LiAIChat_BlightResearchDataConsumed>
-  <LiAIChat_BlightWasteDumpDataReward>在毒废料场回收了{0}份蚀潮研究资料。</LiAIChat_BlightWasteDumpDataReward>
+  <LiAIChat_BlightWasteDumpDataReward>在遗址回收了{0}份蚀潮研究资料。</LiAIChat_BlightWasteDumpDataReward>
   <LiAIChat_BlightWasteDumpBlueprintReward>发现了新的蚀潮科技蓝图：“{0}”。</LiAIChat_BlightWasteDumpBlueprintReward>
+  <LiAIChat_BlightEquipmentRequirements>研究前置：{0}。制造材料：{1}。</LiAIChat_BlightEquipmentRequirements>
+  <LiAIChat_BlightNoResearchPrerequisite>无</LiAIChat_BlightNoResearchPrerequisite>
+  <LiAIChat_BlightNoCraftingMaterials>无</LiAIChat_BlightNoCraftingMaterials>
 </LanguageData>

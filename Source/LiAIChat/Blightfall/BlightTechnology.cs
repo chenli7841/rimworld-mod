@@ -16,11 +16,20 @@ namespace LiAIChat.Blightfall
         public int researchDataCost;
     }
 
+    public enum BlightTechnologyTier
+    {
+        Basic,
+        Advanced,
+        Core
+    }
+
     public class BlightTechnologyGameComponent : GameComponent
     {
         private List<string> unlockedBlueprints = new List<string>();
         private List<string> paidProjects = new List<string>();
         private int wasteDumpRewardsSinceBlueprint;
+        private int advancedSiteRewardsSinceBlueprint;
+        private int coreSiteRewardsSinceBlueprint;
 
         public BlightTechnologyGameComponent(Verse.Game game) { }
 
@@ -34,9 +43,13 @@ namespace LiAIChat.Blightfall
             Scribe_Collections.Look(ref unlockedBlueprints, "blightTechnologyUnlockedBlueprints", LookMode.Value);
             Scribe_Collections.Look(ref paidProjects, "blightTechnologyPaidProjects", LookMode.Value);
             Scribe_Values.Look(ref wasteDumpRewardsSinceBlueprint, "blightWasteDumpRewardsSinceBlueprint", 0);
+            Scribe_Values.Look(ref advancedSiteRewardsSinceBlueprint, "blightAdvancedSiteRewardsSinceBlueprint", 0);
+            Scribe_Values.Look(ref coreSiteRewardsSinceBlueprint, "blightCoreSiteRewardsSinceBlueprint", 0);
             if (unlockedBlueprints == null) unlockedBlueprints = new List<string>();
             if (paidProjects == null) paidProjects = new List<string>();
             wasteDumpRewardsSinceBlueprint = Mathf.Clamp(wasteDumpRewardsSinceBlueprint, 0, 4);
+            advancedSiteRewardsSinceBlueprint = Mathf.Clamp(advancedSiteRewardsSinceBlueprint, 0, 4);
+            coreSiteRewardsSinceBlueprint = Mathf.Clamp(coreSiteRewardsSinceBlueprint, 0, 4);
         }
 
         public bool IsBlueprintUnlocked(string defName)
@@ -63,45 +76,81 @@ namespace LiAIChat.Blightfall
 
         public bool RecordWasteDumpSuccessAndShouldGuaranteeBlueprint()
         {
-            if (!BlightTechnologyUtility.HasUndecodedBlueprints)
+            return RecordSiteSuccessAndShouldGuaranteeBlueprint(BlightTechnologyTier.Basic);
+        }
+
+        public bool RecordSiteSuccessAndShouldGuaranteeBlueprint(BlightTechnologyTier tier)
+        {
+            if (!BlightTechnologyUtility.HasUndecodedBlueprintsForTier(tier))
             {
-                wasteDumpRewardsSinceBlueprint = 0;
+                SetBlueprintRewardProgress(tier, 0);
                 return false;
             }
-            wasteDumpRewardsSinceBlueprint = Mathf.Min(4, wasteDumpRewardsSinceBlueprint + 1);
-            return wasteDumpRewardsSinceBlueprint >= 4;
+            int progress = Mathf.Min(4, BlueprintRewardProgress(tier) + 1);
+            SetBlueprintRewardProgress(tier, progress);
+            return progress >= 4;
         }
 
         public void RecordNewBlueprintReward()
         {
             wasteDumpRewardsSinceBlueprint = 0;
         }
+
+        public void RecordNewBlueprintReward(BlightTechnologyTier tier) => SetBlueprintRewardProgress(tier, 0);
+
+        private int BlueprintRewardProgress(BlightTechnologyTier tier) => tier switch
+        {
+            BlightTechnologyTier.Advanced => advancedSiteRewardsSinceBlueprint,
+            BlightTechnologyTier.Core => coreSiteRewardsSinceBlueprint,
+            _ => wasteDumpRewardsSinceBlueprint
+        };
+
+        private void SetBlueprintRewardProgress(BlightTechnologyTier tier, int value)
+        {
+            switch (tier)
+            {
+                case BlightTechnologyTier.Advanced: advancedSiteRewardsSinceBlueprint = value; break;
+                case BlightTechnologyTier.Core: coreSiteRewardsSinceBlueprint = value; break;
+                default: wasteDumpRewardsSinceBlueprint = value; break;
+            }
+        }
     }
 
     public static class BlightTechnologyUtility
     {
         public const string ResearchDataDefName = "LiAIChat_BlightResearchData";
-        private static readonly string[] BlueprintDefNames =
+        private static readonly string[] BasicBlueprints =
         {
             "LiAIChat_SporeBioengineeringBlueprint",
             "LiAIChat_CorrosiveTechnologyBlueprint",
-            "LiAIChat_SymbioticArmorBlueprint",
-            "LiAIChat_ResonanceTechnologyBlueprint",
-            "LiAIChat_PhaseveilTechnologyBlueprint"
+            "LiAIChat_SymbioticArmorBlueprint"
         };
+        private static readonly string[] AdvancedBlueprints = { "LiAIChat_ResonanceTechnologyBlueprint" };
+        private static readonly string[] CoreBlueprints = { "LiAIChat_PhaseveilTechnologyBlueprint" };
+        private static readonly string[] AllBlueprints = BasicBlueprints.Concat(AdvancedBlueprints).Concat(CoreBlueprints).ToArray();
 
         public static bool HasUndecodedBlueprints
         {
             get
             {
                 BlightTechnologyGameComponent component = BlightTechnologyGameComponent.Instance;
-                return BlueprintDefNames.Any(name => component == null || !component.IsBlueprintUnlocked(name));
+                return AllBlueprints.Any(name => component == null || !component.IsBlueprintUnlocked(name));
             }
         }
 
+        public static bool HasUndecodedBlueprintsForTier(BlightTechnologyTier tier) =>
+            BlueprintNamesFor(tier).Any(name => BlightTechnologyGameComponent.Instance?.IsBlueprintUnlocked(name) != true);
+
+        public static IReadOnlyList<string> BlueprintNamesFor(BlightTechnologyTier tier) => tier switch
+        {
+            BlightTechnologyTier.Advanced => AdvancedBlueprints,
+            BlightTechnologyTier.Core => CoreBlueprints,
+            _ => BasicBlueprints
+        };
+
         public static bool IsBlueprint(ThingDef def)
         {
-            return def != null && BlueprintDefNames.Contains(def.defName);
+            return def != null && AllBlueprints.Contains(def.defName);
         }
 
         public static bool IsProjectUnlocked(ResearchProjectDef project)
@@ -262,18 +311,23 @@ namespace LiAIChat.Blightfall
 
         public static void AwardForWasteDump(Map map)
         {
+            AwardForTier(map, BlightTechnologyTier.Basic);
+        }
+
+        public static void AwardForTier(Map map, BlightTechnologyTier tier)
+        {
             if (map == null) return;
             BlightTechnologyGameComponent component = BlightTechnologyGameComponent.Instance;
             if (component == null) return;
 
-            bool guaranteedBlueprint = component.RecordWasteDumpSuccessAndShouldGuaranteeBlueprint();
+            bool guaranteedBlueprint = component.RecordSiteSuccessAndShouldGuaranteeBlueprint(tier);
             float roll = Rand.Value;
             Thing reward = null;
             bool newBlueprint = false;
 
             if (guaranteedBlueprint || roll >= 0.90f)
             {
-                reward = MakeUndecodedBlueprint();
+                reward = MakeUndecodedBlueprint(tier);
                 newBlueprint = reward != null;
             }
             else if (roll >= 0.70f)
@@ -285,20 +339,20 @@ namespace LiAIChat.Blightfall
                 reward = MakeResearchData();
             if (reward == null)
             {
-                Log.Warning("[LiAIChat Blight Technology] Could not create the abandoned waste dump special reward.");
+                Log.Warning("[LiAIChat Blight Technology] Could not create the Blightfall site reward.");
                 return;
             }
 
             if (!GenPlace.TryPlaceThing(reward, map.Center, map, ThingPlaceMode.Near))
             {
                 if (!reward.Destroyed) reward.Destroy(DestroyMode.Vanish);
-                Log.Warning("[LiAIChat Blight Technology] Could not place the abandoned waste dump special reward.");
+                Log.Warning("[LiAIChat Blight Technology] Could not place the Blightfall site reward.");
                 return;
             }
 
             if (newBlueprint)
             {
-                component.RecordNewBlueprintReward();
+                component.RecordNewBlueprintReward(tier);
                 Messages.Message("LiAIChat_BlightWasteDumpBlueprintReward".Translate(reward.LabelCap), reward,
                     MessageTypeDefOf.PositiveEvent, false);
             }
@@ -318,18 +372,10 @@ namespace LiAIChat.Blightfall
             return BlightTechnologyUtility.CreateResearchData(Rand.RangeInclusive(1, 3));
         }
 
-        private static Thing MakeUndecodedBlueprint()
+        private static Thing MakeUndecodedBlueprint(BlightTechnologyTier tier)
         {
             BlightTechnologyGameComponent component = BlightTechnologyGameComponent.Instance;
-            string[] names =
-            {
-                "LiAIChat_SporeBioengineeringBlueprint",
-                "LiAIChat_CorrosiveTechnologyBlueprint",
-                "LiAIChat_SymbioticArmorBlueprint",
-                "LiAIChat_ResonanceTechnologyBlueprint",
-                "LiAIChat_PhaseveilTechnologyBlueprint"
-            };
-            List<ThingDef> available = names
+            List<ThingDef> available = BlightTechnologyUtility.BlueprintNamesFor(tier)
                 .Where(name => component == null || !component.IsBlueprintUnlocked(name))
                 .Select(DefDatabase<ThingDef>.GetNamedSilentFail)
                 .Where(def => def != null).ToList();

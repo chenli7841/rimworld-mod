@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <HediffDef>
+    <defName>LiAIChat_BlightAbsorberBond</defName><label>Blight absorber armor bond</label><description>The armor is sampling pollution near its wearer.</description>
+    <hediffClass>HediffWithComps</hediffClass><isBad>false</isBad><initialSeverity>1</initialSeverity><maxSeverity>1</maxSeverity>
+    <comps><li Class="LiAIChat.Blightfall.HediffCompProperties_BlightAbsorberBond"><checkIntervalTicks>250</checkIntervalTicks></li></comps>
+  </HediffDef>
+  <HediffDef>
+    <defName>LiAIChat_BlightAbsorberCharge</defName><label>Blight absorber energy</label><labelNoun>absorber energy</labelNoun><description>Stored pollution energy available to the armor's shield.</description>
+    <hediffClass>HediffWithComps</hediffClass><isBad>false</isBad><alwaysShowSeverity>true</alwaysShowSeverity><initialSeverity>0</initialSeverity><maxSeverity>100</maxSeverity>
+  </HediffDef>
+  <HediffDef>
+    <defName>LiAIChat_BlightAbsorberShield</defName><label>Blight shield</label><description>A temporary shield powered by absorbed pollution.</description>
+    <hediffClass>HediffWithComps</hediffClass><isBad>false</isBad><initialSeverity>1</initialSeverity><maxSeverity>1</maxSeverity>
+    <comps><li Class="HediffCompProperties_Disappears"><disappearsAfterTicks>900</disappearsAfterTicks><showRemainingTime>true</showRemainingTime></li><li Class="HediffCompProperties_DisappearsOnDeath"/></comps>
+  </HediffDef>
+  <HediffDef>
+    <defName>LiAIChat_RetaliatorCooldown</defName><label>retaliator spines recovering</label><description>The carapace's spines are regrowing.</description>
+    <hediffClass>HediffWithComps</hediffClass><isBad>false</isBad><initialSeverity>1</initialSeverity><maxSeverity>1</maxSeverity>
+    <comps><li Class="HediffCompProperties_Disappears"><disappearsAfterTicks>180</disappearsAfterTicks><showRemainingTime>true</showRemainingTime></li></comps>
+  </HediffDef>
+  <HediffDef>
+    <defName>LiAIChat_RetaliatorCarapaceBond</defName><label>retaliator carapace bond</label><description>Wearing the carapace slowly irritates the skin as its spines grow.</description>
+    <hediffClass>HediffWithComps</hediffClass><isBad>false</isBad><initialSeverity>1</initialSeverity><maxSeverity>1</maxSeverity>
+    <comps><li Class="LiAIChat.Blightfall.HediffCompProperties_DermalErosionBond"><intervalTicks>250</intervalTicks><severityPerDay>0.035</severityPerDay></li></comps>
+  </HediffDef>
+  <HediffDef>
+    <defName>LiAIChat_SpineToxin</defName><label>spine toxin</label><description>A mild venom slows movement briefly.</description>
+    <hediffClass>HediffWithComps</hediffClass><isBad>true</isBad><initialSeverity>1</initialSeverity><maxSeverity>1</maxSeverity>
+    <comps><li Class="LiAIChat.Blightfall.HediffCompProperties_BlightTimedEffect"><durationTicks>600</durationTicks></li></comps>
+    <stages><li><label>venomized</label><statFactors><MoveSpeed>0.92</MoveSpeed></statFactors></li></stages>
+  </HediffDef>
+  <HediffDef>
+    <defName>LiAIChat_ResonanceMantleActive</defName><label>resonance field active</label><description>The mantle projects a field that disrupts nearby hostile biological minds.</description>
+    <hediffClass>HediffWithComps</hediffClass><isBad>false</isBad><initialSeverity>1</initialSeverity><maxSeverity>1</maxSeverity>
+    <comps><li Class="HediffCompProperties_Disappears"><disappearsAfterTicks>1200</disappearsAfterTicks><showRemainingTime>true</showRemainingTime></li><li Class="HediffCompProperties_DisappearsOnDeath"/><li Class="LiAIChat.Blightfall.HediffCompProperties_ResonanceMantleActive"><pulseIntervalTicks>60</pulseIntervalTicks><targetDebuffTicks>180</targetDebuffTicks><neuralStrainPerSecond>0.002</neuralStrainPerSecond><radius>8</radius></li></comps>
+  </HediffDef>
+  <HediffDef>
+    <defName>LiAIChat_ResonanceMantleCooldown</defName><label>resonance mantle cooldown</label><description>The resonance mantle is recharging.</description>
+    <hediffClass>HediffWithComps</hediffClass><isBad>false</isBad><initialSeverity>1</initialSeverity><maxSeverity>1</maxSeverity>
+    <comps><li Class="HediffCompProperties_Disappears"><disappearsAfterTicks>5400</disappearsAfterTicks><showRemainingTime>true</showRemainingTime></li></comps>
+  </HediffDef>
+  <HediffDef>
+    <defName>LiAIChat_MantleDisruption</defName><label>resonance disruption</label><description>A nearby resonance field temporarily interferes with awareness and coordination.</description>
+    <hediffClass>HediffWithComps</hediffClass><isBad>true</isBad><initialSeverity>1</initialSeverity><maxSeverity>1</maxSeverity>
+    <comps><li Class="LiAIChat.Blightfall.HediffCompProperties_BlightTimedEffect"><durationTicks>180</durationTicks></li></comps>
+    <stages><li><label>disrupted</label><capMods><li><capacity>Consciousness</capacity><offset>-0.05</offset></li><li><capacity>Manipulation</capacity><offset>-0.04</offset></li></capMods></li></stages>
+  </HediffDef>
+</Defs>

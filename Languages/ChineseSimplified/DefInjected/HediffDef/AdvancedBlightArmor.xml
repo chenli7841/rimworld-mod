@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_BlightAbsorberBond.label>吸蚀装甲连接</LiAIChat_BlightAbsorberBond.label>
+  <LiAIChat_BlightAbsorberBond.description>装甲正在吸收穿戴者附近的污染。</LiAIChat_BlightAbsorberBond.description>
+  <LiAIChat_BlightAbsorberCharge.label>吸蚀装甲能量</LiAIChat_BlightAbsorberCharge.label>
+  <LiAIChat_BlightAbsorberCharge.labelNoun>吸收能量</LiAIChat_BlightAbsorberCharge.labelNoun>
+  <LiAIChat_BlightAbsorberCharge.description>装甲护盾可使用的污染能量储备。</LiAIChat_BlightAbsorberCharge.description>
+  <LiAIChat_BlightAbsorberShield.label>蚀潮护盾</LiAIChat_BlightAbsorberShield.label>
+  <LiAIChat_BlightAbsorberShield.description>由吸收的污染能量驱动的临时护盾。</LiAIChat_BlightAbsorberShield.description>
+  <LiAIChat_RetaliatorCooldown.label>反击尖刺再生中</LiAIChat_RetaliatorCooldown.label>
+  <LiAIChat_RetaliatorCooldown.description>甲壳上的尖刺正在重新生长。</LiAIChat_RetaliatorCooldown.description>
+  <LiAIChat_RetaliatorCarapaceBond.label>反击甲壳连接</LiAIChat_RetaliatorCarapaceBond.label>
+  <LiAIChat_RetaliatorCarapaceBond.description>穿戴甲壳时，随着尖刺生长，皮肤会缓慢受到刺激。</LiAIChat_RetaliatorCarapaceBond.description>
+  <LiAIChat_SpineToxin.label>尖刺毒素</LiAIChat_SpineToxin.label>
+  <LiAIChat_SpineToxin.description>轻微毒素会短暂降低移动速度。</LiAIChat_SpineToxin.description>
+  <LiAIChat_SpineToxin.stages.0.label>中毒</LiAIChat_SpineToxin.stages.0.label>
+  <LiAIChat_ResonanceMantleActive.label>共鸣场激活</LiAIChat_ResonanceMantleActive.label>
+  <LiAIChat_ResonanceMantleActive.description>披甲正在释放干扰附近敌对生物的共鸣场。</LiAIChat_ResonanceMantleActive.description>
+  <LiAIChat_ResonanceMantleCooldown.label>共鸣披甲冷却中</LiAIChat_ResonanceMantleCooldown.label>
+  <LiAIChat_ResonanceMantleCooldown.description>共鸣披甲正在重新充能。</LiAIChat_ResonanceMantleCooldown.description>
+  <LiAIChat_MantleDisruption.label>共鸣干扰</LiAIChat_MantleDisruption.label>
+  <LiAIChat_MantleDisruption.description>附近的共鸣场暂时干扰了目标的意识和协调能力。</LiAIChat_MantleDisruption.description>
+  <LiAIChat_MantleDisruption.stages.0.label>受干扰</LiAIChat_MantleDisruption.stages.0.label>
+</LanguageData>

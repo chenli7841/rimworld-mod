@@ -9,4 +9,18 @@
   <LiAIChat_PhaseveilUnconscious>The wearer must be conscious and standing to activate Phaseveil.</LiAIChat_PhaseveilUnconscious>
   <LiAIChat_PhaseveilActivated>{0} activates Phaseveil.</LiAIChat_PhaseveilActivated>
   <LiAIChat_SymbioticCarapace>Symbiotic Carapace</LiAIChat_SymbioticCarapace>
+  <LiAIChat_ActivateBlightShield>Activate Blight Shield ({0}/100)</LiAIChat_ActivateBlightShield>
+  <LiAIChat_ActivateBlightShieldDesc>Absorb incoming damage using stored pollution energy. The shield lasts up to 15 seconds and adds toxic accumulation when activated.</LiAIChat_ActivateBlightShieldDesc>
+  <LiAIChat_AbsorberMustBeWorn>Wear Blight Absorber Armor to use this ability.</LiAIChat_AbsorberMustBeWorn>
+  <LiAIChat_AbsorberShieldAlreadyActive>The Blight Shield is already active.</LiAIChat_AbsorberShieldAlreadyActive>
+  <LiAIChat_AbsorberInsufficientEnergy>At least 30 absorber energy is required.</LiAIChat_AbsorberInsufficientEnergy>
+  <LiAIChat_AbsorberShieldActivated>{0} activates the Blight Shield.</LiAIChat_AbsorberShieldActivated>
+  <LiAIChat_ActivateResonanceMantle>Activate Resonance Field</LiAIChat_ActivateResonanceMantle>
+  <LiAIChat_ActivateResonanceMantleDesc>Disrupt hostile biological pawns within 8 cells for 20 seconds. The field adds neural strain and has a 90-second cooldown.</LiAIChat_ActivateResonanceMantleDesc>
+  <LiAIChat_MantleMustBeWorn>Wear Resonance Mantle to use this ability.</LiAIChat_MantleMustBeWorn>
+  <LiAIChat_MantleAlreadyActive>The resonance field is already active.</LiAIChat_MantleAlreadyActive>
+  <LiAIChat_MantleOnCooldown>The Resonance Mantle is recharging.</LiAIChat_MantleOnCooldown>
+  <LiAIChat_MantleTooStrained>Neural resonance strain is too severe to activate the mantle.</LiAIChat_MantleTooStrained>
+  <LiAIChat_MantleUnconscious>The wearer must be conscious and on a map to activate the mantle.</LiAIChat_MantleUnconscious>
+  <LiAIChat_MantleActivated>{0} activates the Resonance Field.</LiAIChat_MantleActivated>
 </LanguageData>

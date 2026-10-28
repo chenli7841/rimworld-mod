@@ -45,4 +45,25 @@
       <li><minSeverity>0.9</minSeverity><label>severe feedback</label><painOffset>0.2</painOffset><statOffsets><MentalBreakThreshold>0.08</MentalBreakThreshold></statOffsets><capMods><li><capacity>Consciousness</capacity><offset>-0.2</offset></li><li><capacity>Manipulation</capacity><offset>-0.15</offset></li></capMods><statFactors><MoveSpeed>0.85</MoveSpeed></statFactors></li>
     </stages>
   </HediffDef>
+
+  <HediffDef>
+    <defName>LiAIChat_ToxicAccumulation</defName><label>toxic accumulation</label><labelNoun>toxin load</labelNoun>
+    <description>The absorber armor's stored pollution is leaking into the wearer's body. Detoxifier lungs reduce the buildup but cannot eliminate it.</description>
+    <hediffClass>HediffWithComps</hediffClass><isBad>true</isBad><tendable>true</tendable><alwaysShowSeverity>true</alwaysShowSeverity><initialSeverity>0</initialSeverity><maxSeverity>1</maxSeverity>
+    <comps><li Class="LiAIChat.Blightfall.HediffCompProperties_BlightAffliction"><naturalRecoveryPerDay>0.035</naturalRecoveryPerDay><severeThreshold>0.5</severeThreshold><severeRecoveryFactor>0.3</severeRecoveryFactor><treatmentRecovery>0.15</treatmentRecovery></li></comps>
+    <stages>
+      <li><label>minor</label></li>
+      <li><minSeverity>0.25</minSeverity><label>moderate</label></li>
+      <li><minSeverity>0.5</minSeverity><label>severe</label><capMods><li><capacity>Consciousness</capacity><offset>-0.04</offset></li></capMods><statFactors><MoveSpeed>0.96</MoveSpeed></statFactors></li>
+      <li><minSeverity>0.75</minSeverity><label>dangerous</label><capMods><li><capacity>Consciousness</capacity><offset>-0.1</offset></li></capMods><statFactors><MoveSpeed>0.88</MoveSpeed></statFactors></li>
+    </stages>
+  </HediffDef>
+
+  <HediffDef>
+    <defName>LiAIChat_DermalErosion</defName><label>dermal erosion</label><labelNoun>skin erosion</labelNoun>
+    <description>The retaliator carapace's symbiotic spines irritate and damage the wearer's skin. Severe erosion causes pain and recovers slowly.</description>
+    <hediffClass>HediffWithComps</hediffClass><isBad>true</isBad><tendable>true</tendable><alwaysShowSeverity>true</alwaysShowSeverity><initialSeverity>0</initialSeverity><maxSeverity>1</maxSeverity>
+    <comps><li Class="LiAIChat.Blightfall.HediffCompProperties_BlightAffliction"><naturalRecoveryPerDay>0.025</naturalRecoveryPerDay><severeThreshold>0.5</severeThreshold><severeRecoveryFactor>0.25</severeRecoveryFactor><treatmentRecovery>0.15</treatmentRecovery></li></comps>
+    <stages><li><label>minor</label></li><li><minSeverity>0.25</minSeverity><label>moderate</label></li><li><minSeverity>0.5</minSeverity><label>severe</label><painOffset>0.05</painOffset></li><li><minSeverity>0.75</minSeverity><label>dangerous</label><painOffset>0.12</painOffset></li></stages>
+  </HediffDef>
 </Defs>

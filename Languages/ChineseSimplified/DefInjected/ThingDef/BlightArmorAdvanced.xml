@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_BlightAbsorberArmor.label>吸蚀装甲</LiAIChat_BlightAbsorberArmor.label>
+  <LiAIChat_BlightAbsorberArmor.description>穿戴者站在污染地块上时，装甲会吸收附近污染并储存最多100点能量。能量达到30后可启动护盾，最多持续15秒；护盾消耗能量吸收伤害，没有额外的计时冷却。吸收污染和启动护盾会积累毒素；解毒肺可降低积累速度，但不能完全免疫。</LiAIChat_BlightAbsorberArmor.description>
+  <LiAIChat_RetaliatorCarapace.label>反击甲壳</LiAIChat_RetaliatorCarapace.label>
+  <LiAIChat_RetaliatorCarapace.description>敌对近战攻击造成至少2点伤害时，甲壳有40%概率用毒刺反击，造成6点穿刺伤害并施加持续10秒的轻度毒素。反击后毒刺需要恢复3秒。穿戴装甲及触发反击都会累积皮肤侵蚀；远程和环境伤害不会触发反击。</LiAIChat_RetaliatorCarapace.description>
+  <LiAIChat_ResonanceMantle.label>共鸣披甲</LiAIChat_ResonanceMantle.label>
+  <LiAIChat_ResonanceMantle.description>主动释放半径8格、持续20秒的共鸣场，使敌对生物的意识降低5%、操纵能力降低4%；不会影响机械族和盟友。冷却时间90秒。启动期间持续累积神经共鸣负荷，严重负荷时无法再次启动。</LiAIChat_ResonanceMantle.description>
+</LanguageData>

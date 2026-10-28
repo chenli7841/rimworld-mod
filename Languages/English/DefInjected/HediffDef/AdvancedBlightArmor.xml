@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_BlightAbsorberBond.label>Blight absorber armor bond</LiAIChat_BlightAbsorberBond.label>
+  <LiAIChat_BlightAbsorberBond.description>The armor is sampling pollution near its wearer.</LiAIChat_BlightAbsorberBond.description>
+  <LiAIChat_BlightAbsorberCharge.label>Blight absorber energy</LiAIChat_BlightAbsorberCharge.label>
+  <LiAIChat_BlightAbsorberCharge.labelNoun>absorber energy</LiAIChat_BlightAbsorberCharge.labelNoun>
+  <LiAIChat_BlightAbsorberCharge.description>Stored pollution energy available to the armor's shield.</LiAIChat_BlightAbsorberCharge.description>
+  <LiAIChat_BlightAbsorberShield.label>Blight shield</LiAIChat_BlightAbsorberShield.label>
+  <LiAIChat_BlightAbsorberShield.description>A temporary shield powered by absorbed pollution.</LiAIChat_BlightAbsorberShield.description>
+  <LiAIChat_RetaliatorCooldown.label>retaliator spines recovering</LiAIChat_RetaliatorCooldown.label>
+  <LiAIChat_RetaliatorCooldown.description>The carapace's spines are regrowing.</LiAIChat_RetaliatorCooldown.description>
+  <LiAIChat_RetaliatorCarapaceBond.label>retaliator carapace bond</LiAIChat_RetaliatorCarapaceBond.label>
+  <LiAIChat_RetaliatorCarapaceBond.description>Wearing the carapace slowly irritates the skin as its spines grow.</LiAIChat_RetaliatorCarapaceBond.description>
+  <LiAIChat_SpineToxin.label>spine toxin</LiAIChat_SpineToxin.label>
+  <LiAIChat_SpineToxin.description>A mild venom slows movement briefly.</LiAIChat_SpineToxin.description>
+  <LiAIChat_SpineToxin.stages.0.label>venomized</LiAIChat_SpineToxin.stages.0.label>
+  <LiAIChat_ResonanceMantleActive.label>resonance field active</LiAIChat_ResonanceMantleActive.label>
+  <LiAIChat_ResonanceMantleActive.description>The mantle projects a field that disrupts nearby hostile biological minds.</LiAIChat_ResonanceMantleActive.description>
+  <LiAIChat_ResonanceMantleCooldown.label>resonance mantle cooldown</LiAIChat_ResonanceMantleCooldown.label>
+  <LiAIChat_ResonanceMantleCooldown.description>The resonance mantle is recharging.</LiAIChat_ResonanceMantleCooldown.description>
+  <LiAIChat_MantleDisruption.label>resonance disruption</LiAIChat_MantleDisruption.label>
+  <LiAIChat_MantleDisruption.description>A nearby resonance field temporarily interferes with awareness and coordination.</LiAIChat_MantleDisruption.description>
+  <LiAIChat_MantleDisruption.stages.0.label>disrupted</LiAIChat_MantleDisruption.stages.0.label>
+</LanguageData>

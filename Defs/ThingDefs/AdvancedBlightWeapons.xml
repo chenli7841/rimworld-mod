@@ -5,9 +5,10 @@
     <description>A precision weapon that disrupts living targets' nervous systems for a short time. Firing builds neural resonance strain; mechanoids are immune to the disruption.</description>
     <graphicData><texPath>Things/Item/Equipment/WeaponRanged/ChargeLance</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <uiIconScale>1.5</uiIconScale>
+    <generateCommonality>0.03</generateCommonality>
     <statBases><WorkToMake>54000</WorkToMake><Mass>5.2</Mass><AccuracyTouch>0.5</AccuracyTouch><AccuracyShort>0.82</AccuracyShort><AccuracyMedium>0.78</AccuracyMedium><AccuracyLong>0.68</AccuracyLong><RangedWeapon_Cooldown>2.5</RangedWeapon_Cooldown><MarketValue>2600</MarketValue></statBases>
-    <weaponTags><li>SpacerGun</li><li>BlightfallResonanceWeapon</li></weaponTags><weaponClasses><li>RangedHeavy</li></weaponClasses>
-    <costList><Plasteel>90</Plasteel><ComponentSpacer>6</ComponentSpacer><LiAIChat_BlightResearchData>6</LiAIChat_BlightResearchData></costList>
+    <weaponTags Inherit="False"><li>LiAIChatBlightfallGear</li><li>BlightfallResonanceWeapon</li></weaponTags><weaponClasses><li>RangedHeavy</li></weaponClasses>
+    <costList><Plasteel>90</Plasteel><ComponentIndustrial>6</ComponentIndustrial><ComponentSpacer>3</ComponentSpacer><LiAIChat_BlightResearchData>2</LiAIChat_BlightResearchData></costList>
     <recipeMaker><researchPrerequisite>LiAIChat_ResonanceTechnology</researchPrerequisite><skillRequirements><Crafting>10</Crafting></skillRequirements><displayPriority>920</displayPriority></recipeMaker>
     <verbs><li><verbClass>Verb_Shoot</verbClass><hasStandardCommand>true</hasStandardCommand><defaultProjectile>LiAIChat_ResonanceLanceBolt</defaultProjectile><warmupTime>0.8</warmupTime><range>30</range><soundCast>Shot_ChargeRifle</soundCast><soundCastTail>GunTail_Heavy</soundCastTail><muzzleFlashScale>10</muzzleFlashScale></li></verbs>
     <tools><li><label>stock</label><capacities><li>Blunt</li></capacities><power>10</power><cooldownTime>2</cooldownTime></li><li><label>barrel</label><capacities><li>Blunt</li><li>Poke</li></capacities><power>10</power><cooldownTime>2</cooldownTime></li></tools>
@@ -19,10 +20,11 @@
     <description>A living close-combat weapon that siphons a small amount of vitality from wounded biological enemies to repair its wielder. Each successful healing pulse increases hunger and symbiotic metabolic strain.</description>
     <graphicData><texPath>Things/Item/Equipment/WeaponMelee/LongSword</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <techLevel>Spacer</techLevel><possessionCount>1</possessionCount><costStuffCount>0</costStuffCount>
+    <generateCommonality>0.03</generateCommonality>
     <statBases><WorkToMake>48000</WorkToMake><Mass>2.3</Mass><MarketValue>2100</MarketValue></statBases>
-    <weaponTags><li>SpacerMelee</li><li>BlightfallSymbioticWeapon</li></weaponTags>
-    <costList><Plasteel>55</Plasteel><ComponentSpacer>3</ComponentSpacer><LiAIChat_BlightResearchData>5</LiAIChat_BlightResearchData></costList>
-    <recipeMaker><researchPrerequisite>LiAIChat_SymbioticArmor</researchPrerequisite><skillRequirements><Crafting>9</Crafting></skillRequirements><displayPriority>930</displayPriority></recipeMaker>
+    <weaponTags Inherit="False"><li>LiAIChatBlightfallGear</li><li>BlightfallSymbioticWeapon</li></weaponTags>
+    <costList><Plasteel>55</Plasteel><ComponentIndustrial>3</ComponentIndustrial><ComponentSpacer>2</ComponentSpacer><LiAIChat_BlightResearchData>2</LiAIChat_BlightResearchData></costList>
+    <recipeMaker><researchPrerequisite>LiAIChat_ResonanceTechnology</researchPrerequisite><skillRequirements><Crafting>9</Crafting></skillRequirements><displayPriority>930</displayPriority></recipeMaker>
     <equippedAngleOffset>-65</equippedAngleOffset>
     <tools>
       <li><label>handle</label><capacities><li>Blunt</li></capacities><power>10</power><cooldownTime>2</cooldownTime></li>
@@ -36,10 +38,11 @@
     <description>A terrain-control weapon that launches a seed node. Each node lasts 30 seconds, can pollute at most 12 nearby cells, slows hostile living targets within four cells, and is limited to two active nodes per wielder. Firing exposes the wielder to alien spores.</description>
     <graphicData><texPath>Things/Item/Equipment/WeaponRanged/ChargeRifle</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <uiIconScale>1.5</uiIconScale>
+    <generateCommonality>0.03</generateCommonality>
     <statBases><WorkToMake>44000</WorkToMake><Mass>5</Mass><AccuracyTouch>0.45</AccuracyTouch><AccuracyShort>0.72</AccuracyShort><AccuracyMedium>0.62</AccuracyMedium><AccuracyLong>0.42</AccuracyLong><RangedWeapon_Cooldown>3.5</RangedWeapon_Cooldown><MarketValue>1900</MarketValue></statBases>
-    <weaponTags><li>SpacerGun</li><li>BlightfallSeederWeapon</li></weaponTags><weaponClasses><li>RangedHeavy</li></weaponClasses>
-    <costList><Plasteel>65</Plasteel><ComponentSpacer>4</ComponentSpacer><LiAIChat_BlightResearchData>5</LiAIChat_BlightResearchData></costList>
-    <recipeMaker><researchPrerequisite>LiAIChat_SporeBioengineering</researchPrerequisite><skillRequirements><Crafting>9</Crafting></skillRequirements><displayPriority>940</displayPriority></recipeMaker>
+    <weaponTags Inherit="False"><li>LiAIChatBlightfallGear</li><li>BlightfallSeederWeapon</li></weaponTags><weaponClasses><li>RangedHeavy</li></weaponClasses>
+    <costList><Plasteel>65</Plasteel><ComponentIndustrial>4</ComponentIndustrial><ComponentSpacer>2</ComponentSpacer><LiAIChat_BlightResearchData>2</LiAIChat_BlightResearchData></costList>
+    <recipeMaker><researchPrerequisite>LiAIChat_ResonanceTechnology</researchPrerequisite><skillRequirements><Crafting>9</Crafting></skillRequirements><displayPriority>940</displayPriority></recipeMaker>
     <verbs><li><verbClass>Verb_Shoot</verbClass><hasStandardCommand>true</hasStandardCommand><defaultProjectile>LiAIChat_BlightSeederPod</defaultProjectile><warmupTime>0.8</warmupTime><range>24</range><soundCast>Shot_ChargeRifle</soundCast><soundCastTail>GunTail_Heavy</soundCastTail><muzzleFlashScale>8</muzzleFlashScale></li></verbs>
     <tools><li><label>stock</label><capacities><li>Blunt</li></capacities><power>8</power><cooldownTime>2</cooldownTime></li><li><label>barrel</label><capacities><li>Blunt</li><li>Poke</li></capacities><power>8</power><cooldownTime>2</cooldownTime></li></tools>
     <modExtensions><li Class="LiAIChat.Blightfall.BlightWeaponAfflictionExtension"><sporeSeverityPerUse>0.02</sporeSeverityPerUse></li></modExtensions>
@@ -50,9 +53,10 @@
     <description>A heavy anti-shield cannon. Hits absorbed by a vanilla personal shield drain an additional 150% of normal shield energy and suppress its recharge for 10 seconds. Firing causes severe neural feedback and strain.</description>
     <graphicData><texPath>Things/Item/Equipment/WeaponRanged/ChargeLance</texPath><graphicClass>Graphic_Single</graphicClass></graphicData>
     <uiIconScale>1.6</uiIconScale>
+    <generateCommonality>0.01</generateCommonality>
     <statBases><WorkToMake>72000</WorkToMake><Mass>8</Mass><AccuracyTouch>0.3</AccuracyTouch><AccuracyShort>0.7</AccuracyShort><AccuracyMedium>0.72</AccuracyMedium><AccuracyLong>0.62</AccuracyLong><RangedWeapon_Cooldown>5</RangedWeapon_Cooldown><MarketValue>4200</MarketValue></statBases>
-    <weaponTags><li>SpacerGun</li><li>BlightfallHeavyWeapon</li></weaponTags><weaponClasses><li>RangedHeavy</li></weaponClasses>
-    <costList><Plasteel>150</Plasteel><ComponentSpacer>8</ComponentSpacer><LiAIChat_BlightResearchData>10</LiAIChat_BlightResearchData></costList>
+    <weaponTags Inherit="False"><li>LiAIChatBlightfallGear</li><li>BlightfallHeavyWeapon</li></weaponTags><weaponClasses><li>RangedHeavy</li></weaponClasses>
+    <costList><Plasteel>150</Plasteel><ComponentIndustrial>8</ComponentIndustrial><ComponentSpacer>8</ComponentSpacer><LiAIChat_BlightResearchData>3</LiAIChat_BlightResearchData></costList>
     <recipeMaker><researchPrerequisite>LiAIChat_PhaseveilTechnology</researchPrerequisite><skillRequirements><Crafting>12</Crafting></skillRequirements><displayPriority>950</displayPriority></recipeMaker>
     <verbs><li><verbClass>Verb_Shoot</verbClass><hasStandardCommand>true</hasStandardCommand><defaultProjectile>LiAIChat_HeartbreakerBolt</defaultProjectile><warmupTime>1.2</warmupTime><range>35</range><soundCast>Shot_ChargeRifle</soundCast><soundCastTail>GunTail_Heavy</soundCastTail><muzzleFlashScale>13</muzzleFlashScale></li></verbs>
     <tools><li><label>stock</label><capacities><li>Blunt</li></capacities><power>13</power><cooldownTime>2</cooldownTime></li><li><label>barrel</label><capacities><li>Blunt</li><li>Poke</li></capacities><power>13</power><cooldownTime>2</cooldownTime></li></tools>

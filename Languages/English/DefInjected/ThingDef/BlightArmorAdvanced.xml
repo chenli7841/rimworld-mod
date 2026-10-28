@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+  <LiAIChat_BlightAbsorberArmor.description>On polluted ground, this armor absorbs nearby pollution into a reserve of up to 100 energy. At 30 energy, activate a shield for up to 15 seconds; it spends energy to absorb incoming damage and has no separate timed cooldown. Absorption and activation build toxic accumulation. Detoxifier Lungs reduce this buildup, but do not prevent it.</LiAIChat_BlightAbsorberArmor.description>
+  <LiAIChat_RetaliatorCarapace.description>When a hostile melee attacker deals at least 2 damage, the carapace has a 40% chance to retaliate for 6 stabbing damage and apply a 10-second mild venom. Spines recover for 3 seconds after a retaliation. Wearing the armor and triggering spines both add dermal erosion; ranged and environmental damage do not trigger them.</LiAIChat_RetaliatorCarapace.description>
+  <LiAIChat_ResonanceMantle.description>Activate an 8-cell resonance field for 20 seconds; it disrupts hostile biological pawns (5% consciousness and 4% manipulation penalty) and ignores mechanoids and allies. Cooldown: 90 seconds. The field builds neural resonance strain while active, and severe strain prevents activation.</LiAIChat_ResonanceMantle.description>
+</LanguageData>

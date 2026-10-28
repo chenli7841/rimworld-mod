@@ -946,6 +946,14 @@ namespace LiAIChat.Blightfall
                     break;
             }
             UpdateSiteStatus(site, BlightfallSiteStatus.Completed);
+            Map completedMap = Find.Maps.FirstOrDefault(map => map != null && map.Parent == site);
+            if (completedMap != null)
+            {
+                BlightTechnologyRewards.AwardForTier(completedMap,
+                    state.Type == BlightfallSiteType.ResonanceDefense
+                        ? BlightTechnologyTier.Core
+                        : BlightTechnologyTier.Advanced);
+            }
             Log.Message("[LiAIChat Blightfall] Special site completed: " + state.Type + " at tile " + state.TileId + ".");
             string completionText = state.Type == BlightfallSiteType.SporeForest
                 ? "LiAIChat_BlightfallSporeForestComplete".Translate()
@@ -971,6 +979,10 @@ namespace LiAIChat.Blightfall
                  selectedEnding != BlightfallCampaignEnding.HarnessHeart) ||
                 (selectedEnding == BlightfallCampaignEnding.PurifyHeart && !CanPurifyEnding()))
                 return false;
+
+            Map finalMap = Find.Maps.FirstOrDefault(map => map != null && map.Parent == site);
+            if (finalMap != null)
+                BlightTechnologyRewards.AwardForTier(finalMap, BlightTechnologyTier.Core);
 
             ending = selectedEnding;
             state.CoreBattleStage = BlightfallCoreBattleStage.Completed;

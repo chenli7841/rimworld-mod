@@ -9,4 +9,18 @@
   <LiAIChat_PhaseveilUnconscious>穿戴者必须保持清醒且未倒地才能启动相位隐身。</LiAIChat_PhaseveilUnconscious>
   <LiAIChat_PhaseveilActivated>{0}启动了相位隐身。</LiAIChat_PhaseveilActivated>
   <LiAIChat_SymbioticCarapace>共生甲壳</LiAIChat_SymbioticCarapace>
+  <LiAIChat_ActivateBlightShield>启动蚀潮护盾（{0}/100）</LiAIChat_ActivateBlightShield>
+  <LiAIChat_ActivateBlightShieldDesc>消耗储存的污染能量吸收伤害。护盾最多持续15秒，启动时会增加毒素积累。</LiAIChat_ActivateBlightShieldDesc>
+  <LiAIChat_AbsorberMustBeWorn>穿戴吸蚀装甲后才能使用此能力。</LiAIChat_AbsorberMustBeWorn>
+  <LiAIChat_AbsorberShieldAlreadyActive>蚀潮护盾已经启动。</LiAIChat_AbsorberShieldAlreadyActive>
+  <LiAIChat_AbsorberInsufficientEnergy>至少需要30点吸收能量。</LiAIChat_AbsorberInsufficientEnergy>
+  <LiAIChat_AbsorberShieldActivated>{0}启动了蚀潮护盾。</LiAIChat_AbsorberShieldActivated>
+  <LiAIChat_ActivateResonanceMantle>启动共鸣场</LiAIChat_ActivateResonanceMantle>
+  <LiAIChat_ActivateResonanceMantleDesc>干扰8格内的敌对生物，持续20秒。共鸣场会增加神经负荷，冷却时间为90秒。</LiAIChat_ActivateResonanceMantleDesc>
+  <LiAIChat_MantleMustBeWorn>穿戴共鸣披甲后才能使用此能力。</LiAIChat_MantleMustBeWorn>
+  <LiAIChat_MantleAlreadyActive>共鸣场已经启动。</LiAIChat_MantleAlreadyActive>
+  <LiAIChat_MantleOnCooldown>共鸣披甲正在冷却。</LiAIChat_MantleOnCooldown>
+  <LiAIChat_MantleTooStrained>神经共鸣负荷过高，无法启动披甲。</LiAIChat_MantleTooStrained>
+  <LiAIChat_MantleUnconscious>穿戴者必须保持清醒并位于地图上，才能启动共鸣场。</LiAIChat_MantleUnconscious>
+  <LiAIChat_MantleActivated>{0}启动了共鸣场。</LiAIChat_MantleActivated>
 </LanguageData>

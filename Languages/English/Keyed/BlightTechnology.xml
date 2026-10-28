@@ -7,6 +7,9 @@
   <LiAIChat_BlightResearchBlueprintRequired>Decode the matching blueprint before selecting this research project.</LiAIChat_BlightResearchBlueprintRequired>
   <LiAIChat_BlightResearchDataInsufficient>Not enough Blight research data. Need {0}; currently have {1}.</LiAIChat_BlightResearchDataInsufficient>
   <LiAIChat_BlightResearchDataConsumed>Consumed {0} Blight research data to begin {1} research.</LiAIChat_BlightResearchDataConsumed>
-  <LiAIChat_BlightWasteDumpDataReward>Recovered {0} units of Blight research data from the waste dump.</LiAIChat_BlightWasteDumpDataReward>
-  <LiAIChat_BlightWasteDumpBlueprintReward>Recovered a new blueprint: {0}.</LiAIChat_BlightWasteDumpBlueprintReward>
+  <LiAIChat_BlightWasteDumpDataReward>Recovered {0} units of Blight research data from the site.</LiAIChat_BlightWasteDumpDataReward>
+  <LiAIChat_BlightWasteDumpBlueprintReward>Recovered a new Blight technology blueprint: {0}.</LiAIChat_BlightWasteDumpBlueprintReward>
+  <LiAIChat_BlightEquipmentRequirements>Research: {0}. Crafting materials: {1}.</LiAIChat_BlightEquipmentRequirements>
+  <LiAIChat_BlightNoResearchPrerequisite>None</LiAIChat_BlightNoResearchPrerequisite>
+  <LiAIChat_BlightNoCraftingMaterials>None</LiAIChat_BlightNoCraftingMaterials>
 </LanguageData>

@@ -4,4 +4,10 @@
   <LiAIChat_SymbioticCarapace.description>A living armor shell that slowly repairs ordinary wounds while worn. Regeneration consumes the wearer's metabolism: hunger rises 50% faster, and each repair adds symbiotic strain. It pauses while the wearer is hungry.</LiAIChat_SymbioticCarapace.description>
   <LiAIChat_PhaseveilArmor.label>Phaseveil Armor</LiAIChat_PhaseveilArmor.label>
   <LiAIChat_PhaseveilArmor.description>A light phase-distortion suit. Select its wearer and activate Phaseveil to become invisible for up to 20 seconds; the ability has a 90-second cooldown. Attacking or being downed ends the effect. Active cloaking builds neural fatigue, which recovers faster during rest.</LiAIChat_PhaseveilArmor.description>
+  <LiAIChat_BlightAbsorberArmor.label>Blight Absorber Armor</LiAIChat_BlightAbsorberArmor.label>
+  <LiAIChat_BlightAbsorberArmor.description>On polluted ground, this armor absorbs nearby pollution into a reserve of up to 100 energy. Its active shield can spend that reserve to absorb incoming damage. Pollution absorption and shield activation slowly build toxic accumulation.</LiAIChat_BlightAbsorberArmor.description>
+  <LiAIChat_RetaliatorCarapace.label>Retaliator Carapace</LiAIChat_RetaliatorCarapace.label>
+  <LiAIChat_RetaliatorCarapace.description>This living shell grows venomous spines that can retaliate against damaging melee attacks. Each retaliation causes dermal erosion; the spines cannot respond to ranged or environmental damage.</LiAIChat_RetaliatorCarapace.description>
+  <LiAIChat_ResonanceMantle.label>Resonance Mantle</LiAIChat_ResonanceMantle.label>
+  <LiAIChat_ResonanceMantle.description>Activate a short-range resonance field to disrupt nearby hostile biological enemies. The field strains the wearer's nervous system and has a long cooldown.</LiAIChat_ResonanceMantle.description>
 </LanguageData>

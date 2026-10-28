@@ -14,7 +14,9 @@ namespace LiAIChat.Blightfall
         CorrosiveTissueDamage,
         NeuralResonanceStrain,
         SymbioticMetabolicStrain,
-        PhaseveilNeuralFatigue
+        PhaseveilNeuralFatigue,
+        ToxicAccumulation,
+        DermalErosion
     }
 
     public class HediffCompProperties_BlightAffliction : HediffCompProperties
@@ -111,6 +113,8 @@ namespace LiAIChat.Blightfall
         public const string NeuralHediff = "LiAIChat_NeuralResonanceStrain";
         public const string SymbioticHediff = "LiAIChat_SymbioticMetabolicStrain";
         public const string PhaseveilHediff = "LiAIChat_PhaseveilNeuralFatigue";
+        public const string ToxicAccumulationHediff = "LiAIChat_ToxicAccumulation";
+        public const string DermalErosionHediff = "LiAIChat_DermalErosion";
         private static readonly Dictionary<BlightAfflictionType, string> AfflictionDefs =
             new Dictionary<BlightAfflictionType, string>
             {
@@ -118,7 +122,9 @@ namespace LiAIChat.Blightfall
                 { BlightAfflictionType.CorrosiveTissueDamage, CorrosiveHediff },
                 { BlightAfflictionType.NeuralResonanceStrain, NeuralHediff },
                 { BlightAfflictionType.SymbioticMetabolicStrain, SymbioticHediff },
-                { BlightAfflictionType.PhaseveilNeuralFatigue, PhaseveilHediff }
+                { BlightAfflictionType.PhaseveilNeuralFatigue, PhaseveilHediff },
+                { BlightAfflictionType.ToxicAccumulation, ToxicAccumulationHediff },
+                { BlightAfflictionType.DermalErosion, DermalErosionHediff }
             };
 
         public static void RegisterAfflictionDef(BlightAfflictionType type, string hediffDefName)
@@ -134,6 +140,8 @@ namespace LiAIChat.Blightfall
                 ApplySporeExposure(pawn, severity, source);
             else if (type == BlightAfflictionType.CorrosiveTissueDamage)
                 ApplyCorrosiveExposure(pawn, severity, source);
+            else if (type == BlightAfflictionType.ToxicAccumulation)
+                ApplyToxicExposure(pawn, severity, source);
             else
                 ApplyToWholePawn(pawn, HediffFor(type), severity, source, null);
         }
@@ -198,6 +206,17 @@ namespace LiAIChat.Blightfall
             float dosePerArm = severityPerUse;
             foreach (BodyPartRecord arm in naturalArms)
                 ApplyToPart(pawn, CorrosiveHediff, arm, dosePerArm, source, null);
+        }
+
+        private static void ApplyToxicExposure(Pawn pawn, float severity, string source)
+        {
+            if (pawn?.health?.hediffSet == null || severity <= 0f) return;
+            int detoxifierLungs = pawn.health.hediffSet.GetNotMissingParts()
+                .Where(part => part?.def?.defName == "Lung")
+                .Count(part => IsDetoxifierLung(pawn, part));
+            float protectionFactor = detoxifierLungs >= 2 ? 0.5f : detoxifierLungs == 1 ? 0.75f : 1f;
+            ApplyToWholePawn(pawn, ToxicAccumulationHediff, severity * protectionFactor, source,
+                detoxifierLungs > 0 ? "Detoxifier Lung" : null);
         }
 
         public static bool ReduceAffliction(Pawn pawn, BlightAfflictionType type, float amount)
@@ -280,6 +299,14 @@ namespace LiAIChat.Blightfall
     [HarmonyPatch(typeof(Thing), "get_DescriptionDetailed")]
     public static class BlightEquipmentDescriptionPatch
     {
+        private static readonly HashSet<string> BlightEquipmentDefNames = new HashSet<string>
+        {
+            "LiAIChat_Sporecaster", "LiAIChat_CorrosionProjector", "LiAIChat_SymbioticCarapace",
+            "LiAIChat_ResonanceLance", "LiAIChat_SymbioticBlade", "LiAIChat_BlightSeeder",
+            "LiAIChat_HeartbreakerCannon", "LiAIChat_PhaseveilArmor", "LiAIChat_BlightAbsorberArmor",
+            "LiAIChat_RetaliatorCarapace", "LiAIChat_ResonanceMantle"
+        };
+
         public static void Postfix(Thing __instance, ref string __result)
         {
             if (__instance?.def == null) return;
@@ -303,6 +330,16 @@ namespace LiAIChat.Blightfall
                     __result += "\n" + "LiAIChat_BlightApparelSymbioticSideEffect".Translate(apparel.symbioticSeverityPerDay.ToStringPercent());
                 if (apparel.phaseveilSeverityPerDay > 0f)
                     __result += "\n" + "LiAIChat_BlightApparelPhaseveilSideEffect".Translate(apparel.phaseveilSeverityPerDay.ToStringPercent());
+            }
+
+            if (BlightEquipmentDefNames.Contains(__instance.def.defName))
+            {
+                RecipeMakerProperties recipe = __instance.def.recipeMaker;
+                string research = recipe?.researchPrerequisite?.LabelCap ?? "LiAIChat_BlightNoResearchPrerequisite".Translate().ToString();
+                string materials = __instance.def.costList == null || __instance.def.costList.Count == 0
+                    ? "LiAIChat_BlightNoCraftingMaterials".Translate().ToString()
+                    : string.Join(", ", __instance.def.costList.Select(cost => cost.count + " " + cost.thingDef.label));
+                __result += "\n" + "LiAIChat_BlightEquipmentRequirements".Translate(research, materials);
             }
         }
     }
