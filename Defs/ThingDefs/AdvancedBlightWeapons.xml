@@ -83,7 +83,7 @@
     <defName>LiAIChat_BlightSeedNode</defName><label>Blight seed node</label>
     <description>A temporary alien seed structure. It spreads a limited amount of pollution and disrupts nearby hostile life before withering.</description>
     <thingClass>Building</thingClass><category>Building</category><tickerType>Normal</tickerType><size>(1,1)</size><passability>Impassable</passability><fillPercent>0.75</fillPercent><altitudeLayer>Building</altitudeLayer><useHitPoints>true</useHitPoints>
-    <graphicData><texPath>Things/Plant/Glowstool</texPath><graphicClass>Graphic_Single</graphicClass><drawSize>(1.2,1.2)</drawSize></graphicData>
+    <graphicData><texPath>Things/Plant/TreeOak</texPath><graphicClass>Graphic_Single</graphicClass><drawSize>(1.2,1.2)</drawSize></graphicData>
     <statBases><MaxHitPoints>250</MaxHitPoints><ArmorRating_Sharp>0.1</ArmorRating_Sharp><ArmorRating_Blunt>0.15</ArmorRating_Blunt><Flammability>0.8</Flammability><Mass>8</Mass></statBases>
     <comps><li Class="LiAIChat.Blightfall.CompProperties_BlightSeed"/></comps>
   </ThingDef>
